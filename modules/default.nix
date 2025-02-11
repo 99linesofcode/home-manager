@@ -8,5 +8,6 @@
     ./mpv.nix
     ./openssh.nix
     ./sops.nix
+    ./steam.nix
   ];
 }
