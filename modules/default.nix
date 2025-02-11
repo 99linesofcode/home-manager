@@ -7,5 +7,6 @@
     ./keyring.nix
     ./mpv.nix
     ./openssh.nix
+    ./sops.nix
   ];
 }
