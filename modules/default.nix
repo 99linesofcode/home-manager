@@ -5,5 +5,6 @@
     ./git.nix
     ./hyprland.nix
     ./keyring.nix
+    ./mpv.nix
   ];
 }
