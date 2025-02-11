@@ -4,5 +4,6 @@
     ./firefox.nix
     ./git.nix
     ./hyprland.nix
+    ./keyring.nix
   ];
 }
