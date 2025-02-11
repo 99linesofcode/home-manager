@@ -13,5 +13,6 @@
     ./stylix.nix
     ./waybar.nix
     ./yazi.nix
+    ./zellij.nix
   ];
 }
