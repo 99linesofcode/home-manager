@@ -7,7 +7,9 @@
     ./keyring.nix
     ./mpv.nix
     ./openssh.nix
+    ./rclone.nix
     ./sops.nix
     ./steam.nix
+    ./stylix.nix
   ];
 }
