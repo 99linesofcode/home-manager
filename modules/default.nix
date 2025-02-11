@@ -12,5 +12,6 @@
     ./steam.nix
     ./stylix.nix
     ./waybar.nix
+    ./yazi.nix
   ];
 }
