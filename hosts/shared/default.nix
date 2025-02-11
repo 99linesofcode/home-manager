@@ -6,6 +6,7 @@ in {
   imports =
     [
       ./nix.nix
+      ./locale.nix
     ]
     ++ existing-imports [
       ./role/${role}.nix
