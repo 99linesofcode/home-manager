@@ -6,6 +6,7 @@
     ./hyprland.nix
     ./keyring.nix
     ./mpv.nix
+    ./nvim.nix
     ./openssh.nix
     ./rclone.nix
     ./sops.nix
