@@ -11,5 +11,6 @@
     ./sops.nix
     ./steam.nix
     ./stylix.nix
+    ./waybar.nix
   ];
 }
