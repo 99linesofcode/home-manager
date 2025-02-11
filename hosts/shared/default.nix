@@ -5,6 +5,7 @@
 in {
   imports =
     [
+      ./nix.nix
     ]
     ++ existing-imports [
       ./role/${role}.nix
