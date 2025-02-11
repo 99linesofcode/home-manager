@@ -6,5 +6,6 @@
     ./hyprland.nix
     ./keyring.nix
     ./mpv.nix
+    ./openssh.nix
   ];
 }
