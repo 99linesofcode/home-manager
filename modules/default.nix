@@ -15,5 +15,6 @@
     ./waybar.nix
     ./yazi.nix
     ./zellij.nix
+    ./zsh.nix
   ];
 }
