@@ -52,6 +52,13 @@ in
           userEmail = email;
           signing.key = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
         };
+        lazygit = {
+          enable = true;
+          settings = {
+            quitOnTopLevelReturn = true; # exit Lazygit when the user presses escape in a context where there is nothing to cancel/close
+            git.overrideGpg = true; # do not spawn a separate process when using GPG
+          };
+        };
       };
     };
   }
