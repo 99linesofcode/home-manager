@@ -43,9 +43,10 @@ in
               default = "current";
               recurseSubmodules = "on-demand";
             };
-            status.submoduleSummary = true;
             rebase.autoSquash = true;
             rerere.enabled = true; # REuse REcorded REsolution
+            status.submoduleSummary = true;
+            tag.gpgSign = true;
           };
           userName = fullName;
           userEmail = email;
