@@ -3,11 +3,11 @@
   lib,
   ...
 }: let
-  cfg = config.host.mpv;
+  cfg = config.home.mpv;
 in
   with lib; {
     options = {
-      host.mpv.enable = mkEnableOption "mpv media player";
+      home.mpv.enable = mkEnableOption "mpv media player";
     };
 
     config = mkIf cfg.enable {

@@ -4,11 +4,11 @@
   pkgs,
   ...
 }: let
-  cfg = config.host.dunst;
+  cfg = config.home.dunst;
 in
   with lib; {
     options = {
-      host.dunst.enable = mkEnableOption "dunst notifications manager";
+      home.dunst.enable = mkEnableOption "dunst notifications manager";
     };
 
     config = mkIf cfg.enable {

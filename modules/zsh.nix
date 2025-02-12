@@ -3,11 +3,11 @@
   lib,
   ...
 }: let
-  cfg = config.host.zsh;
+  cfg = config.home.zsh;
 in
   with lib; {
     options = {
-      host.zsh.enable = mkEnableOption "zsh";
+      home.zsh.enable = mkEnableOption "zsh";
     };
 
     config = mkIf cfg.enable {

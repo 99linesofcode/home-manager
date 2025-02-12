@@ -4,11 +4,11 @@
   pkgs,
   ...
 }: let
-  cfg = config.host.steam;
+  cfg = config.home.steam;
 in
   with lib; {
     options = {
-      host.steam.enable = mkEnableOption "steam";
+      home.steam.enable = mkEnableOption "steam";
     };
 
     config = mkIf cfg.enable {

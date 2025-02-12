@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  cfg = config.host.nvim;
+  cfg = config.home.nvim;
 in
   with lib; {
     imports = [
@@ -23,7 +23,7 @@ in
     ];
 
     options = {
-      host.nvim.enable = mkEnableOption "nvim";
+      home.nvim.enable = mkEnableOption "nvim";
     };
 
     # TODO: write autocommand to open helpfiles in vertical split

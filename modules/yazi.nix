@@ -4,11 +4,11 @@
   pkgs,
   ...
 }: let
-  cfg = config.host.yazi;
+  cfg = config.home.yazi;
 in
   with lib; {
     options = {
-      host.yazi.enable = mkEnableOption "yazi";
+      home.yazi.enable = mkEnableOption "yazi";
     };
 
     config = mkIf cfg.enable {

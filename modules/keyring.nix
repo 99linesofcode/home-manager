@@ -3,11 +3,11 @@
   lib,
   ...
 }: let
-  cfg = config.host.keyring;
+  cfg = config.home.keyring;
 in
   with lib; {
     options = {
-      host.keyring.enable = mkEnableOption "gnome-keyring";
+      home.keyring.enable = mkEnableOption "gnome-keyring";
     };
 
     config = mkIf cfg.enable {

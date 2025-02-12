@@ -4,22 +4,22 @@
   ...
 }:
 with lib; {
-  host.dunst.enable = true;
-  host.firefox.enable = true;
-  host.git.enable = true;
-  host.hyprland.enable = true;
-  host.keyring.enable = true;
-  host.mpv.enable = true;
-  host.nvim.enable = true;
-  host.openssh.enable = true;
-  host.rclone.enable = true;
-  host.steam.enable = true;
-  host.sops.enable = true;
-  host.stylix.enable = true;
-  host.waybar.enable = true;
-  host.yazi.enable = true;
-  host.zellij.enable = true;
-  host.zsh.enable = true;
+  home.dunst.enable = true;
+  home.firefox.enable = true;
+  home.git.enable = true;
+  home.hyprland.enable = true;
+  home.keyring.enable = true;
+  home.mpv.enable = true;
+  home.nvim.enable = true;
+  home.openssh.enable = true;
+  home.rclone.enable = true;
+  home.steam.enable = true;
+  home.sops.enable = true;
+  home.stylix.enable = true;
+  home.waybar.enable = true;
+  home.yazi.enable = true;
+  home.zellij.enable = true;
+  home.zsh.enable = true;
 
   home = {
     packages = with pkgs; [

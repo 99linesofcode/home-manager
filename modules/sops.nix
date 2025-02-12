@@ -7,7 +7,7 @@
   ...
 }: let
   inherit (specialArgs) hostname username;
-  cfg = config.host.sops;
+  cfg = config.home.sops;
 in
   with lib; {
     imports = [
@@ -15,7 +15,7 @@ in
     ];
 
     options = {
-      host.sops.enable = mkEnableOption "secret management using sops";
+      home.sops.enable = mkEnableOption "secret management using sops";
     };
 
     config = mkIf cfg.enable {

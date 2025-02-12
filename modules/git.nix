@@ -5,11 +5,11 @@
   ...
 }: let
   inherit (specialArgs) fullName email;
-  cfg = config.host.git;
+  cfg = config.home.git;
 in
   with lib; {
     options = {
-      host.git.enable = mkEnableOption "git";
+      home.git.enable = mkEnableOption "git";
     };
 
     config = mkIf cfg.enable {

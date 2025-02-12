@@ -6,11 +6,11 @@
   ...
 }: let
   inherit (specialArgs) username;
-  cfg = config.host.firefox;
+  cfg = config.home.firefox;
 in
   with lib; {
     options = {
-      host.firefox.enable = mkEnableOption "firefox";
+      home.firefox.enable = mkEnableOption "firefox";
     };
 
     config = mkIf cfg.enable {

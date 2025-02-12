@@ -4,11 +4,11 @@
   pkgs,
   ...
 }: let
-  cfg = config.host.hyprland;
+  cfg = config.home.hyprland;
 in
   with lib; {
     options = {
-      host.hyprland.enable = mkEnableOption "hyprland";
+      home.hyprland.enable = mkEnableOption "hyprland";
     };
 
     config = mkIf cfg.enable {

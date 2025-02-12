@@ -5,11 +5,11 @@
   ...
 }: let
   inherit (specialArgs) hostname username;
-  cfg = config.host.openssh;
+  cfg = config.home.openssh;
 in
   with lib; {
     options = {
-      host.openssh.enable = mkEnableOption "openssh";
+      home.openssh.enable = mkEnableOption "openssh";
     };
 
     config = mkIf cfg.enable {

@@ -37,7 +37,7 @@ Reusable modules that have already been built live in the `modules/` directory. 
 
 https://github.com/99linesofcode/home-manager/blob/50fff4aeadfcc5a513a75e7e49599a625559c635/modules/dunst.nix#L1-L23
 
-Enabling this module is as easy as adding `host.dunst.enable = true;` to your user's configuration. Take a look at [hosts/luna/users/shorty/default.nix](https://github.com/99linesofcode/home-manager/blob/50fff4aeadfcc5a513a75e7e49599a625559c635/hosts/luna/users/shorty/default.nix) for a complete example.
+Enabling this module is as easy as adding `home.dunst.enable = true;` to your user's configuration. Take a look at [hosts/luna/users/shorty/default.nix](https://github.com/99linesofcode/home-manager/blob/50fff4aeadfcc5a513a75e7e49599a625559c635/hosts/luna/users/shorty/default.nix) for a complete example.
 
 #### Encrypted secrets
 

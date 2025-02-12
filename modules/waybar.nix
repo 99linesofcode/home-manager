@@ -3,11 +3,11 @@
   lib,
   ...
 }: let
-  cfg = config.host.waybar;
+  cfg = config.home.waybar;
 in
   with lib; {
     options = {
-      host.waybar.enable = mkEnableOption "waybar";
+      home.waybar.enable = mkEnableOption "waybar";
     };
 
     config = mkIf cfg.enable {

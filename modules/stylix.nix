@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: let
-  cfg = config.host.stylix;
+  cfg = config.home.stylix;
 in
   with lib; {
     imports = [
@@ -13,7 +13,7 @@ in
     ];
 
     options = {
-      host.stylix.enable = mkEnableOption "stylix";
+      home.stylix.enable = mkEnableOption "stylix";
     };
 
     config = mkIf cfg.enable {

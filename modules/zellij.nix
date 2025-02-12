@@ -3,11 +3,11 @@
   lib,
   ...
 }: let
-  cfg = config.host.zellij;
+  cfg = config.home.zellij;
 in
   with lib; {
     options = {
-      host.zellij.enable = mkEnableOption "zellij";
+      home.zellij.enable = mkEnableOption "zellij";
     };
 
     config = mkIf cfg.enable {

@@ -4,11 +4,11 @@
   pkgs,
   ...
 }: let
-  cfg = config.host.rclone;
+  cfg = config.home.rclone;
 in
   with lib; {
     options = {
-      host.rclone.enable = mkEnableOption "rclone";
+      home.rclone.enable = mkEnableOption "rclone";
     };
 
     config = mkIf cfg.enable {
