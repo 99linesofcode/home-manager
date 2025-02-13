@@ -3,19 +3,21 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.home.yazi;
 in
-  with lib; {
-    options = {
-      home.yazi.enable = mkEnableOption "yazi";
-    };
+with lib;
+{
+  options = {
+    home.yazi.enable = mkEnableOption "yazi";
+  };
 
-    config = mkIf cfg.enable {
-      home.packages = with pkgs; [
-        ueberzugpp
-      ];
+  config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      ueberzugpp
+    ];
 
-      programs.yazi.enable = true;
-    };
-  }
+    programs.yazi.enable = true;
+  };
+}

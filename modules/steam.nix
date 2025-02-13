@@ -3,17 +3,19 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.home.steam;
 in
-  with lib; {
-    options = {
-      home.steam.enable = mkEnableOption "steam";
-    };
+with lib;
+{
+  options = {
+    home.steam.enable = mkEnableOption "steam";
+  };
 
-    config = mkIf cfg.enable {
-      home.packages = with pkgs; [
-        protonup
-      ];
-    };
-  }
+  config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      protonup
+    ];
+  };
+}

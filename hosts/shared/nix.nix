@@ -3,7 +3,8 @@
   pkgs,
   ...
 }:
-with lib; {
+with lib;
+{
   nixpkgs = {
     config = {
       allowUnfree = mkDefault true;
@@ -15,7 +16,10 @@ with lib; {
     package = pkgs.nix;
     settings = {
       auto-optimise-store = mkDefault true;
-      experimental-features = ["nix-command" "flakes"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       use-xdg-base-directories = mkDefault true;
     };
   };

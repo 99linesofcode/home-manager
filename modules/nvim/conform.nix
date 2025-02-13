@@ -2,7 +2,9 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+with lib;
+{
   programs.nixvim = {
     keymaps = [
     ];
@@ -70,7 +72,7 @@
             "markdownfmt"
           ];
           nix = [
-            "alejandra"
+            "nixfmt-rfc-style"
           ];
           php = {
             __unkeyed-1 = "pint";
@@ -93,9 +95,9 @@
           };
         };
 
-        formatters = {
-          alejandra = {
-            command = "${lib.getExe pkgs.alejandra}";
+        formatters = with pkgs; {
+          nixfmt-rfc-style = {
+            command = "${getExe nixfmt-rfc-style}";
           };
           black = {
             command = "${lib.getExe pkgs.black}";

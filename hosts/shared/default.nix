@@ -1,8 +1,10 @@
-{specialArgs, ...}: let
+{ specialArgs, ... }:
+let
   inherit (specialArgs) role username;
   if-exists = f: builtins.pathExists f;
   existing-imports = imports: builtins.filter if-exists imports;
-in {
+in
+{
   imports =
     [
       ./nix.nix
