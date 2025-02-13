@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   programs.nixvim = {
     keymaps = [
     ];
@@ -8,7 +9,11 @@
         enable = true;
         autoEnableSources = true;
         settings = {
-          formatting.fields = ["kind" "abbr" "menu"];
+          formatting.fields = [
+            "kind"
+            "abbr"
+            "menu"
+          ];
           mapping = {
             "<C-b>" = "cmp.mapping.scroll_docs(-4)";
             "<C-f>" = "cmp.mapping.scroll_docs(4)";
@@ -28,13 +33,13 @@
           };
           snippet.expand = "luasnip";
           sources = [
-            {name = "emoji";}
-            {name = "buffer";}
-            {name = "cmdline";}
-            {name = "dap";}
-            {name = "luasnip";}
-            {name = "nvim_lsp";}
-            {name = "path";}
+            { name = "emoji"; }
+            { name = "buffer"; }
+            { name = "cmdline"; }
+            { name = "dap"; }
+            { name = "luasnip"; }
+            { name = "nvim_lsp"; }
+            { name = "path"; }
           ];
         };
       };

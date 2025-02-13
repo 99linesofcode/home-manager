@@ -3,21 +3,23 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.home.dunst;
 in
-  with lib; {
-    options = {
-      home.dunst.enable = mkEnableOption "dunst notifications manager";
-    };
+with lib;
+{
+  options = {
+    home.dunst.enable = mkEnableOption "dunst notifications manager";
+  };
 
-    config = mkIf cfg.enable {
-      home.packages = with pkgs; [
-        libnotify
-      ];
+  config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      libnotify
+    ];
 
-      services.dunst = {
-        enable = true;
-      };
+    services.dunst = {
+      enable = true;
     };
-  }
+  };
+}

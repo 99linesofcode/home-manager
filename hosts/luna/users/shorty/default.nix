@@ -3,7 +3,8 @@
   pkgs,
   ...
 }:
-with lib; {
+with lib;
+{
   home.dunst.enable = true;
   home.firefox.enable = true;
   home.git.enable = true;
@@ -23,23 +24,24 @@ with lib; {
 
   home = {
     packages = with pkgs; [
-      android-tools
       beeper
       bitwarden
       bitwarden-cli
       bws
       electron
-      (freecad.override {withWayland = true;})
-      # figlet
-      # gcc
-      lazydocker
+      (freecad.override { withWayland = true; })
       nix-prefetch-git
       obsidian
       polychromatic
       rustdesk
       scrcpy
-      skypeforlinux
       webcord
+      # development tools
+      android-tools
+      act # run GitHub Actions locally
+      # figlet
+      # gcc
+      lazydocker
       # debugging and reverse engineering
       wireshark
       gdb

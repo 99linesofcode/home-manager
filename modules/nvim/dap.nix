@@ -1,43 +1,57 @@
-{...}: {
+{ ... }:
+{
   programs.nixvim = {
     keymaps = [
       {
-        mode = ["n" "v"];
+        mode = [
+          "n"
+          "v"
+        ];
         key = "<leader>d";
         action = "";
-        options = {desc = "+debug";};
+        options = {
+          desc = "+debug";
+        };
       }
       {
-        mode = ["n"];
+        mode = [ "n" ];
         key = "<leader>dB";
         action = ''
           function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end;
         '';
-        options = {desc = "Breakpoint Condition";};
+        options = {
+          desc = "Breakpoint Condition";
+        };
       }
       {
-        mode = ["n"];
+        mode = [ "n" ];
         key = "<leader>db";
         action = ''
           function() require("dap").toggle_breakpoint() end;
         '';
-        options = {desc = "Toggle Breakpoint";};
+        options = {
+          desc = "Toggle Breakpoint";
+        };
       }
       {
-        mode = ["n"];
+        mode = [ "n" ];
         key = "<leader>dc";
         action = ''
           function() require("dap").continue() end;
         '';
-        options = {desc = "Continue";};
+        options = {
+          desc = "Continue";
+        };
       }
       {
-        mode = ["n"];
+        mode = [ "n" ];
         key = "<leader>da";
         action = ''
           function() require("dap").continue({ before = get_args }) end;
         '';
-        options = {desc = "Run with Args";};
+        options = {
+          desc = "Run with Args";
+        };
       }
       # { mode = "n"; "<leader>dC"; function() require("dap").run_to_cursor() end; desc = "Run to Cursor" };
       # { mode = "n"; "<leader>dg"; function() require("dap").goto_() end; desc = "Go to Line (No Execute)" };

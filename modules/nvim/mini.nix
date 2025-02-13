@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   programs.nixvim = {
     keymaps = [
     ];
@@ -11,14 +12,14 @@
             n_lines = 50;
             search_method = "cover_or_next";
           };
-          icons = {};
+          icons = { };
           pairs = {
             modes = {
               insert = true;
               command = true;
               terminal = false;
             };
-            skip_ts = ["string"];
+            skip_ts = [ "string" ];
             skip_unbalanced = true;
             markdown = true;
           };

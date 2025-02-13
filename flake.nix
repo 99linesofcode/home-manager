@@ -22,49 +22,56 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
+    let
+      inherit (self) outputs;
 
-    system = "x86_64-linux";
+      system = "x86_64-linux";
 
-    pkgsForSystem = system: nixpkgsSource:
-      import nixpkgsSource {
-        overlays = [
-          #NOTE: add your custom overlays here
-        ];
-        inherit system;
-      };
+      # pkgs = nixpkgs.legacyPackages.${system};
 
-    HomeConfiguration = args:
-      home-manager.lib.homeManagerConfiguration {
-        modules = [
-          (import ./hosts)
-          (import ./modules)
-        ];
-        extraSpecialArgs =
-          {
+      pkgsForSystem =
+        system: nixpkgsSource:
+        import nixpkgsSource {
+          overlays = [
+            #NOTE: add your custom overlays here
+          ];
+          inherit system;
+        };
+
+      HomeConfiguration =
+        args:
+        home-manager.lib.homeManagerConfiguration {
+          modules = [
+            (import ./hosts)
+            (import ./modules)
+          ];
+          extraSpecialArgs = {
             inherit (args) nixpkgs;
-          }
-          // args.extraSpecialArgs;
-        pkgs = pkgsForSystem (args.system or system) nixpkgs;
-      };
-  in {
-    homeConfigurations = {
-      "luna.shorty" = HomeConfiguration {
-        extraSpecialArgs = {
-          inherit inputs outputs;
-          hostname = "luna";
-          username = "shorty";
-          fullName = "Jordy Schreuders";
-          email = "3071062+99linesofcode@users.noreply.github.com";
-          role = "workstation";
+          } // args.extraSpecialArgs;
+          pkgs = pkgsForSystem (args.system or system) nixpkgs;
+        };
+    in
+    {
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+
+      homeConfigurations = {
+        "luna.shorty" = HomeConfiguration {
+          extraSpecialArgs = {
+            inherit inputs outputs;
+            hostname = "luna";
+            username = "shorty";
+            fullName = "Jordy Schreuders";
+            email = "3071062+99linesofcode@users.noreply.github.com";
+            role = "workstation";
+          };
         };
       };
     };
-  };
 }

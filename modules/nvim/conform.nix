@@ -2,7 +2,9 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+with lib;
+{
   programs.nixvim = {
     keymaps = [
     ];
@@ -10,7 +12,7 @@
     plugins.conform-nvim = {
       enable = true;
       settings = {
-        format_on_save = ''
+        format_on_save.__raw = ''
           function(bufnr)
             if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
               return
@@ -25,7 +27,7 @@
            end
         '';
 
-        format_after_save = ''
+        format_after_save.__raw = ''
           function(bufnr)
             if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
               return
@@ -44,9 +46,11 @@
             # "shellharden"
             # "shfmt"
           ];
-          css = [
-            "stylelint"
-          ];
+          css = {
+            __unkeyed-1 = "stylelint";
+            __unkeyed-2 = "eslint_d";
+            stop_after_first = true;
+          };
           html = {
             __unkeyed-1 = "superhtml";
             __unkeyed-2 = "eslint_d";
@@ -60,17 +64,21 @@
             __unkeyed-3 = "prettier";
             stop_after_first = true;
           };
-          json = [
-            "jq"
-          ];
+          json = {
+            __unkeyed-1 = "jq";
+            __unkeyed-2 = "eslint_d";
+            stop_after_first = true;
+          };
           lua = [
             "stylua"
           ];
-          markdown = [
-            "markdownfmt"
-          ];
+          markdown = {
+            __unkeyed-1 = "markdownfmt";
+            __unkeyed-2 = "eslint_d";
+            stop_after_first = true;
+          };
           nix = [
-            "alejandra"
+            "nixfmt-rfc-style"
           ];
           php = {
             __unkeyed-1 = "pint";
@@ -93,39 +101,39 @@
           };
         };
 
-        formatters = {
-          alejandra = {
-            command = "${lib.getExe pkgs.alejandra}";
+        formatters = with pkgs; {
+          nixfmt-rfc-style = {
+            command = "${getExe nixfmt-rfc-style}";
           };
           black = {
-            command = "${lib.getExe pkgs.black}";
+            command = "${getExe black}";
           };
           eslint_d = {
-            command = "${lib.getExe pkgs.eslint_d}";
+            command = "${getExe eslint_d}";
           };
           isort = {
-            command = "${lib.getExe pkgs.isort}";
+            command = "${getExe isort}";
           };
           jq = {
-            command = "${lib.getExe pkgs.jq}";
+            command = "${getExe jq}";
           };
           prettierd = {
-            command = "${lib.getExe pkgs.prettierd}";
+            command = "${getExe prettierd}";
           };
           php_cs_fixer = {
-            command = "${lib.getExe pkgs.php83Packages.php-cs-fixer}";
+            command = "${getExe php83Packages.php-cs-fixer}";
           };
           shellcheck = {
-            command = "${lib.getExe pkgs.shellcheck}";
+            command = "${getExe shellcheck}";
           };
           shellharden = {
-            command = "${lib.getExe pkgs.shellharden}";
+            command = "${getExe shellharden}";
           };
           shfmt = {
-            command = "${lib.getExe pkgs.shfmt}";
+            command = "${getExe shfmt}";
           };
           stylua = {
-            command = "${lib.getExe pkgs.stylua}";
+            command = "${getExe stylua}";
           };
         };
 
