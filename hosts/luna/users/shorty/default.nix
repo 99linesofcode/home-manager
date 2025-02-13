@@ -55,7 +55,10 @@ with lib;
     bat.enable = true;
     btop.enable = true;
     chromium.enable = true;
-    direnv.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
     # eza.enable = true; # rust based ls replacement
     feh.enable = true; # image viewer
     obs-studio.enable = true;
