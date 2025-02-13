@@ -48,7 +48,7 @@ with lib;
             "history"
             "laravel"
             "rails"
-            "gpg-agent"
+            "ssh-agent"
           ];
         };
         shellAliases = {
