@@ -1,4 +1,14 @@
-# 0.1.0 (2025-02-12)
+## [0.1.1](https://github.com/99linesofcode/home-manager/compare/v0.1.0...v0.1.1) (2025-02-13)
+
+
+### Bug Fixes
+
+* **conform.nvim:** use dedicated formatter or fall back to eslint_d ([cf058d3](https://github.com/99linesofcode/home-manager/commit/cf058d321735dc296554891bce47a98157e9eb45))
+* **zsh:** change back to ssh-agent plugin for the time being ([513acf2](https://github.com/99linesofcode/home-manager/commit/513acf2ae6f71dbefe46bb0d9211cd8955b98565))
+
+
+
+# [0.1.0](https://github.com/99linesofcode/home-manager/compare/17bbcdb5b68e554ebaf853d068216c875cfc8a98...v0.1.0) (2025-02-12)
 
 
 ### Features
