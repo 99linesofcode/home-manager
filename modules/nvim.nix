@@ -15,6 +15,7 @@ with lib;
     ./nvim/cmp.nix
     ./nvim/conform.nix
     ./nvim/dap.nix
+    ./nvim/grug-far.nix # TODO: enable once nixvim is updated.
     ./nvim/lsp.nix
     ./nvim/mini.nix
     ./nvim/neo-tree.nix
@@ -41,6 +42,7 @@ with lib;
         vimAlias = true;
         vimdiffAlias = true;
         globals.mapleader = " ";
+        globals.maplocalleader = "\\";
 
         opts = {
           autowrite = true; # write the contents of the file automatically on certain commands
