@@ -688,7 +688,7 @@ with lib;
           noice.enable = true;
           notify = {
             enable = true;
-            timeout = 1000;
+            settings.timeout = 1000;
           };
           schemastore.enable = true;
           ts-autotag.enable = true;
