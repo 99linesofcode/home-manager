@@ -32,9 +32,12 @@
     let
       inherit (self) outputs;
 
-      system = "x86_64-linux";
-
-      # pkgs = nixpkgs.legacyPackages.${system};
+      eachSystem = nixpkgs.lib.genAttrs [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
 
       pkgsForSystem =
         system: nixpkgsSource:
@@ -55,23 +58,25 @@
           extraSpecialArgs = {
             inherit (args) nixpkgs;
           } // args.extraSpecialArgs;
-          pkgs = pkgsForSystem (args.system or system) nixpkgs;
+          pkgs = pkgsForSystem (args.system or "x86_64-linux") nixpkgs;
         };
     in
     {
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+      formatter = eachSystem (s: nixpkgs.legacyPackages.${s}.nixfmt-rfc-style);
 
-      homeConfigurations = {
-        "luna.shorty" = HomeConfiguration {
-          extraSpecialArgs = {
-            inherit inputs outputs;
-            hostname = "luna";
-            username = "shorty";
-            fullName = "Jordy Schreuders";
-            email = "3071062+99linesofcode@users.noreply.github.com";
-            role = "workstation";
+      legacyPackages = eachSystem (s: {
+        homeConfigurations = {
+          "luna.shorty" = HomeConfiguration {
+            extraSpecialArgs = {
+              inherit inputs outputs;
+              hostname = "luna";
+              username = "shorty";
+              fullName = "Jordy Schreuders";
+              email = "3071062+99linesofcode@users.noreply.github.com";
+              role = "workstation";
+            };
           };
         };
-      };
+      });
     };
 }
