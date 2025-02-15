@@ -3,7 +3,6 @@
   pkgs,
   ...
 }:
-with lib;
 {
   programs.nixvim = {
     keymaps = [
@@ -39,105 +38,97 @@ with lib;
 
         formatters_by_ft = {
           "_" = [
+            "squeeze_blanks"
             "trim_whitespace"
+            "trim_newlines"
           ];
           bash = [
             "shellcheck"
-            # "shellharden"
-            # "shfmt"
+            "shellharden"
+            "shfmt"
           ];
-          css = {
-            __unkeyed-1 = "stylelint";
-            __unkeyed-2 = "eslint_d";
-            stop_after_first = true;
-          };
-          html = {
-            __unkeyed-1 = "superhtml";
-            __unkeyed-2 = "eslint_d";
-            __unkeyed-3 = "prettierd";
-            __unkeyed-4 = "prettier";
-            stop_after_first = true;
-          };
-          javascript = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            __unkeyed-3 = "prettier";
-            stop_after_first = true;
-          };
-          json = {
-            __unkeyed-1 = "jq";
-            __unkeyed-2 = "eslint_d";
-            stop_after_first = true;
-          };
+          css = [
+            "stylelint"
+            "prettierd"
+            "prettier"
+          ];
+          html = [
+            "prettierd"
+            "prettier"
+          ];
+          javascript = [
+            "prettierd"
+            "prettier"
+          ];
+          json = [
+            "jq"
+            "prettierd"
+            "prettier"
+          ];
           lua = [
             "stylua"
           ];
-          markdown = {
-            __unkeyed-1 = "markdownfmt";
-            __unkeyed-2 = "eslint_d";
-            stop_after_first = true;
-          };
+          markdown = [
+            "prettierd"
+            "prettier"
+          ];
           nix = [
             "nixfmt-rfc-style"
           ];
-          php = {
-            __unkeyed-1 = "pint";
-            __unkeyed-2 = "php_cs_fixer";
-            stop_after_first = true;
-          };
+          php = [
+            "pint"
+            "php_cs_fixer" # laravel/pint is built ontop of php_cs_fixer
+          ];
           python = [
             "black"
-            # "isort"
+            "isort"
           ];
-          typescript = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            stop_after_first = true;
-          };
-          yaml = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            stop_after_first = true;
-          };
+          typescript = [
+            "prettierd"
+            "prettier"
+          ];
+          yaml = [
+            "yq"
+            "prettierd"
+            "prettier"
+          ];
         };
 
         formatters = with pkgs; {
-          nixfmt-rfc-style = {
-            command = "${getExe nixfmt-rfc-style}";
-          };
           black = {
-            command = "${getExe black}";
-          };
-          eslint_d = {
-            command = "${getExe eslint_d}";
+            command = lib.getExe black;
           };
           isort = {
-            command = "${getExe isort}";
+            command = lib.getExe isort;
           };
           jq = {
-            command = "${getExe jq}";
+            command = lib.getExe jq;
           };
-          prettierd = {
-            command = "${getExe prettierd}";
+          nixfmt-rfc-style = {
+            command = lib.getExe nixfmt-rfc-style;
           };
           php_cs_fixer = {
-            command = "${getExe php83Packages.php-cs-fixer}";
+            command = lib.getExe phpPackages.php-cs-fixer;
           };
           shellcheck = {
-            command = "${getExe shellcheck}";
+            command = lib.getExe shellcheck;
           };
           shellharden = {
-            command = "${getExe shellharden}";
+            command = lib.getExe shellharden;
           };
           shfmt = {
-            command = "${getExe shfmt}";
+            command = lib.getExe shfmt;
           };
           stylua = {
-            command = "${getExe stylua}";
+            command = lib.getExe stylua;
+          };
+          squeeze_blanks = {
+            command = lib.getExe' pkgs.coreutils "cat";
+          };
+          yq = {
+            command = lib.getExe yq;
           };
         };
-
-        notify_on_error = true;
       };
     };
   };

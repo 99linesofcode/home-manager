@@ -16,7 +16,6 @@ with lib;
     programs = {
       direnv = mkIf config.programs.direnv.enable {
         enableZshIntegration = true;
-        nix-direnv.enable = true;
       };
       fastfetch.enable = true;
       yazi = mkIf config.programs.yazi.enable {

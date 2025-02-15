@@ -65,7 +65,7 @@ Congratulations, you should now have all the pieces to cobble together your own 
 
 ## Work In Progress
 
-I've only just started along this journey of Nix myself and there are still quite a few bits and bobs that are missing or a little rough around the edges. For example, some programs might not be bundled with the right module and I currently don't support generating configurations for nix-darwin (MacOS). I'm sure I'll get around to it some day but please be aware that you might run into some issues along the way. If you do, please [create a new issue](https://github.com/99linesofcode/home-manager/issues/new/choose) and I'd be happy to help you sort 'em out.
+I've only just started along this journey of Nix myself and there are still quite a few bits and bobs that are missing or a little rough around the edges. For example, some programs might not be bundled with the right module. I'm sure I'll get around to it some day but please be aware that you might run into some issues along the way. If you do, please [create a new issue](https://github.com/99linesofcode/home-manager/issues/new/choose) and I'd be happy to help you sort 'em out.
 
 ## Contributing
 

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
     keymaps = [
@@ -60,7 +60,6 @@
           };
         };
         servers = {
-          # TODO: do we install these globally or in each devshell?
           bashls.enable = true;
           emmet_ls.enable = true;
           eslint.enable = true;
@@ -78,13 +77,18 @@
             installCargo = false;
             installRustc = false;
           };
+          superhtml = {
+            enable = true;
+            # FIXME: defaults to null on 24.11 branch, fixed in main
+            package = pkgs.superhtml;
+          };
           tailwindcss.enable = true;
           ts_ls.enable = true;
           volar.enable = true;
           yamlls.enable = true;
         };
       };
-      lsp-format.enable = true; # formatting
+      lsp-format.enable = true; # formatting, conform falls back to this
       lspkind.enable = true; # vscode-like pictograms for lsp
       lsp-signature.enable = true; # method signatures
     };
