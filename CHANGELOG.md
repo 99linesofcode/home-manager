@@ -1,3 +1,18 @@
+# [0.2.0](https://github.com/99linesofcode/home-manager/compare/v0.1.1...v0.2.0) (2025-02-15)
+
+
+### Bug Fixes
+
+* **conform:** run formatters or fall back to using LSPs and nvim-lsp ([3987350](https://github.com/99linesofcode/home-manager/commit/3987350044780281845befff0b05661052c07f75))
+
+
+### Features
+
+* generate configurations all supported architectures ([1a9d769](https://github.com/99linesofcode/home-manager/commit/1a9d769a4c8d717d43662ffe79c0ad0375f0aa43))
+* **nix-direnv:** enable home-manager integration ([7a30996](https://github.com/99linesofcode/home-manager/commit/7a309964029f127f184c7427f5d6cf7494d08301))
+
+
+
 ## [0.1.1](https://github.com/99linesofcode/home-manager/compare/v0.1.0...v0.1.1) (2025-02-13)
 
 
