@@ -77,18 +77,13 @@
             installCargo = false;
             installRustc = false;
           };
-          superhtml = {
-            enable = true;
-            # FIXME: defaults to null on 24.11 branch, fixed in main
-            package = pkgs.superhtml;
-          };
+          superhtml.enable = true;
           tailwindcss.enable = true;
           ts_ls.enable = true;
           volar.enable = true;
           yamlls.enable = true;
         };
       };
-      lsp-format.enable = true; # formatting, conform falls back to this
       lspkind.enable = true; # vscode-like pictograms for lsp
       lsp-signature.enable = true; # method signatures
     };

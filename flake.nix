@@ -3,13 +3,13 @@
 
   # NOTE: nix release versions are manually kept in sync with nixos-config nixpkgs.url
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-24.11";
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
-      url = "github:danth/stylix/release-24.11";
+      url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -32,7 +32,7 @@
     let
       inherit (self) outputs;
 
-      eachSystem = nixpkgs.lib.genAttrs [
+      forEachSystem = nixpkgs.lib.genAttrs [
         "aarch64-darwin"
         "aarch64-linux"
         "x86_64-darwin"
@@ -62,9 +62,9 @@
         };
     in
     {
-      formatter = eachSystem (s: nixpkgs.legacyPackages.${s}.nixfmt-rfc-style);
+      formatter = forEachSystem (s: nixpkgs.legacyPackages.${s}.nixfmt-rfc-style);
 
-      legacyPackages = eachSystem (s: {
+      legacyPackages = forEachSystem (s: {
         homeConfigurations = {
           "luna.shorty" = HomeConfiguration {
             extraSpecialArgs = {

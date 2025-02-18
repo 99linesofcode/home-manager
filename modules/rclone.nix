@@ -25,7 +25,6 @@ with lib;
         format = "binary";
         sopsFile = ../hosts/shared/secrets/rclone.conf;
         path = config.home.homeDirectory + "/.config/rclone/rclone.conf";
-        mode = "600";
       };
     };
 

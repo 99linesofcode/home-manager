@@ -105,6 +105,7 @@ with lib;
         exec-once = [
           "waybar"
           "swww-daemon"
+          # TODO: install swaylock or use something like hyprlock?
           "swayidle -w timeout 10 'if pgrep -x swaylock; then hyprctl dispatch dpms off; fi' resume 'hyprctl dispatch dpms on'"
           "swayidle -w timeout 300 'swaylock -f -C ~/.config/swaylock/config' timeout 330 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'"
           "udiskie &"

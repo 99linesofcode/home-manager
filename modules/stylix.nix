@@ -20,12 +20,7 @@ with lib;
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      (nerdfonts.override {
-        fonts = [
-          "Noto"
-        ];
-      })
-      noto-fonts
+      nerd-fonts.noto
       noto-fonts-emoji
     ];
 
@@ -40,15 +35,15 @@ with lib;
       fonts = {
         serif = {
           name = "NotoSerif Nerd Font Propo";
-          package = pkgs.noto-fonts;
+          package = pkgs.nerd-fonts.noto;
         };
         sansSerif = {
           name = "NotoSans Nerd Font Propo";
-          package = pkgs.noto-fonts;
+          package = pkgs.nerd-fonts.noto;
         };
         monospace = {
           name = "NotoMono Nerd Font Propo";
-          package = pkgs.noto-fonts;
+          package = pkgs.nerd-fonts.noto;
         };
         emoji = {
           name = "Noto Color Emoji";
