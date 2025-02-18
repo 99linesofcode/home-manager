@@ -13,6 +13,7 @@ with lib;
     inputs.nixvim.homeManagerModules.nixvim
     ./nvim/bufferline.nix
     ./nvim/cmp.nix
+    ./nvim/codecompanion.nix
     ./nvim/conform.nix
     ./nvim/dap.nix
     ./nvim/grug-far.nix
@@ -22,6 +23,7 @@ with lib;
     ./nvim/snacks.nix
     ./nvim/todo-comments.nix
     ./nvim/treesitter.nix
+    # TODO: replace telescope with snacks.picker
     ./nvim/telescope.nix
     ./nvim/trouble.nix
   ];
@@ -650,6 +652,13 @@ with lib;
           friendly-snippets.enable = true;
           lint.enable = true; # linting
           lualine.enable = true;
+          # TODO: should also attach to codecompletion buffer but it won't
+          markview = {
+            enable = true;
+            settings = {
+              icon_provider = "mini";
+            };
+          };
           # FIXME: causes init.lua errors
           # noice.enable = true;
           # FIXME: causes init.lua errors
