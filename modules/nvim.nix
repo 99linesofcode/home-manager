@@ -659,7 +659,6 @@ with lib;
             };
           };
           friendly-snippets.enable = true;
-          gitsigns.enable = true;
           # FIXME: causes init.lua errors
           # indent-blankline = {
           #   enable = true;

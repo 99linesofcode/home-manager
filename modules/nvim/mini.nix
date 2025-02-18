@@ -13,6 +13,14 @@
             n_lines = 50;
             search_method = "cover_or_next";
           };
+          diff = {
+            view = {
+              style = "sign";
+              options = {
+                algorithm = "histogram";
+              };
+            };
+          };
           icons = { };
           pairs = {
             modes = {
