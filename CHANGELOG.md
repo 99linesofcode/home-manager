@@ -1,3 +1,22 @@
+# [0.3.0](https://github.com/99linesofcode/home-manager/compare/v0.2.0...v0.3.0) (2025-02-18)
+
+
+### Bug Fixes
+
+* **nvim:** no need for lsp-format as formatting is handled by conform/nvim-lsp ([5e756ab](https://github.com/99linesofcode/home-manager/commit/5e756ab78779b99a04706e9baf0c71fb341be1a9))
+* **nvim:** superhtml default package has been set, no need to do this manually anymore ([3ced794](https://github.com/99linesofcode/home-manager/commit/3ced794ff713c8191b4ae104930bafde7990ec12))
+
+
+### Features
+
+* **nvim:** add markview.nvim for markdown previews ([2d8a855](https://github.com/99linesofcode/home-manager/commit/2d8a855328656da9297a3b455b4bf1f3374c0df1))
+* **nvim:** add snacks.nvim a collection of QoL plugins ([9d0e689](https://github.com/99linesofcode/home-manager/commit/9d0e6894246d90aa97c2ac210399b9ceb10e56b9))
+* **nvim:** AI powered coding using codecompanion.nvim ([cf087a6](https://github.com/99linesofcode/home-manager/commit/cf087a6d59b88cf79423b03f98b49d3962ffd28b))
+* **nvim:** in editor Search and Replace through grug-far plugin ([219e703](https://github.com/99linesofcode/home-manager/commit/219e70308a5f00f1693415e1e4048a0ac0c6cd54))
+* **nvim:** replace gitsigns with mini.diff ([5b3b069](https://github.com/99linesofcode/home-manager/commit/5b3b06914c3d2d17011eb896e85912cb6e6dbfe6))
+
+
+
 # [0.2.0](https://github.com/99linesofcode/home-manager/compare/v0.1.1...v0.2.0) (2025-02-15)
 
 
