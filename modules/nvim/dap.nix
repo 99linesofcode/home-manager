@@ -16,8 +16,8 @@
       {
         mode = [ "n" ];
         key = "<leader>dB";
-        action = ''
-          function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end;
+        action.__raw = ''
+          function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end
         '';
         options = {
           desc = "Breakpoint Condition";
@@ -26,8 +26,8 @@
       {
         mode = [ "n" ];
         key = "<leader>db";
-        action = ''
-          function() require("dap").toggle_breakpoint() end;
+        action.__raw = ''
+          function() require("dap").toggle_breakpoint() end
         '';
         options = {
           desc = "Toggle Breakpoint";
@@ -36,8 +36,8 @@
       {
         mode = [ "n" ];
         key = "<leader>dc";
-        action = ''
-          function() require("dap").continue() end;
+        action.__raw = ''
+          function() require("dap").continue() end
         '';
         options = {
           desc = "Continue";
@@ -46,8 +46,8 @@
       {
         mode = [ "n" ];
         key = "<leader>da";
-        action = ''
-          function() require("dap").continue({ before = get_args }) end;
+        action.__raw = ''
+          function() require("dap").continue({ before = get_args }) end
         '';
         options = {
           desc = "Run with Args";
