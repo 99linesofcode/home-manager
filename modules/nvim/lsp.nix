@@ -84,7 +84,6 @@
           yamlls.enable = true;
         };
       };
-      lsp-format.enable = true; # formatting, conform falls back to this
       lspkind.enable = true; # vscode-like pictograms for lsp
       lsp-signature.enable = true; # method signatures
     };
