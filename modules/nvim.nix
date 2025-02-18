@@ -15,7 +15,7 @@ with lib;
     ./nvim/cmp.nix
     ./nvim/conform.nix
     ./nvim/dap.nix
-    ./nvim/grug-far.nix # TODO: enable once nixvim is updated.
+    ./nvim/grug-far.nix
     ./nvim/lsp.nix
     ./nvim/mini.nix
     ./nvim/neo-tree.nix
