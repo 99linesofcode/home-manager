@@ -691,6 +691,7 @@ with lib;
           # noice.enable = true;
           # FIXME: causes init.lua errors
           # schemastore.enable = true;
+          snacks.enable = true;
           ts-autotag.enable = true;
           # FIXME: causes init.lua errors
           # ts-comments.enable = true;
