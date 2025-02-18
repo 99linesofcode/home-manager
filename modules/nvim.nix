@@ -651,7 +651,6 @@ with lib;
 
         plugins = {
           conform-nvim.enable = true; # formatting
-          dashboard.enable = true;
           flash = {
             enable = true;
             settings.modes = {
@@ -661,42 +660,41 @@ with lib;
           };
           friendly-snippets.enable = true;
           gitsigns.enable = true;
-          indent-blankline = {
-            enable = true;
-            settings = {
-              exclude = {
-                filetypes = [
-                  "help"
-                  "alpha"
-                  "dashboard"
-                  "neo-tree"
-                  "Trouble"
-                  "trouble"
-                  "notify"
-                ];
-              };
-              indent = {
-                char = "│";
-              };
-              scope = {
-                show_end = false;
-                show_start = true;
-              };
-            };
-          };
+          # FIXME: causes init.lua errors
+          # indent-blankline = {
+          #   enable = true;
+          #   settings = {
+          #     # exclude = {
+          #     #   filetypes = [
+          #     #     "help"
+          #     #     "alpha"
+          #     #     "dashboard"
+          #     #     "neo-tree"
+          #     #     "Trouble"
+          #     #     "trouble"
+          #     #     "notify"
+          #     #   ];
+          #     # };
+          #     indent = {
+          #       char = "│";
+          #     };
+          #     scope = {
+          #       show_end = false;
+          #       show_start = true;
+          #     };
+          #   };
+          # };
           lazygit.enable = config.programs.lazygit.enable;
           lint.enable = true; # linting
           lualine.enable = true;
-          noice.enable = true;
-          notify = {
-            enable = true;
-            settings.timeout = 1000;
-          };
-          schemastore.enable = true;
+          # FIXME: causes init.lua errors
+          # noice.enable = true;
+          # FIXME: causes init.lua errors
+          # schemastore.enable = true;
           ts-autotag.enable = true;
-          ts-comments.enable = true;
+          # FIXME: causes init.lua errors
+          # ts-comments.enable = true;
           undotree.enable = true;
-          web-devicons.enable = true;
           which-key.enable = true;
         };
       };
