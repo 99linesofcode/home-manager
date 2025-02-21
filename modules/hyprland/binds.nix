@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
@@ -7,20 +7,15 @@
       "SUPER_ALT_CTRL, S, pass, ^(com\.obsproject\.Studio)$"
 
       # Hotkeys
-      "SUPER, Return, exec, alacritty"
+      "SUPER, Return, exec, ${config.home.wayland.uwsm.prefix}alacritty"
       "SUPER, Space, exec, rofi -show-icons -show drun -l 10"
-      "SUPER, E, exec, alacritty -e 'yazi'"
-      "SUPER, D, exec, hyprpicker -na"
+      "SUPER, E, exec, ${config.home.wayland.uwsm.prefix}alacritty -e 'yazi'"
+      "SUPER, D, exec, ${config.home.wayland.uwsm.prefix}hyprpicker -na"
       "SUPER, V, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
 
-      "SUPER_ALT, M, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      "SUPER_ALT, M, exec, ${config.home.wayland.uwsm.prefix}wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
       "SUPER_ALT, B, exec, ~/.config/hypr/scripts/bluetooth-toggle.sh"
-
-      # Fn keys
-      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ", XF86AudioPrev, exec, playerctl previous"
-      ", XF86AudioPlay, exec, playerctl play-pause"
-      ", XF86AudioNext, exec, playerctl next"
+      "SUPER, P, exec, ~/.config/hypr/scripts/display-toggle.sh" # F4
 
       # Manipulate windows
       "SUPER, W, killactive"
@@ -72,20 +67,20 @@
     ];
 
     binde = [
-      # Fn keys
-      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%-"
-      "SUPER, P, exec, ~/.config/hypr/scripts/display-toggle.sh"
-      ", XF86MonBrightnessDown, exec, brightnessctl s 10%-"
-      ", XF86MonBrightnessUp, exec, brightnessctl s 10%+"
-      ", XF86KbdBrightnessDown, exec, brightnessctl s 10%+"
-      ", XF86KbdBrightnessUp, exec, brightnessctl s 10%+"
-
       # Window resizing
       "SUPER_SHIFT, H, resizeactive, -100 0"
       "SUPER_SHIFT, J, resizeactive, 0 100"
       "SUPER_SHIFT, K, resizeactive, 0 -100"
       "SUPER_SHIFT, L, resizeactive, 100 0"
+    ];
+
+    bindel = [
+      ", XF86AudioRaiseVolume, exec, ${config.home.wayland.uwsm.prefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioLowerVolume, exec, ${config.home.wayland.uwsm.prefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86MonBrightnessDown, exec, ${config.home.wayland.uwsm.prefix}brightnessctl s 10%-"
+      ", XF86MonBrightnessUp, exec, ${config.home.wayland.uwsm.prefix}brightnessctl s 10%+"
+      ", XF86KbdBrightnessDown, exec, ${config.home.wayland.uwsm.prefix}brightnessctl s 10%+"
+      ", XF86KbdBrightnessUp, exec, ${config.home.wayland.uwsm.prefix}brightnessctl s 10%+"
     ];
 
     bindm = [

@@ -85,6 +85,7 @@ with lib;
     rofi = {
       enable = true;
       package = pkgs.rofi-wayland;
+      extraConfig.run-command = "${config.home.wayland.uwsm.prefix}{cmd}";
     };
     vscode.enable = true;
     yt-dlp.enable = true;

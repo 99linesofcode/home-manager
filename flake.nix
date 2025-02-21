@@ -1,7 +1,6 @@
 {
   description = "Home Manager configuration";
 
-  # NOTE: nix release versions are manually kept in sync with nixos-config nixpkgs.url
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
