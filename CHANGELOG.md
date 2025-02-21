@@ -1,3 +1,19 @@
+# [0.4.0](https://github.com/99linesofcode/home-manager/compare/v0.3.0...v0.4.0) (2025-02-21)
+
+
+### Bug Fixes
+
+* issues surrounding screen sharing in Firefox and Discord ([1bcac4f](https://github.com/99linesofcode/home-manager/commit/1bcac4f721ae7988200a5aeaa04114491bd70819))
+* NixOS settings should've been behind a toggle ([21a9710](https://github.com/99linesofcode/home-manager/commit/21a97102668441ed0a1c0bdbb86e8bc50bf606a9))
+
+
+### Features
+
+* added module for hyprpolkitagent ([21cf1ff](https://github.com/99linesofcode/home-manager/commit/21cf1ffbd4410f5939a66c99d5b3c83219c05b46))
+* automatically import module files ([4d529ff](https://github.com/99linesofcode/home-manager/commit/4d529ff99a7959b7387bad97053a68d9306ab038))
+
+
+
 # [0.3.0](https://github.com/99linesofcode/home-manager/compare/v0.2.0...v0.3.0) (2025-02-18)
 
 
