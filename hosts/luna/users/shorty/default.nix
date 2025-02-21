@@ -18,6 +18,7 @@ with lib;
   # home.hyprlock.enable = true; # TODO: needs to be configured
   home.hypridle.enable = true;
   home.hyprpaper.enable = true;
+  # home.hyprpolkitagent.enable = true;
   # home.hyprshade.enable = true;
   home.iwgtk.enable = true;
   home.keyring.enable = true;
