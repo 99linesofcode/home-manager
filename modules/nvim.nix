@@ -11,21 +11,7 @@ with lib;
 {
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
-    ./nvim/bufferline.nix
-    ./nvim/cmp.nix
-    ./nvim/codecompanion.nix
-    ./nvim/conform.nix
-    ./nvim/dap.nix
-    ./nvim/grug-far.nix
-    ./nvim/lsp.nix
-    ./nvim/mini.nix
-    ./nvim/neo-tree.nix
-    ./nvim/snacks.nix
-    ./nvim/todo-comments.nix
-    ./nvim/treesitter.nix
-    # TODO: replace telescope with snacks.picker
-    ./nvim/telescope.nix
-    ./nvim/trouble.nix
+    ./nvim
   ];
 
   options = {
