@@ -1,23 +1,43 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }:
 with lib;
 {
+  home.nix.enable = true;
+
+  home.blueman.enable = true;
+  home.brightnessctl.enable = true;
   home.dunst.enable = true;
   home.firefox.enable = true;
   home.git.enable = true;
+  home.grim.enable = true;
   home.hyprland.enable = true;
+  # home.hyprlock.enable = true; # TODO: needs to be configured
+  home.hypridle.enable = true;
+  home.hyprpaper.enable = true;
+  # home.hyprpolkitagent.enable = true;
+  # home.hyprshade.enable = true;
+  home.iwgtk.enable = true;
   home.keyring.enable = true;
   home.mpv.enable = true;
   home.nvim.enable = true;
+  # home.nwg-dock-hyprland.enable = true; # TODO: not sure how I feel about this yet
   home.openssh.enable = true;
+  home.pwvucontrol.enable = true;
+  home.qalculate-gtk.enable = true;
   home.rclone.enable = true;
+  home.slurp.enable = true;
   home.steam.enable = true;
   home.sops.enable = true;
+  home.swappy.enable = true;
   home.stylix.enable = true;
   home.waybar.enable = true;
+  home.wayland.enable = true;
+  home.waypaper.enable = true;
+  home.wlogout.enable = true;
   home.yazi.enable = true;
   home.zellij.enable = true;
   home.zsh.enable = true;
@@ -28,14 +48,14 @@ with lib;
       bitwarden
       bitwarden-cli
       bws
+      discord
       electron
-      (freecad.override { withWayland = true; })
+      (freecad.override { withWayland = config.home.wayland.enable; })
       nix-prefetch-git
       obsidian
       polychromatic
       rustdesk
       scrcpy
-      webcord
       # development tools
       android-tools
       act # run GitHub Actions locally
