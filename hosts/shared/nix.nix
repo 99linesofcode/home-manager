@@ -1,26 +1,30 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }:
+let
+  cfg = config.home.nix;
+in
 with lib;
 {
-  nixpkgs = {
-    config = {
-      allowUnfree = mkDefault true;
-      allowUnfreePredicate = _: true;
-    };
+  options = {
+    home.nix.enable = mkEnableOption "NixOS specific configuration settings";
   };
 
-  nix = {
-    package = pkgs.nix;
-    settings = {
-      auto-optimise-store = mkDefault true;
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-      use-xdg-base-directories = mkDefault true;
+  config = mkIf cfg.enable {
+
+    nix = {
+      package = pkgs.nix;
+      settings = {
+        auto-optimise-store = mkDefault true;
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
+        use-xdg-base-directories = mkDefault true;
+      };
     };
   };
 }

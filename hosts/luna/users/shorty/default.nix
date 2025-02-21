@@ -5,6 +5,8 @@
 }:
 with lib;
 {
+  home.nix.enable = true;
+
   home.dunst.enable = true;
   home.firefox.enable = true;
   home.git.enable = true;
