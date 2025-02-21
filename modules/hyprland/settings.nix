@@ -6,7 +6,7 @@
     ];
 
     monitor = [
-      "eDP-1, highres, 0x0, 2, bitdepth, 10"
+      "eDP-1, highres, 0x0, 2"
     ];
 
     workspace = [

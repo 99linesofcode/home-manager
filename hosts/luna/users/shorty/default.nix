@@ -47,6 +47,7 @@ with lib;
       bitwarden
       bitwarden-cli
       bws
+      discord
       electron
       (freecad.override { withWayland = config.home.wayland.enable; })
       nix-prefetch-git
@@ -54,7 +55,6 @@ with lib;
       polychromatic
       rustdesk
       scrcpy
-      vesktop
       # development tools
       android-tools
       act # run GitHub Actions locally
