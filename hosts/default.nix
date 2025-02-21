@@ -33,20 +33,5 @@ with lib;
   home = {
     inherit username;
     homeDirectory = homeDir + username;
-    packages = with pkgs; [
-      imagemagick
-      ffmpeg
-      mupdf
-      rsync
-      tldr
-      wireguard-tools
-      xdg-utils
-      xdg-user-dirs
-      # compression and extraction
-      unzip
-      wget
-      zip
-    ];
-    stateVersion = "24.05";
   };
 }
