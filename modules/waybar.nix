@@ -15,6 +15,7 @@ with lib;
   config = mkIf cfg.enable {
     programs.waybar = {
       enable = true;
+      systemd.enable = true;
       settings = [
         {
           "height" = 16;
@@ -115,7 +116,7 @@ with lib;
                 " "
               ];
             };
-            "on-click" = "pavucontrol";
+            "on-click" = "pwvucontrol";
           };
 
           "network" = {
