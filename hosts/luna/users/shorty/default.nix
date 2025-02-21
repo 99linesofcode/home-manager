@@ -26,6 +26,7 @@ with lib;
   home.nvim.enable = true;
   # home.nwg-dock-hyprland.enable = true; # TODO: not sure how I feel about this yet
   home.openssh.enable = true;
+  home.playerctl.enable = true;
   home.pwvucontrol.enable = true;
   home.qalculate-gtk.enable = true;
   home.rclone.enable = true;
