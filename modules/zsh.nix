@@ -35,7 +35,6 @@ with lib;
         historySubstringSearch.enable = true;
         oh-my-zsh = {
           enable = true;
-          theme = "juanghurtado";
           plugins = [
             "asdf"
             "colorize"
@@ -49,7 +48,13 @@ with lib;
             "rails"
             "ssh-agent"
           ];
+          theme = "juanghurtado";
         };
+        profileExtra = ''
+          if uwsm check may-start && uwsm select; then
+            exec systemd-cat -t uwsm_start uwsm start default
+          fi
+        '';
         shellAliases = {
           a = "artisan";
           tinker = "artisan tinker";
@@ -59,6 +64,8 @@ with lib;
           kamal = "docker run -it --rm -v '$PWD:/workdir' -v '$SSH_AUTH_SOCK:/ssh-agent' -v /var/run/docker.sock:/var/run/docker.sock -e 'SSH_AUTH_SOCK=/ssh-agent' ghcr.io/basecamp/kamal:latest";
         };
         initExtra = ''
+          fastfetch
+
           # automatically prune branches both local and remote
           function gpb {
             git checkout "$(git_main_branch)"
@@ -73,8 +80,6 @@ with lib;
             rm -rf $PWD/.git/modules/$1
             git config --remove-section submodule.$1
           }
-
-          fastfetch
         '';
       };
     };

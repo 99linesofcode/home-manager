@@ -26,6 +26,7 @@ with lib;
   home.nvim.enable = true;
   # home.nwg-dock-hyprland.enable = true; # TODO: not sure how I feel about this yet
   home.openssh.enable = true;
+  home.playerctl.enable = true;
   home.pwvucontrol.enable = true;
   home.qalculate-gtk.enable = true;
   home.rclone.enable = true;
@@ -85,6 +86,7 @@ with lib;
     rofi = {
       enable = true;
       package = pkgs.rofi-wayland;
+      extraConfig.run-command = "${config.home.wayland.uwsm.prefix}{cmd}";
     };
     vscode.enable = true;
     yt-dlp.enable = true;

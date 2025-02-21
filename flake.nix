@@ -1,7 +1,6 @@
 {
   description = "Home Manager configuration";
 
-  # NOTE: nix release versions are manually kept in sync with nixos-config nixpkgs.url
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
@@ -32,20 +31,22 @@
     let
       inherit (self) outputs;
 
-      forEachSystem = nixpkgs.lib.genAttrs [
+      systems = [
         "aarch64-darwin"
         "aarch64-linux"
         "x86_64-darwin"
         "x86_64-linux"
       ];
 
+      forEachSystem = f: nixpkgs.lib.genAttrs systems f;
+
       pkgsForSystem =
         system: nixpkgsSource:
         import nixpkgsSource {
+          inherit system;
           overlays = [
             #NOTE: add your custom overlays here
           ];
-          inherit system;
         };
 
       HomeConfiguration =
@@ -62,7 +63,7 @@
         };
     in
     {
-      formatter = forEachSystem (s: nixpkgs.legacyPackages.${s}.nixfmt-rfc-style);
+      formatter = forEachSystem (s: nixpkgs.nixfmt-rfc-style);
 
       legacyPackages = forEachSystem (s: {
         homeConfigurations = {

@@ -116,7 +116,7 @@ with lib;
                 " "
               ];
             };
-            "on-click" = "pwvucontrol";
+            "on-click" = "${config.home.wayland.uwsm.prefix}pwvucontrol";
           };
 
           "network" = {
@@ -129,7 +129,7 @@ with lib;
             "tooltip-format-ethernet" = "  {ifname} ({ipaddr}/{cidr})";
             "tooltip-format-disconnected" = "Disconnected";
             "max-length" = 50;
-            "on-click" = "iwgtk";
+            "on-click" = "${config.home.wayland.uwsm.prefix}iwgtk";
           };
 
           "bluetooth" = {
@@ -140,7 +140,7 @@ with lib;
             "tooltip-format" = "{device_alias}";
             "tooltip-format-connected" = "󰂰 {device_enumerate}";
             "tooltip-format-enumerate-connected" = "{device_alias}";
-            "on-click" = "blueman-manager";
+            "on-click" = "${config.home.wayland.uwsm.prefix}blueman-manager";
           };
 
           "battery" = {
