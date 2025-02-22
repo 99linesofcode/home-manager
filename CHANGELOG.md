@@ -1,3 +1,12 @@
+# [0.7.0](https://github.com/99linesofcode/home-manager/compare/v0.6.0...v0.7.0) (2025-02-22)
+
+
+### Features
+
+* **vscode:** added module with marketplace extensions, keybindings and settings ([d4f7635](https://github.com/99linesofcode/home-manager/commit/d4f7635a553dcbdbb0b744ecfb3e2bf9493bad76))
+
+
+
 # [0.6.0](https://github.com/99linesofcode/home-manager/compare/v0.5.0...v0.6.0) (2025-02-22)
 
 
@@ -51,21 +60,6 @@
 * **nvim:** AI powered coding using codecompanion.nvim ([cf087a6](https://github.com/99linesofcode/home-manager/commit/cf087a6d59b88cf79423b03f98b49d3962ffd28b))
 * **nvim:** in editor Search and Replace through grug-far plugin ([219e703](https://github.com/99linesofcode/home-manager/commit/219e70308a5f00f1693415e1e4048a0ac0c6cd54))
 * **nvim:** replace gitsigns with mini.diff ([5b3b069](https://github.com/99linesofcode/home-manager/commit/5b3b06914c3d2d17011eb896e85912cb6e6dbfe6))
-
-
-
-# [0.2.0](https://github.com/99linesofcode/home-manager/compare/v0.1.1...v0.2.0) (2025-02-15)
-
-
-### Bug Fixes
-
-* **conform:** run formatters or fall back to using LSPs and nvim-lsp ([3987350](https://github.com/99linesofcode/home-manager/commit/3987350044780281845befff0b05661052c07f75))
-
-
-### Features
-
-* generate configurations all supported architectures ([1a9d769](https://github.com/99linesofcode/home-manager/commit/1a9d769a4c8d717d43662ffe79c0ad0375f0aa43))
-* **nix-direnv:** enable home-manager integration ([7a30996](https://github.com/99linesofcode/home-manager/commit/7a309964029f127f184c7427f5d6cf7494d08301))
 
 
 
