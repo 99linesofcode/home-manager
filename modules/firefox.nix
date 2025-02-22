@@ -18,11 +18,29 @@ with lib;
   config = mkIf cfg.enable {
     programs.firefox = {
       enable = true;
+      languagePacks = [
+        "en-US"
+        "en-GB"
+        "nl"
+      ];
       package = pkgs.wrapFirefox (pkgs.firefox-unwrapped.override {
         pipewireSupport = true;
       }) { };
       profiles = {
         ${username} = {
+          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+            bitwarden
+            darkreader
+            ublock-origin
+            sponsorblock
+            return-youtube-dislikes
+            vimium
+
+            # TODO: package and contribute these to the NUR?
+            # analytics opt-out
+            # clockify
+            # todoist sidebar
+          ];
           search = {
             force = true;
             default = "Google";
@@ -56,9 +74,15 @@ with lib;
               };
 
               "NixOS Wiki" = {
-                urls = [ { template = "https://nixos.wiki/index.php?search={searchTerms}"; } ];
+                urls = [ { template = "https://wiki.nixos.org/index.php?search={searchTerms}"; } ];
                 iconUpdateURL = "https://wiki.nixos.org/favicon.png";
                 definedAliases = [ "@nw" ];
+              };
+
+              "PHP.net" = {
+                urls = [ { template = "https://php.net/{searchTerms}"; } ];
+                iconUpdateURL = "https://www.php.net/favicon-196x196.png?v=2";
+                definedAliases = [ "@php" ];
               };
 
               "ProtonDB" = {
@@ -81,7 +105,7 @@ with lib;
             };
           };
           settings = {
-            "widget.use-xdg-desktop-portal.file-picker" = 1;
+            "widget.use-xdg-desktop-portal" = true;
           };
         };
       };
