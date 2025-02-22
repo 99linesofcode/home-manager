@@ -18,6 +18,11 @@ with lib;
   config = mkIf cfg.enable {
     programs.firefox = {
       enable = true;
+      languagePacks = [
+        "en-US"
+        "en-GB"
+        "nl"
+      ];
       package = pkgs.wrapFirefox (pkgs.firefox-unwrapped.override {
         pipewireSupport = true;
       }) { };
