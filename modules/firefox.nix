@@ -74,7 +74,7 @@ with lib;
               };
 
               "NixOS Wiki" = {
-                urls = [ { template = "https://nixos.wiki/index.php?search={searchTerms}"; } ];
+                urls = [ { template = "https://wiki.nixos.org/index.php?search={searchTerms}"; } ];
                 iconUpdateURL = "https://wiki.nixos.org/favicon.png";
                 definedAliases = [ "@nw" ];
               };
