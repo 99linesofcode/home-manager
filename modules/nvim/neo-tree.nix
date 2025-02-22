@@ -14,24 +14,7 @@
 
     plugins.neo-tree = {
       enable = true;
-      sources = [
-        "filesystem"
-        "buffers"
-        "git_status"
-        "document_symbols"
-      ];
       closeIfLastWindow = true;
-      filesystem = {
-        bindToCwd = false;
-        followCurrentFile = {
-          enabled = true;
-        };
-        filteredItems = {
-          hideDotfiles = false;
-          hideGitignored = false;
-        };
-      };
-
       defaultComponentConfigs = {
         indent = {
           withExpanders = true;
@@ -54,6 +37,23 @@
           };
         };
       };
+      filesystem = {
+        bindToCwd = false;
+        followCurrentFile = {
+          enabled = true;
+        };
+        filteredItems = {
+          hideDotfiles = false;
+          hideGitignored = false;
+        };
+      };
+      sources = [
+        "filesystem"
+        "buffers"
+        "git_status"
+        "document_symbols"
+      ];
+      window.position = "right";
     };
   };
 }
