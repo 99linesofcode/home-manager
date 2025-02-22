@@ -1,3 +1,14 @@
+# [0.6.0](https://github.com/99linesofcode/home-manager/compare/v0.5.0...v0.6.0) (2025-02-22)
+
+
+### Features
+
+* **firefox:** added php.net search engine ([baa5f94](https://github.com/99linesofcode/home-manager/commit/baa5f94240ef53807966ba08a933dd884a95fd18))
+* **firefox:** install plugins from within module ([e481f49](https://github.com/99linesofcode/home-manager/commit/e481f49477c93811f2dc5b159a79b49bb56d516e))
+* **firefox:** set default language packs ([e9c70a7](https://github.com/99linesofcode/home-manager/commit/e9c70a7b81e5a3b6a4960fe790618dfceca036d6))
+
+
+
 # [0.5.0](https://github.com/99linesofcode/home-manager/compare/v0.4.0...v0.5.0) (2025-02-21)
 
 
@@ -55,16 +66,6 @@
 
 * generate configurations all supported architectures ([1a9d769](https://github.com/99linesofcode/home-manager/commit/1a9d769a4c8d717d43662ffe79c0ad0375f0aa43))
 * **nix-direnv:** enable home-manager integration ([7a30996](https://github.com/99linesofcode/home-manager/commit/7a309964029f127f184c7427f5d6cf7494d08301))
-
-
-
-## [0.1.1](https://github.com/99linesofcode/home-manager/compare/v0.1.0...v0.1.1) (2025-02-13)
-
-
-### Bug Fixes
-
-* **conform.nvim:** use dedicated formatter or fall back to eslint_d ([cf058d3](https://github.com/99linesofcode/home-manager/commit/cf058d321735dc296554891bce47a98157e9eb45))
-* **zsh:** change back to ssh-agent plugin for the time being ([513acf2](https://github.com/99linesofcode/home-manager/commit/513acf2ae6f71dbefe46bb0d9211cd8955b98565))
 
 
 
