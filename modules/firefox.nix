@@ -79,6 +79,12 @@ with lib;
                 definedAliases = [ "@nw" ];
               };
 
+              "PHP.net" = {
+                urls = [ { template = "https://php.net/{searchTerms}"; } ];
+                iconUpdateURL = "https://www.php.net/favicon-196x196.png?v=2";
+                definedAliases = [ "@php" ];
+              };
+
               "ProtonDB" = {
                 urls = [ { template = "https://protondb.com/search?q={searchTerms}"; } ];
                 iconUpdateURL = "https://protondb.com/sites/protondb/images/favicon-32x32.png";
@@ -99,7 +105,7 @@ with lib;
             };
           };
           settings = {
-            "widget.use-xdg-desktop-portal.file-picker" = 1;
+            "widget.use-xdg-desktop-portal" = true;
           };
         };
       };
