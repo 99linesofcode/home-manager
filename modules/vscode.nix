@@ -22,6 +22,7 @@ with lib;
 
         bradlc.vscode-tailwindcss
         bierner.markdown-mermaid
+        danielsanmedium.dscodegpt
         eamodio.gitlens
         evgeniypeshkov.syntax-highlighter
         github.vscode-github-actions

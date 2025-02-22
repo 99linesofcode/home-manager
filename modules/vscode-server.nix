@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   ...
 }:
@@ -8,6 +9,10 @@ let
 in
 with lib;
 {
+  imports = [
+    inputs.vscode-server.homeModules.default
+  ];
+
   options = {
     home.vscode-server.enable = mkEnableOption "VSCode Server";
   };
