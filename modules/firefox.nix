@@ -23,6 +23,19 @@ with lib;
       }) { };
       profiles = {
         ${username} = {
+          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+            bitwarden
+            darkreader
+            ublock-origin
+            sponsorblock
+            return-youtube-dislikes
+            vimium
+
+            # TODO: package and contribute these to the NUR?
+            # analytics opt-out
+            # clockify
+            # todoist sidebar
+          ];
           search = {
             force = true;
             default = "Google";
