@@ -17,6 +17,8 @@ in
       "SUPER, V, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
 
       "SUPER_ALT, M, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      "SUPER_ALT, B, exec, ${uwsmPrefix}~/.config/hypr/scripts/bluetooth-toggle.sh"
+      "SUPER, P, exec, ${uwsmPrefix}~/.config/hypr/scripts/display-toggle.sh" # F4
 
       # Manipulate windows
       "SUPER, W, killactive"
