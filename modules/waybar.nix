@@ -5,6 +5,7 @@
 }:
 let
   cfg = config.home.waybar;
+  uwsmPrefix = config.home.wayland.uwsm.prefix;
 in
 with lib;
 {
@@ -116,7 +117,7 @@ with lib;
                 " "
               ];
             };
-            "on-click" = "${config.home.wayland.uwsm.prefix}pwvucontrol";
+            "on-click" = "${uwsmPrefix}pwvucontrol";
           };
 
           "network" = {
@@ -129,7 +130,7 @@ with lib;
             "tooltip-format-ethernet" = "  {ifname} ({ipaddr}/{cidr})";
             "tooltip-format-disconnected" = "Disconnected";
             "max-length" = 50;
-            "on-click" = "${config.home.wayland.uwsm.prefix}iwgtk";
+            "on-click" = "${uwsmPrefix}iwgtk";
           };
 
           "bluetooth" = {
@@ -140,7 +141,7 @@ with lib;
             "tooltip-format" = "{device_alias}";
             "tooltip-format-connected" = "󰂰 {device_enumerate}";
             "tooltip-format-enumerate-connected" = "{device_alias}";
-            "on-click" = "${config.home.wayland.uwsm.prefix}blueman-manager";
+            "on-click" = "${uwsmPrefix}blueman-manager";
           };
 
           "battery" = {
