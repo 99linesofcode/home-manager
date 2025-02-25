@@ -15,6 +15,8 @@ with lib;
   };
 
   config = mkIf cfg.enable {
+    # TODO: vscode configure keyring
+
     programs.vscode = {
       enable = true;
       extensions = with extensions; [
@@ -23,6 +25,7 @@ with lib;
         bradlc.vscode-tailwindcss
         bierner.markdown-mermaid
         danielsanmedium.dscodegpt
+        # aoudrizwan.claude-dev
         eamodio.gitlens
         evgeniypeshkov.syntax-highlighter
         github.vscode-github-actions
