@@ -74,7 +74,7 @@ with lib;
               };
 
               "NixOS Wiki" = {
-                urls = [ { template = "https://wiki.nixos.org/index.php?search={searchTerms}"; } ];
+                urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
                 iconUpdateURL = "https://wiki.nixos.org/favicon.png";
                 definedAliases = [ "@nw" ];
               };
@@ -104,6 +104,10 @@ with lib;
               };
             };
           };
+          # TODO: hide bookmarks bar
+          # TODO: disable telemetry
+          # TODO: can I login to my mozilla account automatically?
+          # TODO: can I automatically enable my plugins and sort them?
           settings = {
             "widget.use-xdg-desktop-portal" = true;
           };
