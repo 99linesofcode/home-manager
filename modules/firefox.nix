@@ -28,7 +28,7 @@ with lib;
       }) { };
       profiles = {
         ${username} = {
-          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             bitwarden
             darkreader
             ublock-origin
