@@ -638,15 +638,19 @@ with lib;
           friendly-snippets.enable = true;
           lint.enable = true; # linting
           lualine.enable = true;
-          # TODO: should also attach to codecompletion buffer but it won't
-          markview = {
-            enable = true;
-            settings = {
-              icon_provider = "mini";
-            };
-          };
           # FIXME: causes init.lua errors
           # noice.enable = true;
+          render-markdown = {
+            enable = true;
+            settings = {
+              file_types = [
+                "markdown"
+                "codecompanion"
+              ];
+              render_modes = true;
+              sign.enabled = false;
+            };
+          };
           # FIXME: causes init.lua errors
           # schemastore.enable = true;
           ts-autotag.enable = true;
