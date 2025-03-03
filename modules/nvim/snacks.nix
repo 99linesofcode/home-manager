@@ -26,7 +26,7 @@ with lib;
           indent.enabled = true;
           notifier = {
             enabled = true;
-            timeout = 1000;
+            timeout = 2000;
           };
           scroll.enabled = true;
           statuscolumn.enabled = true;

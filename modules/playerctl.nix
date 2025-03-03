@@ -5,10 +5,11 @@
   ...
 }:
 let
+  cfg = config.home.playerctl;
   wayland = config.home.wayland.enable;
   hyprland = config.home.hyprland.enable;
   shouldConfigure = wayland && hyprland;
-  cfg = config.home.playerctl;
+  uwsmPrefix = config.home.wayland.uwsm.prefix;
 in
 with lib;
 {
@@ -23,12 +24,12 @@ with lib;
 
     wayland.windowManager.hyprland.settings = mkIf shouldConfigure {
       bindl = [
-        ", XF86AudioMute, exec, ${config.home.wayland.uwsm.prefix}wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ", XF86AudioPrev, exec, ${config.home.wayland.uwsm.prefix}playerctl previous"
-        ", XF86AudioPlay, exec, ${config.home.wayland.uwsm.prefix}playerctl play-pause"
-        ", XF86AudioNext, exec, ${config.home.wayland.uwsm.prefix}playerctl next"
-        ", XF86AudioMedia, exec, ${config.home.wayland.uwsm.prefix}playerctl play-pause"
-        ", XF86AudioStop, exec, ${config.home.wayland.uwsm.prefix}playerctl stop"
+        ", XF86AudioMute, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioPrev, exec, ${uwsmPrefix}playerctl previous"
+        ", XF86AudioPlay, exec, ${uwsmPrefix}playerctl play-pause"
+        ", XF86AudioNext, exec, ${uwsmPrefix}playerctl next"
+        ", XF86AudioMedia, exec, ${uwsmPrefix}playerctl play-pause"
+        ", XF86AudioStop, exec, ${uwsmPrefix}playerctl stop"
       ];
     };
   };

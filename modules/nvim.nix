@@ -79,6 +79,36 @@ with lib;
           wrap = false; # disable line wrap
         };
 
+        plugins = {
+          flash = {
+            enable = true;
+            settings.modes = {
+              char.jump_labels = true;
+              search.enabled = true;
+            };
+          };
+          friendly-snippets.enable = true;
+          lint.enable = true; # linting
+          lualine.enable = true;
+          noice.enable = true;
+          render-markdown = {
+            enable = true;
+            settings = {
+              file_types = [
+                "markdown"
+                "codecompanion"
+              ];
+              render_modes = true;
+              sign.enabled = false;
+            };
+          };
+          schemastore.enable = true;
+          ts-autotag.enable = true;
+          ts-comments.enable = true;
+          undotree.enable = true;
+          which-key.enable = true;
+        };
+
         keymaps = [
           # save file
           {
@@ -626,35 +656,6 @@ with lib;
             };
           }
         ];
-
-        plugins = {
-          flash = {
-            enable = true;
-            settings.modes = {
-              char.jump_labels = true;
-              search.enabled = true;
-            };
-          };
-          friendly-snippets.enable = true;
-          lint.enable = true; # linting
-          lualine.enable = true;
-          # TODO: should also attach to codecompletion buffer but it won't
-          markview = {
-            enable = true;
-            settings = {
-              icon_provider = "mini";
-            };
-          };
-          # FIXME: causes init.lua errors
-          # noice.enable = true;
-          # FIXME: causes init.lua errors
-          # schemastore.enable = true;
-          ts-autotag.enable = true;
-          # FIXME: causes init.lua errors
-          # ts-comments.enable = true;
-          undotree.enable = true;
-          which-key.enable = true;
-        };
       };
     };
   };

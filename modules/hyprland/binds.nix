@@ -1,4 +1,7 @@
 { config, ... }:
+let
+  uwsmPrefix = config.home.wayland.uwsm.prefix;
+in
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
@@ -7,15 +10,15 @@
       "SUPER_ALT_CTRL, S, pass, ^(com\.obsproject\.Studio)$"
 
       # Hotkeys
-      "SUPER, Return, exec, ${config.home.wayland.uwsm.prefix}alacritty"
+      "SUPER, Return, exec, ${uwsmPrefix}alacritty"
       "SUPER, Space, exec, rofi -show-icons -show drun -l 10"
-      "SUPER, E, exec, ${config.home.wayland.uwsm.prefix}alacritty -e 'yazi'"
-      "SUPER, D, exec, ${config.home.wayland.uwsm.prefix}hyprpicker -na"
+      "SUPER, E, exec, ${uwsmPrefix}alacritty -e 'yazi'"
+      "SUPER, D, exec, ${uwsmPrefix}hyprpicker -na"
       "SUPER, V, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
 
-      "SUPER_ALT, M, exec, ${config.home.wayland.uwsm.prefix}wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-      "SUPER_ALT, B, exec, ~/.config/hypr/scripts/bluetooth-toggle.sh"
-      "SUPER, P, exec, ~/.config/hypr/scripts/display-toggle.sh" # F4
+      "SUPER_ALT, M, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      "SUPER_ALT, B, exec, ${uwsmPrefix}~/.config/hypr/scripts/bluetooth-toggle.sh"
+      "SUPER, P, exec, ${uwsmPrefix}~/.config/hypr/scripts/display-toggle.sh" # F4
 
       # Manipulate windows
       "SUPER, W, killactive"
@@ -75,12 +78,10 @@
     ];
 
     bindel = [
-      ", XF86AudioRaiseVolume, exec, ${config.home.wayland.uwsm.prefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, ${config.home.wayland.uwsm.prefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%-"
-      ", XF86MonBrightnessDown, exec, ${config.home.wayland.uwsm.prefix}brightnessctl s 10%-"
-      ", XF86MonBrightnessUp, exec, ${config.home.wayland.uwsm.prefix}brightnessctl s 10%+"
-      ", XF86KbdBrightnessDown, exec, ${config.home.wayland.uwsm.prefix}brightnessctl s 10%+"
-      ", XF86KbdBrightnessUp, exec, ${config.home.wayland.uwsm.prefix}brightnessctl s 10%+"
+      ", XF86AudioRaiseVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioLowerVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86MonBrightnessDown, exec, ${uwsmPrefix}brightnessctl s 10%-"
+      ", XF86MonBrightnessUp, exec, ${uwsmPrefix}brightnessctl s 10%+"
     ];
 
     bindm = [
