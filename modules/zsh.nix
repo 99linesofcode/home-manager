@@ -14,13 +14,8 @@ with lib;
 
   config = mkIf cfg.enable {
     programs = {
-      direnv = mkIf config.programs.direnv.enable {
-        enableZshIntegration = true;
-      };
       fastfetch.enable = true;
-      yazi = mkIf config.programs.yazi.enable {
-        enableZshIntegration = true;
-      };
+
       zoxide = {
         enable = true;
         options = [
@@ -29,7 +24,6 @@ with lib;
       };
       zsh = {
         enable = true;
-        enableCompletion = true; # NOTE: add environment.pathsToLink = [ "/share/zsh" ]; to system when running NixOS
         autosuggestion.enable = true;
         history.ignoreAllDups = true;
         historySubstringSearch.enable = true;
