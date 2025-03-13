@@ -124,6 +124,12 @@ with lib;
                 iconUpdateURL = "https://music.youtube.com/img/favicon_144.png";
                 definedAliases = [ "@ytm" ];
               };
+
+              "Rotten Tomatoes" = {
+                urls = [ { template = "https://www.rottentomatoes.com/search?search={searchTerms}"; } ];
+                iconUpdateURL = "https://editorial.rottentomatoes.com/wp-content/uploads/2022/05/favicon.png?w=32";
+                definedAliases = [ "@rt" ];
+              };
             };
           };
           settings = {
