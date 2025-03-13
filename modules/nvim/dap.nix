@@ -68,23 +68,22 @@
       # { mode = "n"; "<leader>dw"; function() require("dap.ui.widgets").hover() end; desc = "Widgets" };
     ];
 
-    # TODO: package vscode-php-debug OR interface with xdebug directly
     plugins.dap = {
-      enable = false;
+      enable = true;
       adapters = {
-        # php = {
-        #   type = "executable";
-        #   command = "node";
-        #   args = "vscode-php-debug/out/phpDebug.js";
-        # };
+        php = {
+          type = "executable";
+          command = "node";
+          args = "vscode-php-debug/out/phpDebug.js";
+        };
       };
       configurations = {
-        # php = {
-        #   type = "php";
-        #   request = "launch";
-        #   name = "Listen for Xdebug";
-        #   port = 9003;
-        # };
+        php = {
+          type = "php";
+          request = "launch";
+          name = "Listen for Xdebug";
+          port = 9003;
+        };
       };
     };
   };
