@@ -20,7 +20,6 @@ with lib;
   home.hyprpaper.enable = true;
   # home.hyprpolkitagent.enable = true;
   # home.hyprshade.enable = true;
-  home.iwgtk.enable = true;
   home.keyring.enable = true;
   home.mpv.enable = true;
   home.nvim.enable = true;

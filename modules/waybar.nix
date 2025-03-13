@@ -130,7 +130,7 @@ with lib;
             "tooltip-format-ethernet" = "  {ifname} ({ipaddr}/{cidr})";
             "tooltip-format-disconnected" = "Disconnected";
             "max-length" = 50;
-            "on-click" = "${uwsmPrefix}iwgtk";
+            "on-click" = "which impala &>/dev/null && ${uwsmPrefix}alacritty -e impala || ${uwsmPrefix}nmtui";
           };
 
           "bluetooth" = {
