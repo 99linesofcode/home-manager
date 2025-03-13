@@ -7,7 +7,7 @@
   ...
 }:
 let
-  inherit (specialArgs) hostname username;
+  inherit (specialArgs) username;
   cfg = config.home.sops;
 in
 with lib;
@@ -26,18 +26,6 @@ with lib;
       ssh-to-age
       sops
     ];
-
-    services.gpg-agent = {
-      enable = true;
-      enableSshSupport = true;
-      enableExtraSocket = false;
-      enableZshIntegration = config.programs.zsh.enable;
-      pinentryPackage = pkgs.pinentry-gnome3;
-    };
-
-    programs.gpg = {
-      enable = true;
-    };
 
     sops = {
       age.keyFile = "/home/${username}/.config/sops/age/keys.txt";
