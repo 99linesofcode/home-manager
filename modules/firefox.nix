@@ -26,6 +26,27 @@ with lib;
       package = pkgs.wrapFirefox (pkgs.firefox-unwrapped.override {
         pipewireSupport = true;
       }) { };
+      policies = {
+        DisableTelemetry = true;
+        DisableFirefoxStudies = true;
+        DNSOverHTTPS = {
+          Enabled = true;
+          ProviderUrl = "dns.quad9.net";
+          Locked = true;
+          Fallback = true;
+        };
+        EnableTrackingProtection = {
+          Value = true;
+          Locked = true;
+          Cryptomining = true;
+          EmailTracking = true;
+          Fingerprinting = true;
+        };
+        NetworkPrediction = false; # DNS prefetching
+        OfferToSaveLogins = false;
+        PasswordManagerEnabled = false;
+        PostQuantumKeyAgreementEnabled = true;
+      };
       profiles = {
         ${username} = {
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -104,10 +125,6 @@ with lib;
               };
             };
           };
-          # TODO: hide bookmarks bar
-          # TODO: disable telemetry
-          # TODO: can I login to my mozilla account automatically?
-          # TODO: can I automatically enable my plugins and sort them?
           settings = {
             "widget.use-xdg-desktop-portal" = true;
           };
