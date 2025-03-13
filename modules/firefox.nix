@@ -134,6 +134,7 @@ with lib;
           };
           settings = {
             "browser.toolbars.bookmarks.visibility" = "never"; # bookmark bar vsibility (always, newtab, never)
+            "extensions.autoDisableScopes" = 0; # automatically enable extensions
             "widget.use-xdg-desktop-portal" = true;
           };
         };
