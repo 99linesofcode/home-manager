@@ -8,7 +8,7 @@ with lib;
 {
   home.nix.enable = true;
 
-  home.blueman.enable = true;
+  home.bluetui.enable = true;
   home.brightnessctl.enable = true;
   home.dunst.enable = true;
   home.firefox.enable = true;

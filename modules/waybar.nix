@@ -141,7 +141,8 @@ with lib;
             "tooltip-format" = "{device_alias}";
             "tooltip-format-connected" = "󰂰 {device_enumerate}";
             "tooltip-format-enumerate-connected" = "{device_alias}";
-            "on-click" = "${uwsmPrefix}blueman-manager";
+            "on-click" =
+              "which bluetui &>/dev/null && ${uwsmPrefix}alacritty -e bluetui || ${uwsmPrefix}blueman-manager";
           };
 
           "battery" = {
