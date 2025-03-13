@@ -59,8 +59,6 @@ with lib;
           a = "artisan";
           tinker = "artisan tinker";
           cat = "bat --paging=never";
-          gl = "git sla";
-          gfix = "git fix";
           kamal = "docker run -it --rm -v '$PWD:/workdir' -v '$SSH_AUTH_SOCK:/ssh-agent' -v /var/run/docker.sock:/var/run/docker.sock -e 'SSH_AUTH_SOCK=/ssh-agent' ghcr.io/basecamp/kamal:latest";
         };
         initExtra = ''
