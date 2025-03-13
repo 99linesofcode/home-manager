@@ -133,6 +133,7 @@ with lib;
             };
           };
           settings = {
+            "browser.toolbars.bookmarks.visibility" = "never"; # bookmark bar vsibility (always, newtab, never)
             "widget.use-xdg-desktop-portal" = true;
           };
         };
