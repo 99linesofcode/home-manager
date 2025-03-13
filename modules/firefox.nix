@@ -52,13 +52,14 @@ with lib;
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             bitwarden
             darkreader
+            gaoptout # Google Analytics opt out
             ublock-origin
             sponsorblock
+            read-aloud # TTS
             return-youtube-dislikes
             vimium
 
             # TODO: package and contribute these to the NUR?
-            # analytics opt-out
             # clockify
             # todoist sidebar
           ];
