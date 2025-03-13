@@ -20,6 +20,7 @@ with lib;
 
   config = mkIf shouldConfigure {
     wayland.windowManager.hyprland = {
+      enable = true;
       # see: https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#using-the-home-manager-module-with-nixos
       package = null;
       portalPackage = null;
@@ -47,9 +48,11 @@ with lib;
       '';
     };
 
-    wayland.windowManager.hyprland = {
-      enable = true;
-      systemd.variables = [ "--all" ];
-    };
+    home.hypridle.enable = true;
+    home.hyprlock.enable = true;
+    home.hyprpaper.enable = true;
+    # home.hyprpolkit.enable = true;
+    # home.hyprshade.enable = true;
+    # home.nwg-docker-hyprland.enable = true;
   };
 }

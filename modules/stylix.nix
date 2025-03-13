@@ -65,6 +65,7 @@ with lib;
         hyprland.enable = false;
         firefox.profileNames = [ "${username}" ];
         vscode.profileNames = [ "${username}" ];
+        waybar.font = "sansSerif";
       };
     };
   };

@@ -16,15 +16,9 @@ with lib;
   home.git.enable = true;
   home.grim.enable = true;
   home.hyprland.enable = true;
-  # home.hyprlock.enable = true; # TODO: needs to be configured
-  home.hypridle.enable = true;
-  home.hyprpaper.enable = true;
-  # home.hyprpolkitagent.enable = true;
-  # home.hyprshade.enable = true;
   home.keyring.enable = true;
   home.mpv.enable = true;
   home.nvim.enable = true;
-  # home.nwg-dock-hyprland.enable = true; # TODO: not sure how I feel about this yet
   home.openssh.enable = true;
   home.playerctl.enable = true;
   home.pwvucontrol.enable = true;
@@ -35,8 +29,8 @@ with lib;
   home.sops.enable = true;
   home.swappy.enable = true;
   home.stylix.enable = true;
-  home.vscode.enable = true;
-  home.vscode-server.enable = true;
+  # home.vscode.enable = true;
+  # home.vscode-server.enable = true;
   home.waybar.enable = true;
   home.wayland.enable = true;
   home.waypaper.enable = true;
@@ -50,7 +44,7 @@ with lib;
       beeper
       bitwarden
       bitwarden-cli
-      bws
+      # bws # bitwarden secret store
       discord
       electron
       (freecad.override { withWayland = config.home.wayland.enable; })
