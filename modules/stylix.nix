@@ -3,9 +3,11 @@
   inputs,
   lib,
   pkgs,
+  specialArgs,
   ...
 }:
 let
+  inherit (specialArgs) username;
   cfg = config.home.stylix;
 in
 with lib;
@@ -61,6 +63,8 @@ with lib;
       targets = {
         # TODO: evaluate whether I want to enable this at some point
         hyprland.enable = false;
+        firefox.profileNames = [ "${username}" ];
+        vscode.profileNames = [ "${username}" ];
       };
     };
   };
