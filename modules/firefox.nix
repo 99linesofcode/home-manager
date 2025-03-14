@@ -136,6 +136,9 @@ with lib;
             "browser.toolbars.bookmarks.visibility" = "never"; # bookmark bar vsibility (always, newtab, never)
             "extensions.autoDisableScopes" = 0; # automatically enable extensions
             "widget.use-xdg-desktop-portal" = true;
+
+            # TODO: required for nvidia-vaapi-driver, how to toggle on nixos-config value?
+            "media.ffmpeg.vaapi.enabled" = true;
           };
         };
       };
