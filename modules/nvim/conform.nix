@@ -56,10 +56,13 @@
           ];
           css = [
             "stylelint"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
           html = [
+            "superhtml"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
