@@ -69,6 +69,8 @@
             "stylua"
           ];
           markdown = [
+            "markdownlint-cli2"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
@@ -103,6 +105,9 @@
           };
           jq = {
             command = lib.getExe jq;
+          };
+          markdownlint-cli2 = {
+            command = "node_modules/.bin/markdownlint-cli2";
           };
           nixfmt-rfc-style = {
             command = lib.getExe nixfmt-rfc-style;
