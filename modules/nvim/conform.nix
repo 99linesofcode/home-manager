@@ -22,7 +22,7 @@
               end
             end
 
-            return { timeout_ms = 200, lsp_fallback = true }, on_format
+            return { lsp_fallback = true }, on_format
            end
         '';
 
@@ -77,7 +77,7 @@
           ];
           php = [
             "pint"
-            "php_cs_fixer" # laravel/pint is built ontop of php_cs_fixer
+            "php_cs_fixer"
           ];
           python = [
             "black"
@@ -106,9 +106,6 @@
           };
           nixfmt-rfc-style = {
             command = lib.getExe nixfmt-rfc-style;
-          };
-          php_cs_fixer = {
-            command = lib.getExe phpPackages.php-cs-fixer;
           };
           shellcheck = {
             command = lib.getExe shellcheck;
