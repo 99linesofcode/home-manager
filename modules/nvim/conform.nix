@@ -47,6 +47,13 @@
             "shellharden"
             "shfmt"
           ];
+          blade = [
+            "superhtml"
+            "blade-formatter"
+            "eslint_d"
+            "prettierd"
+            "prettier"
+          ];
           css = [
             "stylelint"
             "prettierd"
