@@ -67,11 +67,18 @@
             "prettier"
           ];
           javascript = [
+            "eslint_d"
+            "prettierd"
+            "prettier"
+          ];
+          javascriptreact = [
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
           json = [
             "jq"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
@@ -96,11 +103,18 @@
             "isort"
           ];
           typescript = [
+            "eslint_d"
+            "prettierd"
+            "prettier"
+          ];
+          typescriptreact = [
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
           yaml = [
             "yq"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
