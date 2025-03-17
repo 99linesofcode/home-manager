@@ -1,3 +1,35 @@
+# [0.9.0](https://github.com/99linesofcode/home-manager/compare/v0.8.0...v0.9.0) (2025-03-17)
+
+
+### Bug Fixes
+
+* **firefox:** automatically enable newly installed extensions ([f11b306](https://github.com/99linesofcode/home-manager/commit/f11b3062ef6a9cadd6499c2817cf96ccac020c74))
+* **firefox:** hide bookmark bar by default ([76c54eb](https://github.com/99linesofcode/home-manager/commit/76c54eb6a94b0e8ee120bafe121559a7ffb3a49d))
+* **hyprland:** Prefix application startup commands with uwsm app -- ([fa4243a](https://github.com/99linesofcode/home-manager/commit/fa4243a8cb9713b07c9cf2bcafcc244064644595))
+* incorrect formatter definition ([5b2918f](https://github.com/99linesofcode/home-manager/commit/5b2918f0561bfe59a0c83478c196a6e4c65c2be8))
+* **mpv:** stylix will handle font definition based on theme ([f24879d](https://github.com/99linesofcode/home-manager/commit/f24879d73038babedda9df71200ed05e52f8c62e))
+* **zsh:** fixed an issue where starting hyprland on login caused system freezes ([f84dc9b](https://github.com/99linesofcode/home-manager/commit/f84dc9b3d3b72adc0dab49f7467b2622b2deff7b))
+
+
+### Features
+
+* **bluetui:** TUI for managing bluetooth connections ([047130b](https://github.com/99linesofcode/home-manager/commit/047130b22905a1988dfe8f55483565abd41fd6d9))
+* **conform.nvim:** blade formatting with blade-formatter and eslint/prettier fallback ([4a71660](https://github.com/99linesofcode/home-manager/commit/4a716604160b4b742a9c377ca993435439809f93))
+* **conform.nvim:** HTML formatting with superhtml, with eslint and prettier fallback ([064e845](https://github.com/99linesofcode/home-manager/commit/064e8459b3eaac56911df9279132858918b760b0))
+* **conform.nvim:** javascript/typescript formatting with eslint_d and fallbacks ([91b83ed](https://github.com/99linesofcode/home-manager/commit/91b83edea38293e273ed4fad6c18b14630f1b67a))
+* **conform.nvim:** markdown formatting with markdownlint-cli2 ([3606f5b](https://github.com/99linesofcode/home-manager/commit/3606f5be96916b2632e1e401520168e83cf4ef48))
+* **conform.nvim:** PHP formatting with laravel/pint and php-cs-fixer ([1b312f6](https://github.com/99linesofcode/home-manager/commit/1b312f673f34f35ab0a89afa5b478280afccc62e))
+* **dap.nvim:** enable debug adapter protocol for PHP ([f978924](https://github.com/99linesofcode/home-manager/commit/f978924b316dbe8732a36e5ae3a134081fbbb973))
+* **eza:** modern alternative to ls ([4024a16](https://github.com/99linesofcode/home-manager/commit/4024a16763fa9a81ed1bce64985d0a029789baa5))
+* **firefox:** added Read Aloud TTS voice reader ([ff27412](https://github.com/99linesofcode/home-manager/commit/ff27412657bf1394154a3ce335942772a04883d3))
+* **firefox:** added Rotten Tomatoes search engine [@rt](https://github.com/rt) ([f79462a](https://github.com/99linesofcode/home-manager/commit/f79462aee04531b585676dc33fffe2e671b015c5))
+* **firefox:** declarative policy definitions ([8ec5c12](https://github.com/99linesofcode/home-manager/commit/8ec5c1222d6acdf74f65bfa05d11fcd06f474db6))
+* **firefox:** hardware video acceleration with nvidia-vaapi-driver ([51057ca](https://github.com/99linesofcode/home-manager/commit/51057cae10b2075a0dcf2c5c0ba310d077b69789))
+* **nvim-dap:** debugging PHP with vscode-php-debug ([524ea6c](https://github.com/99linesofcode/home-manager/commit/524ea6cfebcda5483e84ee3cbe44565420eeb0bd))
+* **zsh:** enable syntax highlighting ([e468103](https://github.com/99linesofcode/home-manager/commit/e468103f8c753cba6e5aa239c4fd095b2af7cb0d))
+
+
+
 # [0.8.0](https://github.com/99linesofcode/home-manager/compare/v0.7.1...v0.8.0) (2025-03-03)
 
 
@@ -45,16 +77,6 @@
 * **firefox:** added php.net search engine ([baa5f94](https://github.com/99linesofcode/home-manager/commit/baa5f94240ef53807966ba08a933dd884a95fd18))
 * **firefox:** install plugins from within module ([e481f49](https://github.com/99linesofcode/home-manager/commit/e481f49477c93811f2dc5b159a79b49bb56d516e))
 * **firefox:** set default language packs ([e9c70a7](https://github.com/99linesofcode/home-manager/commit/e9c70a7b81e5a3b6a4960fe790618dfceca036d6))
-
-
-
-# [0.5.0](https://github.com/99linesofcode/home-manager/compare/v0.4.0...v0.5.0) (2025-02-21)
-
-
-### Features
-
-* **playerctl:** control media with media keys and playerctl ([7d5ceca](https://github.com/99linesofcode/home-manager/commit/7d5ceca99e95f80f9483b5f01a0e944a4425b8c5))
-* **uwsm:** launch applications in systemd slices ([46c439b](https://github.com/99linesofcode/home-manager/commit/46c439b309b63705b54b79594fdc86a4cd51a8be))
 
 
 
