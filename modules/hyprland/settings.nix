@@ -1,8 +1,11 @@
-{ ... }:
+{ config, ... }:
+let
+  uwsmPrefix = config.home.wayland.uwsm.prefix;
+in
 {
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "wl-paste -w cliphist store" # TODO: switch to clipse or stick with rofi and cliphist?
+      "${uwsmPrefix} wl-paste -w cliphist store" # TODO: switch to clipse or stick with rofi and cliphist?
     ];
 
     monitor = [

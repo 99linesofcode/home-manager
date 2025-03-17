@@ -26,18 +26,40 @@ with lib;
       package = pkgs.wrapFirefox (pkgs.firefox-unwrapped.override {
         pipewireSupport = true;
       }) { };
+      policies = {
+        DisableTelemetry = true;
+        DisableFirefoxStudies = true;
+        DNSOverHTTPS = {
+          Enabled = true;
+          ProviderUrl = "dns.quad9.net";
+          Locked = true;
+          Fallback = true;
+        };
+        EnableTrackingProtection = {
+          Value = true;
+          Locked = true;
+          Cryptomining = true;
+          EmailTracking = true;
+          Fingerprinting = true;
+        };
+        NetworkPrediction = false; # DNS prefetching
+        OfferToSaveLogins = false;
+        PasswordManagerEnabled = false;
+        PostQuantumKeyAgreementEnabled = true;
+      };
       profiles = {
         ${username} = {
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             bitwarden
             darkreader
+            gaoptout # Google Analytics opt out
             ublock-origin
             sponsorblock
+            read-aloud # TTS
             return-youtube-dislikes
             vimium
 
             # TODO: package and contribute these to the NUR?
-            # analytics opt-out
             # clockify
             # todoist sidebar
           ];
@@ -102,14 +124,21 @@ with lib;
                 iconUpdateURL = "https://music.youtube.com/img/favicon_144.png";
                 definedAliases = [ "@ytm" ];
               };
+
+              "Rotten Tomatoes" = {
+                urls = [ { template = "https://www.rottentomatoes.com/search?search={searchTerms}"; } ];
+                iconUpdateURL = "https://editorial.rottentomatoes.com/wp-content/uploads/2022/05/favicon.png?w=32";
+                definedAliases = [ "@rt" ];
+              };
             };
           };
-          # TODO: hide bookmarks bar
-          # TODO: disable telemetry
-          # TODO: can I login to my mozilla account automatically?
-          # TODO: can I automatically enable my plugins and sort them?
           settings = {
+            "browser.toolbars.bookmarks.visibility" = "never"; # bookmark bar vsibility (always, newtab, never)
+            "extensions.autoDisableScopes" = 0; # automatically enable extensions
             "widget.use-xdg-desktop-portal" = true;
+
+            # TODO: required for nvidia-vaapi-driver, how to toggle on nixos-config value?
+            "media.ffmpeg.vaapi.enabled" = true;
           };
         };
       };

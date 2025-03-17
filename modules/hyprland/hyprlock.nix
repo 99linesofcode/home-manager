@@ -14,7 +14,9 @@ with lib;
 
   config = mkIf cfg.enable {
     programs = {
-      hyprlock.enable = true;
+      hyprlock = {
+        enable = true;
+      };
     };
   };
 }

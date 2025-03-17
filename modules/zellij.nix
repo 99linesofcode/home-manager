@@ -14,14 +14,14 @@ with lib;
 
   config = mkIf cfg.enable {
     programs = {
-      # TODO: toggle this based on whether or not alacritty was enabled?
-      alacritty = {
+      alacritty = mkIf config.programs.alacritty.enable {
         settings = {
           terminal.shell = "zellij";
         };
       };
       zellij = {
         enable = true;
+        enableZshIntegration = config.programs.zsh.enable;
         settings = {
           default_layout = "compact";
           # NOTE: https://github.com/zellij-org/zellij/blob/main/zellij-utils/assets/config/default.kdl

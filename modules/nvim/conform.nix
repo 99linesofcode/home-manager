@@ -22,7 +22,7 @@
               end
             end
 
-            return { timeout_ms = 200, lsp_fallback = true }, on_format
+            return { lsp_fallback = true }, on_format
            end
         '';
 
@@ -47,21 +47,38 @@
             "shellharden"
             "shfmt"
           ];
+          blade = [
+            "superhtml"
+            "blade-formatter"
+            "eslint_d"
+            "prettierd"
+            "prettier"
+          ];
           css = [
             "stylelint"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
           html = [
+            "superhtml"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
           javascript = [
+            "eslint_d"
+            "prettierd"
+            "prettier"
+          ];
+          javascriptreact = [
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
           json = [
             "jq"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
@@ -69,6 +86,8 @@
             "stylua"
           ];
           markdown = [
+            "markdownlint-cli2"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
@@ -77,18 +96,25 @@
           ];
           php = [
             "pint"
-            "php_cs_fixer" # laravel/pint is built ontop of php_cs_fixer
+            "php_cs_fixer"
           ];
           python = [
             "black"
             "isort"
           ];
           typescript = [
+            "eslint_d"
+            "prettierd"
+            "prettier"
+          ];
+          typescriptreact = [
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
           yaml = [
             "yq"
+            "eslint_d"
             "prettierd"
             "prettier"
           ];
@@ -104,11 +130,11 @@
           jq = {
             command = lib.getExe jq;
           };
+          markdownlint-cli2 = {
+            command = "node_modules/.bin/markdownlint-cli2";
+          };
           nixfmt-rfc-style = {
             command = lib.getExe nixfmt-rfc-style;
-          };
-          php_cs_fixer = {
-            command = lib.getExe phpPackages.php-cs-fixer;
           };
           shellcheck = {
             command = lib.getExe shellcheck;

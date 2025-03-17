@@ -2,9 +2,11 @@
   config,
   inputs,
   lib,
+  specialArgs,
   ...
 }:
 let
+  inherit (specialArgs) username;
   cfg = config.home.vscode;
   extensions = inputs.nix-vscode-extensions.extensions.x86_64-linux.vscode-marketplace;
 in
@@ -19,9 +21,9 @@ with lib;
 
     programs.vscode = {
       enable = true;
-      profiles.default = {
+      profiles.${username} = {
         extensions = with extensions; [
-          ms-vscode-remote.vscode-remote-extensionpack
+          # ms-vscode-remote.vscode-remote-extensionpack
 
           bradlc.vscode-tailwindcss
           bierner.markdown-mermaid

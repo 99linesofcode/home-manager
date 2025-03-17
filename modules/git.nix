@@ -61,6 +61,12 @@ with lib;
           git.overrideGpg = true; # do not spawn a separate process when using GPG
         };
       };
+      zsh = mkIf config.programs.zsh.enable {
+        shellAliases = {
+          gl = "git sla";
+          gfix = "git fix";
+        };
+      };
     };
   };
 }

@@ -78,7 +78,7 @@
         };
     in
     {
-      formatter = forEachSystem (s: nixpkgs.nixfmt-rfc-style);
+      formatter = forEachSystem (s: nixpkgs.legacyPackages.${s}.nixfmt-rfc-style);
 
       legacyPackages = forEachSystem (s: {
         homeConfigurations = {

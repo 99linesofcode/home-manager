@@ -16,12 +16,11 @@ with lib;
     programs.mpv = {
       enable = true;
       config = {
+        alang = "eng,en";
         hdr-compute-peak = "no";
         hwdec = "auto";
-        osd-font = "sans-serif";
         slang = "eng,en";
         sub-auto = "fuzzy";
-        sub-font = "sans-serif";
         sub-border-size = 1;
         sub-color = "#CDCDCD";
         sub-scale = 0.5;

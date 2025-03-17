@@ -14,55 +14,27 @@ with lib;
 
   config = mkIf cfg.enable {
     programs = {
-      direnv = mkIf config.programs.direnv.enable {
-        enableZshIntegration = true;
-      };
       fastfetch.enable = true;
-      yazi = mkIf config.programs.yazi.enable {
-        enableZshIntegration = true;
-      };
+
       zoxide = {
         enable = true;
         options = [
           "--cmd cd"
         ];
       };
+
       zsh = {
         enable = true;
-        enableCompletion = true; # NOTE: add environment.pathsToLink = [ "/share/zsh" ]; to system when running NixOS
         autosuggestion.enable = true;
-        history.ignoreAllDups = true;
-        historySubstringSearch.enable = true;
-        oh-my-zsh = {
-          enable = true;
-          plugins = [
-            "asdf"
-            "colorize"
-            "colored-man-pages"
-            "composer"
-            "docker"
-            "docker-compose"
-            "git"
-            "history"
-            "laravel"
-            "rails"
-            "ssh-agent"
+        history = {
+          ignoreAllDups = true;
+          ignorePatterns = [
+            "cd *"
+            "pkill *"
+            "rm *"
           ];
-          theme = "juanghurtado";
         };
-        profileExtra = ''
-          if uwsm check may-start && uwsm select; then
-            exec systemd-cat -t uwsm_start uwsm start default
-          fi
-        '';
-        shellAliases = {
-          a = "artisan";
-          tinker = "artisan tinker";
-          cat = "bat --paging=never";
-          gl = "git sla";
-          gfix = "git fix";
-          kamal = "docker run -it --rm -v '$PWD:/workdir' -v '$SSH_AUTH_SOCK:/ssh-agent' -v /var/run/docker.sock:/var/run/docker.sock -e 'SSH_AUTH_SOCK=/ssh-agent' ghcr.io/basecamp/kamal:latest";
-        };
+        historySubstringSearch.enable = true;
         initExtra = ''
           fastfetch
 
@@ -81,6 +53,35 @@ with lib;
             git config --remove-section submodule.$1
           }
         '';
+        oh-my-zsh = {
+          enable = true;
+          plugins = [
+            "asdf"
+            "colorize"
+            "colored-man-pages"
+            "composer"
+            "docker"
+            "docker-compose"
+            "git"
+            "history"
+            "laravel"
+            "rails"
+            "ssh-agent"
+          ];
+          theme = "juanghurtado";
+        };
+        # profileExtra = ''
+        #   if uwsm check may-start; then
+        #     exec uwsm start default
+        #   fi
+        # '';
+        syntaxHighlighting.enable = true;
+        shellAliases = {
+          a = "artisan";
+          tinker = "artisan tinker";
+          cat = "bat --paging=never";
+          kamal = "docker run -it --rm -v '$PWD:/workdir' -v '$SSH_AUTH_SOCK:/ssh-agent' -v /var/run/docker.sock:/var/run/docker.sock -e 'SSH_AUTH_SOCK=/ssh-agent' ghcr.io/basecamp/kamal:latest";
+        };
       };
     };
   };

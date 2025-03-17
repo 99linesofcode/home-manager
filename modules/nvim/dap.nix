@@ -1,5 +1,17 @@
-{ ... }:
 {
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  extensions = inputs.nix-vscode-extensions.extensions.x86_64-linux.vscode-marketplace;
+in
+{
+  home.packages = with pkgs; [
+    vscode-extensions.xdebug.php-debug
+  ];
+
   programs.nixvim = {
     keymaps = [
       {
@@ -43,49 +55,216 @@
           desc = "Continue";
         };
       }
+      # {
+      #   mode = [ "n" ];
+      #   key = "<leader>da";
+      #   action.__raw = ''
+      #     function() require("dap").continue({ before = get_args }) end
+      #   '';
+      #   options = {
+      #     desc = "Run with Args";
+      #   };
+      # }
       {
         mode = [ "n" ];
-        key = "<leader>da";
+        key = "<leader>dC";
         action.__raw = ''
-          function() require("dap").continue({ before = get_args }) end
+          function() require("dap").run_to_cursor() end
         '';
         options = {
-          desc = "Run with Args";
+          desc = "Run to Cursor";
         };
       }
-      # { mode = "n"; "<leader>dC"; function() require("dap").run_to_cursor() end; desc = "Run to Cursor" };
-      # { mode = "n"; "<leader>dg"; function() require("dap").goto_() end; desc = "Go to Line (No Execute)" };
-      # { mode = "n"; "<leader>di"; function() require("dap").step_into() end; desc = "Step Into" };
-      # { mode = "n"; "<leader>dj"; function() require("dap").down() end; desc = "Down" };
-      # { mode = "n"; "<leader>dk"; function() require("dap").up() end; desc = "Up" };
-      # { mode = "n"; "<leader>dl"; function() require("dap").run_last() end; desc = "Run Last" };
-      # { mode = "n"; "<leader>do"; function() require("dap").step_out() end; desc = "Step Out" };
-      # { mode = "n"; "<leader>dO"; function() require("dap").step_over() end; desc = "Step Over" };
-      # { mode = "n"; "<leader>dp"; function() require("dap").pause() end; desc = "Pause" };
-      # { mode = "n"; "<leader>dr"; function() require("dap").repl.toggle() end; desc = "Toggle REPL" };
-      # { mode = "n"; "<leader>ds"; function() require("dap").session() end; desc = "Session" };
-      # { mode = "n"; "<leader>dt"; function() require("dap").terminate() end; desc = "Terminate" };
-      # { mode = "n"; "<leader>dw"; function() require("dap.ui.widgets").hover() end; desc = "Widgets" };
+      {
+        mode = [ "n" ];
+        key = "<leader>dg";
+        action.__raw = ''
+          function() require("dap").goto_() end
+        '';
+        options = {
+          desc = "Go to Line (No Execute)";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>di";
+        action.__raw = ''
+          function() require("dap").step_into() end
+        '';
+        options = {
+          desc = "Step Into";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>dj";
+        action.__raw = ''
+          function() require("dap").down() end
+        '';
+        options = {
+          desc = "Down";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>dk";
+        action.__raw = ''
+          function() require("dap").up() end
+        '';
+        options = {
+          desc = "Up";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>dl";
+        action.__raw = ''
+          function() require("dap").run_last() end
+        '';
+        options = {
+          desc = "Run Last";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>do";
+        action.__raw = ''
+          function() require("dap").step_out() end
+        '';
+        options = {
+          desc = "Step Out";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>dO";
+        action.__raw = ''
+          function() require("dap").step_over() end
+        '';
+        options = {
+          desc = "Step Over";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>dp";
+        action.__raw = ''
+          function() require("dap").pause() end
+        '';
+        options = {
+          desc = "Pause";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>dr";
+        action.__raw = ''
+          function() require("dap").repl.toggle() end
+        '';
+        options = {
+          desc = "Toggle REPL";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>ds";
+        action.__raw = ''
+          function() require("dap").session() end
+        '';
+        options = {
+          desc = "Session";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>dt";
+        action.__raw = ''
+          function() require("dap").terminate() end
+        '';
+        options = {
+          desc = "Terminate";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>dw";
+        action.__raw = ''
+          function() require("dap.ui.widgets").hover() end
+        '';
+        options = {
+          desc = "Widgets";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>du";
+        action.__raw = ''
+          function() require("dapui").toggle() end
+        '';
+        options = {
+          desc = "Dap UI";
+        };
+      }
+      {
+        mode = [ "n" ];
+        key = "<leader>de";
+        action.__raw = ''
+          function() require("dapui").eval() end
+        '';
+        options = {
+          desc = "Eval";
+        };
+      }
     ];
 
-    # TODO: package vscode-php-debug OR interface with xdebug directly
-    plugins.dap = {
-      enable = false;
-      adapters = {
-        # php = {
-        #   type = "executable";
-        #   command = "node";
-        #   args = "vscode-php-debug/out/phpDebug.js";
-        # };
+    plugins = {
+      dap = {
+        enable = true;
+        adapters = {
+          executables = {
+            php = {
+              command = lib.getExe' pkgs.nodePackages.nodejs "node";
+              args = [
+                "${pkgs.vscode-extensions.xdebug.php-debug}/share/vscode/extensions/xdebug.php-debug/out/phpDebug.js"
+              ];
+            };
+          };
+        };
+        configurations = {
+          php = [
+            {
+              name = "Listen for Xdebug";
+              type = "php";
+              request = "launch";
+              port = 9003;
+            }
+          ];
+        };
+        signs = {
+          dapBreakpoint = {
+            text = "";
+            texthl = "DapBreakpoint";
+          };
+          dapBreakpointCondition = {
+            text = "";
+            texthl = "dapBreakpointCondition";
+          };
+          dapBreakpointRejected = {
+            text = "";
+            texthl = "DapBreakpointRejected";
+          };
+          dapLogPoint = {
+            text = "";
+            texthl = "DapLogPoint";
+          };
+          dapStopped = {
+            text = "";
+            texthl = "DapStopped";
+          };
+        };
       };
-      configurations = {
-        # php = {
-        #   type = "php";
-        #   request = "launch";
-        #   name = "Listen for Xdebug";
-        #   port = 9003;
-        # };
-      };
+      dap-ui.enable = true;
+      dap-virtual-text.enable = true;
     };
   };
 }

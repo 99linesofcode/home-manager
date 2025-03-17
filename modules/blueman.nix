@@ -12,6 +12,7 @@ with lib;
     home.blueman.enable = mkEnableOption "blueman bluetooth manager";
   };
 
+  # Note that for the applet to work, the blueman service should be enabled system-wide
   config = mkIf cfg.enable {
     services = {
       blueman-applet.enable = true;
