@@ -48,6 +48,7 @@ with lib;
           foxundermoon.shell-format
           open-southeners.laravel-pint
           sanderronde.phpstan-vscode
+          shufo.vscode-blade-formatter
           stylelint.vscode-stylelint
 
           bmewburn.vscode-intelephense-client
