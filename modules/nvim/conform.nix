@@ -42,6 +42,11 @@
             "trim_whitespace"
             "trim_newlines"
           ];
+          sh = [
+            "shellcheck"
+            "shellharden"
+            "shfmt"
+          ];
           bash = [
             "shellcheck"
             "shellharden"
