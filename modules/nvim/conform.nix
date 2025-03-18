@@ -126,9 +126,6 @@
         };
 
         formatters = with pkgs; {
-          black = {
-            command = lib.getExe black;
-          };
           isort = {
             command = lib.getExe isort;
           };
