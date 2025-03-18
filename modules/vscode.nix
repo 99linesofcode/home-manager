@@ -53,6 +53,8 @@ with lib;
 
           bmewburn.vscode-intelephense-client
           laravel.vscode-laravel
+
+          vadimcn.vscode-lldb
           xdebug.php-debug
         ];
         keybindings = [
