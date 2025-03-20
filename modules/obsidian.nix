@@ -15,15 +15,13 @@ with lib;
 
   # TODO: initial bisync run with --resync to setup rclone working directory
   config = mkIf cfg.enable {
-    home.rclone.enable = mkForce true;
-
     home = {
       packages = with pkgs; [
         obsidian
       ];
     };
 
-    systemd.user = {
+    systemd.user = mkIf config.home.rclone.enable {
       timers = {
         obsidian = {
           Unit = {
@@ -34,7 +32,7 @@ with lib;
           };
           Timer = {
             OnCalendar = "*:0/5";
-            Unit = "obsidian";
+            Unit = "obsidian.service";
           };
         };
       };
@@ -43,10 +41,8 @@ with lib;
           Unit = {
             Description = "rclone: bidirectional syncing of Obsidian.md";
             Documentation = "man:rclone(1)";
-            Wants = [ "network-online.target" ];
           };
           Service = {
-            Type = "notify";
             Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
             ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Documents/Obsidian";
             ExecStart = ''
@@ -56,10 +52,10 @@ with lib;
               --conflict-resolve newer \
               --drive-skip-shortcuts \
               --drive-skip-dangling-shortcuts \
-              --fast-list
+              --fast-list \
+              --force
             '';
           };
-          Install.WantedBy = [ "default.target" ];
         };
       };
     };

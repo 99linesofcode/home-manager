@@ -15,11 +15,13 @@ with lib;
   home.firefox.enable = true;
   home.git.enable = true;
   home.grim.enable = true;
+  home.google-drive.enable = true;
   home.hyprland.enable = true;
   home.keyring.enable = true;
   home.lazydocker.enable = true;
   home.mpv.enable = true;
   home.nvim.enable = true;
+  home.obsidian.enable = true;
   home.openssh.enable = true;
   home.playerctl.enable = true;
   home.pwvucontrol.enable = true;
@@ -50,7 +52,6 @@ with lib;
       electron
       (freecad.override { withWayland = config.home.wayland.enable; })
       nix-prefetch-git
-      obsidian
       polychromatic
       rustdesk
       scrcpy
