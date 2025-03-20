@@ -1,3 +1,20 @@
+# [0.11.0](https://github.com/99linesofcode/home-manager/compare/v0.10.0...v0.11.0) (2025-03-20)
+
+
+### Bug Fixes
+
+* **clipboard:** not working due to unset WAYLAND_DISPLAY env variable ([16f97d7](https://github.com/99linesofcode/home-manager/commit/16f97d7f73f0decfb92584daf23807f1d6b67fa7))
+* **hyprland:** enable graphical polkit authentication agent ([28a349d](https://github.com/99linesofcode/home-manager/commit/28a349daefc27e47ec27a08590295a7ca64e8580))
+* **obsidian:** prevent halting on large vault updates ([272dc7f](https://github.com/99linesofcode/home-manager/commit/272dc7ff2087a505cba118646e1fd0a67f59d1a2))
+* **obsidian:** service shouldn't depend on or be wanted by anything ([4374a85](https://github.com/99linesofcode/home-manager/commit/4374a857a745d2ed6f61d2f972ee8b09e277367a))
+
+
+### Features
+
+* **obsidian:** bi-directional synchronization of Obsidian.md vault ([a7bbdfc](https://github.com/99linesofcode/home-manager/commit/a7bbdfc4d3750ecab4e49aacdcbd7611d58fb71a))
+
+
+
 # [0.10.0](https://github.com/99linesofcode/home-manager/compare/v0.9.0...v0.10.0) (2025-03-20)
 
 
@@ -77,15 +94,6 @@
 ### Bug Fixes
 
 * **vscode:** missing homeManager module import ([fd579fb](https://github.com/99linesofcode/home-manager/commit/fd579fbe2af18c4f98372c309fe148c33988d9f3))
-
-
-
-# [0.7.0](https://github.com/99linesofcode/home-manager/compare/v0.6.0...v0.7.0) (2025-02-22)
-
-
-### Features
-
-* **vscode:** added module with marketplace extensions, keybindings and settings ([d4f7635](https://github.com/99linesofcode/home-manager/commit/d4f7635a553dcbdbb0b744ecfb3e2bf9493bad76))
 
 
 
