@@ -41,7 +41,6 @@ with lib;
           Unit = {
             Description = "rclone: bidirectional syncing of Obsidian.md";
             Documentation = "man:rclone(1)";
-            Wants = [ "network-online.target" ];
           };
           Service = {
             Type = "forking";
@@ -57,7 +56,6 @@ with lib;
               --fast-list
             '';
           };
-          Install.WantedBy = [ "default.target" ];
         };
       };
     };
