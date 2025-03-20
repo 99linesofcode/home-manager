@@ -32,7 +32,7 @@ with lib;
           };
           Timer = {
             OnCalendar = "*:0/5";
-            Unit = "obsidian";
+            Unit = "obsidian.service";
           };
         };
       };
@@ -43,7 +43,6 @@ with lib;
             Documentation = "man:rclone(1)";
           };
           Service = {
-            Type = "forking";
             Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
             ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Documents/Obsidian";
             ExecStart = ''
@@ -53,7 +52,8 @@ with lib;
               --conflict-resolve newer \
               --drive-skip-shortcuts \
               --drive-skip-dangling-shortcuts \
-              --fast-list
+              --fast-list \
+              --force
             '';
           };
         };

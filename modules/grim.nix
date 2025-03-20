@@ -5,11 +5,11 @@
   ...
 }:
 let
+  cfg = config.home.grim;
   hyprland = config.home.hyprland.enable;
   slurp = config.home.slurp.enable;
   swappy = config.home.swappy.enable;
   canScreenshot = hyprland && slurp && swappy;
-  cfg = config.home.grim;
 in
 with lib;
 {
