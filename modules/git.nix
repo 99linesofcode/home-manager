@@ -65,6 +65,7 @@ with lib;
         shellAliases = {
           gl = "git sla";
           gfix = "git fix";
+          lz = "lazygit";
         };
       };
     };
