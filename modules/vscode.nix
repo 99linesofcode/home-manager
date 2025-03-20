@@ -49,6 +49,7 @@ with lib;
           open-southeners.laravel-pint
           sanderronde.phpstan-vscode
           shufo.vscode-blade-formatter
+          statiolake.vscode-rustfmt
           stylelint.vscode-stylelint
 
           bmewburn.vscode-intelephense-client
@@ -154,6 +155,9 @@ with lib;
           };
           "[php]" = {
             "editor.defaultFormatter" = "open-southeners.laravel-pint";
+          };
+          "[rust]" = {
+            "editor.defaultFormatter" = "statiolake.vscode-rustfmt";
           };
           "[shellscript]" = {
             "editor.defaultFormatter" = "foxundermoon.shell-format";
