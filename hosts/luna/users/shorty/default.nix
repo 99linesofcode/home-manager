@@ -21,6 +21,7 @@ with lib;
   home.lazydocker.enable = true;
   home.mpv.enable = true;
   home.nvim.enable = true;
+  home.obsidian.enable = true;
   home.openssh.enable = true;
   home.playerctl.enable = true;
   home.pwvucontrol.enable = true;
@@ -51,7 +52,6 @@ with lib;
       electron
       (freecad.override { withWayland = config.home.wayland.enable; })
       nix-prefetch-git
-      obsidian
       polychromatic
       rustdesk
       scrcpy

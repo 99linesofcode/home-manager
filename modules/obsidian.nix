@@ -15,15 +15,13 @@ with lib;
 
   # TODO: initial bisync run with --resync to setup rclone working directory
   config = mkIf cfg.enable {
-    home.rclone.enable = mkForce true;
-
     home = {
       packages = with pkgs; [
         obsidian
       ];
     };
 
-    systemd.user = {
+    systemd.user = mkIf config.home.rclone.enable {
       timers = {
         obsidian = {
           Unit = {
@@ -46,7 +44,7 @@ with lib;
             Wants = [ "network-online.target" ];
           };
           Service = {
-            Type = "notify";
+            Type = "forking";
             Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
             ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Documents/Obsidian";
             ExecStart = ''
