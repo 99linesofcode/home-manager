@@ -15,6 +15,7 @@ with lib;
   home.firefox.enable = true;
   home.git.enable = true;
   home.grim.enable = true;
+  home.google-drive.enable = true;
   home.hyprland.enable = true;
   home.keyring.enable = true;
   home.lazydocker.enable = true;
