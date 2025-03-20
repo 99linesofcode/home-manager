@@ -1,11 +1,29 @@
 {
-  inputs,
   lib,
   pkgs,
   ...
 }:
 let
-  extensions = inputs.nix-vscode-extensions.extensions.x86_64-linux.vscode-marketplace;
+  codelldb = {
+    name = "Launch (CodeLLDB)";
+    type = "codelldb";
+    request = "launch";
+    program.__raw = ''
+      function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. '/', "file")
+      end
+    '';
+  };
+  gdb = {
+    name = "Launch (GDB)";
+    type = "gdb";
+    request = "launch";
+    program.__raw = ''
+      function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. '/', "file")
+      end
+    '';
+  };
 in
 {
   home.packages = with pkgs; [
@@ -229,8 +247,28 @@ in
               ];
             };
           };
+          servers = {
+            codelldb = {
+              port = 9000;
+              executable = {
+                command = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
+                args = [
+                  "--port"
+                  "9000"
+                ];
+              };
+            };
+          };
         };
         configurations = {
+          c = [
+            codelldb
+            gdb
+          ];
+          cpp = [
+            codelldb
+            gdb
+          ];
           php = [
             {
               name = "Listen for Xdebug";
@@ -238,6 +276,10 @@ in
               request = "launch";
               port = 9003;
             }
+          ];
+          rust = [
+            codelldb
+            gdb
           ];
         };
         signs = {
