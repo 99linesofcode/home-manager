@@ -17,6 +17,7 @@ with lib;
   home.grim.enable = true;
   home.hyprland.enable = true;
   home.keyring.enable = true;
+  home.lazydocker.enable = true;
   home.mpv.enable = true;
   home.nvim.enable = true;
   home.openssh.enable = true;
@@ -58,7 +59,6 @@ with lib;
       act # run GitHub Actions locally
       # figlet
       # gcc
-      lazydocker
       # debugging and reverse engineering
       wireshark
       gdb

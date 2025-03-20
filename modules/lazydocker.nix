@@ -23,9 +23,7 @@ with lib;
     programs = {
       zsh = mkIf config.programs.zsh.enable {
         shellAliases = {
-          gl = "git sla";
-          gfix = "git fix";
-          lz = "lazygit";
+          ld = "lazydocker";
         };
       };
     };
