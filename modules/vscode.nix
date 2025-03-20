@@ -13,7 +13,7 @@ in
 with lib;
 {
   options = {
-    home.vscode.enable = mkEnableOption "VSCode IDE";
+    home.vscode.enable = mkEnableOption "Visual Studio Code";
   };
 
   config = mkIf cfg.enable {
@@ -23,11 +23,11 @@ with lib;
       enable = true;
       profiles.${username} = {
         extensions = with extensions; [
-          # ms-vscode-remote.vscode-remote-extensionpack
+          ms-vscode-remote.vscode-remote-extensionpack
 
           bradlc.vscode-tailwindcss
           bierner.markdown-mermaid
-          danielsanmedium.dscodegpt
+          # danielsanmedium.dscodegpt
           # aoudrizwan.claude-dev
           eamodio.gitlens
           evgeniypeshkov.syntax-highlighter
@@ -47,11 +47,16 @@ with lib;
           editorconfig.editorconfig
           foxundermoon.shell-format
           open-southeners.laravel-pint
+          ms-python.black-formatter
           sanderronde.phpstan-vscode
+          shufo.vscode-blade-formatter
+          statiolake.vscode-rustfmt
           stylelint.vscode-stylelint
 
           bmewburn.vscode-intelephense-client
           laravel.vscode-laravel
+
+          vadimcn.vscode-lldb
           xdebug.php-debug
         ];
         keybindings = [
@@ -151,6 +156,12 @@ with lib;
           };
           "[php]" = {
             "editor.defaultFormatter" = "open-southeners.laravel-pint";
+          };
+          "[python]" = {
+            "editor.defaultFormatter" = "ms-python.black-formatter";
+          };
+          "[rust]" = {
+            "editor.defaultFormatter" = "statiolake.vscode-rustfmt";
           };
           "[shellscript]" = {
             "editor.defaultFormatter" = "foxundermoon.shell-format";

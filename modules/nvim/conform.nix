@@ -42,6 +42,11 @@
             "trim_whitespace"
             "trim_newlines"
           ];
+          sh = [
+            "shellcheck"
+            "shellharden"
+            "shfmt"
+          ];
           bash = [
             "shellcheck"
             "shellharden"
@@ -53,6 +58,9 @@
             "eslint_d"
             "prettierd"
             "prettier"
+          ];
+          c = [
+            "clang-format"
           ];
           css = [
             "stylelint"
@@ -102,6 +110,9 @@
             "black"
             "isort"
           ];
+          rust = [
+            "rustfmt"
+          ];
           typescript = [
             "eslint_d"
             "prettierd"
@@ -121,9 +132,6 @@
         };
 
         formatters = with pkgs; {
-          black = {
-            command = lib.getExe black;
-          };
           isort = {
             command = lib.getExe isort;
           };
