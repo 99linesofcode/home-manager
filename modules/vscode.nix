@@ -13,7 +13,7 @@ in
 with lib;
 {
   options = {
-    home.vscode.enable = mkEnableOption "VSCode IDE";
+    home.vscode.enable = mkEnableOption "Visual Studio Code";
   };
 
   config = mkIf cfg.enable {
@@ -47,6 +47,7 @@ with lib;
           editorconfig.editorconfig
           foxundermoon.shell-format
           open-southeners.laravel-pint
+          ms-python.black-formatter
           sanderronde.phpstan-vscode
           shufo.vscode-blade-formatter
           statiolake.vscode-rustfmt
@@ -155,6 +156,9 @@ with lib;
           };
           "[php]" = {
             "editor.defaultFormatter" = "open-southeners.laravel-pint";
+          };
+          "[python]" = {
+            "editor.defaultFormatter" = "ms-python.black-formatter";
           };
           "[rust]" = {
             "editor.defaultFormatter" = "statiolake.vscode-rustfmt";
