@@ -23,11 +23,11 @@ with lib;
       enable = true;
       profiles.${username} = {
         extensions = with extensions; [
-          # ms-vscode-remote.vscode-remote-extensionpack
+          ms-vscode-remote.vscode-remote-extensionpack
 
           bradlc.vscode-tailwindcss
           bierner.markdown-mermaid
-          danielsanmedium.dscodegpt
+          # danielsanmedium.dscodegpt
           # aoudrizwan.claude-dev
           eamodio.gitlens
           evgeniypeshkov.syntax-highlighter
