@@ -59,6 +59,9 @@
             "prettierd"
             "prettier"
           ];
+          c = [
+            "clang-format"
+          ];
           css = [
             "stylelint"
             "eslint_d"
@@ -106,6 +109,9 @@
           python = [
             "black"
             "isort"
+          ];
+          rust = [
+            "rustfmt"
           ];
           typescript = [
             "eslint_d"
