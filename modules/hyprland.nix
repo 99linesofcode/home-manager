@@ -55,7 +55,7 @@ with lib;
     home.hypridle.enable = true;
     home.hyprlock.enable = true;
     home.hyprpaper.enable = true;
-    # home.hyprpolkit.enable = true;
+    home.hyprpolkitagent.enable = true;
     # home.hyprshade.enable = true;
     # home.nwg-docker-hyprland.enable = true;
   };
