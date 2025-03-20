@@ -1,3 +1,23 @@
+# [0.10.0](https://github.com/99linesofcode/home-manager/compare/v0.9.0...v0.10.0) (2025-03-20)
+
+
+### Bug Fixes
+
+* **vscode:** re-enable remote development pack ([6db3c3b](https://github.com/99linesofcode/home-manager/commit/6db3c3b259c6df4e1f9eed0953ae45900729e63d))
+
+
+### Features
+
+* **conform.nvim:** add formatting for POSIX shell scripts ([85490d7](https://github.com/99linesofcode/home-manager/commit/85490d7a6695a5d4d76ba1317794bcca324e0053))
+* **conform.nvim:** add formatting for Rust and C/C++ ([583e6d2](https://github.com/99linesofcode/home-manager/commit/583e6d230d5cdb0105e04310761503c7944734ad))
+* **nvim-dap:** debugging C/C++/Rust with vscode-lldb ([140bb2a](https://github.com/99linesofcode/home-manager/commit/140bb2a033d8b2126120254fb37fc98890ef9587))
+* **vscode:** blade template formatting using blade-formatter ([e4027d9](https://github.com/99linesofcode/home-manager/commit/e4027d91b5c5b8f7baf5cf150b608bd6ac6daf1b))
+* **vscode:** python formatting using black ([1f83047](https://github.com/99linesofcode/home-manager/commit/1f830477aa5c9414f5157429894a6f4759dc1cdf))
+* **vscode:** rust formatting using rustfmt ([c1c60aa](https://github.com/99linesofcode/home-manager/commit/c1c60aafddf236efd9ba4aa88a8835d29332dd3f))
+* **vscode:** support for step debugging of compiled languages ([7aae192](https://github.com/99linesofcode/home-manager/commit/7aae1925e5b49acf57648255ccb7e4947418f5b4))
+
+
+
 # [0.9.0](https://github.com/99linesofcode/home-manager/compare/v0.8.0...v0.9.0) (2025-03-17)
 
 
@@ -66,17 +86,6 @@
 ### Features
 
 * **vscode:** added module with marketplace extensions, keybindings and settings ([d4f7635](https://github.com/99linesofcode/home-manager/commit/d4f7635a553dcbdbb0b744ecfb3e2bf9493bad76))
-
-
-
-# [0.6.0](https://github.com/99linesofcode/home-manager/compare/v0.5.0...v0.6.0) (2025-02-22)
-
-
-### Features
-
-* **firefox:** added php.net search engine ([baa5f94](https://github.com/99linesofcode/home-manager/commit/baa5f94240ef53807966ba08a933dd884a95fd18))
-* **firefox:** install plugins from within module ([e481f49](https://github.com/99linesofcode/home-manager/commit/e481f49477c93811f2dc5b159a79b49bb56d516e))
-* **firefox:** set default language packs ([e9c70a7](https://github.com/99linesofcode/home-manager/commit/e9c70a7b81e5a3b6a4960fe790618dfceca036d6))
 
 
 
