@@ -66,7 +66,7 @@
           html.enable = true;
           jsonls.enable = true;
           lua_ls.enable = true;
-          marksman.enable = true;
+          marksman.enable = true; # TODO: replace with markdownlint-cli2, requires custom server
           nil_ls.enable = true;
           pest_ls.enable = true;
           phpactor.enable = true;
