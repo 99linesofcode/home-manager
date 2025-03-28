@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   specialArgs,
   ...
@@ -12,7 +11,6 @@ let
 
   homeDir = if isDarwin then "/Users/" else "/home/";
 in
-with lib;
 {
   imports =
     [
@@ -30,10 +28,10 @@ with lib;
     };
   };
 
-  news.display = "silent";
-
   home = {
     inherit username;
     homeDirectory = homeDir + username;
   };
+
+  news.display = "silent";
 }

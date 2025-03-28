@@ -6,8 +6,6 @@
 }:
 with lib;
 {
-  home.nix.enable = true;
-
   home.bluetui.enable = true;
   home.brightnessctl.enable = true;
   home.dunst.enable = true;
@@ -47,7 +45,6 @@ with lib;
       beeper
       bitwarden
       bitwarden-cli
-      # bws # bitwarden secret store
       discord
       electron
       (freecad.override { withWayland = config.home.wayland.enable; })
@@ -55,12 +52,8 @@ with lib;
       polychromatic
       rustdesk
       scrcpy
-      # development tools
       android-tools
       act # run GitHub Actions locally
-      # figlet
-      # gcc
-      # debugging and reverse engineering
       wireshark
       gdb
       ghidra
@@ -84,7 +77,6 @@ with lib;
       package = pkgs.rofi-wayland;
       extraConfig.run-command = "${config.home.wayland.uwsm.prefix}{cmd}";
     };
-    vscode.enable = true;
     yt-dlp.enable = true;
     zathura.enable = true;
   };
