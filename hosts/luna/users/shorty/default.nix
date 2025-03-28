@@ -30,8 +30,6 @@ with lib;
   home.sops.enable = true;
   home.swappy.enable = true;
   home.stylix.enable = true;
-  # home.vscode.enable = true;
-  # home.vscode-server.enable = true;
   home.waybar.enable = true;
   home.wayland.enable = true;
   home.waypaper.enable = true;
@@ -50,7 +48,7 @@ with lib;
       (freecad.override { withWayland = config.home.wayland.enable; })
       nix-prefetch-git
       polychromatic
-      rustdesk
+      # rustdesk
       scrcpy
       android-tools
       act # run GitHub Actions locally
