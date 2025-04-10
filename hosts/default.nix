@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   specialArgs,
   ...
@@ -11,6 +12,7 @@ let
 
   homeDir = if isDarwin then "/Users/" else "/home/";
 in
+with lib;
 {
   imports =
     [
