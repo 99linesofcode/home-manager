@@ -18,6 +18,46 @@ with lib;
       ueberzugpp
     ];
 
-    programs.yazi.enable = true;
+    programs.yazi = {
+      enable = true;
+      settings = {
+        manager = {
+          linemode = "none";
+          ratio = [
+            1
+            4
+            3
+          ];
+          sort_by = "natural";
+          sort_sensitive = true;
+          sort_reverse = false;
+          sort_dir_first = true;
+          sort_translit = true;
+          show_hidden = true;
+          show_symlink = true;
+        };
+
+        preview = {
+          image_filter = "lanczos3";
+          image_quality = 90;
+          max_width = 600;
+          max_height = 900;
+          tab_size = 1;
+          ueberzug_scale = 1;
+          ueberzug_offset = [
+            0
+            0
+            0
+            0
+          ];
+        };
+
+        tasks = {
+          bizarre_retry = 5;
+          macro_workers = 10;
+          micro_workers = 5;
+        };
+      };
+    };
   };
 }
