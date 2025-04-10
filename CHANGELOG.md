@@ -1,3 +1,21 @@
+# [0.12.0](https://github.com/99linesofcode/home-manager/compare/v0.11.0...v0.12.0) (2025-04-10)
+
+
+### Bug Fixes
+
+* disable rustdesk and vscode as they fail to build atm ([dac424f](https://github.com/99linesofcode/home-manager/commit/dac424f80fea665f60c1de052e096ec79786127f))
+* **zellij:** disable startup tips ([92e9fa4](https://github.com/99linesofcode/home-manager/commit/92e9fa42cd032cfdda94f6dcd8c60f245eecaa5a))
+
+
+### Features
+
+* **mpv:** configure yazi open rules if yazi is enabled ([d0e308b](https://github.com/99linesofcode/home-manager/commit/d0e308b90d975b28fb6a36d7da8df4634aa4d4ea))
+* **ssh:** configure agent forwarding and keep alive where relevant ([8e97416](https://github.com/99linesofcode/home-manager/commit/8e97416f772b9bd5cb0ba88031c324d026d189bc))
+* **yazi:** sensible default configuration ([d350b1a](https://github.com/99linesofcode/home-manager/commit/d350b1aa9121634b5f853e4051016a152beb3efd))
+* **zsh:** start hyprland through uwsm on profile load ([74496e2](https://github.com/99linesofcode/home-manager/commit/74496e21c49dd3a9be4dd101bfa8b12ee8ef47b0))
+
+
+
 # [0.11.0](https://github.com/99linesofcode/home-manager/compare/v0.10.0...v0.11.0) (2025-03-20)
 
 
@@ -85,15 +103,6 @@
 ### Features
 
 * **nvim:** markdown formatting in codecompanion chat buffer ([b428999](https://github.com/99linesofcode/home-manager/commit/b4289995731898894c910efd6107cc78d5ba0319))
-
-
-
-## [0.7.1](https://github.com/99linesofcode/home-manager/compare/v0.7.0...v0.7.1) (2025-02-22)
-
-
-### Bug Fixes
-
-* **vscode:** missing homeManager module import ([fd579fb](https://github.com/99linesofcode/home-manager/commit/fd579fbe2af18c4f98372c309fe148c33988d9f3))
 
 
 
