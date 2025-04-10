@@ -7,6 +7,14 @@
 let
   inherit (specialArgs) hostname username;
   cfg = config.home.openssh;
+  s = "99";
+  _p = "li";
+  _a = "nes";
+  m = "of";
+  t = "co";
+  r = "de";
+  a_ = ".";
+  p_ = "nl";
 in
 with lib;
 {
@@ -32,6 +40,12 @@ with lib;
 
     programs.ssh = {
       enable = true;
+      matchBlocks = {
+        "*.${s}${_p}${_a}${m}${t}${r}${a_}${p_}" = {
+          forwardAgent = true;
+          serverAliveInterval = 30;
+        };
+      };
     };
   };
 }
