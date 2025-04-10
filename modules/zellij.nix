@@ -23,6 +23,7 @@ with lib;
         enable = true;
         enableZshIntegration = config.programs.zsh.enable;
         settings = {
+          show_startup_tips = false;
           default_layout = "compact";
           # NOTE: https://github.com/zellij-org/zellij/blob/main/zellij-utils/assets/config/default.kdl
           keybinds = {
