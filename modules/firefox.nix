@@ -65,69 +65,69 @@ with lib;
           ];
           search = {
             force = true;
-            default = "Google";
-            privateDefault = "DuckDuckGo";
+            default = "google";
+            privateDefault = "duckDuckgo";
             order = [
-              "Google"
-              "DuckDuckGo"
+              "google"
+              "duckDuckgo"
             ];
             engines = {
-              "Bing".metaData.hidden = true;
-              "DuckDuckGo".metaData.alias = "@d";
-              "Google".metaData.alias = "@g";
-              "Wikipedia (en)".metaData.alias = "@w";
+              "bing".metaData.hidden = true;
+              "duckDuckgo".metaData.alias = "@d";
+              "google".metaData.alias = "@g";
+              "wikipedia (en)".metaData.alias = "@w";
 
-              "Github" = {
+              "github" = {
                 urls = [ { template = "https://github.com/search?q={searchTerms}"; } ];
-                iconUpdateURL = "https://github.githubassets.com/favicons/favicon.svg";
+                icon = "https://github.githubassets.com/favicons/favicon.svg";
                 definedAliases = [ "@gh" ];
               };
 
-              "Reddit" = {
+              "reddit" = {
                 urls = [ { template = "https://reddit.com/search?q={searchTerms}"; } ];
-                iconUpdateURL = "https://www.redditstatic.com/shreddit/assets/favicon/192x192.png";
+                icon = "https://www.redditstatic.com/shreddit/assets/favicon/192x192.png";
                 definedAliases = [ "@r" ];
               };
 
-              "MyNixOS" = {
+              "mynixos" = {
                 urls = [ { template = "https://mynixos.com/search?q={searchTerms}"; } ];
                 icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@n" ];
               };
 
-              "NixOS Wiki" = {
+              "wiki.nixos" = {
                 urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
-                iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+                icon = "https://wiki.nixos.org/favicon.png";
                 definedAliases = [ "@nw" ];
               };
 
-              "PHP.net" = {
+              "php.net" = {
                 urls = [ { template = "https://php.net/{searchTerms}"; } ];
-                iconUpdateURL = "https://www.php.net/favicon-196x196.png?v=2";
+                icon = "https://www.php.net/favicon-196x196.png?v=2";
                 definedAliases = [ "@php" ];
               };
 
-              "ProtonDB" = {
+              "protondb" = {
                 urls = [ { template = "https://protondb.com/search?q={searchTerms}"; } ];
-                iconUpdateURL = "https://protondb.com/sites/protondb/images/favicon-32x32.png";
+                icon = "https://protondb.com/sites/protondb/images/favicon-32x32.png";
                 definedAliases = [ "@p" ];
               };
 
-              "YouTube" = {
+              "youtube" = {
                 urls = [ { template = "https://youtube.com/results?search_query={searchTerms}"; } ];
-                iconUpdateURL = "https://youtube.com/img/favicon_144.png";
+                icon = "https://youtube.com/img/favicon_144.png";
                 definedAliases = [ "@yt" ];
               };
 
-              "YouTube Music" = {
+              "music.youtube" = {
                 urls = [ { template = "https://music.youtube.com/search?q={searchTerms}"; } ];
-                iconUpdateURL = "https://music.youtube.com/img/favicon_144.png";
+                icon = "https://music.youtube.com/img/favicon_144.png";
                 definedAliases = [ "@ytm" ];
               };
 
-              "Rotten Tomatoes" = {
+              "rt" = {
                 urls = [ { template = "https://www.rottentomatoes.com/search?search={searchTerms}"; } ];
-                iconUpdateURL = "https://editorial.rottentomatoes.com/wp-content/uploads/2022/05/favicon.png?w=32";
+                icon = "https://editorial.rottentomatoes.com/wp-content/uploads/2022/05/favicon.png?w=32";
                 definedAliases = [ "@rt" ];
               };
             };

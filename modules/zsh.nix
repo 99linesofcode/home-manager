@@ -37,21 +37,6 @@ with lib;
         historySubstringSearch.enable = true;
         initExtra = ''
           fastfetch
-
-          # automatically prune branches both local and remote
-          function gpb {
-            git checkout "$(git_main_branch)"
-            git fetch
-            git remote prune origin
-            git branch --merged | grep -vE "$(git_main_branch)|$(git_develop_branch)" | xargs -r git branch -d
-          }
-
-          # git remove submodule
-          function grms {
-            git rm $PWD/$1
-            rm -rf $PWD/.git/modules/$1
-            git config --remove-section submodule.$1
-          }
         '';
         oh-my-zsh = {
           enable = true;
@@ -63,18 +48,17 @@ with lib;
             "docker"
             "docker-compose"
             "git"
-            "history"
             "laravel"
             "rails"
             "ssh-agent"
           ];
           theme = "juanghurtado";
         };
-        # profileExtra = ''
-        #   if uwsm check may-start; then
-        #     exec uwsm start default
-        #   fi
-        # '';
+        profileExtra = ''
+          if uwsm check may-start; then
+            exec uwsm start default
+          fi
+        '';
         syntaxHighlighting.enable = true;
         shellAliases = {
           a = "artisan";

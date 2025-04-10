@@ -5,7 +5,6 @@ in
 {
   wayland.windowManager.hyprland.settings = {
     exec-once = [
-      "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
       "${uwsmPrefix} wl-paste -w cliphist store" # TODO: switch to clipse or stick with rofi and cliphist?
     ];
 

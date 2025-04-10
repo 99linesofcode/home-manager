@@ -30,10 +30,10 @@ with lib;
     };
   };
 
-  news.display = "silent";
-
   home = {
     inherit username;
     homeDirectory = homeDir + username;
   };
+
+  news.display = "silent";
 }

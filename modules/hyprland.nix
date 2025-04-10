@@ -24,7 +24,7 @@ with lib;
       # see: https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#using-the-home-manager-module-with-nixos
       package = null;
       portalPackage = null;
-      systemd.enable = false; # uwsm
+      systemd.enable = false; # disabled as it conflicts with uwsm
     };
 
     xdg.configFile = {

@@ -62,6 +62,22 @@ with lib;
         };
       };
       zsh = mkIf config.programs.zsh.enable {
+        initExtra = ''
+          # automatically prune branches both local and remote
+          function gpb {
+            git checkout "$(git_main_branch)"
+            git fetch
+            git remote prune origin
+            git branch --merged | grep -vE "$(git_main_branch)|$(git_develop_branch)" | xargs -r git branch -d
+          }
+
+          # git remove submodule
+          function grms {
+            git rm $PWD/$1
+            rm -rf $PWD/.git/modules/$1
+            git config --remove-section submodule.$1
+          }
+        '';
         shellAliases = {
           gl = "git sla";
           gfix = "git fix";
