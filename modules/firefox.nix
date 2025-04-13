@@ -77,6 +77,12 @@ with lib;
               "google".metaData.alias = "@g";
               "wikipedia (en)".metaData.alias = "@w";
 
+              "archlinux" = {
+                urls = [ { template = "https://wiki.archlinux.org/index.php?search={searchTerms}"; } ];
+                icon = "https://wiki.archlinux.org/favicon.ico";
+                definedAliases = [ "@a" ];
+              };
+
               "github" = {
                 urls = [ { template = "https://github.com/search?q={searchTerms}"; } ];
                 icon = "https://github.githubassets.com/favicons/favicon.svg";
