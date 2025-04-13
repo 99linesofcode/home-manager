@@ -6,9 +6,6 @@
 }:
 let
   cfg = config.home.playerctl;
-  wayland = config.home.wayland.enable;
-  hyprland = config.home.hyprland.enable;
-  shouldConfigure = wayland && hyprland;
   uwsmPrefix = config.home.wayland.uwsm.prefix;
 in
 with lib;
@@ -22,7 +19,7 @@ with lib;
       playerctl
     ];
 
-    wayland.windowManager.hyprland.settings = mkIf shouldConfigure {
+    wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
       bindl = [
         ", XF86AudioPrev, exec, ${uwsmPrefix}playerctl previous"
         ", XF86AudioPlay, exec, ${uwsmPrefix}playerctl play-pause"
