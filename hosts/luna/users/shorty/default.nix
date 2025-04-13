@@ -11,6 +11,7 @@ with lib;
   home.dunst.enable = true;
   home.eza.enable = true;
   home.firefox.enable = true;
+  home.gammastep.enable = true;
   home.git.enable = true;
   home.grim.enable = true;
   home.google-drive.enable = true;
