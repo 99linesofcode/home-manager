@@ -24,7 +24,6 @@ with lib;
 
     wayland.windowManager.hyprland.settings = mkIf shouldConfigure {
       bindl = [
-        ", XF86AudioMute, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ", XF86AudioPrev, exec, ${uwsmPrefix}playerctl previous"
         ", XF86AudioPlay, exec, ${uwsmPrefix}playerctl play-pause"
         ", XF86AudioNext, exec, ${uwsmPrefix}playerctl next"

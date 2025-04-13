@@ -78,8 +78,9 @@ in
     ];
 
     bindel = [
-      ", XF86AudioRaiseVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioMute, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioLowerVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86AudioRaiseVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
     ];
 
     bindm = [
