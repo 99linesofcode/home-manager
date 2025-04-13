@@ -80,8 +80,6 @@ in
     bindel = [
       ", XF86AudioRaiseVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
       ", XF86AudioLowerVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%-"
-      ", XF86MonBrightnessDown, exec, ${uwsmPrefix}brightnessctl s 10%-"
-      ", XF86MonBrightnessUp, exec, ${uwsmPrefix}brightnessctl s 10%+"
     ];
 
     bindm = [

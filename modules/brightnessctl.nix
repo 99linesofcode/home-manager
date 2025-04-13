@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.home.brightnessctl;
+  uwsmPrefix = config.home.wayland.uwsm.prefix;
 in
 with lib;
 {
@@ -17,5 +18,12 @@ with lib;
     home.packages = with pkgs; [
       brightnessctl
     ];
+
+    wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
+      bind = [
+        ", XF86MonBrightnessDown, exec, ${uwsmPrefix}brightnessctl s 10%-"
+        ", XF86MonBrightnessUp, exec, ${uwsmPrefix}brightnessctl s 10%+"
+      ];
+    };
   };
 }
