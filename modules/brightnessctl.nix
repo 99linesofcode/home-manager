@@ -20,7 +20,7 @@ with lib;
     ];
 
     wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
-      bind = [
+      bindel = [
         ", XF86MonBrightnessDown, exec, ${uwsmPrefix}brightnessctl s 10%-"
         ", XF86MonBrightnessUp, exec, ${uwsmPrefix}brightnessctl s 10%+"
       ];
