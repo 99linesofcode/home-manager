@@ -56,6 +56,5 @@ with lib;
     home.hyprlock.enable = true;
     home.hyprpaper.enable = true;
     home.hyprpolkitagent.enable = true;
-    # home.hyprshade.enable = true;
   };
 }
