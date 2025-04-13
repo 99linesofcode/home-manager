@@ -28,12 +28,6 @@ with lib;
     };
 
     xdg.configFile = {
-      "hypr/state.conf" = {
-        source = ../dotfiles/hypr/state.conf;
-        force = true;
-      };
-      "hypr/scripts/bluetooth-toggle.sh".source = ../dotfiles/hypr/scripts/bluetooth-toggle.sh;
-      "hypr/scripts/display-toggle.sh".source = ../dotfiles/hypr/scripts/display-toggle.sh;
       # TODO: figure out how to extract to modules and append to file instead
       "uwsm/env".text = ''
         export AQ_DRM_DEVICES="/dev/dri/card1:/dev/dri/card0"

@@ -9,11 +9,11 @@ in
     ];
 
     monitor = [
-      "eDP-1, highres, 0x0, 2"
+      "eDP-1,highres,0x0,2"
     ];
 
     workspace = [
-      "eDP-1, 1"
+      "eDP-1,1"
     ];
 
     cursor.no_hardware_cursors = true;
