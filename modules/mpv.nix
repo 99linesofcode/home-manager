@@ -23,7 +23,7 @@ with lib;
         sub-auto = "fuzzy";
         sub-border-size = 1;
         sub-color = "#CDCDCD";
-        sub-scale = 0.5;
+        sub-scale = 1;
         sub-shadow-color = "#000000";
         sub-shadow-offset = 2;
       };
