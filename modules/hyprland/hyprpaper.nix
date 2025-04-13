@@ -1,10 +1,11 @@
 {
   config,
   lib,
-  pkgs,
+  specialArgs,
   ...
 }:
 let
+  inherit (specialArgs) username;
   cfg = config.home.hyprpaper;
 in
 with lib;
@@ -14,12 +15,41 @@ with lib;
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      hyprpaper
-    ];
+    xdg.configFile = {
+      "hypr/scripts/wallpaper-rotation.sh".source = ../../dotfiles/hypr/scripts/wallpaper-rotation.sh;
+    };
 
     services = {
       hyprpaper.enable = true;
+    };
+
+    systemd.user = mkIf config.home.rclone.enable {
+      timers = {
+        wallpaper = {
+          Unit = {
+            Description = "hyprpaper: trigger reload random wallpaper";
+          };
+          Timer = {
+            OnCalendar = "*:00/30";
+            Unit = "wallpaper.service";
+          };
+          Install = {
+            WantedBy = [ "timers.target" ];
+          };
+        };
+      };
+      services = {
+        wallpaper = {
+          Unit = {
+            Description = "hyprpaper: reload random wallpaper";
+            After = [ "network-online.target" ];
+          };
+          Service = {
+            Type = "oneshot";
+            ExecStart = "/home/${username}/.config/hypr/scripts/wallpaper-rotation.sh";
+          };
+        };
+      };
     };
   };
 }

@@ -1,11 +1,5 @@
 #!/usr/bin/env sh
 
-export SWWW_TRANSITION_FPS=60
-export SWWW_TRANSITION_STEP=2
+WALLPAPER_DIRECTORY="$HOME/Documents/Google Drive/Afbeeldingen/Wallpapers"
 
-INTERVAL=900 # 15m
-WALLPAPER_DIRECTORY="$HOME/Pictures/Wallpapers/The Mandolorian/"
-
-while true; do
-  find "$WALLPAPER_DIRECTORY" | sort -R | head -n 1 | sed 's/ /\\ /g' | xargs swww img && sleep "$INTERVAL"
-done
+hyprctl hyprpaper reload , "$(find "$WALLPAPER_DIRECTORY" -type f | shuf -n 1)"
