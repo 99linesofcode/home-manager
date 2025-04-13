@@ -5,9 +5,6 @@
 }:
 let
   cfg = config.home.wlogout;
-  wayland = config.home.wayland.enable;
-  hyprland = config.home.hyprland.enable;
-  shouldConfigure = wayland && hyprland;
   uwsmPrefix = config.home.wayland.uwsm.prefix;
 in
 with lib;
@@ -61,7 +58,7 @@ with lib;
       };
     };
 
-    wayland.windowManager.hyprland.settings = mkIf shouldConfigure {
+    wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
       bind = [
         "SUPER, Q, exec, wlogout"
       ];
