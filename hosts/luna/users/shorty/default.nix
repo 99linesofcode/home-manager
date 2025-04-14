@@ -30,7 +30,10 @@ with lib;
     brightnessctl.enable = true;
     dunst.enable = true;
     eza.enable = true;
-    feh.enable = true;
+    feh = {
+      enable = true;
+      defaultApplication.enable = true;
+    };
     firefox.enable = true;
     gammastep.enable = true;
     git.enable = true;
