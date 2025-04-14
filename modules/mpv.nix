@@ -28,21 +28,5 @@ with lib;
         sub-shadow-offset = 2;
       };
     };
-
-    programs.yazi.settings = mkIf config.programs.yazi.enable {
-      open.rules = [
-        {
-          mime = "video/*";
-          use = "play";
-        }
-      ];
-      opener.play = [
-        {
-          run = "mpv \"$@\"";
-          orphan = true;
-          for = "unix";
-        }
-      ];
-    };
   };
 }
