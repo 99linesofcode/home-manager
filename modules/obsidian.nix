@@ -27,12 +27,13 @@ with lib;
           Unit = {
             Description = "rclone: trigger bidirectional syncing of Obsidian.md";
             Documentation = "man:rclone(1)";
-            After = [ "network-online.target" ];
-            Wants = [ "timers.target" ];
           };
           Timer = {
             OnCalendar = "*:0/5";
             Unit = "obsidian.service";
+          };
+          Install = {
+            WantedBy = [ "timers.target" ];
           };
         };
       };
@@ -41,8 +42,10 @@ with lib;
           Unit = {
             Description = "rclone: bidirectional syncing of Obsidian.md";
             Documentation = "man:rclone(1)";
+            After = [ "network-online.target" ];
           };
           Service = {
+            Type = "oneshot";
             Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
             ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Documents/Obsidian";
             ExecStart = ''
