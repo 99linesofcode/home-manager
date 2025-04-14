@@ -3,6 +3,15 @@ let
   uwsmPrefix = config.home.wayland.uwsm.prefix;
 in
 {
+  xdg.configFile = {
+    "hypr/state.conf" = {
+      source = ../../dotfiles/hypr/state.conf;
+      force = true;
+    };
+    "hypr/scripts/bluetooth-toggle.sh".source = ../../dotfiles/hypr/scripts/bluetooth-toggle.sh;
+    "hypr/scripts/display-toggle.sh".source = ../../dotfiles/hypr/scripts/display-toggle.sh;
+  };
+
   wayland.windowManager.hyprland.settings = {
     bind = [
       # Passthrough OBS
@@ -78,10 +87,9 @@ in
     ];
 
     bindel = [
-      ", XF86AudioRaiseVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioMute, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioLowerVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%-"
-      ", XF86MonBrightnessDown, exec, ${uwsmPrefix}brightnessctl s 10%-"
-      ", XF86MonBrightnessUp, exec, ${uwsmPrefix}brightnessctl s 10%+"
+      ", XF86AudioRaiseVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
     ];
 
     bindm = [

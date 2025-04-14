@@ -52,7 +52,6 @@ with lib;
             --config %h/.config/rclone/rclone.conf \
             --no-checksum \
             --no-modtime \
-            --read-only \
             --umask 022 \
             --vfs-cache-mode full \
             --vfs-fast-fingerprint \
