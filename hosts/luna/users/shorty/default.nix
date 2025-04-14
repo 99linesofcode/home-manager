@@ -36,6 +36,7 @@ with lib;
   home.waypaper.enable = true;
   home.wlogout.enable = true;
   home.yazi.enable = true;
+  home.zathura.enable = true;
   home.zellij.enable = true;
   home.zsh.enable = true;
 
@@ -77,6 +78,5 @@ with lib;
       extraConfig.run-command = "${config.home.wayland.uwsm.prefix}{cmd}";
     };
     yt-dlp.enable = true;
-    zathura.enable = true;
   };
 }
