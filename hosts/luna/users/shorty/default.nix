@@ -6,40 +6,6 @@
 }:
 with lib;
 {
-  home.bluetui.enable = true;
-  home.brightnessctl.enable = true;
-  home.dunst.enable = true;
-  home.eza.enable = true;
-  home.firefox.enable = true;
-  home.gammastep.enable = true;
-  home.git.enable = true;
-  home.grim.enable = true;
-  home.google-drive.enable = true;
-  home.hyprland.enable = true;
-  home.keyring.enable = true;
-  home.lazydocker.enable = true;
-  home.mpv.enable = true;
-  home.nvim.enable = true;
-  home.obsidian.enable = true;
-  home.openssh.enable = true;
-  home.playerctl.enable = true;
-  home.pwvucontrol.enable = true;
-  home.qalculate-gtk.enable = true;
-  home.rclone.enable = true;
-  home.slurp.enable = true;
-  home.steam.enable = true;
-  home.sops.enable = true;
-  home.swappy.enable = true;
-  home.stylix.enable = true;
-  home.waybar.enable = true;
-  home.wayland.enable = true;
-  home.waypaper.enable = true;
-  home.wlogout.enable = true;
-  home.yazi.enable = true;
-  home.zathura.enable = true;
-  home.zellij.enable = true;
-  home.zsh.enable = true;
-
   home = {
     packages = with pkgs; [
       beeper
@@ -59,6 +25,43 @@ with lib;
       ghidra
       scanmem
     ];
+
+    bluetui.enable = true;
+    brightnessctl.enable = true;
+    dunst.enable = true;
+    eza.enable = true;
+    firefox.enable = true;
+    gammastep.enable = true;
+    git.enable = true;
+    grim.enable = true;
+    google-drive.enable = true;
+    hyprland.enable = true;
+    keyring.enable = true;
+    lazydocker.enable = true;
+    mpv.enable = true;
+    nvim.enable = true;
+    obsidian.enable = true;
+    openssh.enable = true;
+    playerctl.enable = true;
+    pwvucontrol.enable = true;
+    qalculate-gtk.enable = true;
+    rclone.enable = true;
+    slurp.enable = true;
+    steam.enable = true;
+    sops.enable = true;
+    swappy.enable = true;
+    stylix.enable = true;
+    waybar.enable = true;
+    wayland.enable = true;
+    waypaper.enable = true;
+    wlogout.enable = true;
+    yazi.enable = true;
+    zathura = {
+      enable = true;
+      defaultApplication.enable = true;
+    };
+    zellij.enable = true;
+    zsh.enable = true;
   };
 
   programs = {
