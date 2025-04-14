@@ -1,3 +1,25 @@
+# [0.13.0](https://github.com/99linesofcode/home-manager/compare/v0.12.0...v0.13.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* **mpv:** no need to manually define yazi opener rules ([c88eb1d](https://github.com/99linesofcode/home-manager/commit/c88eb1d16b82ea718032084efaa51551575fb46e))
+* **obsidian:** timer was not registered correctly ([5688cfb](https://github.com/99linesofcode/home-manager/commit/5688cfb9332826a2b2d7e4c3729889c4c1c55b07))
+
+
+### Features
+
+* allow declaring default mime type associations ([5f4e30b](https://github.com/99linesofcode/home-manager/commit/5f4e30bfdfe1c7374388884a86057f72b87e43a3))
+* **feh:** declare default application for common mimetypes ([6a17a0b](https://github.com/99linesofcode/home-manager/commit/6a17a0b3cc3920c2a9e442c5b6c2a2542f22f41a))
+* **firefox:** custom search engine for the ArchLinux wiki ([23ac9da](https://github.com/99linesofcode/home-manager/commit/23ac9da2bf67524ebbe8a376f642e7df9bae7723))
+* **gammastep:** automatically adjust color temperature ([c614d5b](https://github.com/99linesofcode/home-manager/commit/c614d5b890fd7108fad6bc5857c70ef02347d86e))
+* **hypridle:** reduce brightness, lock, turn off screen, suspend ([5ab1c16](https://github.com/99linesofcode/home-manager/commit/5ab1c165d408bde9f98df5bd56b74ca3370420ca))
+* **hyprlock:** display date and time on lock screen ([4ece5ab](https://github.com/99linesofcode/home-manager/commit/4ece5ab77e8d3aa470745406424df747e5725591))
+* **hyprpaper:** load a random wallpaper every 30 minutes ([4056f80](https://github.com/99linesofcode/home-manager/commit/4056f80ec7b78642367f9e82c73d1bd9a988c7ab))
+* **zathura:** declare default application for common mimetypes ([7a3d45a](https://github.com/99linesofcode/home-manager/commit/7a3d45a02f81ed433b64ccddafb31cd8ecb4a750))
+
+
+
 # [0.12.0](https://github.com/99linesofcode/home-manager/compare/v0.11.0...v0.12.0) (2025-04-10)
 
 
@@ -82,27 +104,6 @@
 * **firefox:** hardware video acceleration with nvidia-vaapi-driver ([51057ca](https://github.com/99linesofcode/home-manager/commit/51057cae10b2075a0dcf2c5c0ba310d077b69789))
 * **nvim-dap:** debugging PHP with vscode-php-debug ([524ea6c](https://github.com/99linesofcode/home-manager/commit/524ea6cfebcda5483e84ee3cbe44565420eeb0bd))
 * **zsh:** enable syntax highlighting ([e468103](https://github.com/99linesofcode/home-manager/commit/e468103f8c753cba6e5aa239c4fd095b2af7cb0d))
-
-
-
-# [0.8.0](https://github.com/99linesofcode/home-manager/compare/v0.7.1...v0.8.0) (2025-03-03)
-
-
-### Bug Fixes
-
-* **bluetooth:** awk uses single instead of double quotes ([e020150](https://github.com/99linesofcode/home-manager/commit/e020150c790fd015285989cd290007c3b5d3e4cf))
-* **bluetooth:** put shell script in systemd.slice ([acd98f5](https://github.com/99linesofcode/home-manager/commit/acd98f5929cc9839030e84aed8f871b71ef21b71))
-* **brightnessctl:** throwing non-existent XF86Kbd keycodes errors ([b21bed7](https://github.com/99linesofcode/home-manager/commit/b21bed7453453cf2d27b7fc227f646ce7971f781))
-* **firefox:** addons moved to extensions.packages ([424ee4b](https://github.com/99linesofcode/home-manager/commit/424ee4b9c1ef21eb28085b43b960161b08abf5b2))
-* **firefox:** broken NixOS wiki search engine ([e8fa113](https://github.com/99linesofcode/home-manager/commit/e8fa11371ff56b1e1a80d9217d79168d37d40df0))
-* **nvim:** display notifications for a second longer ([062b07b](https://github.com/99linesofcode/home-manager/commit/062b07b073105cbdf7a3f277be7bba68354ddee3))
-* suppressed home-manager news notification ([56046e1](https://github.com/99linesofcode/home-manager/commit/56046e1759c6106011a8f50cef8e3dce9187546a))
-* **vscode:** extensions moved to profiles.default.extensions ([cb71cbb](https://github.com/99linesofcode/home-manager/commit/cb71cbb3bb247c8086af6c83fbe2a113b0d4c498))
-
-
-### Features
-
-* **nvim:** markdown formatting in codecompanion chat buffer ([b428999](https://github.com/99linesofcode/home-manager/commit/b4289995731898894c910efd6107cc78d5ba0319))
 
 
 
