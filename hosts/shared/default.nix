@@ -1,9 +1,15 @@
-{ pkgs, specialArgs, ... }:
+{
+  lib,
+  pkgs,
+  specialArgs,
+  ...
+}:
 let
   inherit (specialArgs) role username;
   if-exists = f: builtins.pathExists f;
   existing-imports = imports: builtins.filter if-exists imports;
 in
+with lib;
 {
   imports =
     [
@@ -15,6 +21,11 @@ in
       ./users/${username}
       ./users/${username}.nix
     ];
+
+  xdg = {
+    mime.enable = mkDefault true;
+    mimeApps.enable = mkDefault true;
+  };
 
   home = {
     stateVersion = "25.05";
