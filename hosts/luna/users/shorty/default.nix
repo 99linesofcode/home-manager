@@ -30,6 +30,7 @@ with lib;
     brightnessctl.enable = true;
     dunst.enable = true;
     eza.enable = true;
+    feh.enable = true;
     firefox.enable = true;
     gammastep.enable = true;
     git.enable = true;
@@ -73,7 +74,6 @@ with lib;
       enable = true;
       nix-direnv.enable = true;
     };
-    feh.enable = true; # image viewer
     obs-studio.enable = true;
     rofi = {
       enable = true;
