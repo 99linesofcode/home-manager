@@ -11,8 +11,33 @@ let
 in
 with lib;
 {
-  options = {
-    home.firefox.enable = mkEnableOption "firefox";
+  options.home.firefox = with types; {
+    enable = mkEnableOption "firefox";
+    defaultApplication = {
+      enable = mkOption {
+        description = "MIME default application configuration";
+        type = bool;
+        default = false;
+      };
+      mimeTypes = mkOption {
+        description = "MIME types to be the default application for";
+        type = listOf str;
+        default = [
+          "application/x-extension-htm"
+          "application/x-extension-html"
+          "application/x-extension-shtml"
+          "application/x-extension-xht"
+          "application/x-extension-xhtml"
+          "application/xhtml+xml"
+          "text/html"
+          "x-scheme-handler/about"
+          "x-scheme-handler/chrome"
+          "x-scheme-handler/http"
+          "x-scheme-handler/https"
+          "x-scheme-handler/unknown"
+        ];
+      };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -143,11 +168,15 @@ with lib;
             "extensions.autoDisableScopes" = 0; # automatically enable extensions
             "widget.use-xdg-desktop-portal" = true;
 
-            # TODO: required for nvidia-vaapi-driver, how to toggle on nixos-config value?
+            # TODO: required for nvidia-vaapi-driver, how to toggle on nixos-config value 🤔
             "media.ffmpeg.vaapi.enabled" = true;
           };
         };
       };
     };
+
+    xdg.mimeApps.defaultApplications = mkIf cfg.defaultApplication.enable (
+      lib.genAttrs cfg.defaultApplication.mimeTypes (_: "firefox.desktop")
+    );
   };
 }

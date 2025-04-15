@@ -34,7 +34,10 @@ with lib;
       enable = true;
       defaultApplication.enable = true;
     };
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+      defaultApplication.enable = true;
+    };
     gammastep.enable = true;
     git.enable = true;
     grim.enable = true;
