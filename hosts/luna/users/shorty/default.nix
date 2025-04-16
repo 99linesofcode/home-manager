@@ -58,6 +58,8 @@ with lib;
     sops.enable = true;
     swappy.enable = true;
     stylix.enable = true;
+    vscode.enable = true;
+    vscode-server.enable = true;
     waybar.enable = true;
     wayland.enable = true;
     waypaper.enable = true;

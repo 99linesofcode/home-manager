@@ -1,14 +1,13 @@
 {
   config,
-  inputs,
   lib,
+  pkgs,
   specialArgs,
   ...
 }:
 let
   inherit (specialArgs) username;
   cfg = config.home.vscode;
-  extensions = inputs.nix-vscode-extensions.extensions.x86_64-linux.vscode-marketplace;
 in
 with lib;
 {
@@ -22,13 +21,12 @@ with lib;
     programs.vscode = {
       enable = true;
       profiles.${username} = {
-        extensions = with extensions; [
+        extensions = with pkgs.vscode-marketplace; [
           ms-vscode-remote.vscode-remote-extensionpack
 
+          asvetliakov.vscode-neovim
           bradlc.vscode-tailwindcss
           bierner.markdown-mermaid
-          # danielsanmedium.dscodegpt
-          # aoudrizwan.claude-dev
           eamodio.gitlens
           evgeniypeshkov.syntax-highlighter
           github.vscode-github-actions
@@ -37,6 +35,7 @@ with lib;
           mikestead.dotenv
           ms-azuretools.vscode-docker
           naumovs.color-highlight
+          saoudrizwan.claude-dev # cline
           redhat.vscode-yaml
           yo1dog.cursor-align
           yzhang.markdown-all-in-one
