@@ -70,6 +70,7 @@ with lib;
           "editor.bracketPairColorization.enabled" = true;
           "editor.cursorBlinking" = "smooth";
           "editor.detectIndentation" = false;
+          "editor.fontSize" = mkForce 14;
           "editor.formatOnSave" = true;
           "editor.formatOnPaste" = false;
           "editor.guides.bracketPairs" = "active";
@@ -94,7 +95,7 @@ with lib;
           "search.useIgnoreFiles" = false;
           "window.menuBarVisibility" = "compact";
           "window.titleBarStyle" = "native";
-          "window.zoomLevel" = 1;
+          "window.zoomLevel" = 0;
           "workbench.sideBar.location" = "right";
           "workbench.startupEditor" = "none";
 
