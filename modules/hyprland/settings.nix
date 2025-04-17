@@ -40,7 +40,6 @@ in
     gestures.workspace_swipe = true;
 
     input = {
-      kb_options = "caps:swapescape";
       sensitivity = 0.2;
       touchpad.natural_scroll = true;
     };
