@@ -133,6 +133,12 @@ with lib;
           "git.showPushSuccessNotification" = true;
           "git.suggestSmartCommit" = false;
 
+          # html formatting
+          "html.format" = {
+            "templating" = true;
+            "wrapAttributes" = "force-expand-multiline";
+          };
+
           # todo tree
           "todo-tree.tree.autoRefresh" = true;
 
