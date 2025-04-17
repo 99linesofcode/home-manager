@@ -168,6 +168,10 @@ with lib;
           "[yaml]" = {
             "editor.defaultFormatter" = "redhat.vscode-yaml";
           };
+
+          "extensions.experimental.affinity" = {
+            "asvetliakov.vscode-neovim" = 1;
+          };
         };
       };
     };
