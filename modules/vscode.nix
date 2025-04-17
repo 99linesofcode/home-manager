@@ -31,6 +31,7 @@ with lib;
           evgeniypeshkov.syntax-highlighter
           github.vscode-github-actions
           gruntfuggly.todo-tree
+          laravel.vscode-laravel
           m1guelpf.better-pest
           mikestead.dotenv
           ms-azuretools.vscode-docker
@@ -48,7 +49,6 @@ with lib;
           open-southeners.laravel-pint
           ms-python.black-formatter
           sanderronde.phpstan-vscode
-          shufo.vscode-blade-formatter
           statiolake.vscode-rustfmt
           stylelint.vscode-stylelint
 
@@ -90,6 +90,7 @@ with lib;
           ];
           "editor.tabSize" = 2;
           "files.trimTrailingWhitespace" = true;
+          "laravel-pint.enable" = true;
           "search.useIgnoreFiles" = false;
           "window.menuBarVisibility" = "compact";
           "window.titleBarStyle" = "native";
@@ -144,11 +145,14 @@ with lib;
           "[dockerfile]" = {
             "editor.defaultFormatter" = "ms-azuretools.vscode-docker";
           };
-          "[html][jsonc][javascript][typescript][vue][javascriptreact][typescriptreact]" = {
+          "[javascript][typescript][vue][javascriptreact][typescriptreact]" = {
             "editor.defaultFormatter" = "dbaeumer.vscode-eslint";
           };
-          "[json]" = {
+          "[json][jsonc]" = {
             "editor.defaultFormatter" = "vscode.json-language-features";
+          };
+          "[html][blade]" = {
+            "editor.defaultFormatter" = "vscode.html-language-features";
           };
           "[markdown]" = {
             "editor.defaultFormatter" = "DavidAnson.vscode-markdownlint";
