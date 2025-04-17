@@ -96,6 +96,7 @@ with lib;
           "window.titleBarStyle" = "native";
           "window.zoomLevel" = 1;
           "workbench.sideBar.location" = "right";
+          "workbench.startupEditor" = "none";
 
           # emmet
           "emmet.includeLanguages" = {
