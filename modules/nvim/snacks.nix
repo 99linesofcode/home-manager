@@ -22,8 +22,10 @@ with lib;
       snacks = {
         enable = true;
         settings = {
-          dashboard.enabled = true;
-          indent.enabled = true;
+          indent = {
+            enabled = true;
+            only_scope = true;
+          };
           notifier = {
             enabled = true;
             timeout = 2000;
