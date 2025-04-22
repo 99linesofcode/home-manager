@@ -27,6 +27,8 @@ with lib;
       nixvim = {
         enable = true;
         defaultEditor = true;
+        extraConfigLuaPre = "if not vim.g.vscode then";
+        extraConfigLuaPost = "end";
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;
