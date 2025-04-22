@@ -99,10 +99,12 @@ with lib;
         ];
 
         userSettings = {
+          "breadcrumbs.enabled" = false;
           "diffEditor.ignoreTrimWhitespace" = false;
           "diffEditor.renderSideBySide" = false;
           "editor.bracketPairColorization.enabled" = true;
           "editor.cursorBlinking" = "smooth";
+          "editor.cursorSmoothCaretAnimation" = "on";
           "editor.detectIndentation" = false;
           "editor.fontSize" = mkForce 14;
           "editor.formatOnSave" = true;
@@ -113,6 +115,8 @@ with lib;
           "editor.lineNumbers" = "relative";
           "editor.lineHeight" = 30;
           "editor.minimap.enabled" = false;
+          "editor.scrollbar.horizontal" = "hidden";
+          "editor.scrollbar.vertical" = "hidden";
           "editor.semanticHighlighting.enabled" = true;
           "editor.quickSuggestions" = {
             "comments" = true;
@@ -131,9 +135,11 @@ with lib;
           "files.trimTrailingWhitespace" = true;
           "laravel-pint.enable" = true;
           "search.useIgnoreFiles" = false;
-          "window.menuBarVisibility" = "compact";
+          "window.customTitleBarVisibility" = "never";
+          "window.menuBarVisibility" = "toggle";
           "window.titleBarStyle" = "native";
           "window.zoomLevel" = 0;
+          "workbench.layoutControl.enabled" = false;
           "workbench.sideBar.location" = "right";
           "workbench.startupEditor" = "none";
 
