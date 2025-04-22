@@ -22,40 +22,43 @@ with lib;
       enable = true;
       profiles.${username} = {
         extensions = with pkgs.vscode-marketplace; [
-          ms-vscode-remote.vscode-remote-extensionpack
-
           asvetliakov.vscode-neovim
           bradlc.vscode-tailwindcss
           bierner.markdown-mermaid
           eamodio.gitlens
-          evgeniypeshkov.syntax-highlighter
+          editorconfig.editorconfig
           github.vscode-github-actions
           gruntfuggly.todo-tree
-          laravel.vscode-laravel
           m1guelpf.better-pest
           mikestead.dotenv
-          ms-azuretools.vscode-docker
+          ms-vscode-remote.vscode-remote-extensionpack
+          ms-vscode.vscode-speech
           naumovs.color-highlight
           saoudrizwan.claude-dev # cline
-          redhat.vscode-yaml
           yo1dog.cursor-align
-          yzhang.markdown-all-in-one
+          vadimcn.vscode-lldb
 
+          # linters, highlighters and formatters
           brettm12345.nixfmt-vscode
           davidanson.vscode-markdownlint
           dbaeumer.vscode-eslint
-          editorconfig.editorconfig
+          evgeniypeshkov.syntax-highlighter
           foxundermoon.shell-format
-          open-southeners.laravel-pint
+          ms-azuretools.vscode-docker
           ms-python.black-formatter
-          sanderronde.phpstan-vscode
+          open-southeners.laravel-pint
+          redhat.vscode-yaml
           statiolake.vscode-rustfmt
           stylelint.vscode-stylelint
+          yzhang.markdown-all-in-one
 
+          # PHP
           bmewburn.vscode-intelephense-client
           laravel.vscode-laravel
-
-          vadimcn.vscode-lldb
+          onecentlin.laravel5-snippets
+          onecentlin.laravel-blade
+          # phpactor.vscode-phpactor
+          # sanderronde.phpstan-vscode
           xdebug.php-debug
         ];
         keybindings = [
@@ -78,6 +81,7 @@ with lib;
           "editor.inlineSuggest.enabled" = true;
           "editor.lineNumbers" = "relative";
           "editor.lineHeight" = 30;
+          "editor.minimap.enabled" = false;
           "editor.semanticHighlighting.enabled" = true;
           "editor.quickSuggestions" = {
             "comments" = true;
@@ -90,6 +94,9 @@ with lib;
             160
           ];
           "editor.tabSize" = 2;
+          "files.associations" = {
+            ".php-cs-fixer*" = "php";
+          };
           "files.trimTrailingWhitespace" = true;
           "laravel-pint.enable" = true;
           "search.useIgnoreFiles" = false;
@@ -98,6 +105,9 @@ with lib;
           "window.zoomLevel" = 0;
           "workbench.sideBar.location" = "right";
           "workbench.startupEditor" = "none";
+
+          # laravel-blade formatter
+          "blade.format.enable" = true;
 
           # emmet
           "emmet.includeLanguages" = {
@@ -122,10 +132,9 @@ with lib;
             "typescriptreact"
           ];
 
-          # php
-          "files.associations" = {
-            ".php-cs-fixer*" = "php";
-          };
+          # disable for intelephese
+          "php.suggest.basic" = false;
+          "php.validate.enable" = false;
 
           # git
           "git.autofetch" = true;
@@ -137,7 +146,6 @@ with lib;
 
           # html formatting
           "html.format" = {
-            "templating" = true;
             "wrapAttributes" = "force-expand-multiline";
           };
 
@@ -155,12 +163,6 @@ with lib;
           };
           "[javascript][typescript][vue][javascriptreact][typescriptreact]" = {
             "editor.defaultFormatter" = "dbaeumer.vscode-eslint";
-          };
-          "[json][jsonc]" = {
-            "editor.defaultFormatter" = "vscode.json-language-features";
-          };
-          "[html][blade]" = {
-            "editor.defaultFormatter" = "vscode.html-language-features";
           };
           "[markdown]" = {
             "editor.defaultFormatter" = "DavidAnson.vscode-markdownlint";

@@ -31,6 +31,80 @@ in
   ];
 
   programs.nixvim = {
+    plugins = {
+      dap = {
+        enable = true;
+        adapters = with pkgs; {
+          executables = {
+            php = {
+              command = lib.getExe' nodePackages.nodejs "node";
+              args = [
+                "${vscode-extensions.xdebug.php-debug}/share/vscode/extensions/xdebug.php-debug/out/phpDebug.js"
+              ];
+            };
+          };
+          servers = {
+            codelldb = {
+              port = 9000;
+              executable = {
+                command = "${vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
+                args = [
+                  "--port"
+                  "9000"
+                ];
+              };
+            };
+          };
+        };
+        configurations = {
+          c = [
+            codelldb
+            gdb
+          ];
+          cpp = [
+            codelldb
+            gdb
+          ];
+          php = [
+            {
+              name = "Listen for Xdebug";
+              type = "php";
+              request = "launch";
+              port = 9003;
+            }
+          ];
+          rust = [
+            codelldb
+            gdb
+          ];
+        };
+        signs = {
+          dapBreakpoint = {
+            text = "";
+            texthl = "DapBreakpoint";
+          };
+          dapBreakpointCondition = {
+            text = "";
+            texthl = "dapBreakpointCondition";
+          };
+          dapBreakpointRejected = {
+            text = "";
+            texthl = "DapBreakpointRejected";
+          };
+          dapLogPoint = {
+            text = "";
+            texthl = "DapLogPoint";
+          };
+          dapStopped = {
+            text = "";
+            texthl = "DapStopped";
+          };
+        };
+      };
+      dap-ui.enable = true;
+      dap-virtual-text.enable = true;
+    };
+
     keymaps = [
       {
         mode = [
@@ -235,78 +309,5 @@ in
       }
     ];
 
-    plugins = {
-      dap = {
-        enable = true;
-        adapters = {
-          executables = {
-            php = {
-              command = lib.getExe' pkgs.nodePackages.nodejs "node";
-              args = [
-                "${pkgs.vscode-extensions.xdebug.php-debug}/share/vscode/extensions/xdebug.php-debug/out/phpDebug.js"
-              ];
-            };
-          };
-          servers = {
-            codelldb = {
-              port = 9000;
-              executable = {
-                command = "${pkgs.vscode-extensions.vadimcn.vscode-lldb}/share/vscode/extensions/vadimcn.vscode-lldb/adapter/codelldb";
-                args = [
-                  "--port"
-                  "9000"
-                ];
-              };
-            };
-          };
-        };
-        configurations = {
-          c = [
-            codelldb
-            gdb
-          ];
-          cpp = [
-            codelldb
-            gdb
-          ];
-          php = [
-            {
-              name = "Listen for Xdebug";
-              type = "php";
-              request = "launch";
-              port = 9003;
-            }
-          ];
-          rust = [
-            codelldb
-            gdb
-          ];
-        };
-        signs = {
-          dapBreakpoint = {
-            text = "";
-            texthl = "DapBreakpoint";
-          };
-          dapBreakpointCondition = {
-            text = "";
-            texthl = "dapBreakpointCondition";
-          };
-          dapBreakpointRejected = {
-            text = "";
-            texthl = "DapBreakpointRejected";
-          };
-          dapLogPoint = {
-            text = "";
-            texthl = "DapLogPoint";
-          };
-          dapStopped = {
-            text = "";
-            texthl = "DapStopped";
-          };
-        };
-      };
-      dap-ui.enable = true;
-      dap-virtual-text.enable = true;
-    };
   };
 }
