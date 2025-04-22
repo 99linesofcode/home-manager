@@ -134,6 +134,7 @@ with lib;
           };
           "files.trimTrailingWhitespace" = true;
           "laravel-pint.enable" = true;
+          "outline.collapseItems" = "alwaysCollapse";
           "search.useIgnoreFiles" = false;
           "window.customTitleBarVisibility" = "never";
           "window.menuBarVisibility" = "toggle";
