@@ -100,7 +100,7 @@ with lib;
 
         userSettings = {
           "diffEditor.ignoreTrimWhitespace" = false;
-          "diffEditor.renderSideBySide" = true;
+          "diffEditor.renderSideBySide" = false;
           "editor.bracketPairColorization.enabled" = true;
           "editor.cursorBlinking" = "smooth";
           "editor.detectIndentation" = false;
