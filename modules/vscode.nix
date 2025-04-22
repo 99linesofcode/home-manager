@@ -86,7 +86,18 @@ with lib;
             };
             "when" = "!sideBarVisible";
           }
+          # todo-tree
+          {
+            "key" = "ctrl+shift+t";
+            "command" = "todo-tree-view.focus";
+          }
+          # cline
+          {
+            "key" = "ctrl+shift+c";
+            "command" = "claude-dev.SidebarProvider.focus";
+          }
         ];
+
         userSettings = {
           "diffEditor.ignoreTrimWhitespace" = false;
           "diffEditor.renderSideBySide" = true;
