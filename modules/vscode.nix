@@ -133,7 +133,6 @@ with lib;
             ".php-cs-fixer*" = "php";
           };
           "files.trimTrailingWhitespace" = true;
-          "laravel-pint.enable" = true;
           "outline.collapseItems" = "alwaysCollapse";
           "search.useIgnoreFiles" = false;
           "window.customTitleBarVisibility" = "never";
@@ -143,9 +142,6 @@ with lib;
           "workbench.layoutControl.enabled" = false;
           "workbench.sideBar.location" = "right";
           "workbench.startupEditor" = "none";
-
-          # laravel-blade formatter
-          "blade.format.enable" = true;
 
           # emmet
           "emmet.includeLanguages" = {
@@ -170,9 +166,11 @@ with lib;
             "typescriptreact"
           ];
 
-          # disable for intelephese
-          "php.suggest.basic" = false;
-          "php.validate.enable" = false;
+          # PHP
+          "blade.format.enable" = true; # laravel-blade
+          "laravel-pint.enable" = true;
+          "php.suggest.basic" = false; # intelephese
+          "php.validate.enable" = false; # intelephense
 
           # git
           "git.autofetch" = true;
