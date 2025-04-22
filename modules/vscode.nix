@@ -25,7 +25,6 @@ with lib;
           asvetliakov.vscode-neovim
           bradlc.vscode-tailwindcss
           bierner.markdown-mermaid
-          eamodio.gitlens
           editorconfig.editorconfig
           github.vscode-github-actions
           gruntfuggly.todo-tree
@@ -37,6 +36,7 @@ with lib;
           saoudrizwan.claude-dev # cline
           yo1dog.cursor-align
           vadimcn.vscode-lldb
+          waderyan.gitblame
 
           # linters, highlighters and formatters
           brettm12345.nixfmt-vscode
