@@ -74,7 +74,6 @@ with lib;
   };
 
   programs = {
-    alacritty.enable = true;
     bat.enable = true;
     btop.enable = true;
     chromium.enable = true;
