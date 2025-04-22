@@ -61,10 +61,30 @@ with lib;
           # sanderronde.phpstan-vscode
           xdebug.php-debug
         ];
+
         keybindings = [
+          # toggle sidebar and focus
           {
-            "key" = "ctrl+b";
-            "command" = "workbench.action.toggleSidebarVisibility";
+            "key" = "ctrl+e";
+            "command" = "runCommands";
+            "args" = {
+              "commands" = [
+                "workbench.action.toggleSidebarVisibility"
+                "workbench.action.focusActiveEditorGroup"
+              ];
+            };
+            "when" = "sideBarVisible";
+          }
+          {
+            "key" = "ctrl+e";
+            "command" = "runCommands";
+            "args" = {
+              "commands" = [
+                "workbench.action.toggleSidebarVisibility"
+                "workbench.action.focusSideBar"
+              ];
+            };
+            "when" = "!sideBarVisible";
           }
         ];
         userSettings = {
