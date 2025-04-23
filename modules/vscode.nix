@@ -109,6 +109,7 @@ with lib;
           "editor.cursorBlinking" = "smooth";
           "editor.cursorSmoothCaretAnimation" = "on";
           "editor.detectIndentation" = false;
+          "editor.fontLigatures" = true;
           "editor.fontSize" = mkForce 14;
           "editor.formatOnSave" = true;
           "editor.formatOnPaste" = false;
