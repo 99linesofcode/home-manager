@@ -99,6 +99,11 @@ with lib;
         ];
 
         userSettings = {
+          "chat.editor.fontSize" = mkForce 14;
+          "debug.console.fontSize" = mkForce 14;
+          "editor.fontSize" = mkForce 14;
+          "terminal.integrated.fontSize" = mkForce 14;
+
           "breadcrumbs.enabled" = false;
           "diffEditor.ignoreTrimWhitespace" = false;
           "diffEditor.renderSideBySide" = false;
@@ -110,7 +115,6 @@ with lib;
           "editor.cursorSmoothCaretAnimation" = "on";
           "editor.detectIndentation" = false;
           "editor.fontLigatures" = true;
-          "editor.fontSize" = mkForce 14;
           "editor.formatOnSave" = true;
           "editor.formatOnPaste" = false;
           "editor.guides.bracketPairs" = "active";
