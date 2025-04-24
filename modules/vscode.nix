@@ -86,6 +86,11 @@ with lib;
             };
             "when" = "!sideBarVisible";
           }
+          # always start a find and replace instead of a find in files session
+          {
+            "key" = "ctrl+shift+f";
+            "command" = "workbench.action.replaceInFiles";
+          }
           # todo-tree
           {
             "key" = "ctrl+shift+t";
