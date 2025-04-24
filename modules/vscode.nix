@@ -142,7 +142,7 @@ with lib;
           };
           "files.trimTrailingWhitespace" = true;
           "outline.collapseItems" = "alwaysCollapse";
-          "search.useIgnoreFiles" = false;
+          "search.useIgnoreFiles" = true;
           "window.customTitleBarVisibility" = "never";
           "window.menuBarVisibility" = "toggle";
           "window.titleBarStyle" = "native";
