@@ -1,3 +1,12 @@
+# [0.15.0](https://github.com/99linesofcode/home-manager/compare/v0.14.0...v0.15.0) (2025-05-19)
+
+
+### Features
+
+* **hyprpicker:** module for colorpicking ([e69f8f1](https://github.com/99linesofcode/home-manager/commit/e69f8f11fc2095defd11fc3d097519a72d17897a))
+
+
+
 # [0.14.0](https://github.com/99linesofcode/home-manager/compare/v0.13.0...v0.14.0) (2025-05-19)
 
 
@@ -79,26 +88,6 @@
 ### Features
 
 * **obsidian:** bi-directional synchronization of Obsidian.md vault ([a7bbdfc](https://github.com/99linesofcode/home-manager/commit/a7bbdfc4d3750ecab4e49aacdcbd7611d58fb71a))
-
-
-
-# [0.10.0](https://github.com/99linesofcode/home-manager/compare/v0.9.0...v0.10.0) (2025-03-20)
-
-
-### Bug Fixes
-
-* **vscode:** re-enable remote development pack ([6db3c3b](https://github.com/99linesofcode/home-manager/commit/6db3c3b259c6df4e1f9eed0953ae45900729e63d))
-
-
-### Features
-
-* **conform.nvim:** add formatting for POSIX shell scripts ([85490d7](https://github.com/99linesofcode/home-manager/commit/85490d7a6695a5d4d76ba1317794bcca324e0053))
-* **conform.nvim:** add formatting for Rust and C/C++ ([583e6d2](https://github.com/99linesofcode/home-manager/commit/583e6d230d5cdb0105e04310761503c7944734ad))
-* **nvim-dap:** debugging C/C++/Rust with vscode-lldb ([140bb2a](https://github.com/99linesofcode/home-manager/commit/140bb2a033d8b2126120254fb37fc98890ef9587))
-* **vscode:** blade template formatting using blade-formatter ([e4027d9](https://github.com/99linesofcode/home-manager/commit/e4027d91b5c5b8f7baf5cf150b608bd6ac6daf1b))
-* **vscode:** python formatting using black ([1f83047](https://github.com/99linesofcode/home-manager/commit/1f830477aa5c9414f5157429894a6f4759dc1cdf))
-* **vscode:** rust formatting using rustfmt ([c1c60aa](https://github.com/99linesofcode/home-manager/commit/c1c60aafddf236efd9ba4aa88a8835d29332dd3f))
-* **vscode:** support for step debugging of compiled languages ([7aae192](https://github.com/99linesofcode/home-manager/commit/7aae1925e5b49acf57648255ccb7e4947418f5b4))
 
 
 
