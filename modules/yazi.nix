@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.home.yazi;
+  uwsmPrefix = config.home.wayland.uwsm.prefix;
 in
 with lib;
 {
@@ -58,6 +59,15 @@ with lib;
           micro_workers = 5;
         };
       };
+      plugins = {
+        # TODO: add ouch.yazi for compressing and decompressing archives
+      };
+    };
+
+    wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
+      bind = [
+        "SUPER, E, exec, ${uwsmPrefix}alacritty -e 'yazi'"
+      ];
     };
   };
 }

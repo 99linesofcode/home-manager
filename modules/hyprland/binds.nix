@@ -21,7 +21,6 @@ in
       # Hotkeys
       "SUPER, Return, exec, ${uwsmPrefix}alacritty"
       "SUPER, Space, exec, rofi -show-icons -show drun -l 10"
-      "SUPER, E, exec, ${uwsmPrefix}alacritty -e 'yazi'"
       "SUPER, V, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
 
       "SUPER_ALT, M, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
