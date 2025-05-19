@@ -8,6 +8,34 @@
       lsp = {
         enable = true;
         inlayHints = true;
+        servers = {
+          bashls.enable = true;
+          emmet_ls.enable = true;
+          eslint.enable = true;
+          html.enable = true;
+          intelephense = {
+            enable = true;
+            package = pkgs.intelephense;
+          };
+          jsonls.enable = true;
+          lua_ls.enable = true;
+          marksman.enable = true;
+          nil_ls.enable = true;
+          pest_ls.enable = true;
+          pyright.enable = true;
+          ruby_lsp.enable = true;
+          rust_analyzer = {
+            enable = true;
+            installCargo = false;
+            installRustc = false;
+          };
+          superhtml.enable = true;
+          tailwindcss.enable = true;
+          ts_ls.enable = true;
+          volar.enable = true;
+          yamlls.enable = true;
+        };
+
         keymaps = {
           silent = true;
           lspBuf = {
@@ -58,30 +86,6 @@
               desc = "Previous Diagnostic";
             };
           };
-        };
-        servers = {
-          bashls.enable = true;
-          emmet_ls.enable = true;
-          eslint.enable = true;
-          html.enable = true;
-          jsonls.enable = true;
-          lua_ls.enable = true;
-          marksman.enable = true; # TODO: replace with markdownlint-cli2, requires custom server
-          nil_ls.enable = true;
-          pest_ls.enable = true;
-          phpactor.enable = true;
-          pyright.enable = true;
-          ruby_lsp.enable = true;
-          rust_analyzer = {
-            enable = true;
-            installCargo = false;
-            installRustc = false;
-          };
-          superhtml.enable = true;
-          tailwindcss.enable = true;
-          ts_ls.enable = true;
-          volar.enable = true;
-          yamlls.enable = true;
         };
       };
       lspkind.enable = true; # vscode-like pictograms for lsp

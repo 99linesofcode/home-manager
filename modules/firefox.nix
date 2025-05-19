@@ -11,8 +11,33 @@ let
 in
 with lib;
 {
-  options = {
-    home.firefox.enable = mkEnableOption "firefox";
+  options.home.firefox = with types; {
+    enable = mkEnableOption "firefox";
+    defaultApplication = {
+      enable = mkOption {
+        description = "MIME default application configuration";
+        type = bool;
+        default = false;
+      };
+      mimeTypes = mkOption {
+        description = "MIME types to be the default application for";
+        type = listOf str;
+        default = [
+          "application/x-extension-htm"
+          "application/x-extension-html"
+          "application/x-extension-shtml"
+          "application/x-extension-xht"
+          "application/x-extension-xhtml"
+          "application/xhtml+xml"
+          "text/html"
+          "x-scheme-handler/about"
+          "x-scheme-handler/chrome"
+          "x-scheme-handler/http"
+          "x-scheme-handler/https"
+          "x-scheme-handler/unknown"
+        ];
+      };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -143,11 +168,29 @@ with lib;
             "extensions.autoDisableScopes" = 0; # automatically enable extensions
             "widget.use-xdg-desktop-portal" = true;
 
-            # TODO: required for nvidia-vaapi-driver, how to toggle on nixos-config value?
+            # TODO: required for nvidia-vaapi-driver, how to toggle on nixos-config value 🤔
             "media.ffmpeg.vaapi.enabled" = true;
+
+            # completely disable Pocket
+            "extensions.pocket.enabled" = false;
+            "extensions.pocket.api" = "0.0.0.0";
+            "extensions.pocket.loggedOutVariant" = "";
+            "extensions.pocket.oAuthConsumerKey" = "";
+            "extensions.pocket.onSaveRecs" = false;
+            "extensions.pocket.onSaveRecs.locales" = "";
+            "extensions.pocket.showHome" = false;
+            "extensions.pocket.site" = "0.0.0.0";
+            "browser.newtabpage.activity-stream.pocketCta" = "";
+            "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
+            "services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includePocket" =
+              false;
           };
         };
       };
     };
+
+    xdg.mimeApps.defaultApplications = mkIf cfg.defaultApplication.enable (
+      lib.genAttrs cfg.defaultApplication.mimeTypes (_: "firefox.desktop")
+    );
   };
 }

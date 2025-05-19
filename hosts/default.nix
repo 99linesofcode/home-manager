@@ -26,7 +26,6 @@ with lib;
   nixpkgs = {
     config = {
       allowUnfree = mkDefault true;
-      allowUnfreePredicate = _: true;
     };
   };
 
