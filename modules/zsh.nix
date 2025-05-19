@@ -16,6 +16,11 @@ with lib;
     programs = {
       fastfetch.enable = true;
 
+      fzf = {
+        enable = true;
+        enableZshIntegration = true;
+      };
+
       zoxide = {
         enable = true;
         options = [

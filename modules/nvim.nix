@@ -22,7 +22,6 @@ with lib;
   config = mkIf cfg.enable {
     programs = {
       fd.enable = true;
-      fzf.enable = true;
       ripgrep.enable = true;
       nixvim = {
         enable = true;
