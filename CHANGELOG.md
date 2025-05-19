@@ -1,3 +1,30 @@
+# [0.14.0](https://github.com/99linesofcode/home-manager/compare/v0.13.0...v0.14.0) (2025-05-19)
+
+
+### Bug Fixes
+
+* **stylix:** style correct vscode profile instead of the default ([388a1af](https://github.com/99linesofcode/home-manager/commit/388a1af0eb38081b2bed3e50ff5fc6e1e43edef4))
+* **vscode-neovim:** disable neovim configuration in vscode context ([f5698d2](https://github.com/99linesofcode/home-manager/commit/f5698d2bc99f30d33f493dbcb1a856ee6651e771))
+* **vscode:** configure html formatter to force attributes on new line ([291e1de](https://github.com/99linesofcode/home-manager/commit/291e1de8d4bdb94ed5ceebdbb3021d892e2f8739))
+* **vscode:** force font sizes as other windows do not inherit editor.fontSize ([bcaf221](https://github.com/99linesofcode/home-manager/commit/bcaf22141c08c2345a08f5d0383729cc2532ee71))
+* **vscode:** ignore files in .gitignore on search by default ([cf49167](https://github.com/99linesofcode/home-manager/commit/cf4916778bee64b2b702a0ce6142f15a72d7f466))
+* **vscode:** key remapping is handled at kernel level now ([d2c8c52](https://github.com/99linesofcode/home-manager/commit/d2c8c52fe83105916b8889c6f3b7d05dfa4a7421))
+* **vscode:** read extensions from correct nixpkgs ([4f5ff2a](https://github.com/99linesofcode/home-manager/commit/4f5ff2a013861352da6b6f8f32875e5143c7f2d3))
+* **vscode:** use html formatter for blade files since blade doesnt play nice with livewire ([517a3bf](https://github.com/99linesofcode/home-manager/commit/517a3bf5e3fc62b2793283dd9518c9db5a2f40c9))
+
+
+### Features
+
+* **firefox:** completely disable Pocket for added performance boost ([409b9dc](https://github.com/99linesofcode/home-manager/commit/409b9dc4022eae256ec34dc22f3b33f046fe08e1))
+* **firefox:** declare default application ([f015b83](https://github.com/99linesofcode/home-manager/commit/f015b83fc03d6554115a64b8b5bad3186fbb5e27))
+* **nvim-lsp:** intelephense instead of phpactor as lsp ([add025c](https://github.com/99linesofcode/home-manager/commit/add025c99f9721ab2220dd6b1d55d92f6f13cd66))
+* **steam:** replace protonup with steamtinkerlaunch ([80e9696](https://github.com/99linesofcode/home-manager/commit/80e96962e0decf6eb00e0ba9e09b709856c460b7))
+* **vscode:** keybinds for todo tree and cline ([6fae63a](https://github.com/99linesofcode/home-manager/commit/6fae63ac529a8e44373b57227c8957a48f6475af))
+* **vscode:** removed unnecessary UI element cluttering up the workspace ([08eeee4](https://github.com/99linesofcode/home-manager/commit/08eeee4f1a50d3bbae297b72c2bc48d204da4077))
+* **vscode:** toggle and focus sidebar ([9e6bc71](https://github.com/99linesofcode/home-manager/commit/9e6bc714e7945ba6a4174a466c4bfb382da627c0))
+
+
+
 # [0.13.0](https://github.com/99linesofcode/home-manager/compare/v0.12.0...v0.13.0) (2025-04-14)
 
 
@@ -72,38 +99,6 @@
 * **vscode:** python formatting using black ([1f83047](https://github.com/99linesofcode/home-manager/commit/1f830477aa5c9414f5157429894a6f4759dc1cdf))
 * **vscode:** rust formatting using rustfmt ([c1c60aa](https://github.com/99linesofcode/home-manager/commit/c1c60aafddf236efd9ba4aa88a8835d29332dd3f))
 * **vscode:** support for step debugging of compiled languages ([7aae192](https://github.com/99linesofcode/home-manager/commit/7aae1925e5b49acf57648255ccb7e4947418f5b4))
-
-
-
-# [0.9.0](https://github.com/99linesofcode/home-manager/compare/v0.8.0...v0.9.0) (2025-03-17)
-
-
-### Bug Fixes
-
-* **firefox:** automatically enable newly installed extensions ([f11b306](https://github.com/99linesofcode/home-manager/commit/f11b3062ef6a9cadd6499c2817cf96ccac020c74))
-* **firefox:** hide bookmark bar by default ([76c54eb](https://github.com/99linesofcode/home-manager/commit/76c54eb6a94b0e8ee120bafe121559a7ffb3a49d))
-* **hyprland:** Prefix application startup commands with uwsm app -- ([fa4243a](https://github.com/99linesofcode/home-manager/commit/fa4243a8cb9713b07c9cf2bcafcc244064644595))
-* incorrect formatter definition ([5b2918f](https://github.com/99linesofcode/home-manager/commit/5b2918f0561bfe59a0c83478c196a6e4c65c2be8))
-* **mpv:** stylix will handle font definition based on theme ([f24879d](https://github.com/99linesofcode/home-manager/commit/f24879d73038babedda9df71200ed05e52f8c62e))
-* **zsh:** fixed an issue where starting hyprland on login caused system freezes ([f84dc9b](https://github.com/99linesofcode/home-manager/commit/f84dc9b3d3b72adc0dab49f7467b2622b2deff7b))
-
-
-### Features
-
-* **bluetui:** TUI for managing bluetooth connections ([047130b](https://github.com/99linesofcode/home-manager/commit/047130b22905a1988dfe8f55483565abd41fd6d9))
-* **conform.nvim:** blade formatting with blade-formatter and eslint/prettier fallback ([4a71660](https://github.com/99linesofcode/home-manager/commit/4a716604160b4b742a9c377ca993435439809f93))
-* **conform.nvim:** HTML formatting with superhtml, with eslint and prettier fallback ([064e845](https://github.com/99linesofcode/home-manager/commit/064e8459b3eaac56911df9279132858918b760b0))
-* **conform.nvim:** javascript/typescript formatting with eslint_d and fallbacks ([91b83ed](https://github.com/99linesofcode/home-manager/commit/91b83edea38293e273ed4fad6c18b14630f1b67a))
-* **conform.nvim:** markdown formatting with markdownlint-cli2 ([3606f5b](https://github.com/99linesofcode/home-manager/commit/3606f5be96916b2632e1e401520168e83cf4ef48))
-* **conform.nvim:** PHP formatting with laravel/pint and php-cs-fixer ([1b312f6](https://github.com/99linesofcode/home-manager/commit/1b312f673f34f35ab0a89afa5b478280afccc62e))
-* **dap.nvim:** enable debug adapter protocol for PHP ([f978924](https://github.com/99linesofcode/home-manager/commit/f978924b316dbe8732a36e5ae3a134081fbbb973))
-* **eza:** modern alternative to ls ([4024a16](https://github.com/99linesofcode/home-manager/commit/4024a16763fa9a81ed1bce64985d0a029789baa5))
-* **firefox:** added Read Aloud TTS voice reader ([ff27412](https://github.com/99linesofcode/home-manager/commit/ff27412657bf1394154a3ce335942772a04883d3))
-* **firefox:** added Rotten Tomatoes search engine [@rt](https://github.com/rt) ([f79462a](https://github.com/99linesofcode/home-manager/commit/f79462aee04531b585676dc33fffe2e671b015c5))
-* **firefox:** declarative policy definitions ([8ec5c12](https://github.com/99linesofcode/home-manager/commit/8ec5c1222d6acdf74f65bfa05d11fcd06f474db6))
-* **firefox:** hardware video acceleration with nvidia-vaapi-driver ([51057ca](https://github.com/99linesofcode/home-manager/commit/51057cae10b2075a0dcf2c5c0ba310d077b69789))
-* **nvim-dap:** debugging PHP with vscode-php-debug ([524ea6c](https://github.com/99linesofcode/home-manager/commit/524ea6cfebcda5483e84ee3cbe44565420eeb0bd))
-* **zsh:** enable syntax highlighting ([e468103](https://github.com/99linesofcode/home-manager/commit/e468103f8c753cba6e5aa239c4fd095b2af7cb0d))
 
 
 
