@@ -26,6 +26,7 @@ with lib;
         options = [
           "--cmd cd"
         ];
+        enableZshIntegration = true;
       };
 
       zsh = {
