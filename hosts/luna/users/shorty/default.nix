@@ -14,6 +14,7 @@ with lib;
       discord
       electron
       (freecad.override { withWayland = config.home.wayland.enable; })
+      insomnia # FOSS alternative to Postman API tester
       nix-prefetch-git
       polychromatic
       # rustdesk
