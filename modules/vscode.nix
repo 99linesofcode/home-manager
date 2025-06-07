@@ -168,7 +168,7 @@ with lib;
             "css"
             "scss"
           ];
-          "tailwindCss.emmetCompletions" = true;
+          "tailwindCSS.emmetCompletions" = true;
 
           # javascript
           "eslint.format.enable" = true;
