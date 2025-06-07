@@ -56,6 +56,9 @@ with lib;
               --drive-skip-shortcuts \
               --drive-skip-dangling-shortcuts \
               --fast-list \
+              --max-lock 2m \
+              --recover \
+              --resilient \
               --force
             '';
           };
