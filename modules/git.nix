@@ -43,10 +43,11 @@ with lib;
           };
           push = {
             default = "current";
-            recurseSubmodules = "on-demand";
+            recurseSubmodules = "on-demand"; # push submodules before git push
           };
           rebase.autoSquash = true;
           rerere.enabled = true; # REuse REcorded REsolution
+          submodule.recurse = true; # update submodules after pull
           status.submoduleSummary = true;
           tag.gpgSign = true;
         };
