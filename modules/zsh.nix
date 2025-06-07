@@ -42,6 +42,16 @@ with lib;
         historySubstringSearch.enable = true;
         initExtra = ''
           fastfetch
+
+          function a {
+            if [[ -f docker-compose.yml || -f docker-compose.yaml ]]; then
+              if [[ docker ps -f "name=php" -f "publish=80" &>/dev/null ]]; then
+                docker compose exec php php artisan $@
+              fi
+            else
+              php artisan $@
+            fi
+          }
         '';
         oh-my-zsh = {
           enable = true;
@@ -66,8 +76,7 @@ with lib;
         '';
         syntaxHighlighting.enable = true;
         shellAliases = {
-          a = "artisan";
-          tinker = "artisan tinker";
+          tinker = "a tinker";
           cat = "bat --paging=never";
           kamal = "docker run -it --rm -v '$PWD:/workdir' -v '$SSH_AUTH_SOCK:/ssh-agent' -v /var/run/docker.sock:/var/run/docker.sock -e 'SSH_AUTH_SOCK=/ssh-agent' ghcr.io/basecamp/kamal:latest";
         };
