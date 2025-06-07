@@ -89,7 +89,6 @@ with lib;
             };
           };
           friendly-snippets.enable = true;
-          lint.enable = true; # linting
           lualine.enable = true;
           noice.enable = true;
           render-markdown = {
