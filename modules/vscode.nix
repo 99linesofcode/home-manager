@@ -50,6 +50,7 @@ with lib;
           redhat.vscode-yaml
           statiolake.vscode-rustfmt
           stylelint.vscode-stylelint
+          vue.volar
           yzhang.markdown-all-in-one
 
           # PHP
@@ -159,8 +160,6 @@ with lib;
           # emmet
           "emmet.includeLanguages" = {
             "blade" = "html";
-            "vue" = "html";
-            "vue-html" = "html";
           };
 
           # css
