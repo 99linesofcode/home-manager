@@ -40,7 +40,6 @@ with lib;
             "rm *"
           ];
         };
-        historySubstringSearch.enable = true;
         initExtra = ''
           fastfetch
 
@@ -63,6 +62,7 @@ with lib;
             "composer"
             "docker"
             "docker-compose"
+            "fzf"
             "git"
             "laravel"
             "rails"
