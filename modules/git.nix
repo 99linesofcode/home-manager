@@ -65,7 +65,7 @@ with lib;
       zsh = mkIf config.programs.zsh.enable {
         initExtra = ''
           # automatically prune branches both local and remote
-          function gpb {
+          function gpb() {
             git checkout "$(git_main_branch)"
             git fetch
             git remote prune origin
@@ -73,7 +73,7 @@ with lib;
           }
 
           # git remove submodule
-          function grms {
+          function grms() {
             git rm $PWD/$1
             rm -rf $PWD/.git/modules/$1
             git config --remove-section submodule.$1

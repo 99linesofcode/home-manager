@@ -44,13 +44,13 @@ with lib;
         initExtra = ''
           fastfetch
 
-          function a {
-            if [[ -f docker-compose.yml || -f docker-compose.yaml ]]; then
-              if [[ docker ps -f "name=php" -f "publish=80" &>/dev/null ]]; then
-                docker compose exec php php artisan $@
+          function a() {
+            if [ -f docker-compose.yml || -f docker-compose.yaml ]; then
+              if docker ps -f "name=php" -f "publish=80" >/dev/null 2>&1; then
+                docker compose exec php php artisan "$@"
               fi
             else
-              php artisan $@
+              php artisan "$@"
             fi
           }
         '';
