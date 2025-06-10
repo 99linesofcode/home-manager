@@ -324,14 +324,6 @@ with lib;
               desc = "Switch to Other Buffer";
             };
           }
-          {
-            mode = "n";
-            key = "<leader>bd";
-            action = "<cmd>bdelete<cr>";
-            options = {
-              desc = "Delete Buffer";
-            };
-          }
 
           # clear search with <esc>
           {

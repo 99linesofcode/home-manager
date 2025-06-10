@@ -20,14 +20,6 @@
       }
       {
         mode = "n";
-        key = "<leader>bo";
-        action = "<cmd>BufferLineCloseOthers<cr>";
-        options = {
-          desc = "Delete Other Buffers";
-        };
-      }
-      {
-        mode = "n";
         key = "<leader>br";
         action = "<cmd>BufferLineCloseRight<cr>";
         options = {
