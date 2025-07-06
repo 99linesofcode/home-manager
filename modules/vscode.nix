@@ -2,11 +2,9 @@
   config,
   lib,
   pkgs,
-  specialArgs,
   ...
 }:
 let
-  inherit (specialArgs) username;
   cfg = config.home.vscode;
 in
 with lib;
@@ -20,7 +18,7 @@ with lib;
 
     programs.vscode = {
       enable = true;
-      profiles.${username} = {
+      profiles.default = {
         extensions = with pkgs.vscode-marketplace; [
           asvetliakov.vscode-neovim
           bradlc.vscode-tailwindcss
@@ -35,16 +33,17 @@ with lib;
           naumovs.color-highlight
           saoudrizwan.claude-dev # cline
           yo1dog.cursor-align
-          vadimcn.vscode-lldb
+          # vadimcn.vscode-lldb
           waderyan.gitblame
 
           # linters, highlighters and formatters
-          brettm12345.nixfmt-vscode
           davidanson.vscode-markdownlint
           dbaeumer.vscode-eslint
           evgeniypeshkov.syntax-highlighter
           foxundermoon.shell-format
+          jnoortheen.nix-ide
           ms-azuretools.vscode-docker
+          ms-kubernetes-tools.vscode-kubernetes-tools
           ms-python.black-formatter
           open-southeners.laravel-pint
           redhat.vscode-yaml
@@ -148,6 +147,9 @@ with lib;
           };
           "files.trimTrailingWhitespace" = true;
           "outline.collapseItems" = "alwaysCollapse";
+          "search.exclude" = {
+            "**/public/" = true;
+          };
           "search.useIgnoreFiles" = true;
           "window.customTitleBarVisibility" = "never";
           "window.menuBarVisibility" = "toggle";
@@ -177,6 +179,17 @@ with lib;
             "javascriptreact"
             "typescriptreact"
           ];
+
+          # nix
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = "nil";
+          "nix.serverSettings" = {
+            "nil" = {
+              "formatting" = {
+                "command" = [ "nixfmt" ];
+              };
+            };
+          };
 
           # PHP
           "blade.format.enable" = true; # laravel-blade
@@ -214,6 +227,9 @@ with lib;
           };
           "[markdown]" = {
             "editor.defaultFormatter" = "DavidAnson.vscode-markdownlint";
+          };
+          "[nix]" = {
+            "editor.defaultFormatter" = "jnoortheen.nix-ide";
           };
           "[php]" = {
             "editor.defaultFormatter" = "open-southeners.laravel-pint";
