@@ -3,15 +3,17 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.home.PLACEHOLDER;
 in
-  with lib; {
-    options = {
-      home.PLACEHOLDER.enable = mkEnableOption "PLACEHOLDER";
-    };
+with lib;
+{
+  options = {
+    home.PLACEHOLDER.enable = mkEnableOption "PLACEHOLDER";
+  };
 
-    config =
-      mkIf cfg.enable {
-      };
-  }
+  config =
+    mkIf cfg.enable {
+    };
+}

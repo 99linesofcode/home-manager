@@ -31,6 +31,7 @@ with lib;
     bluetui.enable = true;
     brightnessctl.enable = true;
     dunst.enable = true;
+    docker.enable = true;
     eza.enable = true;
     feh = {
       enable = true;
