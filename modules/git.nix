@@ -63,7 +63,7 @@ with lib;
         };
       };
       zsh = mkIf config.programs.zsh.enable {
-        initExtra = ''
+        initContent = ''
           # automatically prune branches both local and remote
           function gpb() {
             git checkout "$(git_main_branch)"

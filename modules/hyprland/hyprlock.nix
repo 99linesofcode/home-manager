@@ -23,12 +23,16 @@ with lib;
               font_size = "128";
               font_family = "Noto Sans";
               position = "200, 300";
+              halign = "left";
+              valign = "bottom";
             }
             {
               text = "cmd[update:1000] echo $(date '+%A, %B %d')";
               font_size = "64";
               font_family = "Noto Sans";
               position = "200, 200";
+              halign = "left";
+              valign = "bottom";
             }
           ];
         };

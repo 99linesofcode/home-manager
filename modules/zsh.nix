@@ -40,7 +40,7 @@ with lib;
             "rm *"
           ];
         };
-        initExtra = ''
+        initContent = ''
           fastfetch
 
           function a() {

@@ -13,7 +13,7 @@ in
 with lib;
 {
   imports = [
-    inputs.stylix.homeManagerModules.stylix
+    inputs.stylix.homeModules.stylix
   ];
 
   options = {

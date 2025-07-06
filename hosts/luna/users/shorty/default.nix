@@ -13,7 +13,8 @@ with lib;
       bitwarden-cli
       discord
       electron
-      (freecad.override { withWayland = config.home.wayland.enable; })
+      # (freecad.override { withWayland = config.home.wayland.enable; })
+      freecad-wayland
       insomnia # FOSS alternative to Postman API tester
       nix-prefetch-git
       polychromatic
