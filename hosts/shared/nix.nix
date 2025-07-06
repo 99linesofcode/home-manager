@@ -16,4 +16,12 @@ with lib;
       use-xdg-base-directories = mkDefault true;
     };
   };
+
+  home = {
+    packages = with pkgs; [
+      nil
+      nixfmt-rfc-style
+    ];
+  };
+
 }
