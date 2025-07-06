@@ -13,7 +13,6 @@ with lib;
     home.PLACEHOLDER.enable = mkEnableOption "PLACEHOLDER";
   };
 
-  config =
-    mkIf cfg.enable {
-    };
+  config = mkIf cfg.enable {
+  };
 }
