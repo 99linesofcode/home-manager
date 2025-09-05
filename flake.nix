@@ -73,7 +73,8 @@
           ];
           extraSpecialArgs = {
             inherit (args) nixpkgs;
-          } // args.extraSpecialArgs;
+          }
+          // args.extraSpecialArgs;
           pkgs = pkgsForSystem (args.system or "x86_64-linux") nixpkgs;
         };
     in
@@ -90,6 +91,17 @@
               fullName = "Jordy Schreuders";
               email = "3071062+99linesofcode@users.noreply.github.com";
               role = "workstation";
+            };
+          };
+          # TODO: dedicated SSH keys and server role configuration
+          "mars.shorty" = HomeConfiguration {
+            extraSpecialArgs = {
+              inherit inputs outputs;
+              hostname = "mars";
+              username = "shorty";
+              fullName = "Jordy Schreuders";
+              email = "3071062+99linesofcode@users.noreply.github.com";
+              role = "server";
             };
           };
         };
