@@ -16,6 +16,13 @@ with lib;
 
   config = mkIf cfg.enable {
     programs = {
+      gh = {
+        enable = true;
+        settings = {
+          color_labels = "enabled";
+          git_protocol = "ssh";
+        };
+      };
       git = {
         enable = true;
         aliases = {
