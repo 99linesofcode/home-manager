@@ -84,7 +84,10 @@ with lib;
           flash = {
             enable = true;
             settings.modes = {
-              char.jump_labels = true;
+              char = {
+                jump_labels = true;
+                jump.autojump = false;
+              };
               search.enabled = true;
             };
           };
