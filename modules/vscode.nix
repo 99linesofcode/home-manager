@@ -188,9 +188,22 @@ with lib;
             "blade" = "html";
           };
 
+          # git
+          "git.autofetch" = true;
+          "git.ignoreLegacyWarning" = true;
+          "git.ignoreMissingGitWarning" = true;
+          "git.openRepositoryInParentFolders" = "never";
+          "git.showPushSuccessNotification" = true;
+          "git.suggestSmartCommit" = false;
+
+          # html formatting
+          "html.format" = {
+            "wrapAttributes" = "force-expand-multiline";
+          };
+
           # javascript
           "eslint.format.enable" = true;
-          "esint.validate" = [
+          "eslint.validate" = [
             "javascript"
             "typescript"
             "javascriptreact"
@@ -212,19 +225,6 @@ with lib;
           "laravel-pint.enable" = true;
           "php.suggest.basic" = false; # intelephese
           "php.validate.enable" = false; # intelephense
-
-          # git
-          "git.autofetch" = true;
-          "git.ignoreLegacyWarning" = true;
-          "git.ignoreMissingGitWarning" = true;
-          "git.openRepositoryInParentFolders" = "never";
-          "git.showPushSuccessNotification" = true;
-          "git.suggestSmartCommit" = false;
-
-          # html formatting
-          "html.format" = {
-            "wrapAttributes" = "force-expand-multiline";
-          };
 
           # todo tree
           "todo-tree.tree.autoRefresh" = true;
