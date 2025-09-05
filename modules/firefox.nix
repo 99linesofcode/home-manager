@@ -14,11 +14,7 @@ with lib;
   options.home.firefox = with types; {
     enable = mkEnableOption "firefox";
     defaultApplication = {
-      enable = mkOption {
-        description = "MIME default application configuration";
-        type = bool;
-        default = false;
-      };
+      enable = mkEnableOption "MIME default application";
       mimeTypes = mkOption {
         description = "MIME types to be the default application for";
         type = listOf str;
@@ -82,6 +78,7 @@ with lib;
             sponsorblock
             read-aloud # TTS
             return-youtube-dislikes
+            vue-js-devtools
             vimium
 
             # TODO: package and contribute these to the NUR?

@@ -16,6 +16,13 @@ with lib;
 
   config = mkIf cfg.enable {
     programs = {
+      gh = {
+        enable = true;
+        settings = {
+          color_labels = "enabled";
+          git_protocol = "ssh";
+        };
+      };
       git = {
         enable = true;
         aliases = {
@@ -43,10 +50,11 @@ with lib;
           };
           push = {
             default = "current";
-            recurseSubmodules = "on-demand";
+            recurseSubmodules = "on-demand"; # push submodules before git push
           };
           rebase.autoSquash = true;
           rerere.enabled = true; # REuse REcorded REsolution
+          submodule.recurse = true; # update submodules after pull
           status.submoduleSummary = true;
           tag.gpgSign = true;
         };
@@ -62,9 +70,9 @@ with lib;
         };
       };
       zsh = mkIf config.programs.zsh.enable {
-        initExtra = ''
+        initContent = ''
           # automatically prune branches both local and remote
-          function gpb {
+          function gpb() {
             git checkout "$(git_main_branch)"
             git fetch
             git remote prune origin
@@ -72,7 +80,7 @@ with lib;
           }
 
           # git remove submodule
-          function grms {
+          function grms() {
             git rm $PWD/$1
             rm -rf $PWD/.git/modules/$1
             git config --remove-section submodule.$1

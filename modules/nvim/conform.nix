@@ -157,7 +157,7 @@
             command = lib.getExe' pkgs.coreutils "cat";
           };
           yq = {
-            command = lib.getExe yq;
+            command = lib.getExe yq-go;
           };
         };
       };

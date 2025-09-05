@@ -84,12 +84,14 @@ with lib;
           flash = {
             enable = true;
             settings.modes = {
-              char.jump_labels = true;
+              char = {
+                jump_labels = true;
+                jump.autojump = false;
+              };
               search.enabled = true;
             };
           };
           friendly-snippets.enable = true;
-          lint.enable = true; # linting
           lualine.enable = true;
           noice.enable = true;
           render-markdown = {
@@ -323,14 +325,6 @@ with lib;
             action = "<cmd>e #<br>";
             options = {
               desc = "Switch to Other Buffer";
-            };
-          }
-          {
-            mode = "n";
-            key = "<leader>bd";
-            action = "<cmd>bdelete<cr>";
-            options = {
-              desc = "Delete Buffer";
             };
           }
 

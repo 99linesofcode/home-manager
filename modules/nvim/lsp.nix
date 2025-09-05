@@ -12,6 +12,7 @@
           bashls.enable = true;
           emmet_ls.enable = true;
           eslint.enable = true;
+          helm_ls.enable = true;
           html.enable = true;
           intelephense = {
             enable = true;

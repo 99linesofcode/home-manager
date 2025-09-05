@@ -2,11 +2,9 @@
   config,
   lib,
   pkgs,
-  specialArgs,
   ...
 }:
 let
-  inherit (specialArgs) username;
   cfg = config.home.vscode;
 in
 with lib;
@@ -20,7 +18,7 @@ with lib;
 
     programs.vscode = {
       enable = true;
-      profiles.${username} = {
+      profiles.default = {
         extensions = with pkgs.vscode-marketplace; [
           asvetliakov.vscode-neovim
           bradlc.vscode-tailwindcss
@@ -35,30 +33,32 @@ with lib;
           naumovs.color-highlight
           saoudrizwan.claude-dev # cline
           yo1dog.cursor-align
-          vadimcn.vscode-lldb
+          # vadimcn.vscode-lldb
           waderyan.gitblame
 
           # linters, highlighters and formatters
-          brettm12345.nixfmt-vscode
           davidanson.vscode-markdownlint
           dbaeumer.vscode-eslint
           evgeniypeshkov.syntax-highlighter
           foxundermoon.shell-format
+          jnoortheen.nix-ide
           ms-azuretools.vscode-docker
+          ms-kubernetes-tools.vscode-kubernetes-tools
           ms-python.black-formatter
           open-southeners.laravel-pint
           redhat.vscode-yaml
           statiolake.vscode-rustfmt
           stylelint.vscode-stylelint
+          vue.volar
           yzhang.markdown-all-in-one
 
           # PHP
           bmewburn.vscode-intelephense-client
           laravel.vscode-laravel
           onecentlin.laravel5-snippets
-          onecentlin.laravel-blade
           # phpactor.vscode-phpactor
           # sanderronde.phpstan-vscode
+          shufo.vscode-blade-formatter
           xdebug.php-debug
         ];
 
@@ -147,6 +147,9 @@ with lib;
           };
           "files.trimTrailingWhitespace" = true;
           "outline.collapseItems" = "alwaysCollapse";
+          "search.exclude" = {
+            "**/public/" = true;
+          };
           "search.useIgnoreFiles" = true;
           "window.customTitleBarVisibility" = "never";
           "window.menuBarVisibility" = "toggle";
@@ -156,34 +159,34 @@ with lib;
           "workbench.sideBar.location" = "right";
           "workbench.startupEditor" = "none";
 
-          # emmet
-          "emmet.includeLanguages" = {
-            "blade" = "html";
-            "vue" = "html";
-            "vue-html" = "html";
-          };
+          # blade
+          "bladeFormatter.format.enabled" = true;
+          "bladeFormatter.format.indentInnerHtml" = true;
+          "bladeFormatter.format.indentSize" = 4;
+          "bladeFormatter.format.noMultipleEmptyLines" = true;
+          "bladeFormatter.format.noPhpSyntaxCheck" = false;
+          "bladeFormatter.format.noSingleQuote" = false;
+          "bladeFormatter.format.noTrailingCommaPhp" = false;
+          "bladeFormatter.format.phpVersion" = "8.4";
+          "bladeFormatter.format.sortHtmlAttributes" = "code-guide";
+          "bladeFormatter.format.sortTailwindcssClasses" = true;
+          "bladeFormatter.format.useTabs" = false;
+          "bladeFormatter.format.wrapAttributes" = "force-expand-multiline";
+          "bladeFormatter.format.wrapAttributesMinAttrs" = 2;
+          "bladeFormatter.format.wrapLineLength" = 120;
+          "bladeFormatter.misc.dontShowNewVersionMessage" = true;
 
           # css
           "stylelint.validate" = [
             "css"
             "scss"
           ];
-          "tailwindCss.emmetCompletions" = true;
+          "tailwindCSS.emmetCompletions" = true;
 
-          # javascript
-          "eslint.format.enable" = true;
-          "esint.validate" = [
-            "javascript"
-            "typescript"
-            "javascriptreact"
-            "typescriptreact"
-          ];
-
-          # PHP
-          "blade.format.enable" = true; # laravel-blade
-          "laravel-pint.enable" = true;
-          "php.suggest.basic" = false; # intelephese
-          "php.validate.enable" = false; # intelephense
+          # emmet
+          "emmet.includeLanguages" = {
+            "blade" = "html";
+          };
 
           # git
           "git.autofetch" = true;
@@ -198,15 +201,73 @@ with lib;
             "wrapAttributes" = "force-expand-multiline";
           };
 
-          # todo tree
-          "todo-tree.tree.autoRefresh" = true;
+          # javascript
+          "eslint.format.enable" = true;
+          "eslint.validate" = [
+            "javascript"
+            "typescript"
+            "javascriptreact"
+            "typescriptreact"
+          ];
+
+          # nix
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = "nil";
+          "nix.serverSettings" = {
+            "nil" = {
+              "formatting" = {
+                "command" = [ "nixfmt" ];
+              };
+            };
+          };
+
+          # php
+          "laravel-pint.enable" = true;
+          "php.suggest.basic" = false; # intelephese
+          "php.validate.enable" = false; # intelephense
 
           # telemetry
           "redhat.telemetry.enabled" = false;
           "telemetry.telemetryLevel" = "off";
           "update.mode" = "none";
 
+          # todo tree
+          "todo-tree.tree.autoRefresh" = true;
+          "todo-tree.useBuiltInExcludes" = "search excludes";
+          "todo-tree.highlights.customHighlight" = {
+            "WARN" = {
+              "foreground" = "#000";
+              "background" = "#ffc386";
+              "iconColour" = "#ffc386";
+              "icon" = "alert";
+            };
+            "TODO" = {
+              "foreground" = "#000";
+              "background" = "#f4ff81";
+              "iconColour" = "#f4ff81";
+              "icon" = "check-circle";
+            };
+            "FIXME" = {
+              "foreground" = "#000";
+              "background" = "#ff7f7f";
+              "iconColour" = "#ff7f7f";
+              "icon" = "flame";
+            };
+          };
+          "todo-tree.highlights.defaultHighlight" = {
+            "type" = "text-and-comment";
+          };
+          "todo-tree.general.tags" = [
+            "TODO"
+            "WARN"
+            "FIXME"
+            "REVIEW"
+          ];
+
           # formatting
+          "[blade]" = {
+            "editor.defaultFormatter" = "shufo.vscode-blade-formatter";
+          };
           "[dockerfile]" = {
             "editor.defaultFormatter" = "ms-azuretools.vscode-docker";
           };
@@ -215,6 +276,9 @@ with lib;
           };
           "[markdown]" = {
             "editor.defaultFormatter" = "DavidAnson.vscode-markdownlint";
+          };
+          "[nix]" = {
+            "editor.defaultFormatter" = "jnoortheen.nix-ide";
           };
           "[php]" = {
             "editor.defaultFormatter" = "open-southeners.laravel-pint";

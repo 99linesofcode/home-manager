@@ -13,7 +13,9 @@ with lib;
       bitwarden-cli
       discord
       electron
-      (freecad.override { withWayland = config.home.wayland.enable; })
+      # (freecad.override { withWayland = config.home.wayland.enable; })
+      freecad-wayland
+      insomnia # FOSS alternative to Postman API tester
       nix-prefetch-git
       polychromatic
       # rustdesk
@@ -29,6 +31,7 @@ with lib;
     bluetui.enable = true;
     brightnessctl.enable = true;
     dunst.enable = true;
+    docker.enable = true;
     eza.enable = true;
     feh = {
       enable = true;
@@ -41,9 +44,9 @@ with lib;
     gammastep.enable = true;
     git.enable = true;
     grim.enable = true;
+    gnome-keyring.enable = true;
     google-drive.enable = true;
     hyprland.enable = true;
-    keyring.enable = true;
     lazydocker.enable = true;
     mpv.enable = true;
     nvim.enable = true;
