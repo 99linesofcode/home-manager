@@ -6,7 +6,7 @@
 
     plugins = {
       lint = {
-        enable = false;
+        enable = true;
         lintersByFt = {
           dockerfile = [
             "hadolint"
@@ -32,6 +32,9 @@
           ];
           text = [
             "vale"
+          ];
+          yaml = [
+            "yq"
           ];
         };
       };
