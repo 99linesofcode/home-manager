@@ -1,3 +1,36 @@
+# [0.16.0](https://github.com/99linesofcode/home-manager/compare/v0.15.0...v0.16.0) (2025-09-05)
+
+
+### Bug Fixes
+
+* make shell functions POSIX compliant ([2ab1b68](https://github.com/99linesofcode/home-manager/commit/2ab1b6831292a0d948314acfcff38b58ac328148))
+* **nvim:** calling bdelete closed the whole editor session ([e7215a7](https://github.com/99linesofcode/home-manager/commit/e7215a7a2d3a9f5b7316f5076ce8ce38952b8d46))
+* **nvim:** disable flash autojump on single result ([26d304e](https://github.com/99linesofcode/home-manager/commit/26d304ed509cb7dcbc2f484220c3cd4143dc1ae0))
+* **obsidian:** automatically bounce back from almost any interruption ([e740c31](https://github.com/99linesofcode/home-manager/commit/e740c314b7543d7e27a4762eb15c31332f62df0d))
+* **steam:** missing fonts causing Wine installation wizards to crash ([6b3187d](https://github.com/99linesofcode/home-manager/commit/6b3187d27f58c71f6da3967ff4c673fa256bce3c))
+* **vscode:** blade formatting using vscode-blade-formatter ([7935469](https://github.com/99linesofcode/home-manager/commit/793546926810cf23250663989726ae2666dab42c))
+* **vscode:** emmet completions didnt work for TailwindCSS ([e705ed1](https://github.com/99linesofcode/home-manager/commit/e705ed1892d5d8a00a0f322fe25ea19ba4b903d0))
+* **vscode:** typo in eslint.validate block ([6a37f1a](https://github.com/99linesofcode/home-manager/commit/6a37f1a0a07df9d0ceb8e4b94455009a425594fc))
+* **zsh:** enable zsh integration for fzf ([4f5c92c](https://github.com/99linesofcode/home-manager/commit/4f5c92c4213b7651ab5061f1a8f28af9adc4a672))
+* **zsh:** history substring search was not using fzf ([8c511b4](https://github.com/99linesofcode/home-manager/commit/8c511b47208d727bff3adcdab7e12c33ca1df281))
+
+
+### Features
+
+* **artisan:** automatically run inside PHP container if present ([712b2f0](https://github.com/99linesofcode/home-manager/commit/712b2f0e782eda1b45b585ae45926a367d0ff09f))
+* **docker:** use gnome keyring as credential store ([122a00e](https://github.com/99linesofcode/home-manager/commit/122a00e1f18af82b00c801af6b90d1908978482f))
+* **firefox:** add vuejs devtools ([aebe150](https://github.com/99linesofcode/home-manager/commit/aebe15005e9040ff22ea02d87985ac84ddac15a2))
+* **git:** enable github cli ([e77e483](https://github.com/99linesofcode/home-manager/commit/e77e4839643f2f84049b4d241e25250123a38f9a))
+* **git:** update submodules on pull ([5739de3](https://github.com/99linesofcode/home-manager/commit/5739de39065fae6036f14ce8c228005e47fa9f6a))
+* **insomnia:** FOSS Postman alternative ([9d02f92](https://github.com/99linesofcode/home-manager/commit/9d02f9272b95ff840c7e10b1092a38e7b959c422))
+* install nil and nixfmt-rfc system wide ([bdcdf1f](https://github.com/99linesofcode/home-manager/commit/bdcdf1f94c7281f0cc61a99f5689b20aff55e526))
+* **nvim:** fix yaml linting and formatting by using yq-go ([4768487](https://github.com/99linesofcode/home-manager/commit/47684873a7c7555863823f8fbe2ddc6f8bb9588f))
+* **nvim:** install helm language server ([4264ddb](https://github.com/99linesofcode/home-manager/commit/4264ddb5c793c0f403863d3fe5a86772e284eda2))
+* **vscode:** add todo-tree styling ([2fdf2dd](https://github.com/99linesofcode/home-manager/commit/2fdf2dd7818fd4f6960b605478b49374d53d2cd6))
+* **vscode:** Vuejs syntax highlighting, formatting, etc. ([495563f](https://github.com/99linesofcode/home-manager/commit/495563f53c945089ad35fa118e8aaa2d51983293))
+
+
+
 # [0.15.0](https://github.com/99linesofcode/home-manager/compare/v0.14.0...v0.15.0) (2025-05-19)
 
 
@@ -71,23 +104,6 @@
 * **ssh:** configure agent forwarding and keep alive where relevant ([8e97416](https://github.com/99linesofcode/home-manager/commit/8e97416f772b9bd5cb0ba88031c324d026d189bc))
 * **yazi:** sensible default configuration ([d350b1a](https://github.com/99linesofcode/home-manager/commit/d350b1aa9121634b5f853e4051016a152beb3efd))
 * **zsh:** start hyprland through uwsm on profile load ([74496e2](https://github.com/99linesofcode/home-manager/commit/74496e21c49dd3a9be4dd101bfa8b12ee8ef47b0))
-
-
-
-# [0.11.0](https://github.com/99linesofcode/home-manager/compare/v0.10.0...v0.11.0) (2025-03-20)
-
-
-### Bug Fixes
-
-* **clipboard:** not working due to unset WAYLAND_DISPLAY env variable ([16f97d7](https://github.com/99linesofcode/home-manager/commit/16f97d7f73f0decfb92584daf23807f1d6b67fa7))
-* **hyprland:** enable graphical polkit authentication agent ([28a349d](https://github.com/99linesofcode/home-manager/commit/28a349daefc27e47ec27a08590295a7ca64e8580))
-* **obsidian:** prevent halting on large vault updates ([272dc7f](https://github.com/99linesofcode/home-manager/commit/272dc7ff2087a505cba118646e1fd0a67f59d1a2))
-* **obsidian:** service shouldn't depend on or be wanted by anything ([4374a85](https://github.com/99linesofcode/home-manager/commit/4374a857a745d2ed6f61d2f972ee8b09e277367a))
-
-
-### Features
-
-* **obsidian:** bi-directional synchronization of Obsidian.md vault ([a7bbdfc](https://github.com/99linesofcode/home-manager/commit/a7bbdfc4d3750ecab4e49aacdcbd7611d58fb71a))
 
 
 
