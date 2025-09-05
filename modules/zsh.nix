@@ -70,7 +70,7 @@ with lib;
           ];
           theme = "juanghurtado";
         };
-        profileExtra = ''
+        profileExtra = mkIf config.home.wayland.enable ''
           if uwsm check may-start; then
             exec uwsm start default
           fi

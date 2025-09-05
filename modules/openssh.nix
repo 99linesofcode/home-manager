@@ -40,10 +40,10 @@ with lib;
 
     programs.ssh = {
       enable = true;
+      forwardAgent = true;
+      serverAliveInterval = 30;
       matchBlocks = {
         "*.${s}${_p}${_a}${m}${t}${r}${a_}${p_}" = {
-          forwardAgent = true;
-          serverAliveInterval = 30;
         };
       };
     };
