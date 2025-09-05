@@ -226,13 +226,43 @@ with lib;
           "php.suggest.basic" = false; # intelephese
           "php.validate.enable" = false; # intelephense
 
-          # todo tree
-          "todo-tree.tree.autoRefresh" = true;
-
           # telemetry
           "redhat.telemetry.enabled" = false;
           "telemetry.telemetryLevel" = "off";
           "update.mode" = "none";
+
+          # todo tree
+          "todo-tree.tree.autoRefresh" = true;
+          "todo-tree.useBuiltInExcludes" = "search excludes";
+          "todo-tree.highlights.customHighlight" = {
+            "WARN" = {
+              "foreground" = "#000";
+              "background" = "#ffc386";
+              "iconColour" = "#ffc386";
+              "icon" = "alert";
+            };
+            "TODO" = {
+              "foreground" = "#000";
+              "background" = "#f4ff81";
+              "iconColour" = "#f4ff81";
+              "icon" = "check-circle";
+            };
+            "FIXME" = {
+              "foreground" = "#000";
+              "background" = "#ff7f7f";
+              "iconColour" = "#ff7f7f";
+              "icon" = "flame";
+            };
+          };
+          "todo-tree.highlights.defaultHighlight" = {
+            "type" = "text-and-comment";
+          };
+          "todo-tree.general.tags" = [
+            "TODO"
+            "WARN"
+            "FIXME"
+            "REVIEW"
+          ];
 
           # formatting
           "[blade]" = {
