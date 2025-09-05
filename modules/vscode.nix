@@ -56,9 +56,9 @@ with lib;
           bmewburn.vscode-intelephense-client
           laravel.vscode-laravel
           onecentlin.laravel5-snippets
-          onecentlin.laravel-blade
           # phpactor.vscode-phpactor
           # sanderronde.phpstan-vscode
+          shufo.vscode-blade-formatter
           xdebug.php-debug
         ];
 
@@ -159,10 +159,22 @@ with lib;
           "workbench.sideBar.location" = "right";
           "workbench.startupEditor" = "none";
 
-          # emmet
-          "emmet.includeLanguages" = {
-            "blade" = "html";
-          };
+          # blade
+          "bladeFormatter.format.enabled" = true;
+          "bladeFormatter.format.indentInnerHtml" = true;
+          "bladeFormatter.format.indentSize" = 4;
+          "bladeFormatter.format.noMultipleEmptyLines" = true;
+          "bladeFormatter.format.noPhpSyntaxCheck" = false;
+          "bladeFormatter.format.noSingleQuote" = false;
+          "bladeFormatter.format.noTrailingCommaPhp" = false;
+          "bladeFormatter.format.phpVersion" = "8.4";
+          "bladeFormatter.format.sortHtmlAttributes" = "code-guide";
+          "bladeFormatter.format.sortTailwindcssClasses" = true;
+          "bladeFormatter.format.useTabs" = false;
+          "bladeFormatter.format.wrapAttributes" = "force-expand-multiline";
+          "bladeFormatter.format.wrapAttributesMinAttrs" = 2;
+          "bladeFormatter.format.wrapLineLength" = 120;
+          "bladeFormatter.misc.dontShowNewVersionMessage" = true;
 
           # css
           "stylelint.validate" = [
@@ -170,6 +182,11 @@ with lib;
             "scss"
           ];
           "tailwindCSS.emmetCompletions" = true;
+
+          # emmet
+          "emmet.includeLanguages" = {
+            "blade" = "html";
+          };
 
           # javascript
           "eslint.format.enable" = true;
@@ -191,8 +208,7 @@ with lib;
             };
           };
 
-          # PHP
-          "blade.format.enable" = true; # laravel-blade
+          # php
           "laravel-pint.enable" = true;
           "php.suggest.basic" = false; # intelephese
           "php.validate.enable" = false; # intelephense
@@ -219,6 +235,9 @@ with lib;
           "update.mode" = "none";
 
           # formatting
+          "[blade]" = {
+            "editor.defaultFormatter" = "shufo.vscode-blade-formatter";
+          };
           "[dockerfile]" = {
             "editor.defaultFormatter" = "ms-azuretools.vscode-docker";
           };
