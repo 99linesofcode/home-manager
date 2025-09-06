@@ -11,16 +11,15 @@ let
 in
 with lib;
 {
-  imports =
-    [
-      ./nix.nix
-      ./locale.nix
-    ]
-    ++ existing-imports [
-      ./role/${role}.nix
-      ./users/${username}
-      ./users/${username}.nix
-    ];
+  imports = [
+    ./nix.nix
+    ./locale.nix
+  ]
+  ++ existing-imports [
+    ./role/${role}.nix
+    ./users/${username}
+    ./users/${username}.nix
+  ];
 
   xdg = {
     mime.enable = mkDefault true;
@@ -32,12 +31,14 @@ with lib;
     packages = with pkgs; [
       imagemagick
       ffmpeg
+      jq
       mupdf
       rsync
       tldr
       wireguard-tools
       xdg-utils
       xdg-user-dirs
+      yq-go
       # compression and extraction
       unzip
       wget
