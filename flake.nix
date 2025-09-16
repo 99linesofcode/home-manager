@@ -72,7 +72,7 @@
             (import ./modules)
           ];
           extraSpecialArgs = {
-            inherit (args) nixpkgs;
+            inherit self inputs outputs;
           }
           // args.extraSpecialArgs;
           pkgs = pkgsForSystem (args.system or "x86_64-linux") nixpkgs;
@@ -85,7 +85,6 @@
         homeConfigurations = {
           "luna.shorty" = HomeConfiguration {
             extraSpecialArgs = {
-              inherit inputs outputs;
               hostname = "luna";
               username = "shorty";
               fullName = "Jordy Schreuders";
@@ -96,7 +95,6 @@
           # TODO: dedicated SSH keys and server role configuration
           "mars.shorty" = HomeConfiguration {
             extraSpecialArgs = {
-              inherit inputs outputs;
               hostname = "mars";
               username = "shorty";
               fullName = "Jordy Schreuders";
