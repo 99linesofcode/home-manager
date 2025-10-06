@@ -54,4 +54,8 @@ with lib;
       };
     };
   };
+
+  services = {
+    espanso.enable = true;
+  };
 }
