@@ -44,13 +44,21 @@ with lib;
           fastfetch
 
           function a() {
-            if [ -f docker-compose.yml || -f docker-compose.yaml ]; then
-              if docker ps -f "name=php" -f "publish=80" >/dev/null 2>&1; then
+            if [ -f docker-compose.yml ] || [ -f docker-compose.yaml ]; then
+              if docker ps -f "name=php" -f "publish=80" --format "{{.ID}}" | grep -q .; then
                 docker compose exec php php artisan "$@"
+                return
               fi
-            else
-              php artisan "$@"
             fi
+
+            # TODO: local PHP should probably take precedence when dnsmasq is setup correctly
+            if command -v php >/dev/null 2>&1; then
+              php artisan "$@"
+              return
+            fi
+
+            echo "Failed to run artisan. Could not find PHP or PHP docker container."
+            return 1
           }
         '';
         oh-my-zsh = {
