@@ -47,6 +47,7 @@ with lib;
     gnome-keyring.enable = true;
     google-drive.enable = true;
     hyprland.enable = true;
+    impala.enable = true;
     lazydocker.enable = true;
     mpv.enable = true;
     nvim.enable = true;
