@@ -130,7 +130,7 @@ with lib;
             "tooltip-format-ethernet" = "  {ifname} ({ipaddr}/{cidr})";
             "tooltip-format-disconnected" = "Disconnected";
             "max-length" = 50;
-            "on-click" = "which impala &>/dev/null && ${uwsmPrefix}alacritty -e impala || ${uwsmPrefix}nmtui";
+            "on-click" = "${uwsmPrefix}alacritty -e impala";
           };
 
           "bluetooth" = {
@@ -141,8 +141,7 @@ with lib;
             "tooltip-format" = "{device_alias}";
             "tooltip-format-connected" = "󰂰 {device_enumerate}";
             "tooltip-format-enumerate-connected" = "{device_alias}";
-            "on-click" =
-              "which bluetui &>/dev/null && ${uwsmPrefix}alacritty -e bluetui || ${uwsmPrefix}blueman-manager";
+            "on-click" = "${uwsmPrefix}alacritty -e bluetui";
           };
 
           "battery" = {
