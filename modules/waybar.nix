@@ -121,6 +121,7 @@ with lib;
           };
 
           "network" = {
+            "interface" = "wlan0";
             "format" = "{ifname}";
             "format-wifi" = "   {signalStrength}%";
             "format-ethernet" = "  {ipaddr}";
