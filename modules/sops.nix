@@ -28,9 +28,8 @@ with lib;
     sops = {
       defaultSopsFile = ../.sops.yaml;
       age = {
-        generateKey = true;
+        generateKey = false;
         sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
-        keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
       };
     };
   };

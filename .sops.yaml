@@ -1,19 +1,15 @@
 keys:
-  - &master age1nww8elvlr7l2sn2452z6wef8tyex53ehrypemkxhzfay2t99x52scwsw94
-  - &user_shorty age10a049meemjvgdgukx6zu5lwu82mqul83l7fyd66tzy9sm8637s7q07ujez
+  - &master age1hy523tlslqas8qgs0lxgxanp9gx06fjekn608w4qf66mxkjzmucqh0g6vg
 creation_rules:
   - path_regex: hosts/shared/secrets/.*
     key_groups:
       - age:
           - *master
-          - *user_shorty
-  - path_regex: hosts/luna/secrets/.*
+  - path_regex: hosts/luna/.*/secrets/.*
     key_groups:
       - age:
           - *master
-          - *user_shorty
   - path_regex: hosts/luna/users/shorty/secrets/.*
     key_groups:
       - age:
           - *master
-          - *user_shorty
