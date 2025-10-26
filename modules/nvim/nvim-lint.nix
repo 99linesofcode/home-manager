@@ -18,8 +18,7 @@
             "vale"
           ];
           php = [
-            "pint"
-            "php_cs_fixer"
+            "phpstan"
           ];
           rst = [
             "vale"

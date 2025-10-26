@@ -1,34 +1,29 @@
-# TODO: generate keys and update creation rules dynamically on nixos-anywhere install (update yaml with yq)
 keys:
-  - &master age1nww8elvlr7l2sn2452z6wef8tyex53ehrypemkxhzfay2t99x52scwsw94
-  - &luna_shorty age10a049meemjvgdgukx6zu5lwu82mqul83l7fyd66tzy9sm8637s7q07ujez
-  - &mars_shorty age1pztum0c6dy94ah2rcwfd983hwhg8mwum3uljpwguu8cypxrs0uxsqz6hc5
+  - &master age1hy523tlslqas8qgs0lxgxanp9gx06fjekn608w4qf66mxkjzmucqh0g6vg
+  - &host_mars age1epkfxmjk0tlne8rmxqq77u06q3lnf5xfjcrwq42nuasswefndyfscw84cy
+  - &user_shorty age1hy523tlslqas8qgs0lxgxanp9gx06fjekn608w4qf66mxkjzmucqh0g6vg
 creation_rules:
   - path_regex: hosts/shared/secrets/.*
     key_groups:
       - age:
           - *master
-          - *luna_shorty
-          - *mars_shorty
-  - path_regex: hosts/luna/secrets/.*
+          - *host_mars
+          - *user_shorty
+  - path_regex: hosts/luna/.*/secrets/.*
     key_groups:
       - age:
           - *master
-          - *luna_shorty
   - path_regex: hosts/luna/users/shorty/secrets/.*
     key_groups:
       - age:
           - *master
-          - *luna_shorty
-  - path_regex: hosts/mars/secrets/.*
+  - path_regex: hosts/mars/.*/secrets/.*
     key_groups:
       - age:
           - *master
-          - *luna_shorty
-          - *mars_shorty
+          - *host_mars
   - path_regex: hosts/mars/users/shorty/secrets/.*
     key_groups:
       - age:
           - *master
-          - *luna_shorty
-          - *mars_shorty
+          - *user_shorty

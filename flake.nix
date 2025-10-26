@@ -46,9 +46,7 @@
       inherit (self) outputs;
 
       systems = [
-        "aarch64-darwin"
         "aarch64-linux"
-        "x86_64-darwin"
         "x86_64-linux"
       ];
 
@@ -72,8 +70,9 @@
             (import ./modules)
           ];
           extraSpecialArgs = {
-            inherit (args) nixpkgs;
-          } // args.extraSpecialArgs;
+            inherit self inputs outputs;
+          }
+          // args.extraSpecialArgs;
           pkgs = pkgsForSystem (args.system or "x86_64-linux") nixpkgs;
         };
     in
@@ -84,12 +83,21 @@
         homeConfigurations = {
           "luna.shorty" = HomeConfiguration {
             extraSpecialArgs = {
-              inherit inputs outputs;
               hostname = "luna";
               username = "shorty";
               fullName = "Jordy Schreuders";
               email = "3071062+99linesofcode@users.noreply.github.com";
               role = "workstation";
+            };
+          };
+          # TODO: dedicated SSH keys and server role configuration
+          "mars.shorty" = HomeConfiguration {
+            extraSpecialArgs = {
+              hostname = "mars";
+              username = "shorty";
+              fullName = "Jordy Schreuders";
+              email = "3071062+99linesofcode@users.noreply.github.com";
+              role = "server";
             };
           };
         };

@@ -6,7 +6,7 @@ in
 {
   sops.secrets.openrouter_api_key = {
     format = "binary";
-    sopsFile = ../../hosts/${hostname}/users/${username}/secrets/openrouter_api_key;
+    sopsFile = ../../hosts/shared/secrets/openrouter_api_key;
     path = "%r/openrouter_api_key";
   };
 

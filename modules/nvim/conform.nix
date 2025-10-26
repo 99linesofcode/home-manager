@@ -44,7 +44,6 @@
           ];
           sh = [
             "shellcheck"
-            "shellharden"
             "shfmt"
           ];
           bash = [

@@ -73,7 +73,8 @@ with lib;
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             bitwarden
             darkreader
-            gaoptout # Google Analytics opt out
+            # fake-filler # TODO: added in a later commit
+            gaoptout
             ublock-origin
             sponsorblock
             read-aloud # TTS

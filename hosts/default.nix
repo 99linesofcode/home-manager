@@ -14,14 +14,13 @@ let
 in
 with lib;
 {
-  imports =
-    [
-      ./shared
-    ]
-    ++ existing-imports [
-      ./${hostname}
-      ./${hostname}.nix
-    ];
+  imports = [
+    ./shared
+  ]
+  ++ existing-imports [
+    ./${hostname}
+    ./${hostname}.nix
+  ];
 
   nixpkgs = {
     config = {
