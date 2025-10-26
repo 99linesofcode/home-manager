@@ -1,3 +1,28 @@
+# [0.17.0](https://github.com/99linesofcode/home-manager/compare/v0.16.0...v0.17.0) (2025-10-26)
+
+
+### Bug Fixes
+
+* **nvim-conform:** don't run shellharden in sh ([ee46a77](https://github.com/99linesofcode/home-manager/commit/ee46a7717f8c94a9c53eb0d107fd7c61d01e0ef9))
+* **nvim:** php linting using phpstan ([4a42df7](https://github.com/99linesofcode/home-manager/commit/4a42df743489391571af5e91fd668c387dfcd751))
+* **openssh:** automatically forward agent and keep connection alive ([3881051](https://github.com/99linesofcode/home-manager/commit/3881051098680b7a67389ebe491891f8dcdcbd16))
+* **waybar:** assume impala since nmtui won't be installed ([0b45065](https://github.com/99linesofcode/home-manager/commit/0b45065e2eecb00418d0e16b5ced70cb8f5dbe6c))
+* **waybar:** hardcode network interface to prevent faulty autoselect ([fc8842b](https://github.com/99linesofcode/home-manager/commit/fc8842be5c100193d866b9c4515611b2dd753a0e))
+* **zsh:** only add uwsm start to .zprofile if wayland is enabled ([3c9a6b5](https://github.com/99linesofcode/home-manager/commit/3c9a6b51c90df4c847d0d4b7a763e5f5782d24c5))
+* **zsh:** running artisan in container or local using the a() function ([35e78c2](https://github.com/99linesofcode/home-manager/commit/35e78c2cf1b1b5d2111b0c5085c9df53fcd6273f))
+
+
+### Features
+
+* **alias:** run both artisan and composer in docker container if available ([95a72bd](https://github.com/99linesofcode/home-manager/commit/95a72bd04215eab089caa035e47db74a88fa1c1d))
+* **deploy:** let nixos-config handle initial provisioning ([8b8172b](https://github.com/99linesofcode/home-manager/commit/8b8172b9bb657a0b050f1e546ec2785117c2bf94))
+* **deploy:** succesful deployment of the mars host ([7cc7ee1](https://github.com/99linesofcode/home-manager/commit/7cc7ee13c6c5793c2ed18248d95a2ecdbd16239d))
+* **espanso:** a text expander ([7e5fd1b](https://github.com/99linesofcode/home-manager/commit/7e5fd1b3a5e43b5c402e52a231e8e042b27377f2))
+* **impala:** iwd based TUI wifi manager ([3fb2154](https://github.com/99linesofcode/home-manager/commit/3fb21541cd52731b9092dd0531117dc2ed94fd03))
+* install jq and yq globally ([0e24dca](https://github.com/99linesofcode/home-manager/commit/0e24dca161850f6eabe21aed31eef08716b5f1a1))
+
+
+
 # [0.16.0](https://github.com/99linesofcode/home-manager/compare/v0.15.0...v0.16.0) (2025-09-05)
 
 
@@ -86,24 +111,6 @@
 * **hyprlock:** display date and time on lock screen ([4ece5ab](https://github.com/99linesofcode/home-manager/commit/4ece5ab77e8d3aa470745406424df747e5725591))
 * **hyprpaper:** load a random wallpaper every 30 minutes ([4056f80](https://github.com/99linesofcode/home-manager/commit/4056f80ec7b78642367f9e82c73d1bd9a988c7ab))
 * **zathura:** declare default application for common mimetypes ([7a3d45a](https://github.com/99linesofcode/home-manager/commit/7a3d45a02f81ed433b64ccddafb31cd8ecb4a750))
-
-
-
-# [0.12.0](https://github.com/99linesofcode/home-manager/compare/v0.11.0...v0.12.0) (2025-04-10)
-
-
-### Bug Fixes
-
-* disable rustdesk and vscode as they fail to build atm ([dac424f](https://github.com/99linesofcode/home-manager/commit/dac424f80fea665f60c1de052e096ec79786127f))
-* **zellij:** disable startup tips ([92e9fa4](https://github.com/99linesofcode/home-manager/commit/92e9fa42cd032cfdda94f6dcd8c60f245eecaa5a))
-
-
-### Features
-
-* **mpv:** configure yazi open rules if yazi is enabled ([d0e308b](https://github.com/99linesofcode/home-manager/commit/d0e308b90d975b28fb6a36d7da8df4634aa4d4ea))
-* **ssh:** configure agent forwarding and keep alive where relevant ([8e97416](https://github.com/99linesofcode/home-manager/commit/8e97416f772b9bd5cb0ba88031c324d026d189bc))
-* **yazi:** sensible default configuration ([d350b1a](https://github.com/99linesofcode/home-manager/commit/d350b1aa9121634b5f853e4051016a152beb3efd))
-* **zsh:** start hyprland through uwsm on profile load ([74496e2](https://github.com/99linesofcode/home-manager/commit/74496e21c49dd3a9be4dd101bfa8b12ee8ef47b0))
 
 
 
