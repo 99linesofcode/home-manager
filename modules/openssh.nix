@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (specialArgs) hostname username;
+  inherit (specialArgs) hostname;
   cfg = config.home.openssh;
   s = "99";
   _p = "li";
@@ -26,13 +26,13 @@ with lib;
     sops.secrets = {
       "ssh/id_ed25519" = {
         format = "binary";
-        sopsFile = ../hosts/${hostname}/users/${username}/secrets/id_ed25519;
+        sopsFile = ../hosts/${hostname}/users/${config.home.username}/secrets/id_ed25519;
         path = config.home.homeDirectory + "/.ssh/id_ed25519";
         mode = "600";
       };
       "ssh/id_ed25519.pub" = {
         format = "binary";
-        sopsFile = ../hosts/${hostname}/users/${username}/secrets/id_ed25519.pub;
+        sopsFile = ../hosts/${hostname}/users/${config.home.username}/secrets/id_ed25519.pub;
         path = config.home.homeDirectory + "/.ssh/id_ed25519.pub";
         mode = "600";
       };

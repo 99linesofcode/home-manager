@@ -8,19 +8,20 @@
           "v"
         ];
         key = "<leader>sr";
-        action.__raw = ''
-          function()
-            local grug = require("grug-far")
-            local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
+        action.__raw = # lua
+          ''
+            function()
+              local grug = require("grug-far")
+              local ext = vim.bo.buftype == "" and vim.fn.expand("%:e")
 
-            grug.open({
-              transient = true,
-              prefills = {
-                filesFilter = ext and ext ~= "" and "*." .. ext or nil,
-              },
-            })
-          end
-        '';
+              grug.open({
+                transient = true,
+                prefills = {
+                  filesFilter = ext and ext ~= "" and "*." .. ext or nil,
+                },
+              })
+            end
+          '';
         options = {
           desc = "Search and Replace";
         };

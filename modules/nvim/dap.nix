@@ -8,21 +8,23 @@ let
     name = "Launch (CodeLLDB)";
     type = "codelldb";
     request = "launch";
-    program.__raw = ''
-      function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. '/', "file")
-      end
-    '';
+    program.__raw = # lua
+      ''
+        function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. '/', "file")
+        end
+      '';
   };
   gdb = {
     name = "Launch (GDB)";
     type = "gdb";
     request = "launch";
-    program.__raw = ''
-      function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. '/', "file")
-      end
-    '';
+    program.__raw = # lua
+      ''
+        function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. '/', "file")
+        end
+      '';
   };
 in
 {
@@ -120,9 +122,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dB";
-        action.__raw = ''
-          function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").set_breakpoint(vim.fn.input('Breakpoint condition: ')) end
+          '';
         options = {
           desc = "Breakpoint Condition";
         };
@@ -130,9 +133,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>db";
-        action.__raw = ''
-          function() require("dap").toggle_breakpoint() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").toggle_breakpoint() end
+          '';
         options = {
           desc = "Toggle Breakpoint";
         };
@@ -140,9 +144,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dc";
-        action.__raw = ''
-          function() require("dap").continue() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").continue() end
+          '';
         options = {
           desc = "Continue";
         };
@@ -160,9 +165,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dC";
-        action.__raw = ''
-          function() require("dap").run_to_cursor() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").run_to_cursor() end
+          '';
         options = {
           desc = "Run to Cursor";
         };
@@ -170,9 +176,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dg";
-        action.__raw = ''
-          function() require("dap").goto_() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").goto_() end
+          '';
         options = {
           desc = "Go to Line (No Execute)";
         };
@@ -180,9 +187,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>di";
-        action.__raw = ''
-          function() require("dap").step_into() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").step_into() end
+          '';
         options = {
           desc = "Step Into";
         };
@@ -190,9 +198,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dj";
-        action.__raw = ''
-          function() require("dap").down() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").down() end
+          '';
         options = {
           desc = "Down";
         };
@@ -200,9 +209,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dk";
-        action.__raw = ''
-          function() require("dap").up() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").up() end
+          '';
         options = {
           desc = "Up";
         };
@@ -210,9 +220,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dl";
-        action.__raw = ''
-          function() require("dap").run_last() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").run_last() end
+          '';
         options = {
           desc = "Run Last";
         };
@@ -220,9 +231,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>do";
-        action.__raw = ''
-          function() require("dap").step_out() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").step_out() end
+          '';
         options = {
           desc = "Step Out";
         };
@@ -230,9 +242,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dO";
-        action.__raw = ''
-          function() require("dap").step_over() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").step_over() end
+          '';
         options = {
           desc = "Step Over";
         };
@@ -240,9 +253,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dp";
-        action.__raw = ''
-          function() require("dap").pause() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").pause() end
+          '';
         options = {
           desc = "Pause";
         };
@@ -250,9 +264,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dr";
-        action.__raw = ''
-          function() require("dap").repl.toggle() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").repl.toggle() end
+          '';
         options = {
           desc = "Toggle REPL";
         };
@@ -260,9 +275,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>ds";
-        action.__raw = ''
-          function() require("dap").session() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").session() end
+          '';
         options = {
           desc = "Session";
         };
@@ -270,9 +286,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dt";
-        action.__raw = ''
-          function() require("dap").terminate() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap").terminate() end
+          '';
         options = {
           desc = "Terminate";
         };
@@ -280,9 +297,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>dw";
-        action.__raw = ''
-          function() require("dap.ui.widgets").hover() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dap.ui.widgets").hover() end
+          '';
         options = {
           desc = "Widgets";
         };
@@ -290,9 +308,10 @@ in
       {
         mode = [ "n" ];
         key = "<leader>du";
-        action.__raw = ''
-          function() require("dapui").toggle() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dapui").toggle() end
+          '';
         options = {
           desc = "Dap UI";
         };
@@ -300,14 +319,14 @@ in
       {
         mode = [ "n" ];
         key = "<leader>de";
-        action.__raw = ''
-          function() require("dapui").eval() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("dapui").eval() end
+          '';
         options = {
           desc = "Eval";
         };
       }
     ];
-
   };
 }

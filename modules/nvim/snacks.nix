@@ -2,41 +2,43 @@
 with lib;
 {
   programs.nixvim = {
-    keymaps =
-      [
-        {
-          mode = "n";
-          key = "<leader>bd";
-          action.__raw = ''
+    keymaps = [
+      {
+        mode = "n";
+        key = "<leader>bd";
+        action.__raw = # lua
+          ''
             function() Snacks.bufdelete() end
           '';
-          options = {
-            desc = "Delete Buffer";
-          };
-        }
-        {
-          mode = "n";
-          key = "<leader>bo";
-          action.__raw = ''
+        options = {
+          desc = "Delete Buffer";
+        };
+      }
+      {
+        mode = "n";
+        key = "<leader>bo";
+        action.__raw = # lua
+          ''
             function() Snacks.bufdelete.other() end
           '';
-          options = {
-            desc = "Delete Other Buffers";
-          };
-        }
-      ]
-      ++ optionals config.programs.lazygit.enable [
-        {
-          mode = "n";
-          key = "<leader>gg";
-          action.__raw = ''
+        options = {
+          desc = "Delete Other Buffers";
+        };
+      }
+    ]
+    ++ optionals config.programs.lazygit.enable [
+      {
+        mode = "n";
+        key = "<leader>gg";
+        action.__raw = # lua
+          ''
             function() Snacks.lazygit() end
           '';
-          options = {
-            desc = "LazyGit";
-          };
-        }
-      ];
+        options = {
+          desc = "LazyGit";
+        };
+      }
+    ];
 
     plugins = {
       snacks = {
