@@ -20,6 +20,8 @@ with lib;
 
   # TODO: write autocommand to open helpfiles in vertical split
   config = mkIf cfg.enable {
+    home.file."${config.xdg.cacheHome}/nvim/.gitkeep".text = "";
+
     programs = {
       fd.enable = true;
       ripgrep.enable = true;
