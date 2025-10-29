@@ -10,7 +10,9 @@ in
 with lib;
 {
   options = {
-    home.docker.enable = mkEnableOption "docker";
+    home.docker = {
+      enable = mkEnableOption "docker";
+    };
   };
 
   config = mkIf cfg.enable {

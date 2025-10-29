@@ -1,6 +1,5 @@
-{ specialArgs, ... }:
+{ ... }:
 let
-  inherit (specialArgs) hostname username;
   model = "google/gemini-2.5-pro-exp-03-25:free";
 in
 {
@@ -36,24 +35,25 @@ in
         enable = true;
         settings = {
           adapters = {
-            openrouter.__raw = ''
-              function()
-                return require('codecompanion.adapters').extend('openai', {
-                  name = "openrouter",
-                  url = "https://openrouter.ai/api/v1/chat/completions",
-                  env = {
-                    api_key = "cmd: cat $XDG_RUNTIME_DIR/openrouter_api_key",
-                    model = "schema.model.default",
-                  },
-                  formatted_name = "OpenRouter",
-                  schema = {
-                    model = {
-                      default = "${model}"
+            openrouter.__raw = # lua
+              ''
+                function()
+                  return require('codecompanion.adapters').extend('openai', {
+                    name = "openrouter",
+                    url = "https://openrouter.ai/api/v1/chat/completions",
+                    env = {
+                      api_key = "cmd: cat $XDG_RUNTIME_DIR/openrouter_api_key",
+                      model = "schema.model.default",
                     },
-                  },
-                })
-              end
-            '';
+                    formatted_name = "OpenRouter",
+                    schema = {
+                      model = {
+                        default = "${model}"
+                      },
+                    },
+                  })
+                end
+              '';
           };
           display = {
             chat = {

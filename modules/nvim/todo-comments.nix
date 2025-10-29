@@ -5,9 +5,10 @@
       {
         mode = "n";
         key = "[t";
-        action.__raw = ''
-          function() require("todo-comments").jump_prev() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("todo-comments").jump_prev() end
+          '';
         options = {
           desc = "Prev Todo Comment";
         };
@@ -15,9 +16,10 @@
       {
         mode = "n";
         key = "]t";
-        action.__raw = ''
-          function() require("todo-comments").jump_next() end
-        '';
+        action.__raw = # lua
+          ''
+            function() require("todo-comments").jump_next() end
+          '';
         options = {
           desc = "Next Todo Comment";
         };

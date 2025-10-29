@@ -11,30 +11,32 @@
     plugins.conform-nvim = {
       enable = true;
       settings = {
-        format_on_save.__raw = ''
-          function(bufnr)
-            if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-              return
-            end
-            local function on_format(err)
-              if err and err:match("timeout$") then
-                slow_format_filetypes[vim.bo[bufnr].filetype] = true
+        format_on_save.__raw = # lua
+          ''
+            function(bufnr)
+              if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                return
               end
+              local function on_format(err)
+                if err and err:match("timeout$") then
+                  slow_format_filetypes[vim.bo[bufnr].filetype] = true
+                end
+              end
+
+              return { lsp_fallback = true }, on_format
+             end
+          '';
+
+        format_after_save.__raw = # lua
+          ''
+            function(bufnr)
+              if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                return
+              end
+
+              return { lsp_fallback = true }
             end
-
-            return { lsp_fallback = true }, on_format
-           end
-        '';
-
-        format_after_save.__raw = ''
-          function(bufnr)
-            if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-              return
-            end
-
-            return { lsp_fallback = true }
-          end
-        '';
+          '';
 
         formatters_by_ft = {
           "_" = [
