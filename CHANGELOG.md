@@ -1,3 +1,12 @@
+## [0.17.1](https://github.com/99linesofcode/home-manager/compare/v0.17.0...v0.17.1) (2025-10-29)
+
+
+### Bug Fixes
+
+* **xdg:** enable creating XDG base directories and setting the env variables ([82fa48a](https://github.com/99linesofcode/home-manager/commit/82fa48afc95a204cde1f818fc4954cfad32997b7))
+
+
+
 # [0.17.0](https://github.com/99linesofcode/home-manager/compare/v0.16.0...v0.17.0) (2025-10-26)
 
 
@@ -89,28 +98,6 @@
 * **vscode:** keybinds for todo tree and cline ([6fae63a](https://github.com/99linesofcode/home-manager/commit/6fae63ac529a8e44373b57227c8957a48f6475af))
 * **vscode:** removed unnecessary UI element cluttering up the workspace ([08eeee4](https://github.com/99linesofcode/home-manager/commit/08eeee4f1a50d3bbae297b72c2bc48d204da4077))
 * **vscode:** toggle and focus sidebar ([9e6bc71](https://github.com/99linesofcode/home-manager/commit/9e6bc714e7945ba6a4174a466c4bfb382da627c0))
-
-
-
-# [0.13.0](https://github.com/99linesofcode/home-manager/compare/v0.12.0...v0.13.0) (2025-04-14)
-
-
-### Bug Fixes
-
-* **mpv:** no need to manually define yazi opener rules ([c88eb1d](https://github.com/99linesofcode/home-manager/commit/c88eb1d16b82ea718032084efaa51551575fb46e))
-* **obsidian:** timer was not registered correctly ([5688cfb](https://github.com/99linesofcode/home-manager/commit/5688cfb9332826a2b2d7e4c3729889c4c1c55b07))
-
-
-### Features
-
-* allow declaring default mime type associations ([5f4e30b](https://github.com/99linesofcode/home-manager/commit/5f4e30bfdfe1c7374388884a86057f72b87e43a3))
-* **feh:** declare default application for common mimetypes ([6a17a0b](https://github.com/99linesofcode/home-manager/commit/6a17a0b3cc3920c2a9e442c5b6c2a2542f22f41a))
-* **firefox:** custom search engine for the ArchLinux wiki ([23ac9da](https://github.com/99linesofcode/home-manager/commit/23ac9da2bf67524ebbe8a376f642e7df9bae7723))
-* **gammastep:** automatically adjust color temperature ([c614d5b](https://github.com/99linesofcode/home-manager/commit/c614d5b890fd7108fad6bc5857c70ef02347d86e))
-* **hypridle:** reduce brightness, lock, turn off screen, suspend ([5ab1c16](https://github.com/99linesofcode/home-manager/commit/5ab1c165d408bde9f98df5bd56b74ca3370420ca))
-* **hyprlock:** display date and time on lock screen ([4ece5ab](https://github.com/99linesofcode/home-manager/commit/4ece5ab77e8d3aa470745406424df747e5725591))
-* **hyprpaper:** load a random wallpaper every 30 minutes ([4056f80](https://github.com/99linesofcode/home-manager/commit/4056f80ec7b78642367f9e82c73d1bd9a988c7ab))
-* **zathura:** declare default application for common mimetypes ([7a3d45a](https://github.com/99linesofcode/home-manager/commit/7a3d45a02f81ed433b64ccddafb31cd8ecb4a750))
 
 
 
