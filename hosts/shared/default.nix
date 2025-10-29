@@ -22,6 +22,7 @@ with lib;
   ];
 
   xdg = {
+    enable = mkDefault true;
     mime.enable = mkDefault true;
     mimeApps.enable = mkDefault true;
   };
