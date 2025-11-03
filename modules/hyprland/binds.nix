@@ -62,6 +62,12 @@ in
       "SUPER, 4, workspace, 4"
       "SUPER, 5, workspace, 5"
       "SUPER, 6, workspace, 6"
+      "SUPER, 7, workspace, 7"
+      "SUPER, 8, workspace, 8"
+      "SUPER, 9, workspace, 9"
+      "SUPER, 0, workspace, 10"
+      "SUPER, minus, workspace, 11"
+      "SUPER, equal, workspace, 12"
 
       # Move window to workspace
       "SUPER_SHIFT, 1, movetoworkspace, 1"
@@ -70,10 +76,18 @@ in
       "SUPER_SHIFT, 4, movetoworkspace, 4"
       "SUPER_SHIFT, 5, movetoworkspace, 5"
       "SUPER_SHIFT, 6, movetoworkspace, 6"
+      "SUPER_SHIFT, 7, movetoworkspace, 7"
+      "SUPER_SHIFT, 8, movetoworkspace, 8"
+      "SUPER_SHIFT, 9, movetoworkspace, 9"
+      "SUPER_SHIFT, 0, movetoworkspace, 10"
+      "SUPER_SHIFT, minus, movetoworkspace, 11"
+      "SUPER_SHIFT, equal, movetoworkspace, 12"
 
       # Scroll through workspaces
       "SUPER_SHIFT, mouse_down, workspace, e+1"
+      "SUPER_SHIFT, Down, workspace, e+1"
       "SUPER_SHIFT, mouse_up, workspace, e-1"
+      "SUPER_SHIFT, Up, workspace, e-1"
     ];
 
     binde = [
