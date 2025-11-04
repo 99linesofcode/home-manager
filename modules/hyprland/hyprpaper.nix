@@ -23,7 +23,7 @@ with lib;
       hyprpaper.enable = true;
     };
 
-    systemd.user = mkIf config.home.rclone.enable {
+    systemd.user = mkIf config.home.google-drive.enable {
       timers = {
         wallpaper = {
           Unit = {
