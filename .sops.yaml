@@ -9,21 +9,20 @@ creation_rules:
           - *master
           - *host_mars
           - *user_shorty
+  - path_regex: hosts/luna/users/shorty/secrets/.*
+    key_groups:
+      - age:
+          - *user_shorty
   - path_regex: hosts/luna/.*/secrets/.*
     key_groups:
       - age:
           - *master
-  - path_regex: hosts/luna/users/shorty/secrets/.*
+  - path_regex: hosts/mars/users/shorty/secrets/.*
     key_groups:
       - age:
-          - *master
+          - *user_shorty
   - path_regex: hosts/mars/.*/secrets/.*
     key_groups:
       - age:
           - *master
           - *host_mars
-  - path_regex: hosts/mars/users/shorty/secrets/.*
-    key_groups:
-      - age:
-          - *master
-          - *user_shorty
