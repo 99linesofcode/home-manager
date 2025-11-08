@@ -33,6 +33,7 @@ with lib;
         export AQ_DRM_DEVICES="/dev/dri/card1:/dev/dri/card0"
         export CLUTTER_BACKEND="wayland"
         export ELECTRON_OZONE_PLATFORM_HINT="auto"
+        export GDK_SCALE="2"
         export GDK_BACKEND="wayland,x11,*"
         export MOZ_ENABLE_WAYLAND=1
         export MOZ_DISABLE_RDD_SANDBOX=1
