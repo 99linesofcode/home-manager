@@ -9,7 +9,9 @@ in
     ];
 
     monitor = [
-      "eDP-1,highres,0x0,2"
+      "eDP-1, highres, 0x0, 2" # Razer Blade 15
+      "HEADLESS-2, 3200x2400@20, auto, 3.125" # BOOX TAB X C
+      ", preferred, auto, auto"
     ];
 
     workspace = [
