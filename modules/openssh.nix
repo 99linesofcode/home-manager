@@ -40,9 +40,20 @@ with lib;
 
     programs.ssh = {
       enable = true;
-      forwardAgent = true;
-      serverAliveInterval = 30;
+      enableDefaultConfig = false;
       matchBlocks = {
+        "*" = {
+          forwardAgent = true;
+          addKeysToAgent = "no";
+          compression = false;
+          serverAliveInterval = 30;
+          serverAliveCountMax = 3;
+          hashKnownHosts = false;
+          userKnownHostsFile = "~/.ssh/known_hosts";
+          controlMaster = "no";
+          controlPath = "~/.ssh/master-%r@%n:%p";
+          controlPersist = "no";
+        };
         "*.${s}${_p}${_a}${m}${t}${r}${a_}${p_}" = {
         };
       };

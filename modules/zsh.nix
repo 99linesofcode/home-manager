@@ -32,6 +32,7 @@ with lib;
       zsh = {
         enable = true;
         autosuggestion.enable = true;
+        dotDir = config.home.homeDirectory;
         history = {
           ignoreAllDups = true;
           ignorePatterns = [

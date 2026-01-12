@@ -14,46 +14,48 @@
 
     plugins.neo-tree = {
       enable = true;
-      closeIfLastWindow = true;
-      defaultComponentConfigs = {
-        indent = {
-          withExpanders = true;
-          expanderCollapsed = "󰅂";
-          expanderExpanded = "󰅀";
-          expanderHighlight = "NeoTreeExpander";
-        };
+      settings = {
+        closeIfLastWindow = true;
+        defaultComponentConfigs = {
+          indent = {
+            withExpanders = true;
+            expanderCollapsed = "󰅂";
+            expanderExpanded = "󰅀";
+            expanderHighlight = "NeoTreeExpander";
+          };
 
-        gitStatus = {
-          symbols = {
-            added = " ";
-            conflict = "󰩌 ";
-            deleted = "󱂥";
-            ignored = " ";
-            modified = " ";
-            renamed = "󰑕";
-            staged = "󰩍";
-            unstaged = "";
-            untracked = " ";
+          gitStatus = {
+            symbols = {
+              added = " ";
+              conflict = "󰩌 ";
+              deleted = "󱂥";
+              ignored = " ";
+              modified = " ";
+              renamed = "󰑕";
+              staged = "󰩍";
+              unstaged = "";
+              untracked = " ";
+            };
           };
         };
-      };
-      filesystem = {
-        bindToCwd = false;
-        followCurrentFile = {
-          enabled = true;
+        filesystem = {
+          bindToCwd = false;
+          followCurrentFile = {
+            enabled = true;
+          };
+          filteredItems = {
+            hideDotfiles = false;
+            hideGitignored = false;
+          };
         };
-        filteredItems = {
-          hideDotfiles = false;
-          hideGitignored = false;
-        };
+        sources = [
+          "filesystem"
+          "buffers"
+          "git_status"
+          "document_symbols"
+        ];
+        window.position = "right";
       };
-      sources = [
-        "filesystem"
-        "buffers"
-        "git_status"
-        "document_symbols"
-      ];
-      window.position = "right";
     };
   };
 }

@@ -33,7 +33,7 @@
           superhtml.enable = true;
           tailwindcss.enable = true;
           ts_ls.enable = true;
-          volar.enable = true;
+          vue_ls.enable = true;
           yamlls.enable = true;
         };
 

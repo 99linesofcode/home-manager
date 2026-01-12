@@ -101,7 +101,7 @@
             "prettier"
           ];
           nix = [
-            "nixfmt-rfc-style"
+            "nixfmt"
           ];
           php = [
             "pint"
@@ -139,8 +139,8 @@
           jq = {
             command = lib.getExe jq;
           };
-          nixfmt-rfc-style = {
-            command = lib.getExe nixfmt-rfc-style;
+          nixfmt = {
+            command = lib.getExe nixfmt;
           };
           shellcheck = {
             command = lib.getExe shellcheck;

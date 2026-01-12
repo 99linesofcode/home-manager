@@ -25,13 +25,13 @@ with lib;
       };
       git = {
         enable = true;
-        aliases = {
-          fix = "commit --fixup";
-          pufowile = "push --force-with-lease";
-          sl = "log --oneline --decorate --graph";
-          sla = "sl --all";
-        };
-        extraConfig = {
+        settings = {
+          aliases = {
+            fix = "commit --fixup";
+            pufowile = "push --force-with-lease";
+            sl = "log --oneline --decorate --graph";
+            sla = "sl --all";
+          };
           branch.autoSetupRebase = "always";
           commit.gpgSign = true;
           core = {
@@ -57,9 +57,11 @@ with lib;
           submodule.recurse = true; # update submodules after pull
           status.submoduleSummary = true;
           tag.gpgSign = true;
+          user = {
+            inherit email;
+            name = fullName;
+          };
         };
-        userName = fullName;
-        userEmail = email;
         signing.key = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
       };
       lazygit = {

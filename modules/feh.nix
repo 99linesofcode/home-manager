@@ -41,7 +41,7 @@ with lib;
   config = mkIf cfg.enable {
     programs.feh = with pkgs; {
       enable = true;
-      package = feh.override { imlib2 = imlib2Full; };
+      # package = feh.override { imlib2 = imlib2Full; }; # FIXME: wouldnt build for 4ebc11dad54b7e5b8a46c6edb2533852e99ec566bbe10836b2d6dba89c9c2e3c
     };
 
     xdg.mimeApps.defaultApplications = mkIf cfg.defaultApplication.enable (
