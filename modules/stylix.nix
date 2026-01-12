@@ -23,7 +23,7 @@ with lib;
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       nerd-fonts.noto
-      noto-fonts-emoji
+      noto-fonts-color-emoji
     ];
 
     stylix = {
@@ -49,7 +49,7 @@ with lib;
         };
         emoji = {
           name = "Noto Color Emoji";
-          package = pkgs.noto-fonts-emoji;
+          package = pkgs.noto-fonts-color-emoji;
         };
       };
       iconTheme = {
