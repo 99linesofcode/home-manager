@@ -52,7 +52,7 @@ with lib;
           package = pkgs.noto-fonts-color-emoji;
         };
       };
-      iconTheme = {
+      icons = {
         enable = true;
         package = pkgs.papirus-icon-theme;
         dark = "Papirus Dark";
