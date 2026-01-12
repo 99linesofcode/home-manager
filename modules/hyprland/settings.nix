@@ -18,6 +18,8 @@ in
       "eDP-1,1"
     ];
 
+    gesture = "3, horizontal, workspace";
+
     cursor.no_hardware_cursors = true;
 
     decoration = {
@@ -39,7 +41,6 @@ in
     general = {
       gaps_out = 10;
     };
-    gestures.workspace_swipe = true;
 
     input = {
       sensitivity = 0.2;
