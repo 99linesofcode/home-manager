@@ -57,6 +57,7 @@ with lib;
 
     home.hypridle.enable = true;
     home.hyprlock.enable = true;
+    home.hyprmon.enable = true;
     home.hyprpaper.enable = true;
     home.hyprpicker.enable = true;
     home.hyprpolkitagent.enable = true;

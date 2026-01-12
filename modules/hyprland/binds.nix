@@ -9,7 +9,6 @@ in
       force = true;
     };
     "hypr/scripts/bluetooth-toggle.sh".source = ../../dotfiles/hypr/scripts/bluetooth-toggle.sh;
-    "hypr/scripts/display-toggle.sh".source = ../../dotfiles/hypr/scripts/display-toggle.sh;
   };
 
   wayland.windowManager.hyprland.settings = {
@@ -25,7 +24,6 @@ in
 
       "SUPER_ALT, M, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
       "SUPER_ALT, B, exec, ${uwsmPrefix}~/.config/hypr/scripts/bluetooth-toggle.sh"
-      "SUPER, P, exec, ${uwsmPrefix}~/.config/hypr/scripts/display-toggle.sh" # F4
 
       # Manipulate windows
       "SUPER, W, killactive"
