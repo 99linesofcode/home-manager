@@ -88,14 +88,14 @@ with lib;
           search = {
             force = true;
             default = "google";
-            privateDefault = "duckDuckgo";
+            privateDefault = "ddg";
             order = [
+              "ddg"
               "google"
-              "duckDuckgo"
             ];
             engines = {
               "bing".metaData.hidden = true;
-              "duckDuckgo".metaData.alias = "@d";
+              "ddg".metaData.alias = "@d";
               "google".metaData.alias = "@g";
               "wikipedia (en)".metaData.alias = "@w";
 
