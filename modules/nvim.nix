@@ -43,6 +43,7 @@ with lib;
           confirm = true; # confirm to save changes before exiting modified buffer
           cursorline = true; # enable highlighting of the current line
           expandtab = true; # use spaces instead of tabs
+          foldlevelstart = 99; # expand all folds
           foldmethod = "expr"; # fold level of a line
           foldtext = "";
           formatoptions = "jcroqlnt"; # default: tcqj
