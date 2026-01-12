@@ -19,8 +19,12 @@ with lib;
       "hypr/scripts/wallpaper-rotation.sh".source = ../../dotfiles/hypr/scripts/wallpaper-rotation.sh;
     };
 
-    services = {
-      hyprpaper.enable = true;
+    services.hyprpaper = {
+      enable = true;
+      settings = {
+        ipc = "on";
+        splash = false;
+      };
     };
 
     systemd.user = mkIf config.home.google-drive.enable {
