@@ -29,7 +29,7 @@ with lib;
             Documentation = "man:rclone(1)";
           };
           Timer = {
-            OnCalendar = "*:0/5";
+            OnCalendar = "*:0/5"; # every 5 minutes
             Unit = "obsidian.service";
           };
           Install = {

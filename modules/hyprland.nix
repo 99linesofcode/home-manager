@@ -47,6 +47,14 @@ with lib;
       '';
     };
 
+    home.pointerCursor = {
+      enable = true;
+      hyprcursor = {
+        enable = true;
+        size = 24;
+      };
+    };
+
     home.hypridle.enable = true;
     home.hyprlock.enable = true;
     home.hyprpaper.enable = true;
