@@ -88,7 +88,6 @@ with lib;
     obs-studio.enable = true;
     rofi = {
       enable = true;
-      package = pkgs.rofi-wayland;
       extraConfig.run-command = "${config.home.wayland.uwsm.prefix}{cmd}";
     };
     yt-dlp.enable = true;
