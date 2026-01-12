@@ -40,12 +40,12 @@
         };
         filesystem = {
           bindToCwd = false;
-          followCurrentFile = {
+          follow_current_file = {
             enabled = true;
           };
-          filteredItems = {
-            hideDotfiles = false;
-            hideGitignored = false;
+          filtered_items = {
+            hide_dotfiles = false;
+            hide_gitignored = false;
           };
         };
         sources = [
