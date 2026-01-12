@@ -1,3 +1,12 @@
+## [0.18.1](https://github.com/99linesofcode/home-manager/compare/v0.18.0...v0.18.1) (2026-01-12)
+
+
+### Bug Fixes
+
+* **nvim:** expand all folds ([ab8f34e](https://github.com/99linesofcode/home-manager/commit/ab8f34efa1d0b2959024bf085a11349bdce70601))
+
+
+
 # [0.18.0](https://github.com/99linesofcode/home-manager/compare/v0.17.0...v0.18.0) (2026-01-12)
 
 
@@ -83,33 +92,6 @@
 ### Features
 
 * **hyprpicker:** module for colorpicking ([e69f8f1](https://github.com/99linesofcode/home-manager/commit/e69f8f11fc2095defd11fc3d097519a72d17897a))
-
-
-
-# [0.14.0](https://github.com/99linesofcode/home-manager/compare/v0.13.0...v0.14.0) (2025-05-19)
-
-
-### Bug Fixes
-
-* **stylix:** style correct vscode profile instead of the default ([388a1af](https://github.com/99linesofcode/home-manager/commit/388a1af0eb38081b2bed3e50ff5fc6e1e43edef4))
-* **vscode-neovim:** disable neovim configuration in vscode context ([f5698d2](https://github.com/99linesofcode/home-manager/commit/f5698d2bc99f30d33f493dbcb1a856ee6651e771))
-* **vscode:** configure html formatter to force attributes on new line ([291e1de](https://github.com/99linesofcode/home-manager/commit/291e1de8d4bdb94ed5ceebdbb3021d892e2f8739))
-* **vscode:** force font sizes as other windows do not inherit editor.fontSize ([bcaf221](https://github.com/99linesofcode/home-manager/commit/bcaf22141c08c2345a08f5d0383729cc2532ee71))
-* **vscode:** ignore files in .gitignore on search by default ([cf49167](https://github.com/99linesofcode/home-manager/commit/cf4916778bee64b2b702a0ce6142f15a72d7f466))
-* **vscode:** key remapping is handled at kernel level now ([d2c8c52](https://github.com/99linesofcode/home-manager/commit/d2c8c52fe83105916b8889c6f3b7d05dfa4a7421))
-* **vscode:** read extensions from correct nixpkgs ([4f5ff2a](https://github.com/99linesofcode/home-manager/commit/4f5ff2a013861352da6b6f8f32875e5143c7f2d3))
-* **vscode:** use html formatter for blade files since blade doesnt play nice with livewire ([517a3bf](https://github.com/99linesofcode/home-manager/commit/517a3bf5e3fc62b2793283dd9518c9db5a2f40c9))
-
-
-### Features
-
-* **firefox:** completely disable Pocket for added performance boost ([409b9dc](https://github.com/99linesofcode/home-manager/commit/409b9dc4022eae256ec34dc22f3b33f046fe08e1))
-* **firefox:** declare default application ([f015b83](https://github.com/99linesofcode/home-manager/commit/f015b83fc03d6554115a64b8b5bad3186fbb5e27))
-* **nvim-lsp:** intelephense instead of phpactor as lsp ([add025c](https://github.com/99linesofcode/home-manager/commit/add025c99f9721ab2220dd6b1d55d92f6f13cd66))
-* **steam:** replace protonup with steamtinkerlaunch ([80e9696](https://github.com/99linesofcode/home-manager/commit/80e96962e0decf6eb00e0ba9e09b709856c460b7))
-* **vscode:** keybinds for todo tree and cline ([6fae63a](https://github.com/99linesofcode/home-manager/commit/6fae63ac529a8e44373b57227c8957a48f6475af))
-* **vscode:** removed unnecessary UI element cluttering up the workspace ([08eeee4](https://github.com/99linesofcode/home-manager/commit/08eeee4f1a50d3bbae297b72c2bc48d204da4077))
-* **vscode:** toggle and focus sidebar ([9e6bc71](https://github.com/99linesofcode/home-manager/commit/9e6bc714e7945ba6a4174a466c4bfb382da627c0))
 
 
 
