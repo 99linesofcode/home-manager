@@ -83,7 +83,6 @@ with lib;
             vimium
 
             # TODO: package and contribute these to the NUR?
-            # clockify
             # todoist sidebar
           ];
           search = {
