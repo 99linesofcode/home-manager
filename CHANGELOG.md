@@ -1,3 +1,24 @@
+# [0.18.0](https://github.com/99linesofcode/home-manager/compare/v0.17.0...v0.18.0) (2026-01-12)
+
+
+### Bug Fixes
+
+* disable installing ghidra and overriding feh.imlib2 with imlib2Full for the time being ([aa44507](https://github.com/99linesofcode/home-manager/commit/aa44507eb040e43285ef0faaa6e2a77570922215))
+* **hyprland:** allow navigating and cycling to other half of the workspaces ([20f8eee](https://github.com/99linesofcode/home-manager/commit/20f8eee161c8f04cb6c2a98036a6393f8c428b1a))
+* **hyprpaper:** disable rendering hyprland splash on wallpaper ([78d2363](https://github.com/99linesofcode/home-manager/commit/78d2363473c242a168e063ddc61f91a79b62403b))
+* **nvim:** couldn't run lazygit as sub process due to missing .cache/nvim directory ([134e09d](https://github.com/99linesofcode/home-manager/commit/134e09dd80bb0c48a9063904eb65ca85069d3240))
+* **sops:** stops at first match so order of creation_rules is important ([827d6e2](https://github.com/99linesofcode/home-manager/commit/827d6e22742033e1ba9c31a43f6e96cc3131eee3))
+* **xdg:** enable creating XDG base directories and setting the env variables ([82fa48a](https://github.com/99linesofcode/home-manager/commit/82fa48afc95a204cde1f818fc4954cfad32997b7))
+* **xwayland:** resolve scaling issues for xwayland applications ([f5d6a4e](https://github.com/99linesofcode/home-manager/commit/f5d6a4ea8fbe24a9d00d77b4fc5b807f2cbc5a4a))
+
+
+### Features
+
+* **hyprmon:** TUI monitor configuration tool for Hyprland with visual layout ([43b1a29](https://github.com/99linesofcode/home-manager/commit/43b1a296a09bbe740a54a32e0b6e30e677a0ac1c))
+* **hyprpointer:** The hyprland cursor format ([001fb76](https://github.com/99linesofcode/home-manager/commit/001fb764238955b6f361a6609a4699f9c84f7c1e))
+
+
+
 # [0.17.0](https://github.com/99linesofcode/home-manager/compare/v0.16.0...v0.17.0) (2025-10-26)
 
 
@@ -89,28 +110,6 @@
 * **vscode:** keybinds for todo tree and cline ([6fae63a](https://github.com/99linesofcode/home-manager/commit/6fae63ac529a8e44373b57227c8957a48f6475af))
 * **vscode:** removed unnecessary UI element cluttering up the workspace ([08eeee4](https://github.com/99linesofcode/home-manager/commit/08eeee4f1a50d3bbae297b72c2bc48d204da4077))
 * **vscode:** toggle and focus sidebar ([9e6bc71](https://github.com/99linesofcode/home-manager/commit/9e6bc714e7945ba6a4174a466c4bfb382da627c0))
-
-
-
-# [0.13.0](https://github.com/99linesofcode/home-manager/compare/v0.12.0...v0.13.0) (2025-04-14)
-
-
-### Bug Fixes
-
-* **mpv:** no need to manually define yazi opener rules ([c88eb1d](https://github.com/99linesofcode/home-manager/commit/c88eb1d16b82ea718032084efaa51551575fb46e))
-* **obsidian:** timer was not registered correctly ([5688cfb](https://github.com/99linesofcode/home-manager/commit/5688cfb9332826a2b2d7e4c3729889c4c1c55b07))
-
-
-### Features
-
-* allow declaring default mime type associations ([5f4e30b](https://github.com/99linesofcode/home-manager/commit/5f4e30bfdfe1c7374388884a86057f72b87e43a3))
-* **feh:** declare default application for common mimetypes ([6a17a0b](https://github.com/99linesofcode/home-manager/commit/6a17a0b3cc3920c2a9e442c5b6c2a2542f22f41a))
-* **firefox:** custom search engine for the ArchLinux wiki ([23ac9da](https://github.com/99linesofcode/home-manager/commit/23ac9da2bf67524ebbe8a376f642e7df9bae7723))
-* **gammastep:** automatically adjust color temperature ([c614d5b](https://github.com/99linesofcode/home-manager/commit/c614d5b890fd7108fad6bc5857c70ef02347d86e))
-* **hypridle:** reduce brightness, lock, turn off screen, suspend ([5ab1c16](https://github.com/99linesofcode/home-manager/commit/5ab1c165d408bde9f98df5bd56b74ca3370420ca))
-* **hyprlock:** display date and time on lock screen ([4ece5ab](https://github.com/99linesofcode/home-manager/commit/4ece5ab77e8d3aa470745406424df747e5725591))
-* **hyprpaper:** load a random wallpaper every 30 minutes ([4056f80](https://github.com/99linesofcode/home-manager/commit/4056f80ec7b78642367f9e82c73d1bd9a988c7ab))
-* **zathura:** declare default application for common mimetypes ([7a3d45a](https://github.com/99linesofcode/home-manager/commit/7a3d45a02f81ed433b64ccddafb31cd8ecb4a750))
 
 
 
