@@ -9,7 +9,7 @@ with lib;
   home = {
     packages = with pkgs; [
       beeper
-      bitwarden
+      bitwarden-desktop
       bitwarden-cli
       discord
       electron
