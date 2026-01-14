@@ -60,6 +60,7 @@ with lib;
     slurp.enable = true;
     steam.enable = true;
     sops.enable = true;
+    syncthing.enable = true;
     swappy.enable = true;
     stylix.enable = true;
     vscode.enable = true;
