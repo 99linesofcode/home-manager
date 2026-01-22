@@ -47,9 +47,9 @@ with lib;
 
             function a() {
               if [ -f artisan ]; then
-                p php artisan
+                p php artisan $@
               else
-                p php ./vendor/bin/testbench
+                p php ./vendor/bin/testbench $@
               fi
             }
 
