@@ -26,7 +26,7 @@ with lib;
       git = {
         enable = true;
         settings = {
-          aliases = {
+          alias = {
             fix = "commit --fixup";
             pufowile = "push --force-with-lease";
             sl = "log --oneline --decorate --graph";
