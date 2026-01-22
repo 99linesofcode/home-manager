@@ -41,27 +41,36 @@ with lib;
             "rm *"
           ];
         };
-        initContent = ''
-          fastfetch
+        initContent = # sh
+          ''
+            fastfetch
 
-          function p() {
-            if [ -f docker-compose.yml ] || [ -f docker-compose.yaml ]; then
-              if docker ps -f "name=php" -f "publish=80" --format "{{.ID}}" | grep -q .; then
-                docker compose exec php $@
+            function a() {
+              if [ -f artisan ]; then
+                p php artisan
+              else
+                p php ./vendor/bin/testbench
+              fi
+            }
+
+            function p() {
+              if [ -f docker-compose.yml ] || [ -f docker-compose.yaml ]; then
+                if docker ps -f "name=php" -f "publish=80" --format "{{.ID}}" | grep -q .; then
+                  docker compose exec php $@
+                  return
+                fi
+              fi
+
+              # TODO: local PHP should probably take precedence when dnsmasq is setup correctly
+              if command -v php >/dev/null 2>&1; then
+                $@
                 return
               fi
-            fi
 
-            # TODO: local PHP should probably take precedence when dnsmasq is setup correctly
-            if command -v php >/dev/null 2>&1; then
-              $@
-              return
-            fi
-
-            echo "Failed to run $@. Could not find PHP or PHP docker container."
-            return 1
-          }
-        '';
+              echo "Failed to run $@. Could not find PHP or PHP docker container."
+              return 1
+            }
+          '';
         oh-my-zsh = {
           enable = true;
           plugins = [
@@ -76,14 +85,15 @@ with lib;
           ];
           theme = "juanghurtado";
         };
-        profileExtra = mkIf config.home.wayland.enable ''
-          if uwsm check may-start; then
-            exec uwsm start default
-          fi
-        '';
+        profileExtra =
+          mkIf config.home.wayland.enable # sh
+            ''
+              if uwsm check may-start; then
+                exec uwsm start default
+              fi
+            '';
         syntaxHighlighting.enable = true;
         shellAliases = {
-          a = "p php artisan";
           artisan = "a";
           cat = "bat --paging=never";
           c = "p composer";
