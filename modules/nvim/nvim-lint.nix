@@ -15,6 +15,7 @@
             "jsonlint"
           ];
           markdown = [
+            "markdownlint-cli2"
             "vale"
           ];
           php = [
