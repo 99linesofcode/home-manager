@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   specialArgs,
   ...
 }:
@@ -15,6 +16,10 @@ with lib;
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      git-filter-repo
+    ];
+
     programs = {
       gh = {
         enable = true;
