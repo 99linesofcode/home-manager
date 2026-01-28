@@ -31,6 +31,7 @@
             installRustc = false;
           };
           superhtml.enable = true;
+          sqruff.enable = true;
           tailwindcss.enable = true;
           ts_ls.enable = true;
           vue_ls.enable = true;

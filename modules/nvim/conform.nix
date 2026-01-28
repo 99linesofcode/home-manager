@@ -114,6 +114,9 @@
           rust = [
             "rustfmt"
           ];
+          sql = [
+            "sqruff"
+          ];
           typescript = [
             "eslint_d"
             "prettierd"
