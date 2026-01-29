@@ -14,11 +14,6 @@ with lib;
 
   config = mkIf cfg.enable {
     programs = {
-      alacritty = mkIf config.programs.alacritty.enable {
-        settings = {
-          terminal.shell = "zellij";
-        };
-      };
       zellij = {
         enable = true;
         enableZshIntegration = config.programs.zsh.enable;
