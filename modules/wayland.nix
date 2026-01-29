@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.home.wayland;
-  uwsmPrefix = "uwsm app -- ";
+  uwsmPrefix = "uwsm app --";
 in
 with lib;
 {
@@ -14,7 +14,7 @@ with lib;
     home.wayland = {
       enable = mkEnableOption "wayland";
       uwsm.prefix = mkOption {
-        default = "${uwsmPrefix}";
+        default = "${uwsmPrefix} ";
         type = with types; str;
         description = "UWSM prefix";
       };

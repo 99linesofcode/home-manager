@@ -21,7 +21,7 @@ with lib;
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER, D, exec, ${uwsmPrefix}hyprpicker -na"
+        "SUPER, D, exec, ${uwsmPrefix} hyprpicker -na"
       ];
     };
   };

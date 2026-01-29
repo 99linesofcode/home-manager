@@ -21,11 +21,11 @@ with lib;
 
     wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
       bindl = [
-        ", XF86AudioPrev, exec, ${uwsmPrefix}playerctl previous"
-        ", XF86AudioPlay, exec, ${uwsmPrefix}playerctl play-pause"
-        ", XF86AudioNext, exec, ${uwsmPrefix}playerctl next"
-        ", XF86AudioMedia, exec, ${uwsmPrefix}playerctl play-pause"
-        ", XF86AudioStop, exec, ${uwsmPrefix}playerctl stop"
+        ", XF86AudioPrev, exec, ${uwsmPrefix} playerctl previous"
+        ", XF86AudioPlay, exec, ${uwsmPrefix} playerctl play-pause"
+        ", XF86AudioNext, exec, ${uwsmPrefix} playerctl next"
+        ", XF86AudioMedia, exec, ${uwsmPrefix} playerctl play-pause"
+        ", XF86AudioStop, exec, ${uwsmPrefix} playerctl stop"
       ];
     };
   };
