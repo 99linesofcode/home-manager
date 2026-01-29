@@ -46,13 +46,4 @@ with lib;
       zip
     ];
   };
-
-  programs = {
-    alacritty = {
-      enable = true;
-      settings = {
-        font.offset.y = 8;
-      };
-    };
-  };
 }

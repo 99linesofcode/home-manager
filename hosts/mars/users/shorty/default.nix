@@ -11,6 +11,7 @@ with lib;
       nix-prefetch-git
     ];
 
+    alacritty.enable = true;
     docker.enable = true;
     eza.enable = true;
     feh = {
