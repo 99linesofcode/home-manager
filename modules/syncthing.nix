@@ -19,7 +19,7 @@ with lib;
     services.syncthing = {
       enable = true;
       settings = {
-        # TODO: configure these at user level and encrypt device ids
+        options.urAccepted = -1; # do not submit anonymous usage data
         devices = {
           "note" = {
             id = "4CYUMEQ-DYNLFQ6-ASNQ7MX-TB6WRBA-4JPEOHJ-C5YA27Q-PVQ72CQ-AUU77Q6";
