@@ -13,8 +13,8 @@ with lib;
     home.google-drive.enable = mkEnableOption "Google Drive";
   };
 
-  config = mkIf cfg.enable {
-    systemd.user.services = mkIf config.home.rclone.enable {
+  config = mkIf (config.home.rclone.enable && cfg.enable) {
+    systemd.user.services = {
       gdrive = {
         Unit = {
           Description = "rclone: Remote FUSE filesystem for Google Drive";
