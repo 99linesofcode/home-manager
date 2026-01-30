@@ -1,3 +1,22 @@
+# [0.19.0](https://github.com/99linesofcode/home-manager/compare/v0.18.1...v0.19.0) (2026-01-30)
+
+
+### Bug Fixes
+
+* **google-drive:** enable module only when rclone and google-drive are enabled ([5415f5c](https://github.com/99linesofcode/home-manager/commit/5415f5c8c9b0cbdaf376c4761e308aaaad50b4dc))
+* **nvim:** neo-tree settings are passed as is not translated from camelCase to snake_case ([e1a5b1c](https://github.com/99linesofcode/home-manager/commit/e1a5b1c62ac1e24255402b947912d77277fb97ee))
+* **nvim:** nvim-treesitter settings are passed as is not translated from camelCase to snake_case ([96f69a0](https://github.com/99linesofcode/home-manager/commit/96f69a0e635120e8354d68e42d2a803c595dfccf))
+* **syncthing:** enable only when google-drive AND obsidian are enabled ([5f54988](https://github.com/99linesofcode/home-manager/commit/5f54988bd4b377144301dde04a74210c23e9650c))
+* **syncthing:** opt-out of sharing anonymous usage data ([b8541d5](https://github.com/99linesofcode/home-manager/commit/b8541d5fd157fd1d19fda3856f014b387dd334ef))
+
+
+### Features
+
+* **firefox:** custom search engines for Sonarr and Radarr ([e642e4d](https://github.com/99linesofcode/home-manager/commit/e642e4d2dfe0c4e49dd8cc32ac2e0d847582ded3))
+* **syncthing:** add module for peer-to-peer file synchronization ([9461a5e](https://github.com/99linesofcode/home-manager/commit/9461a5e8a017f1f6e527e4647f178c085bbc01b4))
+
+
+
 ## [0.18.1](https://github.com/99linesofcode/home-manager/compare/v0.18.0...v0.18.1) (2026-01-12)
 
 
@@ -83,15 +102,6 @@
 * **nvim:** install helm language server ([4264ddb](https://github.com/99linesofcode/home-manager/commit/4264ddb5c793c0f403863d3fe5a86772e284eda2))
 * **vscode:** add todo-tree styling ([2fdf2dd](https://github.com/99linesofcode/home-manager/commit/2fdf2dd7818fd4f6960b605478b49374d53d2cd6))
 * **vscode:** Vuejs syntax highlighting, formatting, etc. ([495563f](https://github.com/99linesofcode/home-manager/commit/495563f53c945089ad35fa118e8aaa2d51983293))
-
-
-
-# [0.15.0](https://github.com/99linesofcode/home-manager/compare/v0.14.0...v0.15.0) (2025-05-19)
-
-
-### Features
-
-* **hyprpicker:** module for colorpicking ([e69f8f1](https://github.com/99linesofcode/home-manager/commit/e69f8f11fc2095defd11fc3d097519a72d17897a))
 
 
 
