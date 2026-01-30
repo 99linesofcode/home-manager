@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   specialArgs,
   ...
 }:
@@ -15,6 +16,10 @@ with lib;
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      git-filter-repo
+    ];
+
     programs = {
       gh = {
         enable = true;
@@ -26,7 +31,7 @@ with lib;
       git = {
         enable = true;
         settings = {
-          aliases = {
+          alias = {
             fix = "commit --fixup";
             pufowile = "push --force-with-lease";
             sl = "log --oneline --decorate --graph";

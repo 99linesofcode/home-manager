@@ -31,6 +31,7 @@
             installRustc = false;
           };
           superhtml.enable = true;
+          sqruff.enable = true;
           tailwindcss.enable = true;
           ts_ls.enable = true;
           vue_ls.enable = true;
@@ -90,6 +91,7 @@
         };
       };
       lspkind.enable = true; # vscode-like pictograms for lsp
+      lsp-lines.enable = true; # diagnostics in virtual line
       lsp-signature.enable = true; # method signatures
     };
   };

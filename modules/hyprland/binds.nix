@@ -18,12 +18,11 @@ in
       "SUPER_ALT_CTRL, S, pass, ^(com\.obsproject\.Studio)$"
 
       # Hotkeys
-      "SUPER, Return, exec, ${uwsmPrefix}alacritty"
       "SUPER, Space, exec, rofi -show-icons -show drun -l 10"
       "SUPER, V, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"
 
-      "SUPER_ALT, M, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-      "SUPER_ALT, B, exec, ${uwsmPrefix}~/.config/hypr/scripts/bluetooth-toggle.sh"
+      "SUPER_ALT, M, exec, ${uwsmPrefix} wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      "SUPER_ALT, B, exec, ${uwsmPrefix} ~/.config/hypr/scripts/bluetooth-toggle.sh"
 
       # Manipulate windows
       "SUPER, W, killactive"
@@ -97,9 +96,9 @@ in
     ];
 
     bindel = [
-      ", XF86AudioMute, exec, ${uwsmPrefix}wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-      ", XF86AudioLowerVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%-"
-      ", XF86AudioRaiseVolume, exec, ${uwsmPrefix}wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
+      ", XF86AudioMute, exec, ${uwsmPrefix} wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ", XF86AudioLowerVolume, exec, ${uwsmPrefix} wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86AudioRaiseVolume, exec, ${uwsmPrefix} wpctl set-volume -l 1.25 @DEFAULT_AUDIO_SINK@ 5%+"
     ];
 
     bindm = [

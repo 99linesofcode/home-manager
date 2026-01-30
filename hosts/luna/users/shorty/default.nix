@@ -28,6 +28,7 @@ with lib;
       scanmem
     ];
 
+    alacritty.enable = true;
     bluetui.enable = true;
     brightnessctl.enable = true;
     dunst.enable = true;

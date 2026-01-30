@@ -20,7 +20,7 @@ with lib;
         layout = [
           {
             "label" = "lock";
-            "action" = "which hyprlock &>/dev/null && ${uwsmPrefix}hyprlock || loginctl lock-session";
+            "action" = "which hyprlock &>/dev/null && ${uwsmPrefix} hyprlock || loginctl lock-session";
             "text" = "[L] ock";
             "keybind" = "l";
           }

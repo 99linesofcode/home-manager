@@ -97,75 +97,75 @@ with lib;
               "bing".metaData.hidden = true;
               "ddg".metaData.alias = "@d";
               "google".metaData.alias = "@g";
-              "wikipedia (en)".metaData.alias = "@w";
+              "wikipedia".metaData.alias = "@w";
 
-              "Arch Linux Wiki" = {
+              "archlinux" = {
                 urls = [ { template = "https://wiki.archlinux.org/index.php?search={searchTerms}"; } ];
                 icon = "https://wiki.archlinux.org/favicon.ico";
                 definedAliases = [ "@a" ];
               };
 
-              "Github" = {
+              "github" = {
                 urls = [ { template = "https://github.com/search?q={searchTerms}"; } ];
                 icon = "https://github.githubassets.com/favicons/favicon.svg";
                 definedAliases = [ "@gh" ];
               };
 
-              "Reddit" = {
+              "reddit" = {
                 urls = [ { template = "https://reddit.com/search?q={searchTerms}"; } ];
                 icon = "https://www.redditstatic.com/shreddit/assets/favicon/192x192.png";
                 definedAliases = [ "@r" ];
               };
 
-              "MyNixOS" = {
+              "mynixos" = {
                 urls = [ { template = "https://mynixos.com/search?q={searchTerms}"; } ];
                 icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
                 definedAliases = [ "@n" ];
               };
 
-              "NixOS Wiki" = {
+              "nixoswiki" = {
                 urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
                 icon = "https://wiki.nixos.org/nixos.png";
                 definedAliases = [ "@nw" ];
               };
 
-              "PHP" = {
+              "php" = {
                 urls = [ { template = "https://php.net/{searchTerms}"; } ];
                 icon = "https://www.php.net/favicon-196x196.png?v=2";
                 definedAliases = [ "@php" ];
               };
 
-              "ProtonDB" = {
+              "protondb" = {
                 urls = [ { template = "https://protondb.com/search?q={searchTerms}"; } ];
                 icon = "https://protondb.com/sites/protondb/images/favicon-32x32.png";
                 definedAliases = [ "@p" ];
               };
 
-              "YouTube" = {
+              "youtube" = {
                 urls = [ { template = "https://youtube.com/results?search_query={searchTerms}"; } ];
                 icon = "https://youtube.com/img/favicon_144.png";
                 definedAliases = [ "@yt" ];
               };
 
-              "YouTube Music" = {
+              "youtubemusic" = {
                 urls = [ { template = "https://music.youtube.com/search?q={searchTerms}"; } ];
                 icon = "https://music.youtube.com/img/favicon_144.png";
                 definedAliases = [ "@ytm" ];
               };
 
-              "Rotten Tomatoes" = {
+              "rottentomatoes" = {
                 urls = [ { template = "https://www.rottentomatoes.com/search?search={searchTerms}"; } ];
                 icon = "https://editorial.rottentomatoes.com/wp-content/uploads/2022/05/favicon.png?w=32";
                 definedAliases = [ "@rt" ];
               };
 
-              "Sonarr" = {
+              "sonarr" = {
                 urls = [ { template = "https://sonarr.99linesofcode.nl/add/new?term={searchTerms}"; } ];
                 icon = "https://sonarr.99linesofcode.nl/Content/Images/Icons/favicon-32x32.png";
                 definedAliases = [ "@sonarr" ];
               };
 
-              "Radarr" = {
+              "radarr" = {
                 urls = [ { template = "https://radarr.99linesofcode.nl/add/new?term={searchTerms}"; } ];
                 icon = "https://radarr.99linesofcode.nl/Content/Images/Icons/favicon-32x32.png";
                 definedAliases = [ "@radarr" ];

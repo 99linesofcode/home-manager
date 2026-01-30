@@ -66,7 +66,7 @@ with lib;
 
     wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
       bind = [
-        "SUPER, E, exec, ${uwsmPrefix}alacritty -e 'yazi'"
+        "SUPER, E, exec, ${uwsmPrefix} alacritty -e yazi"
       ];
     };
   };
