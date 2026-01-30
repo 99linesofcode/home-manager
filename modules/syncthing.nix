@@ -29,7 +29,7 @@ with lib;
           };
         };
         folders = {
-          "Obsidian" = mkIf (config.home.rclone.enable && config.home.obsidian.enable) {
+          "Obsidian" = mkIf (config.home.google-drive.enable && config.home.obsidian.enable) {
             path = "/home/${username}/Documents/Google Drive/Obsidian";
             devices = [
               "note"
