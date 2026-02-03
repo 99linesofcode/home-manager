@@ -24,6 +24,7 @@ with lib;
     openssh.enable = true;
     rclone.enable = true;
     sops.enable = true;
+    stylix.enable = true;
     yazi.enable = true;
     zellij.enable = true;
     zsh.enable = true;
