@@ -50,6 +50,7 @@ with lib;
     hyprland.enable = true;
     impala.enable = true;
     lazydocker.enable = true;
+    lazysql.enable = true;
     mpv.enable = true;
     nvim.enable = true;
     obsidian.enable = true;

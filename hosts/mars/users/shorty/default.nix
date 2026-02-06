@@ -20,6 +20,7 @@ with lib;
     };
     git.enable = true;
     lazydocker.enable = true;
+    lazysql.enable = true;
     nvim.enable = true;
     openssh.enable = true;
     rclone.enable = true;
