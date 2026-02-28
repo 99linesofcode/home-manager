@@ -18,7 +18,7 @@ with lib;
       insomnia # FOSS alternative to Postman API tester
       nix-prefetch-git
       polychromatic
-      # rustdesk
+      rustdesk-flutter
       scrcpy
       android-tools
       act # run GitHub Actions locally
