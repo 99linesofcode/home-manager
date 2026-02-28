@@ -59,6 +59,7 @@ with lib;
           micro_workers = 5;
         };
       };
+      shellWrapperName = "y";
       plugins = {
         # TODO: add ouch.yazi for compressing and decompressing archives
       };
