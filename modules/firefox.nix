@@ -73,7 +73,7 @@ with lib;
           extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             bitwarden
             darkreader
-            # fake-filler # TODO: added in a later commit
+            fake-filler
             gaoptout
             ublock-origin
             sponsorblock
