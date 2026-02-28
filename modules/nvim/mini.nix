@@ -21,7 +21,9 @@
               };
             };
           };
-          icons = { };
+          icons = {
+            style = "glyph";
+          };
           pairs = {
             modes = {
               insert = true;
