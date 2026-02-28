@@ -22,7 +22,7 @@ with lib;
     programs.yazi = {
       enable = true;
       settings = {
-        manager = {
+        mgr = {
           linemode = "none";
           ratio = [
             1
