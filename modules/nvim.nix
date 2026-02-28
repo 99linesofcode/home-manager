@@ -33,8 +33,11 @@ with lib;
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;
-        globals.mapleader = " ";
-        globals.maplocalleader = "\\";
+
+        globals = {
+          mapleader = " ";
+          maplocalleader = "\\";
+        };
 
         opts = {
           autowrite = true; # write the contents of the file automatically on certain commands
