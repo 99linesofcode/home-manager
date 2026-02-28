@@ -19,7 +19,7 @@
           trim_scope = "outer";
         };
       };
-      # treesitter-refactor.enable = true; # FIXME: wouldnt build for 4ebc11dad54b7e5b8a46c6edb2533852e99ec566bbe10836b2d6dba89c9c2e3c
+      # treesitter-refactor.enable = true; # FIXME:conflicts with treesitter changes/migration, enable later
       treesitter-textobjects = {
         enable = true;
         settings = {
