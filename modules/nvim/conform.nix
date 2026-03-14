@@ -45,11 +45,9 @@
             "trim_newlines"
           ];
           sh = [
-            "shellcheck"
             "shfmt"
           ];
           bash = [
-            "shellcheck"
             "shellharden"
             "shfmt"
           ];
@@ -75,40 +73,47 @@
             "prettierd"
             "prettier"
           ];
-          javascript = [
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
-          javascriptreact = [
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
-          json = [
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
+          javascript = {
+            __unkeyed-1 = "eslint_d";
+            __unkeyed-2 = "prettierd";
+            __unkeyed-3 = "prettier";
+            stop_after_first = true;
+          };
+          javascriptreact = {
+            __unkeyed-1 = "eslint_d";
+            __unkeyed-2 = "prettierd";
+            __unkeyed-3 = "prettier";
+            stop_after_first = true;
+          };
+          json = {
+            __unkeyed-1 = "eslint_d";
+            __unkeyed-2 = "prettierd";
+            __unkeyed-3 = "prettierd";
+            __unkeyed-4 = "jq";
+            stop_after_first = true;
+          };
           lua = [
             "stylua"
           ];
-          markdown = [
-            "markdownlint-cli2"
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
+          markdown = {
+            __unkeyed-1 = "eslint_d";
+            __unkeyed-2 = "prettierd";
+            __unkeyed-3 = "prettier";
+            stop_after_first = true;
+          };
           nix = [
             "nixfmt"
           ];
-          php = [
-            "pint"
-            "php_cs_fixer"
-          ];
+          php = {
+            __unkeyed-1 = "pint";
+            __unkeyed-2 = "php_cs_fixer";
+            stop_after_first = true;
+          };
           python = [
-            "black"
-            "isort"
+            "ruff_format"
+          ];
+          ruby = [
+            "rubocop"
           ];
           rust = [
             "rustfmt"
@@ -116,45 +121,28 @@
           sql = [
             "sqruff"
           ];
-          typescript = [
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
-          typescriptreact = [
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
-          yaml = [
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
+          typescript = {
+            __unkeyed-1 = "eslint_d";
+            __unkeyed-2 = "prettierd";
+            __unkeyed-3 = "prettier";
+            stop_after_first = true;
+          };
+          typescriptreact = {
+            __unkeyed-1 = "eslint_d";
+            __unkeyed-2 = "prettierd";
+            __unkeyed-3 = "prettier";
+            stop_after_first = true;
+          };
+          yaml = {
+            __unkeyed-1 = "eslint_d";
+            __unkeyed-2 = "prettierd";
+            __unkeyed-3 = "prettierd";
+            __unkeyed-4 = "yq";
+            stop_after_first = true;
+          };
         };
 
         formatters = with pkgs; {
-          isort = {
-            command = lib.getExe isort;
-          };
-          jq = {
-            command = lib.getExe jq;
-          };
-          nixfmt = {
-            command = lib.getExe nixfmt;
-          };
-          shellcheck = {
-            command = lib.getExe shellcheck;
-          };
-          shellharden = {
-            command = lib.getExe shellharden;
-          };
-          shfmt = {
-            command = lib.getExe shfmt;
-          };
-          stylua = {
-            command = lib.getExe stylua;
-          };
           squeeze_blanks = {
             command = lib.getExe' pkgs.coreutils "cat";
           };

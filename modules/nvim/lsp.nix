@@ -10,6 +10,7 @@
         inlayHints = true;
         servers = {
           bashls.enable = true;
+          cssls.enable = true;
           emmet_ls.enable = true;
           eslint.enable = true;
           helm_ls.enable = true;
@@ -25,6 +26,7 @@
           pest_ls.enable = true;
           pyright.enable = true;
           ruby_lsp.enable = true;
+          ruff.enable = true; # python
           rust_analyzer = {
             enable = true;
             installCargo = false;

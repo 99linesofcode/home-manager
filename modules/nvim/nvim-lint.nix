@@ -8,11 +8,11 @@
       lint = {
         enable = true;
         lintersByFt = {
+          bash = [
+            "shellcheck"
+          ];
           dockerfile = [
             "hadolint"
-          ];
-          json = [
-            "jsonlint"
           ];
           markdown = [
             "markdownlint-cli2"
@@ -21,20 +21,17 @@
           php = [
             "phpstan"
           ];
-          rst = [
-            "vale"
-          ];
           ruby = [
-            "ruby"
+            "rubocop"
           ];
-          rust = [
-            "rustfmt"
+          sh = [
+            "shellcheck"
           ];
           text = [
             "vale"
           ];
           yaml = [
-            "yq"
+            "yamllint"
           ];
         };
       };
