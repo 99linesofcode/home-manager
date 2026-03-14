@@ -42,6 +42,7 @@ with lib;
         opts = {
           autowrite = true; # write the contents of the file automatically on certain commands
           clipboard = "unnamedplus"; # use system clipboard
+          colorcolumn = "80,120,160"; # color line length columns
           completeopt = "menu,menuone,noselect";
           confirm = true; # confirm to save changes before exiting modified buffer
           cursorline = true; # enable highlighting of the current line
