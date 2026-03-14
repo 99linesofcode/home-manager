@@ -33,17 +33,18 @@
           };
           snippet.expand = "luasnip";
           sources = [
-            { name = "emoji"; }
             { name = "buffer"; }
             { name = "cmdline"; }
             { name = "dap"; }
             { name = "luasnip"; }
             { name = "nvim_lsp"; }
+            { name = "nvim_lsp_document_symbol"; }
+            { name = "nvim_lsp_signature_help"; }
             { name = "path"; }
+            { name = "treesitter"; }
           ];
         };
       };
-      cmp-nvim-lsp.enable = true;
     };
   };
 }
