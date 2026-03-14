@@ -19,7 +19,6 @@
           trim_scope = "outer";
         };
       };
-      # treesitter-refactor.enable = true; # FIXME:conflicts with treesitter changes/migration, enable later
       treesitter-textobjects = {
         enable = true;
         settings = {
