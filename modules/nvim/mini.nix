@@ -5,6 +5,7 @@
     ];
 
     plugins = {
+      mini-align.enable = true;
       mini = {
         enable = true;
         mockDevIcons = true;
