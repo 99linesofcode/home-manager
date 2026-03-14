@@ -86,7 +86,6 @@
             "prettier"
           ];
           json = [
-            "jq"
             "eslint_d"
             "prettierd"
             "prettier"
@@ -128,7 +127,6 @@
             "prettier"
           ];
           yaml = [
-            "yq"
             "eslint_d"
             "prettierd"
             "prettier"
