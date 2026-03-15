@@ -29,6 +29,15 @@ with lib;
         enable = true;
         defaultEditor = true;
         extraConfigLuaPre = "if not vim.g.vscode then";
+        extraConfigLua = # lua
+          ''
+            vim.filetype.add({
+              pattern = {
+                ["%.env%..+"] = "dotenv";
+                ["%.env"] = "dotenv";
+              }
+            })
+          '';
         extraConfigLuaPost = "end";
         viAlias = true;
         vimAlias = true;
