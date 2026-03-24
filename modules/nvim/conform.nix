@@ -39,11 +39,6 @@
           '';
 
         formatters_by_ft = {
-          "_" = [
-            "squeeze_blanks"
-            "trim_whitespace"
-            "trim_newlines"
-          ];
           sh = [
             "shfmt"
           ];
@@ -143,9 +138,6 @@
         };
 
         formatters = with pkgs; {
-          squeeze_blanks = {
-            command = lib.getExe' pkgs.coreutils "cat";
-          };
           yq = {
             command = lib.getExe yq-go;
           };
