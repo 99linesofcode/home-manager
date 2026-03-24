@@ -28,8 +28,8 @@
           };
           performance = {
             debounce = 60;
-            fetchingTimeout = 200;
-            maxViewEntries = 30;
+            fetching_timeout = 200;
+            max_view_entries = 30;
           };
           snippet.expand = "luasnip";
           sources = [
