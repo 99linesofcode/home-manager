@@ -51,44 +51,47 @@
             "shellharden"
             "shfmt"
           ];
-          blade = [
-            "superhtml"
-            "blade-formatter"
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
+          blade = {
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
+            __unkeyed-4 = "blade-formatter";
+            __unkeyed-5 = "superhtml";
+            stop_after_first = true;
+          };
           c = [
             "clang-format"
           ];
-          css = [
-            "stylelint"
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
-          html = [
-            "superhtml"
-            "eslint_d"
-            "prettierd"
-            "prettier"
-          ];
+          css = {
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
+            __unkeyed-4 = "stylelint";
+            stop_after_first = true;
+          };
+          html = {
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
+            __unkeyed-4 = "superhtml";
+            stop_after_first = true;
+          };
           javascript = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            __unkeyed-3 = "prettier";
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
             stop_after_first = true;
           };
           javascriptreact = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            __unkeyed-3 = "prettier";
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
             stop_after_first = true;
           };
           json = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            __unkeyed-3 = "prettierd";
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
             __unkeyed-4 = "jq";
             stop_after_first = true;
           };
@@ -96,9 +99,10 @@
             "stylua"
           ];
           markdown = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            __unkeyed-3 = "prettier";
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
+            __unkeyed-4 = "markdownlint-cli2";
             stop_after_first = true;
           };
           nix = [
@@ -122,21 +126,21 @@
             "sqruff"
           ];
           typescript = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            __unkeyed-3 = "prettier";
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
             stop_after_first = true;
           };
           typescriptreact = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            __unkeyed-3 = "prettier";
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
             stop_after_first = true;
           };
           yaml = {
-            __unkeyed-1 = "eslint_d";
-            __unkeyed-2 = "prettierd";
-            __unkeyed-3 = "prettierd";
+            __unkeyed-1 = "prettierd";
+            __unkeyed-2 = "prettier";
+            __unkeyed-3 = "eslint_d";
             __unkeyed-4 = "yq";
             stop_after_first = true;
           };
