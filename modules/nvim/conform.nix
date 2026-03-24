@@ -56,7 +56,6 @@
             __unkeyed-2 = "prettier";
             __unkeyed-3 = "eslint_d";
             __unkeyed-4 = "blade-formatter";
-            __unkeyed-5 = "superhtml";
             stop_after_first = true;
           };
           c = [
@@ -66,14 +65,12 @@
             __unkeyed-1 = "prettierd";
             __unkeyed-2 = "prettier";
             __unkeyed-3 = "eslint_d";
-            __unkeyed-4 = "stylelint";
             stop_after_first = true;
           };
           html = {
             __unkeyed-1 = "prettierd";
             __unkeyed-2 = "prettier";
             __unkeyed-3 = "eslint_d";
-            __unkeyed-4 = "superhtml";
             stop_after_first = true;
           };
           javascript = {
@@ -102,7 +99,6 @@
             __unkeyed-1 = "prettierd";
             __unkeyed-2 = "prettier";
             __unkeyed-3 = "eslint_d";
-            __unkeyed-4 = "markdownlint-cli2";
             stop_after_first = true;
           };
           nix = [

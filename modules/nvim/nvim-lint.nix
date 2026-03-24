@@ -15,23 +15,13 @@
             "hadolint"
           ];
           markdown = [
-            "markdownlint-cli2"
             "vale"
-          ];
-          php = [
-            "phpstan"
-          ];
-          ruby = [
-            "rubocop"
           ];
           sh = [
             "shellcheck"
           ];
           text = [
             "vale"
-          ];
-          yaml = [
-            "yamllint"
           ];
         };
       };

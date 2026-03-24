@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -20,7 +21,18 @@ with lib;
 
   # TODO: write autocommand to open helpfiles in vertical split
   config = mkIf cfg.enable {
-    home.file."${config.xdg.cacheHome}/nvim/.gitkeep".text = "";
+    home = {
+      file."${config.xdg.cacheHome}/nvim/.gitkeep".text = "";
+      packages = with pkgs; [
+        hadolint
+        prettier
+        shellcheck-minimal
+        shfmt
+        vale
+        valeStyles.alex
+        valeStyles.proselint
+      ];
+    };
 
     programs = {
       fd.enable = true;
