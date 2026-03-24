@@ -37,7 +37,15 @@
         };
         settings = {
           defaults = {
+            file_ignore_patterns = [
+              "%.git/"
+            ];
             sorting_strategy = "ascending";
+          };
+          pickers = {
+            find_files = {
+              hidden = true;
+            };
           };
         };
         keymaps = {
