@@ -20,7 +20,6 @@ with lib;
       rustdesk-flutter
       scrcpy
       android-tools
-      act # run GitHub Actions locally
       wireshark
       gdb
       ghidra

@@ -16,9 +16,19 @@ with lib;
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      git-filter-repo
-    ];
+    home = {
+      packages = with pkgs; [
+        act # run GitHub Actions locally
+        git-filter-repo
+      ];
+
+      file = {
+        ".actrc".text = # sh
+          ''
+            --container-options -v $SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent
+          '';
+      };
+    };
 
     programs = {
       gh = {
@@ -77,22 +87,23 @@ with lib;
         };
       };
       zsh = mkIf config.programs.zsh.enable {
-        initContent = ''
-          # automatically prune branches both local and remote
-          function gpb() {
-            git checkout "$(git_main_branch)"
-            git fetch
-            git remote prune origin
-            git branch --merged | grep -vE "$(git_main_branch)|$(git_develop_branch)" | xargs -r git branch -d
-          }
+        initContent = # sh
+          ''
+            # automatically prune branches both local and remote
+            function gpb() {
+              git checkout "$(git_main_branch)"
+              git fetch
+              git remote prune origin
+              git branch --merged | grep -vE "$(git_main_branch)|$(git_develop_branch)" | xargs -r git branch -d
+            }
 
-          # git remove submodule
-          function grms() {
-            git rm $PWD/$1
-            rm -rf $PWD/.git/modules/$1
-            git config --remove-section submodule.$1
-          }
-        '';
+            # git remove submodule
+            function grms() {
+              git rm $PWD/$1
+              rm -rf $PWD/.git/modules/$1
+              git config --remove-section submodule.$1
+            }
+          '';
         shellAliases = {
           gl = "git sla";
           gfix = "git fix";
