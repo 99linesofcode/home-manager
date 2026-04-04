@@ -69,6 +69,31 @@ with lib;
       bind = [
         "SUPER, E, exec, ${uwsmPrefix} alacritty -e yazi"
       ];
+
+      windowrule = [
+        {
+          name = "yazi";
+          "match:title" = "^(Yazi:.*)$";
+          float = "on";
+          center = "on";
+        }
+        {
+          name = "ueberzug";
+          "match:class" = "^(ueberzugpp_.*)$";
+          no_initial_focus = "on";
+          no_anim = "on";
+          no_shadow = "on";
+          float = "on";
+          center = "on";
+          size = "500";
+        }
+        {
+          name = "zathura";
+          "match:class" = "^(org.pwmt.zathura)$";
+          float = "on";
+          center = "on";
+        }
+      ];
     };
   };
 }
