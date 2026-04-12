@@ -81,7 +81,6 @@ with lib;
   programs = {
     bat.enable = true;
     btop.enable = true;
-    chromium.enable = true;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
