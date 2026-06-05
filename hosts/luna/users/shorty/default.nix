@@ -12,6 +12,7 @@ with lib;
       bitwarden-desktop
       bitwarden-cli
       discord
+      etlegacy
       electron
       # freecad # FIXME: doesn't build with nixpkgs#2fc6539b481e1d2569f25f8799236694180c0993
       insomnia # FOSS alternative to Postman API tester
