@@ -38,7 +38,7 @@
             { name = "dap"; }
             { name = "luasnip"; }
             { name = "nvim_lsp"; }
-            { name = "nvim_lsp_document_symbol"; }
+            # { name = "nvim_lsp_document_symbol"; } # FIXME: incorrectly listed as an unfree package as of 05d48760cd7b5f05a60e772220d377a10c02eddf4ec12e3f333e8cad1ac5ce3e
             { name = "nvim_lsp_signature_help"; }
             { name = "path"; }
             { name = "treesitter"; }
