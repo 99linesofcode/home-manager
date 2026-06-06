@@ -39,7 +39,7 @@ in
         adapters = with pkgs; {
           executables = {
             php = {
-              command = lib.getExe' nodePackages.nodejs "node";
+              command = lib.getExe' nodejs "node";
               args = [
                 "${vscode-extensions.xdebug.php-debug}/share/vscode/extensions/xdebug.php-debug/out/phpDebug.js"
               ];
