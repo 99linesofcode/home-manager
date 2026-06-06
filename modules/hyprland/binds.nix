@@ -28,7 +28,7 @@ in
       "SUPER, W, killactive"
       "SUPER, F, fullscreen"
       "SUPER_CTRL, F, togglefloating"
-      "SUPER_CTRL, S, togglesplit"
+      "SUPER_CTRL, S, layoutmsg, togglesplit"
 
       # Focus window
       "SUPER, H, movefocus, l"
