@@ -14,17 +14,11 @@ with lib;
 
   config = mkIf cfg.enable {
     programs = {
-      alacritty = mkIf config.programs.alacritty.enable {
-        settings = {
-          terminal.shell = "zellij";
-        };
-      };
       zellij = {
         enable = true;
         enableZshIntegration = config.programs.zsh.enable;
         settings = {
           show_startup_tips = false;
-          default_layout = "compact";
           # NOTE: https://github.com/zellij-org/zellij/blob/main/zellij-utils/assets/config/default.kdl
           keybinds = {
             "normal clear-defaults=true" = {

@@ -22,7 +22,7 @@ with lib;
     programs.yazi = {
       enable = true;
       settings = {
-        manager = {
+        mgr = {
           linemode = "none";
           ratio = [
             1
@@ -59,6 +59,7 @@ with lib;
           micro_workers = 5;
         };
       };
+      shellWrapperName = "y";
       plugins = {
         # TODO: add ouch.yazi for compressing and decompressing archives
       };
@@ -66,7 +67,32 @@ with lib;
 
     wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
       bind = [
-        "SUPER, E, exec, ${uwsmPrefix}alacritty -e 'yazi'"
+        "SUPER, E, exec, ${uwsmPrefix} alacritty -e yazi"
+      ];
+
+      windowrule = [
+        {
+          name = "yazi";
+          "match:title" = "^(Yazi:.*)$";
+          float = "on";
+          center = "on";
+        }
+        {
+          name = "ueberzug";
+          "match:class" = "^(ueberzugpp_.*)$";
+          no_initial_focus = "on";
+          no_anim = "on";
+          no_shadow = "on";
+          float = "on";
+          center = "on";
+          size = "500";
+        }
+        {
+          name = "zathura";
+          "match:class" = "^(org.pwmt.zathura)$";
+          float = "on";
+          center = "on";
+        }
       ];
     };
   };

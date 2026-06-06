@@ -2,6 +2,7 @@
   config,
   inputs,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -20,7 +21,18 @@ with lib;
 
   # TODO: write autocommand to open helpfiles in vertical split
   config = mkIf cfg.enable {
-    home.file."${config.xdg.cacheHome}/nvim/.gitkeep".text = "";
+    home = {
+      file."${config.xdg.cacheHome}/nvim/.gitkeep".text = "";
+      packages = with pkgs; [
+        hadolint
+        prettier
+        shellcheck-minimal
+        shfmt
+        vale
+        valeStyles.alex
+        valeStyles.proselint
+      ];
+    };
 
     programs = {
       fd.enable = true;
@@ -29,16 +41,29 @@ with lib;
         enable = true;
         defaultEditor = true;
         extraConfigLuaPre = "if not vim.g.vscode then";
+        extraConfigLua = # lua
+          ''
+            vim.filetype.add({
+              pattern = {
+                ["%.env%..+"] = "dotenv";
+                ["%.env"] = "dotenv";
+              }
+            })
+          '';
         extraConfigLuaPost = "end";
         viAlias = true;
         vimAlias = true;
         vimdiffAlias = true;
-        globals.mapleader = " ";
-        globals.maplocalleader = "\\";
+
+        globals = {
+          mapleader = " ";
+          maplocalleader = "\\";
+        };
 
         opts = {
           autowrite = true; # write the contents of the file automatically on certain commands
           clipboard = "unnamedplus"; # use system clipboard
+          colorcolumn = "80,120,160"; # color line length columns
           completeopt = "menu,menuone,noselect";
           confirm = true; # confirm to save changes before exiting modified buffer
           cursorline = true; # enable highlighting of the current line

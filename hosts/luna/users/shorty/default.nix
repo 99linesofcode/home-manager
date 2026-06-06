@@ -11,25 +11,25 @@ with lib;
       beeper
       bitwarden-desktop
       bitwarden-cli
-      discord
+      etlegacy
       electron
-      # (freecad.override { withWayland = config.home.wayland.enable; })
-      freecad-wayland
+      # freecad # FIXME: doesn't build with nixpkgs#2fc6539b481e1d2569f25f8799236694180c0993
       insomnia # FOSS alternative to Postman API tester
       nix-prefetch-git
       polychromatic
-      # rustdesk
+      rustdesk-flutter
       scrcpy
       android-tools
-      act # run GitHub Actions locally
       wireshark
       gdb
-      # ghidra # FIXME: wouldnt build for 4ebc11dad54b7e5b8a46c6edb2533852e99ec566bbe10836b2d6dba89c9c2e3c
+      ghidra
       scanmem
     ];
 
+    alacritty.enable = true;
     bluetui.enable = true;
     brightnessctl.enable = true;
+    discord.enable = true;
     dunst.enable = true;
     docker.enable = true;
     eza.enable = true;
@@ -49,6 +49,7 @@ with lib;
     hyprland.enable = true;
     impala.enable = true;
     lazydocker.enable = true;
+    lazysql.enable = true;
     mpv.enable = true;
     nvim.enable = true;
     obsidian.enable = true;
@@ -81,7 +82,6 @@ with lib;
   programs = {
     bat.enable = true;
     btop.enable = true;
-    chromium.enable = true;
     direnv = {
       enable = true;
       nix-direnv.enable = true;

@@ -28,7 +28,7 @@ with lib;
   };
 
   home = {
-    stateVersion = "25.05";
+    stateVersion = "26.05";
     packages = with pkgs; [
       imagemagick
       ffmpeg
@@ -45,14 +45,5 @@ with lib;
       wget
       zip
     ];
-  };
-
-  programs = {
-    alacritty = {
-      enable = true;
-      settings = {
-        font.offset.y = 8;
-      };
-    };
   };
 }

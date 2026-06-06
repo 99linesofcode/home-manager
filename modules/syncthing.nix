@@ -21,9 +21,6 @@ with lib;
       settings = {
         options.urAccepted = -1; # do not submit anonymous usage data
         devices = {
-          "note" = {
-            id = "4CYUMEQ-DYNLFQ6-ASNQ7MX-TB6WRBA-4JPEOHJ-C5YA27Q-PVQ72CQ-AUU77Q6";
-          };
           "boox" = {
             id = "O7JFX2O-SXQ2PGL-JGEPNM4-L42XPWW-A45NXOO-SSFRFJK-UIAGCC7-C5MRBQP";
           };
@@ -32,7 +29,6 @@ with lib;
           "Obsidian" = mkIf (config.home.google-drive.enable && config.home.obsidian.enable) {
             path = "/home/${username}/Documents/Google Drive/Obsidian";
             devices = [
-              "note"
               "boox"
             ];
           };

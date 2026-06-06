@@ -21,7 +21,7 @@ with lib;
 
     wayland.windowManager.hyprland.settings = {
       bind = [
-        "SUPER, P, exec, ${uwsmPrefix}alacritty -e hyprmon" # F4
+        "SUPER, P, exec, ${uwsmPrefix} alacritty -e hyprmon" # F4
       ];
     };
   };

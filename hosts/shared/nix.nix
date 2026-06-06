@@ -19,7 +19,7 @@ with lib;
 
   home = {
     packages = with pkgs; [
-      nil
+      nixd
       nixfmt
     ];
   };

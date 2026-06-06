@@ -3,10 +3,12 @@
   inputs,
   lib,
   pkgs,
+  specialArgs,
   ...
 }:
 let
   cfg = config.home.sops;
+  inherit (specialArgs) username;
 in
 with lib;
 {
@@ -29,6 +31,7 @@ with lib;
       defaultSopsFile = ../.sops.yaml;
       age = {
         generateKey = false;
+        keyFile = "/home/${username}/.config/sops/age/keys.txt";
         sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
       };
     };

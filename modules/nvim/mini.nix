@@ -5,6 +5,8 @@
     ];
 
     plugins = {
+      mini-align.enable = true;
+      mini-splitjoin.enable = true;
       mini = {
         enable = true;
         mockDevIcons = true;
@@ -21,7 +23,9 @@
               };
             };
           };
-          icons = { };
+          icons = {
+            style = "glyph";
+          };
           pairs = {
             modes = {
               insert = true;

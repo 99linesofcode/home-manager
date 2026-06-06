@@ -10,8 +10,8 @@
         inlayHints = true;
         servers = {
           bashls.enable = true;
+          cssls.enable = true;
           emmet_ls.enable = true;
-          eslint.enable = true;
           helm_ls.enable = true;
           html.enable = true;
           intelephense = {
@@ -21,18 +21,17 @@
           jsonls.enable = true;
           lua_ls.enable = true;
           marksman.enable = true;
-          nil_ls.enable = true;
-          pest_ls.enable = true;
-          pyright.enable = true;
+          nixd.enable = true;
           ruby_lsp.enable = true;
+          ruff.enable = true; # python
           rust_analyzer = {
             enable = true;
             installCargo = false;
             installRustc = false;
           };
-          superhtml.enable = true;
+          sqruff.enable = true; # sql
           tailwindcss.enable = true;
-          ts_ls.enable = true;
+          ts_ls.enable = true; # javascript/typescript
           vue_ls.enable = true;
           yamlls.enable = true;
         };
@@ -90,6 +89,7 @@
         };
       };
       lspkind.enable = true; # vscode-like pictograms for lsp
+      lsp-lines.enable = true; # diagnostics in virtual line
       lsp-signature.enable = true; # method signatures
     };
   };

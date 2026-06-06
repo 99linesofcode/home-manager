@@ -117,7 +117,7 @@ with lib;
                 " "
               ];
             };
-            "on-click" = "${uwsmPrefix}pwvucontrol";
+            "on-click" = "${uwsmPrefix} pwvucontrol";
           };
 
           "network" = {
@@ -131,7 +131,7 @@ with lib;
             "tooltip-format-ethernet" = "  {ifname} ({ipaddr}/{cidr})";
             "tooltip-format-disconnected" = "Disconnected";
             "max-length" = 50;
-            "on-click" = "${uwsmPrefix}alacritty -e impala";
+            "on-click" = "${uwsmPrefix} alacritty -e impala";
           };
 
           "bluetooth" = {
@@ -142,7 +142,7 @@ with lib;
             "tooltip-format" = "{device_alias}";
             "tooltip-format-connected" = "󰂰 {device_enumerate}";
             "tooltip-format-enumerate-connected" = "{device_alias}";
-            "on-click" = "${uwsmPrefix}alacritty -e bluetui";
+            "on-click" = "${uwsmPrefix} alacritty -e bluetui";
           };
 
           "battery" = {
