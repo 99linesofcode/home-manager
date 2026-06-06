@@ -21,6 +21,7 @@ with lib;
   config = mkIf shouldConfigure {
     wayland.windowManager.hyprland = {
       enable = true;
+      configType = "hyprlang"; # TODO: figure out whether lua requires changes to the hyprland module configuration
       # see: https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#using-the-home-manager-module-with-nixos
       package = null;
       portalPackage = null;
