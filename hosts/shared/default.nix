@@ -28,7 +28,7 @@ with lib;
   };
 
   home = {
-    stateVersion = "25.05";
+    stateVersion = "26.05";
     packages = with pkgs; [
       imagemagick
       ffmpeg

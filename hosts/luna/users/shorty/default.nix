@@ -11,7 +11,6 @@ with lib;
       beeper
       bitwarden-desktop
       bitwarden-cli
-      discord
       etlegacy
       electron
       # freecad # FIXME: doesn't build with nixpkgs#2fc6539b481e1d2569f25f8799236694180c0993
@@ -30,6 +29,7 @@ with lib;
     alacritty.enable = true;
     bluetui.enable = true;
     brightnessctl.enable = true;
+    discord.enable = true;
     dunst.enable = true;
     docker.enable = true;
     eza.enable = true;
