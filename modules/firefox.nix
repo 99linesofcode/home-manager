@@ -39,6 +39,7 @@ with lib;
   config = mkIf cfg.enable {
     programs.firefox = {
       enable = true;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
       languagePacks = [
         "en-US"
         "en-GB"
