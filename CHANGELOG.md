@@ -1,3 +1,53 @@
+# [0.20.0](https://github.com/99linesofcode/home-manager/compare/v0.19.0...v0.20.0) (2026-06-06)
+
+
+### Bug Fixes
+
+* **conform.nvim:** don't squeeze or trim, it'll be handled by editorconfig/formatters ([a144362](https://github.com/99linesofcode/home-manager/commit/a1443623bdfb202119ea6fc247fcaa0095faf09b))
+* **dependabot:** time should be of type string instead of int ([fc50350](https://github.com/99linesofcode/home-manager/commit/fc503500951c8c7ee775f0c3d6fec22ec101d304))
+* **feh:** disable override as imlib2 build argument no longer exists ([6cd01fa](https://github.com/99linesofcode/home-manager/commit/6cd01fa3c7381feff5a01c27afe9adaa5fd30f79))
+* **firefox:** configuration is now stored and read from XDG_CONFIG_HOME ([c840bbb](https://github.com/99linesofcode/home-manager/commit/c840bbb379a91e0a16c16f39d3a2aa9b722f8c30))
+* **freecad:** freecad-wayland no longer exists and freecad presently doesn't build ([b7d2376](https://github.com/99linesofcode/home-manager/commit/b7d23766f90d3b85ea84bcaed7c282eda8a92444))
+* **ghidra:** now builds correctly again ([db7b9ec](https://github.com/99linesofcode/home-manager/commit/db7b9ec12ea729aa29dcab7dd4510b66e9bc0276))
+* **git:** aliases setting shouldve been alias ([c2b343f](https://github.com/99linesofcode/home-manager/commit/c2b343f52252d01f2c8eb06386bb387706a9c1b7))
+* **hyprland:** dispatch togglesplit has been replaced with layoutmsg ([1796df6](https://github.com/99linesofcode/home-manager/commit/1796df6c36b1c3fdbdf5b19641f12fd922d17241))
+* **hyprland:** set configType to the legacy hyprlang ([3e6ef47](https://github.com/99linesofcode/home-manager/commit/3e6ef47f6df81d34e9edc4989be5928e0d3e54a8))
+* **mars.shorty:** enable styling with stylix ([12b8e33](https://github.com/99linesofcode/home-manager/commit/12b8e33aa00406947351a487fd163d2088a47817))
+* **nvim-cmp:** disable lsp document symbol while the licensing issue is resolved ([df4f371](https://github.com/99linesofcode/home-manager/commit/df4f371f1e311095773d843c46da7fb614ebef64))
+* **nvim:** settings entries were renamed to snake_case instead of camelCase ([801cbc6](https://github.com/99linesofcode/home-manager/commit/801cbc6914b02f6d762e348f954a06e1e0a45788))
+* **sops:** use age key generated for host by nixos-config ([ddbe338](https://github.com/99linesofcode/home-manager/commit/ddbe338df3631ef93c132b2e3f625fe8e94a9745))
+* **telescope.nvim:** live_grep hidden files ([fed58f6](https://github.com/99linesofcode/home-manager/commit/fed58f6bf50644b99d5e6c31111b6edc37f122c7))
+* **telescope.nvim:** search hidden files and directories unless [.gitignore|.ignore]d ([8537da7](https://github.com/99linesofcode/home-manager/commit/8537da7722c0385f0128b831d0357313b4f150e9))
+* **yazi:** settings.manager was renamed to settings.mgr ([16ea454](https://github.com/99linesofcode/home-manager/commit/16ea4543a3329fbd4f069124de5cdb2827966a7d))
+* **yazi:** suppress shell wrapper rename warning by being explicit ([6f29d71](https://github.com/99linesofcode/home-manager/commit/6f29d71b577e4069b2c9c579738612fce9f14df3))
+* **zellij:** use default layout as this displays the keybindings on CTRL B ([939f97e](https://github.com/99linesofcode/home-manager/commit/939f97e6ea16e4aa38e5d85290971d7a0d5c22fb))
+
+
+### Features
+
+* **act:** run GitHub Actions from your local dev machine ([5957713](https://github.com/99linesofcode/home-manager/commit/5957713fd172f5b290b46104faf056fdbe14834b))
+* **firefox:** enable fake-filler extension ([100cae5](https://github.com/99linesofcode/home-manager/commit/100cae5bc7d6a0a0ff1a49f012710056c97637f2))
+* **git:** add git filter-repo to simplify history management ([3fd3cb7](https://github.com/99linesofcode/home-manager/commit/3fd3cb7865324e7667630cfb2bdac8e415906c8c))
+* **github:** let dependabot automatically update git submodules ([bc91a14](https://github.com/99linesofcode/home-manager/commit/bc91a14f507d7a6082e469b09b90bbb6e8590ed2))
+* install native ET:Legacy client ([6972709](https://github.com/99linesofcode/home-manager/commit/6972709378ae58aa1ccce5f0b3d7e839042d9f8d))
+* **lazysql:** TUI client for SQL ([af6a6c5](https://github.com/99linesofcode/home-manager/commit/af6a6c5d901bc5253da2003f5b3030280bab5220))
+* **nvim:** add dotenv filetype and make sure .env files are detected as much ([dfd2b51](https://github.com/99linesofcode/home-manager/commit/dfd2b516be6b82b1f66ef8955c26330fcfba984b))
+* **nvim:** add line length rulers at 80, 120 and 160 characters ([4e0cd59](https://github.com/99linesofcode/home-manager/commit/4e0cd59e499a20d65d481a613c8d0022b857bbf7))
+* **nvim:** allow aligning code through mini-align ([2525fd8](https://github.com/99linesofcode/home-manager/commit/2525fd8726791954dbdbe86b8e471ea570e8ae62))
+* **nvim:** autocompletions for method signature, symbols and treesitter parser ([74a93b7](https://github.com/99linesofcode/home-manager/commit/74a93b7f7447c7afe0cd93452cc239e4da108374))
+* **nvim:** display diagnostics on virtual line with lsp-lines ([4604a68](https://github.com/99linesofcode/home-manager/commit/4604a683f878a00ea409d3406465e016f0510140))
+* **nvim:** force mini-icons to use glyphs ([0da7ebc](https://github.com/99linesofcode/home-manager/commit/0da7ebc3d5e042ed96e76d0cfec7819e8f75851d))
+* **nvim:** formatting sql with sqlruff ([36f5ae1](https://github.com/99linesofcode/home-manager/commit/36f5ae1d027941735e5b4854eac74e00e01e82a6))
+* **nvim:** handle linting, formatting and error checking at lsp, nvim-lint or conform level ([f1baa44](https://github.com/99linesofcode/home-manager/commit/f1baa4411deeb4153497da1a4969fa7cc46be918))
+* **nvim:** install language servers and linters that should be globally available ([54ad52b](https://github.com/99linesofcode/home-manager/commit/54ad52b8e0ca18ed278e15fcd625fc92713cbdcf))
+* **nvim:** lint markdown using markdownlint-cli2 as well as vale for prose ([d13bcad](https://github.com/99linesofcode/home-manager/commit/d13bcad3941177da182ef7680c309217c7e015ad))
+* **nvim:** split or join arguments easily using mini-splitjoin ([d58b7a6](https://github.com/99linesofcode/home-manager/commit/d58b7a6fe5ca0f3c6705d96bd5816960692b9d85))
+* **yazi:** override default window behavior in hyprland ([f142a3c](https://github.com/99linesofcode/home-manager/commit/f142a3cb7fe298d2b686a7515f47244629a26953))
+* **zsh:** run artisan OR testbench in docker OR local with a() and p() ([c3c266c](https://github.com/99linesofcode/home-manager/commit/c3c266c9fbf6c3794f3adbff613f268a6f53acac))
+* **zsh:** run artisan OR testbench in docker OR local with a() and p() ([2620efb](https://github.com/99linesofcode/home-manager/commit/2620efb5ea52fb58346c69f6d7ef36b138a0c973))
+
+
+
 # [0.19.0](https://github.com/99linesofcode/home-manager/compare/v0.18.1...v0.19.0) (2026-01-30)
 
 
@@ -69,39 +119,6 @@
 * **espanso:** a text expander ([7e5fd1b](https://github.com/99linesofcode/home-manager/commit/7e5fd1b3a5e43b5c402e52a231e8e042b27377f2))
 * **impala:** iwd based TUI wifi manager ([3fb2154](https://github.com/99linesofcode/home-manager/commit/3fb21541cd52731b9092dd0531117dc2ed94fd03))
 * install jq and yq globally ([0e24dca](https://github.com/99linesofcode/home-manager/commit/0e24dca161850f6eabe21aed31eef08716b5f1a1))
-
-
-
-# [0.16.0](https://github.com/99linesofcode/home-manager/compare/v0.15.0...v0.16.0) (2025-09-05)
-
-
-### Bug Fixes
-
-* make shell functions POSIX compliant ([2ab1b68](https://github.com/99linesofcode/home-manager/commit/2ab1b6831292a0d948314acfcff38b58ac328148))
-* **nvim:** calling bdelete closed the whole editor session ([e7215a7](https://github.com/99linesofcode/home-manager/commit/e7215a7a2d3a9f5b7316f5076ce8ce38952b8d46))
-* **nvim:** disable flash autojump on single result ([26d304e](https://github.com/99linesofcode/home-manager/commit/26d304ed509cb7dcbc2f484220c3cd4143dc1ae0))
-* **obsidian:** automatically bounce back from almost any interruption ([e740c31](https://github.com/99linesofcode/home-manager/commit/e740c314b7543d7e27a4762eb15c31332f62df0d))
-* **steam:** missing fonts causing Wine installation wizards to crash ([6b3187d](https://github.com/99linesofcode/home-manager/commit/6b3187d27f58c71f6da3967ff4c673fa256bce3c))
-* **vscode:** blade formatting using vscode-blade-formatter ([7935469](https://github.com/99linesofcode/home-manager/commit/793546926810cf23250663989726ae2666dab42c))
-* **vscode:** emmet completions didnt work for TailwindCSS ([e705ed1](https://github.com/99linesofcode/home-manager/commit/e705ed1892d5d8a00a0f322fe25ea19ba4b903d0))
-* **vscode:** typo in eslint.validate block ([6a37f1a](https://github.com/99linesofcode/home-manager/commit/6a37f1a0a07df9d0ceb8e4b94455009a425594fc))
-* **zsh:** enable zsh integration for fzf ([4f5c92c](https://github.com/99linesofcode/home-manager/commit/4f5c92c4213b7651ab5061f1a8f28af9adc4a672))
-* **zsh:** history substring search was not using fzf ([8c511b4](https://github.com/99linesofcode/home-manager/commit/8c511b47208d727bff3adcdab7e12c33ca1df281))
-
-
-### Features
-
-* **artisan:** automatically run inside PHP container if present ([712b2f0](https://github.com/99linesofcode/home-manager/commit/712b2f0e782eda1b45b585ae45926a367d0ff09f))
-* **docker:** use gnome keyring as credential store ([122a00e](https://github.com/99linesofcode/home-manager/commit/122a00e1f18af82b00c801af6b90d1908978482f))
-* **firefox:** add vuejs devtools ([aebe150](https://github.com/99linesofcode/home-manager/commit/aebe15005e9040ff22ea02d87985ac84ddac15a2))
-* **git:** enable github cli ([e77e483](https://github.com/99linesofcode/home-manager/commit/e77e4839643f2f84049b4d241e25250123a38f9a))
-* **git:** update submodules on pull ([5739de3](https://github.com/99linesofcode/home-manager/commit/5739de39065fae6036f14ce8c228005e47fa9f6a))
-* **insomnia:** FOSS Postman alternative ([9d02f92](https://github.com/99linesofcode/home-manager/commit/9d02f9272b95ff840c7e10b1092a38e7b959c422))
-* install nil and nixfmt-rfc system wide ([bdcdf1f](https://github.com/99linesofcode/home-manager/commit/bdcdf1f94c7281f0cc61a99f5689b20aff55e526))
-* **nvim:** fix yaml linting and formatting by using yq-go ([4768487](https://github.com/99linesofcode/home-manager/commit/47684873a7c7555863823f8fbe2ddc6f8bb9588f))
-* **nvim:** install helm language server ([4264ddb](https://github.com/99linesofcode/home-manager/commit/4264ddb5c793c0f403863d3fe5a86772e284eda2))
-* **vscode:** add todo-tree styling ([2fdf2dd](https://github.com/99linesofcode/home-manager/commit/2fdf2dd7818fd4f6960b605478b49374d53d2cd6))
-* **vscode:** Vuejs syntax highlighting, formatting, etc. ([495563f](https://github.com/99linesofcode/home-manager/commit/495563f53c945089ad35fa118e8aaa2d51983293))
 
 
 
