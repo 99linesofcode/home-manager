@@ -177,6 +177,7 @@ with lib;
             "browser.toolbars.bookmarks.visibility" = "never"; # bookmark bar vsibility (always, newtab, never)
             "extensions.autoDisableScopes" = 0; # automatically enable extensions
             "widget.use-xdg-desktop-portal" = true;
+            "widget.wayland.fractional-scale.enabled" = false; # FIXME: fixes an issue that causes extensions to become comically large
 
             # TODO: required for nvidia-vaapi-driver, how to toggle on nixos-config value 🤔
             "media.ffmpeg.vaapi.enabled" = true;
