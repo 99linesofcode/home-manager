@@ -1,3 +1,12 @@
+## [0.20.1](https://github.com/99linesofcode/home-manager/compare/v0.20.0...v0.20.1) (2026-06-09)
+
+
+### Bug Fixes
+
+* **firefox:** scaling issue in extensions ([580a6f5](https://github.com/99linesofcode/home-manager/commit/580a6f52fe4a5fc5109244de73c4a51c2a48d951))
+
+
+
 # [0.20.0](https://github.com/99linesofcode/home-manager/compare/v0.19.0...v0.20.0) (2026-06-06)
 
 
@@ -94,31 +103,6 @@
 
 * **hyprmon:** TUI monitor configuration tool for Hyprland with visual layout ([43b1a29](https://github.com/99linesofcode/home-manager/commit/43b1a296a09bbe740a54a32e0b6e30e677a0ac1c))
 * **hyprpointer:** The hyprland cursor format ([001fb76](https://github.com/99linesofcode/home-manager/commit/001fb764238955b6f361a6609a4699f9c84f7c1e))
-
-
-
-# [0.17.0](https://github.com/99linesofcode/home-manager/compare/v0.16.0...v0.17.0) (2025-10-26)
-
-
-### Bug Fixes
-
-* **nvim-conform:** don't run shellharden in sh ([ee46a77](https://github.com/99linesofcode/home-manager/commit/ee46a7717f8c94a9c53eb0d107fd7c61d01e0ef9))
-* **nvim:** php linting using phpstan ([4a42df7](https://github.com/99linesofcode/home-manager/commit/4a42df743489391571af5e91fd668c387dfcd751))
-* **openssh:** automatically forward agent and keep connection alive ([3881051](https://github.com/99linesofcode/home-manager/commit/3881051098680b7a67389ebe491891f8dcdcbd16))
-* **waybar:** assume impala since nmtui won't be installed ([0b45065](https://github.com/99linesofcode/home-manager/commit/0b45065e2eecb00418d0e16b5ced70cb8f5dbe6c))
-* **waybar:** hardcode network interface to prevent faulty autoselect ([fc8842b](https://github.com/99linesofcode/home-manager/commit/fc8842be5c100193d866b9c4515611b2dd753a0e))
-* **zsh:** only add uwsm start to .zprofile if wayland is enabled ([3c9a6b5](https://github.com/99linesofcode/home-manager/commit/3c9a6b51c90df4c847d0d4b7a763e5f5782d24c5))
-* **zsh:** running artisan in container or local using the a() function ([35e78c2](https://github.com/99linesofcode/home-manager/commit/35e78c2cf1b1b5d2111b0c5085c9df53fcd6273f))
-
-
-### Features
-
-* **alias:** run both artisan and composer in docker container if available ([95a72bd](https://github.com/99linesofcode/home-manager/commit/95a72bd04215eab089caa035e47db74a88fa1c1d))
-* **deploy:** let nixos-config handle initial provisioning ([8b8172b](https://github.com/99linesofcode/home-manager/commit/8b8172b9bb657a0b050f1e546ec2785117c2bf94))
-* **deploy:** succesful deployment of the mars host ([7cc7ee1](https://github.com/99linesofcode/home-manager/commit/7cc7ee13c6c5793c2ed18248d95a2ecdbd16239d))
-* **espanso:** a text expander ([7e5fd1b](https://github.com/99linesofcode/home-manager/commit/7e5fd1b3a5e43b5c402e52a231e8e042b27377f2))
-* **impala:** iwd based TUI wifi manager ([3fb2154](https://github.com/99linesofcode/home-manager/commit/3fb21541cd52731b9092dd0531117dc2ed94fd03))
-* install jq and yq globally ([0e24dca](https://github.com/99linesofcode/home-manager/commit/0e24dca161850f6eabe21aed31eef08716b5f1a1))
 
 
 
