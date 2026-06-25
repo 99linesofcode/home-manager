@@ -85,13 +85,6 @@ with lib;
           ];
           theme = "juanghurtado";
         };
-        profileExtra =
-          mkIf config.home.wayland.enable # sh
-            ''
-              if uwsm check may-start; then
-                exec uwsm start default
-              fi
-            '';
         syntaxHighlighting.enable = true;
         shellAliases = {
           artisan = "a";
