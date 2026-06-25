@@ -1,3 +1,12 @@
+## [0.20.2](https://github.com/99linesofcode/home-manager/compare/v0.20.1...v0.20.2) (2026-06-25)
+
+
+### Bug Fixes
+
+* **zsh:** uwsm is not kicked off through the hyprland-uwsm.desktop file and PAM ([0b3cee7](https://github.com/99linesofcode/home-manager/commit/0b3cee769fd87773359409905379101b2665cb4a))
+
+
+
 ## [0.20.1](https://github.com/99linesofcode/home-manager/compare/v0.20.0...v0.20.1) (2026-06-09)
 
 
@@ -82,27 +91,6 @@
 ### Bug Fixes
 
 * **nvim:** expand all folds ([ab8f34e](https://github.com/99linesofcode/home-manager/commit/ab8f34efa1d0b2959024bf085a11349bdce70601))
-
-
-
-# [0.18.0](https://github.com/99linesofcode/home-manager/compare/v0.17.0...v0.18.0) (2026-01-12)
-
-
-### Bug Fixes
-
-* disable installing ghidra and overriding feh.imlib2 with imlib2Full for the time being ([aa44507](https://github.com/99linesofcode/home-manager/commit/aa44507eb040e43285ef0faaa6e2a77570922215))
-* **hyprland:** allow navigating and cycling to other half of the workspaces ([20f8eee](https://github.com/99linesofcode/home-manager/commit/20f8eee161c8f04cb6c2a98036a6393f8c428b1a))
-* **hyprpaper:** disable rendering hyprland splash on wallpaper ([78d2363](https://github.com/99linesofcode/home-manager/commit/78d2363473c242a168e063ddc61f91a79b62403b))
-* **nvim:** couldn't run lazygit as sub process due to missing .cache/nvim directory ([134e09d](https://github.com/99linesofcode/home-manager/commit/134e09dd80bb0c48a9063904eb65ca85069d3240))
-* **sops:** stops at first match so order of creation_rules is important ([827d6e2](https://github.com/99linesofcode/home-manager/commit/827d6e22742033e1ba9c31a43f6e96cc3131eee3))
-* **xdg:** enable creating XDG base directories and setting the env variables ([82fa48a](https://github.com/99linesofcode/home-manager/commit/82fa48afc95a204cde1f818fc4954cfad32997b7))
-* **xwayland:** resolve scaling issues for xwayland applications ([f5d6a4e](https://github.com/99linesofcode/home-manager/commit/f5d6a4ea8fbe24a9d00d77b4fc5b807f2cbc5a4a))
-
-
-### Features
-
-* **hyprmon:** TUI monitor configuration tool for Hyprland with visual layout ([43b1a29](https://github.com/99linesofcode/home-manager/commit/43b1a296a09bbe740a54a32e0b6e30e677a0ac1c))
-* **hyprpointer:** The hyprland cursor format ([001fb76](https://github.com/99linesofcode/home-manager/commit/001fb764238955b6f361a6609a4699f9c84f7c1e))
 
 
 
