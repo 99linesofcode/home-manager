@@ -8,9 +8,9 @@ with lib;
 {
   home = {
     packages = with pkgs; [
-      beeper
-      bitwarden-desktop
-      bitwarden-cli
+      # beeper
+      # bitwarden-desktop
+      # bitwarden-cli
       etlegacy
       electron
       # freecad # FIXME: doesn't build with nixpkgs#2fc6539b481e1d2569f25f8799236694180c0993
@@ -61,7 +61,7 @@ with lib;
     slurp.enable = true;
     steam.enable = true;
     sops.enable = true;
-    syncthing.enable = true;
+    # syncthing.enable = true;
     swappy.enable = true;
     stylix.enable = true;
     vscode.enable = true;
