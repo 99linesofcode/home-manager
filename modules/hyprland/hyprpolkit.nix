@@ -18,7 +18,7 @@ with lib;
       hyprpolkitagent
     ];
 
-    systemd.user.services.hyprpolkit = mkIf cfg.enable {
+    systemd.user.services.hyprpolkit = {
       Unit = {
         Description = "Hyprland Polkit Authentication Agent";
         Documentation = "https://github.com/hyprwm/hyprpolkitagent";
@@ -26,7 +26,6 @@ with lib;
         PartOf = [ "graphical-session.target" ];
         ConditionEnvironment = [ "WAYLAND_DISPLAY" ];
       };
-
       Service = {
         ExecStart = "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent";
         Slice = "session.slice";

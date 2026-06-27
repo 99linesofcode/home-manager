@@ -9,8 +9,6 @@ with lib;
   home = {
     packages = with pkgs; [
       # beeper
-      # bitwarden-desktop
-      # bitwarden-cli
       etlegacy
       electron
       # freecad # FIXME: doesn't build with nixpkgs#2fc6539b481e1d2569f25f8799236694180c0993
@@ -27,6 +25,7 @@ with lib;
     ];
 
     alacritty.enable = true;
+    bitwarden.enable = true;
     bluetui.enable = true;
     brightnessctl.enable = true;
     discord.enable = true;
