@@ -45,9 +45,6 @@ with lib;
         "en-GB"
         "nl"
       ];
-      package = pkgs.wrapFirefox (pkgs.firefox-unwrapped.override {
-        pipewireSupport = true;
-      }) { };
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
