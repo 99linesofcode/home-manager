@@ -37,6 +37,13 @@ with lib;
   };
 
   config = mkIf cfg.enable {
+    home.sessionVariables = {
+      MOZ_ENABLE_WAYLAND = 1;
+      MOZ_DISABLE_RDD_SANDBOX = 1;
+      MOZ_DRM_DEVICE = "/dev/dri/card0";
+      MOZ_USE_XINPUT2 = 1;
+    };
+
     programs.firefox = {
       enable = true;
       configPath = "${config.xdg.configHome}/mozilla/firefox";
