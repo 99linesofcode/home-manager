@@ -4,10 +4,6 @@ let
 in
 {
   xdg.configFile = {
-    "hypr/state.conf" = {
-      source = ../../dotfiles/hypr/state.conf;
-      force = true;
-    };
     "hypr/scripts/bluetooth-toggle.sh".source = ../../dotfiles/hypr/scripts/bluetooth-toggle.sh;
   };
 
