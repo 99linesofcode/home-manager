@@ -19,8 +19,6 @@ with lib;
       rclone
     ];
 
-    # TODO: create docker-plugins/rclone directories and add config if docker is enabled and running in rootless mode
-
     # TODO: encrypt to disk using rclone config encryption?
     sops.secrets = {
       "rclone/rclone.conf" = {
