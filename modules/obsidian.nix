@@ -48,19 +48,17 @@ with lib;
             Type = "oneshot";
             Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
             ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Documents/Obsidian";
-            ExecStart = ''
-              ${pkgs.rclone}/bin/rclone bisync \
-              gdrive:Obsidian/ %h/Documents/Obsidian \
-              --config %h/.config/rclone/rclone.conf \
-              --conflict-resolve newer \
-              --drive-skip-shortcuts \
-              --drive-skip-dangling-shortcuts \
-              --fast-list \
-              --max-lock 2m \
-              --recover \
-              --resilient \
-              --force
-            '';
+            ExecStart = # sh
+              ''
+                ${pkgs.rclone}/bin/rclone bisync \
+                gdrive:Obsidian/ %h/Documents/Obsidian \
+                --config $XDG_CONFIG_HOME/rclone/rclone.conf \
+                --conflict-resolve newer \
+                --force \
+                --max-lock 2m \
+                --recover \
+                --resilient
+              '';
           };
         };
       };
