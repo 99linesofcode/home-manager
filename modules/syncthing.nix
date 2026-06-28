@@ -30,11 +30,21 @@ with lib;
         };
         folders = {
           "Obsidian" = mkIf (config.home.google-drive.enable && config.home.obsidian.enable) {
-            path = "/home/${username}/Documents/Google Drive/Obsidian";
             devices = [
               "boox"
               "fairphone"
             ];
+            ignorePatterns = [
+              ".direnv"
+              ".git"
+              ".github"
+              ".Trash-1000"
+              ".vitepress"
+              "flake.lock"
+              "node_modules"
+              "pnpm-lock.yaml"
+            ];
+            path = "/home/${username}/Documents/Obsidian";
           };
         };
       };
