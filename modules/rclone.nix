@@ -14,10 +14,23 @@ with lib;
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      fuse
-      rclone
-    ];
+    home = {
+      file."${config.xdg.configHome}/rclone/filter-file.txt".text = ''
+        - .direnv/
+        - .git/
+        - .github/
+        - .Trash-1000/
+        - node_modules/
+        - pnpm-lock.yaml
+        - vendor/
+        - composer.lock
+      '';
+
+      packages = with pkgs; [
+        fuse
+        rclone
+      ];
+    };
 
     # TODO: encrypt to disk using rclone config encryption?
     sops.secrets = {
