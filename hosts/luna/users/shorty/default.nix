@@ -51,6 +51,7 @@ with lib;
     lazysql.enable = true;
     mpv.enable = true;
     nvim.enable = true;
+    obs.enable = true;
     obsidian.enable = true;
     openssh.enable = true;
     playerctl.enable = true;
@@ -85,7 +86,6 @@ with lib;
       enable = true;
       nix-direnv.enable = true;
     };
-    obs-studio.enable = true;
     rofi = {
       enable = true;
       extraConfig.run-command = "${config.home.wayland.uwsm.prefix}{cmd}";
