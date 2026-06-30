@@ -32,9 +32,25 @@ with lib;
               --slow-hash-sync-only
             '';
       };
-      packages = with pkgs; [
-        obsidian
-      ];
+    };
+
+    programs = {
+      obsidian = {
+        enable = true;
+        cli.enable = true;
+        defaultSettings = {
+          app = {
+            vimMode = true;
+            userIgnoreFilters = [
+              "/.git/"
+              "/node_modules/"
+            ];
+            newFileLocation = "current";
+            showLineNumber = true;
+            showUnsupportedFiles = true;
+          };
+        };
+      };
     };
 
     systemd.user = mkIf config.home.rclone.enable {
