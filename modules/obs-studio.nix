@@ -14,6 +14,13 @@ with lib;
   };
 
   config = mkIf cfg.enable {
+    home = {
+      file."${config.xdg.configHome}/obs-studio/input-overlay-presets" = {
+        source = "${pkgs.obs-studio-plugins.input-overlay.src}/presets";
+        recursive = true;
+      };
+    };
+
     programs = {
       obs-studio = {
         enable = true;
