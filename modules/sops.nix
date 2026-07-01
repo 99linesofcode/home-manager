@@ -21,8 +21,8 @@ with lib;
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       age
-      ssh-to-age
       sops
+      ssh-to-age
     ];
 
     sops = {

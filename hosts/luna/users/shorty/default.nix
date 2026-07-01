@@ -8,20 +8,20 @@ with lib;
 {
   home = {
     packages = with pkgs; [
+      android-tools
       beeper
-      etlegacy
       electron
+      etlegacy
       freecad
+      gdb
+      ghidra
       insomnia # NOTE: FOSS alternative to Postman API tester
       nix-prefetch-git
       polychromatic
       rustdesk-flutter
-      scrcpy
-      android-tools
-      wireshark
-      gdb
-      ghidra
       scanmem
+      scrcpy
+      wireshark
     ];
 
     alacritty.enable = true;
@@ -64,6 +64,7 @@ with lib;
     syncthing.enable = true;
     swappy.enable = true;
     stylix.enable = true;
+    typst.enable = true;
     vscode.enable = true;
     vscode-server.enable = true;
     waybar.enable = true;
