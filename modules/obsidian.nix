@@ -28,6 +28,7 @@ with lib;
               --config "$XDG_CONFIG_HOME/rclone/rclone.conf" \
               --create-empty-src-dirs \
               --fix-case \
+              --max-lock 2m \
               --resync \
               --slow-hash-sync-only
             '';

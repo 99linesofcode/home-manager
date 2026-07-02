@@ -31,6 +31,7 @@ with lib;
     discord.enable = true;
     dunst.enable = true;
     docker.enable = true;
+    etlegacy.enable = true;
     eza.enable = true;
     feh = {
       enable = true;
