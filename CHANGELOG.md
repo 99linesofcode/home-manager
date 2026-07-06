@@ -1,3 +1,26 @@
+# [0.21.0](https://github.com/99linesofcode/home-manager/compare/v0.20.2...v0.21.0) (2026-07-06)
+
+
+### Bug Fixes
+
+* **hyprpaper:** hyprctl hyprpaper was called incorrectly ([d2dca52](https://github.com/99linesofcode/home-manager/commit/d2dca52f8a73053967e43dcf32b466eada3092b4))
+* **obs:** write input-overlay presets in .config/obs-studio ([088f807](https://github.com/99linesofcode/home-manager/commit/088f80750b7f78a0f4905a22b9f1d8e17a53d676))
+* **sops:** defaultSopsFile should point to a secrets file, not the .sops config ([49430a6](https://github.com/99linesofcode/home-manager/commit/49430a6602f1321d04a26b7a4904874cfee921a7))
+* **sops:** master key decrypts everything and hosts don't need access to hm secrets ([9b26fa7](https://github.com/99linesofcode/home-manager/commit/9b26fa753143c1c79530b420a65a1eef551fb064))
+* **sops:** use ${username}.txt age key and generate it if it doesn't exist ([4595b46](https://github.com/99linesofcode/home-manager/commit/4595b460954763649da7f7cb7ef0136e6f4fbc3e))
+* use dedicated release versions for other flakes as well ([03d522d](https://github.com/99linesofcode/home-manager/commit/03d522d9ac1231c0d1ce6393b5d26198a2d8dad1))
+
+
+### Features
+
+* **bitwarden:** replace desktop with CLI ([c67695a](https://github.com/99linesofcode/home-manager/commit/c67695af3b2c9253e9a7c6a6d1eda7b4a468deaa))
+* **obsidian:** run bisync --resync on initial run ([60aac98](https://github.com/99linesofcode/home-manager/commit/60aac9810e19a3083c6c9fb84ceaba83fa1abd7f))
+* **rclone:** define files that can optionally be ignored ([d5881f7](https://github.com/99linesofcode/home-manager/commit/d5881f7a57f016b277770cf4ab92188f9df927f6))
+* **syncthing:** add fairphone device ID ([410ca48](https://github.com/99linesofcode/home-manager/commit/410ca4813798f858d13776456c88fe2a2a2ece8d))
+* **typst:** convert .md files to PDFs using Pandoc and Typst ([44e9c71](https://github.com/99linesofcode/home-manager/commit/44e9c71384646f48f7b40640cb60550bce3a118d))
+
+
+
 ## [0.20.2](https://github.com/99linesofcode/home-manager/compare/v0.20.1...v0.20.2) (2026-06-25)
 
 
@@ -82,15 +105,6 @@
 
 * **firefox:** custom search engines for Sonarr and Radarr ([e642e4d](https://github.com/99linesofcode/home-manager/commit/e642e4d2dfe0c4e49dd8cc32ac2e0d847582ded3))
 * **syncthing:** add module for peer-to-peer file synchronization ([9461a5e](https://github.com/99linesofcode/home-manager/commit/9461a5e8a017f1f6e527e4647f178c085bbc01b4))
-
-
-
-## [0.18.1](https://github.com/99linesofcode/home-manager/compare/v0.18.0...v0.18.1) (2026-01-12)
-
-
-### Bug Fixes
-
-* **nvim:** expand all folds ([ab8f34e](https://github.com/99linesofcode/home-manager/commit/ab8f34efa1d0b2959024bf085a11349bdce70601))
 
 
 
