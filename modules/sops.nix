@@ -3,9 +3,11 @@
   inputs,
   lib,
   pkgs,
+  specialArgs,
   ...
 }:
 let
+  inherit (specialArgs) hostname username;
   cfg = config.home.sops;
 in
 with lib;
@@ -26,7 +28,7 @@ with lib;
     ];
 
     sops = {
-      defaultSopsFile = ../.sops.yaml;
+      defaultSopsFile = "../hosts/${hostname}/users/${username}/secrets/secrets.yaml";
       age = {
         generateKey = false;
         keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
