@@ -22,8 +22,9 @@ with lib;
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      nerd-fonts.noto
+      noto-fonts
       noto-fonts-color-emoji
+      nerd-fonts.noto
     ];
 
     stylix = {

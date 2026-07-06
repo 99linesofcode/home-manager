@@ -37,6 +37,14 @@ with lib;
   };
 
   config = mkIf cfg.enable {
+    home.hyprland.uwsm.extraLines = # sh
+      ''
+        export MOZ_ENABLE_WAYLAND=1
+        export MOZ_DISABLE_RDD_SANDBOX=1
+        export MOZ_DRM_DEVICE="/dev/dri/card0"
+        export MOZ_USE_XINPUT2=1
+      '';
+
     programs.firefox = {
       enable = true;
       configPath = "${config.xdg.configHome}/mozilla/firefox";
@@ -45,18 +53,19 @@ with lib;
         "en-GB"
         "nl"
       ];
-      package = pkgs.wrapFirefox (pkgs.firefox-unwrapped.override {
-        pipewireSupport = true;
-      }) { };
       policies = {
-        DisableTelemetry = true;
+        AppAutoUpdate = false;
+        BackgroundAppUpdate = false;
         DisableFirefoxStudies = true;
+        DisablePocket = true;
+        DisableTelemetry = true;
         DNSOverHTTPS = {
           Enabled = true;
           ProviderUrl = "dns.quad9.net";
           Locked = true;
           Fallback = true;
         };
+        DontCheckDefaultBrowser = true;
         EnableTrackingProtection = {
           Value = true;
           Locked = true;
@@ -64,28 +73,94 @@ with lib;
           EmailTracking = true;
           Fingerprinting = true;
         };
+        HardwareAcceleration = true;
         NetworkPrediction = false; # DNS prefetching
         OfferToSaveLogins = false;
         PasswordManagerEnabled = false;
         PostQuantumKeyAgreementEnabled = true;
+
+        ExtensionSettings =
+          let
+            moz = short: "https://addons.mozilla.org/firefox/downloads/latest/${short}/latest.xpi";
+          in
+          {
+            "*".installation_mode = "blocked";
+
+            "nl-NL@dictionaries.addons.mozilla.org" = {
+              install_url = moz "woordenboek-nederlands";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "{d187b435-812e-4813-a93e-edccc4118f9d}" = {
+              install_url = moz "british-english-dictionary-gb";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+              install_url = moz "bitwarden-password-manager";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "addon@darkreader.org" = {
+              install_url = moz "darkreader";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "{7efbd09d-90ad-47fa-b91a-08c472bdf566}" = {
+              install_url = moz "fake-filler";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "{2f182d41-fd03-4a6d-938d-081419586c37}" = {
+              install_url = moz "google-analytics-opt-out";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "sponsorBlocker@ajay.app" = {
+              install_url = moz "sponsorblock";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "{762f9885-5a13-4abd-9c77-433dcd38b8fd}" = {
+              install_url = moz "return-youtube-dislikes";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "{5caff8cc-3d2e-4110-a88a-003cc85b3858}" = {
+              install_url = moz "vue-js-devtools";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
+              install_url = moz "vimium-ff";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "{849ee818-783e-44ec-b22d-c190c12964d3}" = {
+              install_url = moz "todoist_sidebar";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+
+            "uBlock0@raymondhill.net" = {
+              install_url = moz "ublock-origin";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
+          };
       };
       profiles = {
         ${username} = {
-          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-            bitwarden
-            darkreader
-            fake-filler
-            gaoptout
-            ublock-origin
-            sponsorblock
-            read-aloud # TTS
-            return-youtube-dislikes
-            vue-js-devtools
-            vimium
-
-            # TODO: package and contribute these to the NUR?
-            # todoist sidebar
-          ];
           search = {
             force = true;
             default = "google";
@@ -181,20 +256,6 @@ with lib;
 
             # TODO: required for nvidia-vaapi-driver, how to toggle on nixos-config value 🤔
             "media.ffmpeg.vaapi.enabled" = true;
-
-            # completely disable Pocket
-            "extensions.pocket.enabled" = false;
-            "extensions.pocket.api" = "0.0.0.0";
-            "extensions.pocket.loggedOutVariant" = "";
-            "extensions.pocket.oAuthConsumerKey" = "";
-            "extensions.pocket.onSaveRecs" = false;
-            "extensions.pocket.onSaveRecs.locales" = "";
-            "extensions.pocket.showHome" = false;
-            "extensions.pocket.site" = "0.0.0.0";
-            "browser.newtabpage.activity-stream.pocketCta" = "";
-            "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
-            "services.sync.prefs.sync.browser.newtabpage.activity-stream.section.highlights.includePocket" =
-              false;
           };
         };
       };

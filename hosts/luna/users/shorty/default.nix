@@ -8,30 +8,30 @@ with lib;
 {
   home = {
     packages = with pkgs; [
+      android-tools
       beeper
-      bitwarden-desktop
-      bitwarden-cli
-      etlegacy
       electron
-      # freecad # FIXME: doesn't build with nixpkgs#2fc6539b481e1d2569f25f8799236694180c0993
-      insomnia # FOSS alternative to Postman API tester
+      etlegacy
+      freecad
+      gdb
+      ghidra
+      insomnia # NOTE: FOSS alternative to Postman API tester
       nix-prefetch-git
       polychromatic
       rustdesk-flutter
-      scrcpy
-      android-tools
-      wireshark
-      gdb
-      ghidra
       scanmem
+      scrcpy
+      wireshark
     ];
 
     alacritty.enable = true;
+    bitwarden.enable = true;
     bluetui.enable = true;
     brightnessctl.enable = true;
     discord.enable = true;
     dunst.enable = true;
     docker.enable = true;
+    etlegacy.enable = true;
     eza.enable = true;
     feh = {
       enable = true;
@@ -52,6 +52,7 @@ with lib;
     lazysql.enable = true;
     mpv.enable = true;
     nvim.enable = true;
+    obs.enable = true;
     obsidian.enable = true;
     openssh.enable = true;
     playerctl.enable = true;
@@ -64,6 +65,7 @@ with lib;
     syncthing.enable = true;
     swappy.enable = true;
     stylix.enable = true;
+    typst.enable = true;
     vscode.enable = true;
     vscode-server.enable = true;
     waybar.enable = true;
@@ -86,7 +88,6 @@ with lib;
       enable = true;
       nix-direnv.enable = true;
     };
-    obs-studio.enable = true;
     rofi = {
       enable = true;
       extraConfig.run-command = "${config.home.wayland.uwsm.prefix}{cmd}";

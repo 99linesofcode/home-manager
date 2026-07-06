@@ -1,11 +1,10 @@
 {
   config,
   lib,
-  specialArgs,
+  pkgs,
   ...
 }:
 let
-  inherit (specialArgs) username;
   cfg = config.home.hyprpaper;
 in
 with lib;
@@ -15,10 +14,6 @@ with lib;
   };
 
   config = mkIf cfg.enable {
-    xdg.configFile = {
-      "hypr/scripts/wallpaper-rotation.sh".source = ../../dotfiles/hypr/scripts/wallpaper-rotation.sh;
-    };
-
     services.hyprpaper = {
       enable = true;
       settings = {
@@ -45,12 +40,21 @@ with lib;
       services = {
         wallpaper = {
           Unit = {
-            Description = "hyprpaper: reload random wallpaper";
-            After = [ "network-online.target" ];
+            Description = "hyprpaper: load random wallpaper";
+            After = [ "gdrive.service" ];
+            Wants = [ "gdrive.service" ];
           };
           Service = {
             Type = "oneshot";
-            ExecStart = "/home/${username}/.config/hypr/scripts/wallpaper-rotation.sh";
+            ExecStart =
+              pkgs.writeShellScript "wallpaper-rotation" # sh
+                ''
+                  #!/usr/bin/env sh
+
+                  WALLPAPER_DIRECTORY="$HOME/Documents/Google Drive/Afbeeldingen/Wallpapers"
+
+                  hyprctl hyprpaper wallpaper ", $(find "$WALLPAPER_DIRECTORY" -type f | shuf -n 1)"
+                '';
           };
         };
       };

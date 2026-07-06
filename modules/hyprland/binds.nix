@@ -4,19 +4,11 @@ let
 in
 {
   xdg.configFile = {
-    "hypr/state.conf" = {
-      source = ../../dotfiles/hypr/state.conf;
-      force = true;
-    };
     "hypr/scripts/bluetooth-toggle.sh".source = ../../dotfiles/hypr/scripts/bluetooth-toggle.sh;
   };
 
   wayland.windowManager.hyprland.settings = {
     bind = [
-      # Passthrough OBS
-      "SUPER_ALT_CTRL, R, pass, ^(com\.obsproject\.Studio)$"
-      "SUPER_ALT_CTRL, S, pass, ^(com\.obsproject\.Studio)$"
-
       # Hotkeys
       "SUPER, Space, exec, rofi -show-icons -show drun -l 10"
       "SUPER, V, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"

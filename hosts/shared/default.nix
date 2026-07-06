@@ -30,19 +30,18 @@ with lib;
   home = {
     stateVersion = "26.05";
     packages = with pkgs; [
-      imagemagick
       ffmpeg
+      imagemagick
       jq
       mupdf
       rsync
       tldr
-      wireguard-tools
-      xdg-utils
-      xdg-user-dirs
-      yq-go
-      # compression and extraction
       unzip
       wget
+      wireguard-tools
+      xdg-user-dirs
+      xdg-utils
+      yq-go
       zip
     ];
   };

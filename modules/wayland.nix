@@ -22,11 +22,13 @@ with lib;
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      polkit
-      wl-clipboard
-      xdg-utils # command line tools that assist applications with a variety of desktop integration tasks
-    ];
+    home = {
+      packages = with pkgs; [
+        polkit
+        wl-clipboard
+        xdg-utils # command line tools that assist applications with a variety of desktop integration tasks
+      ];
+    };
 
     services = {
       cliphist.enable = true;

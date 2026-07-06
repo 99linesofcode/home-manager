@@ -7,8 +7,8 @@
   ...
 }:
 let
+  inherit (specialArgs) hostname username;
   cfg = config.home.sops;
-  inherit (specialArgs) username;
 in
 with lib;
 {
@@ -23,15 +23,15 @@ with lib;
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       age
-      ssh-to-age
       sops
+      ssh-to-age
     ];
 
     sops = {
-      defaultSopsFile = ../.sops.yaml;
+      defaultSopsFile = "../hosts/${hostname}/users/${username}/secrets/secrets.yaml";
       age = {
-        generateKey = false;
-        keyFile = "/home/${username}/.config/sops/age/keys.txt";
+        generateKey = true;
+        keyFile = "${config.xdg.configHome}/sops/age/${username}.txt";
         sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
       };
     };
