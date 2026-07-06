@@ -12,7 +12,7 @@ To start using this repository to manage your own dotfiles with Nix, there are o
 1. Define a `HomeConfiguration` for your host and user;
 1. Add a custom user configuration under `hosts/`;
 1. Configure your user and enable any Nix Modules found in `modules/` that you would like to use;
-1. Add encrypted secrets if you are using any modules that depend on [SOPS](https://github.com/getsops/sops);
+1. Add encrypted secrets if you are using any modules that depend on [Sops](https://github.com/getsops/sops);
 1. Activate your configuration.
 
 #### Defining a `HomeConfiguration`
@@ -41,7 +41,7 @@ Enabling this module is as easy as adding `home.dunst.enable = true;` to your us
 
 #### Encrypted secrets
 
-Secrets such as your SSH keys, configuration files containing authentication tokens or anything else you might want to hide from the outside world and restrict access to are encrypted and managed through SOPS. Decrypting, storing and using them within Nix is done through https://github.com/Mic92/sops-nix.
+Secrets such as your SSH keys, configuration files containing authentication tokens or anything else you might want to hide from the outside world and restrict access to are encrypted and managed through Sops. Decrypting, storing and using them within Nix is done through https://github.com/Mic92/sops-nix.
 
 The `.sops.yaml` file configures the public keys that will be used to encrypt files in certain directories:
 
@@ -49,13 +49,13 @@ https://github.com/99linesofcode/home-manager/blob/50fff4aeadfcc5a513a75e7e49599
 
 As you can see I've configured both the `master` and `luna_shorty` keys to be able to encrypt (and decrypt) files under `hosts/shared/secrets/`, `hosts/luna/secrets/` and `hosts/luna/users/{username}/secrets/`.
 
-Everytime you use sops to create a file inside one of these directories they will automatically be encrypted with the referenced public keys. Either private key corresponding to one of the public keys can then be used to decrypt the file. Be sure to check out the SOPS repository to learn more.
+Everytime you use Sops to create a file inside one of these directories they will automatically be encrypted with the referenced public keys. Either private key corresponding to one of the public keys can then be used to decrypt the file. Be sure to check out the Sops repository to learn more.
 
-Now that we've encrypted our secrets, the last step is to learn how to use them inside your Nix modules. SOPS supports a variety of formats but here is an example of how to import a binary file and expose it to your Nix module using the already built in `sops-nix` library:
+Now that we've encrypted our secrets, the last step is to learn how to use them inside your Nix modules. Sops supports a variety of formats but here is an example of how to import a binary file and expose it to your Nix module using the already built in `sops-nix` library:
 
 https://github.com/99linesofcode/home-manager/blob/50fff4aeadfcc5a513a75e7e49599a625559c635/modules/rclone.nix#L21-L28
 
-When switching to your new configuration, `sops-nix` will use `sops` to decrypt the file using the private key stored in `$XDG_CONFIG_HOME/sops/age/keys.txt` and make it available under `XDG_RUNTIME_DIR/secrets.d` and, in this case, create a symlink to that file under `$HOME/.config/rclone/rclone.conf;`. 
+When switching to your new configuration, `sops-nix` will use Sops to decrypt the file using the private key stored in `$XDG_CONFIG_HOME/sops/age/keys.txt` and make it available under `XDG_RUNTIME_DIR/secrets.d` and, in this case, create a symlink to that file under `$HOME/.config/rclone/rclone.conf;`.
 
 #### Activate your configuration
 
