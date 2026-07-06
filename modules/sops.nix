@@ -30,8 +30,8 @@ with lib;
     sops = {
       defaultSopsFile = "../hosts/${hostname}/users/${username}/secrets/secrets.yaml";
       age = {
-        generateKey = false;
-        keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+        generateKey = true;
+        keyFile = "${config.xdg.configHome}/sops/age/${username}.txt";
         sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
       };
     };
