@@ -84,7 +84,7 @@ with lib;
             ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Documents/Obsidian";
             ExecStart = # sh
               ''
-                ${pkgs.rclone}/bin/rclone bisync gdrive:Obsidian/ "%h/Documents/Obsidian" \
+                ${pkgs.rclone}/bin/rclone bisync gdrive:Obsidian/ "%h/Documents/Obsidian/" \
                 --compare size,modtime,checksum \
                 --config "%h/.config/rclone/rclone.conf" \
                 --conflict-resolve newer \
