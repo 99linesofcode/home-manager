@@ -57,10 +57,10 @@ with lib;
     home = {
       pointerCursor = {
         enable = true;
-        hyprcursor = {
-          enable = true;
-          size = 24;
-        };
+        size = 24;
+        gtk.enable = true;
+        hyprcursor.enable = true;
+        x11.enable = true;
       };
 
       hypridle.enable = true;
