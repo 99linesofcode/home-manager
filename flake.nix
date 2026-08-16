@@ -3,9 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixvim = {
       url = "github:nix-community/nixvim/nixos-26.05";
@@ -53,7 +58,8 @@
           inherit system;
           overlays = [
             inputs.nix-vscode-extensions.overlays.default
-          ];
+          ]
+          ++ builtins.attrValues (import ./overlays { inherit inputs; });
         };
 
       HomeConfiguration =

@@ -20,7 +20,7 @@ with lib;
       packages = with pkgs; [
         noto-fonts-cjk-sans-static
         noto-fonts-cjk-serif-static
-        typst
+        nix-unstable.typst
       ];
     };
 
