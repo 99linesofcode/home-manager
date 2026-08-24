@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self,
   ...
 }:
 let
@@ -17,11 +18,11 @@ with lib;
     sops.secrets = {
       bitwarden_client_id = {
         format = "binary";
-        sopsFile = ../hosts/shared/secrets/bitwarden_client_id;
+        sopsFile = "${self}/hosts/shared/secrets/bitwarden_client_id";
       };
       bitwarden_client_secret = {
         format = "binary";
-        sopsFile = ../hosts/shared/secrets/bitwarden_client_secret;
+        sopsFile = "${self}/hosts/shared/secrets/bitwarden_client_secret";
       };
     };
 

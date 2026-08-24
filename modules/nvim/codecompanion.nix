@@ -3,12 +3,6 @@ let
   model = "google/gemini-2.5-pro-exp-03-25:free";
 in
 {
-  sops.secrets.openrouter_api_key = {
-    format = "binary";
-    sopsFile = ../../hosts/shared/secrets/openrouter_api_key;
-    path = "%r/openrouter_api_key";
-  };
-
   programs.nixvim = {
     keymaps = [
       {

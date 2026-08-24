@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self,
   ...
 }:
 let
@@ -36,7 +37,7 @@ with lib;
     sops.secrets = {
       "rclone/rclone.conf" = {
         format = "binary";
-        sopsFile = ../hosts/shared/secrets/rclone.conf;
+        sopsFile = "${self}/hosts/shared/secrets/rclone.conf";
         path = config.home.homeDirectory + "/.config/rclone/rclone.conf";
       };
     };
