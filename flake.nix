@@ -79,7 +79,7 @@
     {
       formatter = forEachSystem (s: nixpkgs.legacyPackages.${s}.nixfmt);
 
-      legacyPackages = forEachSystem (_: {
+      packages = forEachSystem (_: {
         homeConfigurations = {
           "luna.shorty" = HomeConfiguration {
             extraSpecialArgs = {
