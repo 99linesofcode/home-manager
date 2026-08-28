@@ -81,7 +81,6 @@ with lib;
             "docker-compose"
             "fzf"
             "git"
-            "ssh-agent"
           ];
           theme = "juanghurtado";
         };
