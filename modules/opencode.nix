@@ -50,6 +50,27 @@ with lib;
         enableMcpIntegration = true;
         settings = cfg.settings;
       };
+      mcp = {
+        enable = true;
+        servers = {
+          gmail = {
+            type = "remote";
+            url = "https://gmailmcp.googleapis.com/mcp/v1";
+          };
+          google-drive = {
+            type = "remote";
+            url = "https://drivemcp.googleapis.com/mcp/v1";
+          };
+          google-calendar = {
+            type = "remote";
+            url = "https://calendarmcp.googleapis.com/mcp/v1";
+          };
+          todoist = {
+            type = "remote";
+            url = "https://ai.todoist.net/mcp";
+          };
+        };
+      };
       zsh.initContent = mkIf config.home.zsh.enable (
         mkOrder 500 # sh
           ''
