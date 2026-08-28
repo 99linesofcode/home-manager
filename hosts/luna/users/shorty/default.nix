@@ -67,6 +67,7 @@ with lib;
     swappy.enable = true;
     stylix.enable = true;
     typst.enable = true;
+    voxtype.enable = true;
     vscode.enable = true;
     vscode-server.enable = true;
     waybar.enable = true;

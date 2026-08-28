@@ -1,6 +1,9 @@
 {
   config,
+  inputs,
   lib,
+  pkgs,
+  self,
   ...
 }:
 let
@@ -8,42 +11,61 @@ let
 in
 with lib;
 {
+  imports = [
+    "${inputs.home-manager-unstable}/modules/services/voxtype.nix"
+  ];
+
+  disabledModules = [
+    "services/voxtype.nix"
+  ];
+
   options = {
     home.voxtype.enable = mkEnableOption "voxtype - AI powered speech-to-text daemon";
   };
 
   config = mkIf cfg.enable {
     sops.secrets = {
-      openrouter_api_key = {
-        format = "binary";
-        sopsFile = "${self}/hosts/shared/secrets/openrouter_api_key";
+      voxtype = {
+        format = "dotenv";
+        sopsFile = "${self}/hosts/shared/secrets/voxtype.env";
       };
     };
 
     services.voxtype = {
       enable = true;
-      audio.feedback.enabled = false;
-      output = {
-        fallback_to_clipboard = true;
-        mode = "type";
-        notification = {
-          on_recording_start = true;
-          on_recording_end = false;
-          on_transcription = false;
+      package = pkgs.voxtype-onnx;
+      settings = {
+        hotkey.enabled = false;
+        audio.feedback.enabled = false;
+        engine = "whisper";
+        osd.enabled = false;
+        output = {
+          fallback_to_clipboard = true;
+          mode = "type";
+          notification = {
+            on_recording_start = true;
+            on_recording_end = true;
+            on_transcription = false;
+          };
         };
-      };
-      whisper = {
-        language = "auto";
-        remote_endpoint = "https//openrouter.ai/api";
+        parakeet = {
+          model = "parakeet-tdt-0.6b-v3";
+          model_type = "tdt";
+        };
+        whisper = rec {
+          mode = "remote";
+          model = remote_model;
+          remote_endpoint = "https://openrouter.ai/api";
+          remote_model = "mistralai/voxtral-small-24b-2507-stt";
+        };
       };
     };
 
-    programs.zsh.initContent = mkIf config.home.zsh.enable (
-      mkOrder 500 # sh
-        ''
-          export VOXTYPE_WHISPER_API_KEY=$(cat ${config.sops.secrets.openrouter_api_key.path})
-        ''
-    );
+    systemd.user.services.voxtype = {
+      Service = {
+        EnvironmentFile = config.sops.secrets.voxtype.path;
+      };
+    };
 
     wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
       bind = [
