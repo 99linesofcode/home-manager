@@ -35,9 +35,9 @@ with lib;
       enable = true;
       package = pkgs.voxtype-onnx;
       settings = {
-        hotkey.enabled = false;
         audio.feedback.enabled = false;
-        engine = "whisper";
+        engine = "parakeet";
+        hotkey.enabled = false;
         osd.enabled = false;
         output = {
           fallback_to_clipboard = true;
