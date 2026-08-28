@@ -37,7 +37,7 @@ with lib;
         sopsFile = "${self}/hosts/shared/secrets/opencode.env";
       };
       # TODO: possibly read secrets from a predefined auth.json file such as the one below?
-      # "opencode/auth.json" = {The
+      # "opencode/auth.json" = {
       #   format = "json";
       #   sopsFile = "${self}/hosts/shared/secrets/opencode";
       #   path = "${config.xdg.stateHome}/opencode/auth.json";
@@ -53,6 +53,14 @@ with lib;
       mcp = {
         enable = true;
         servers = {
+          # github = {
+          #   type = "remote";
+          #   url = "https://api.githubcopilot.com/mcp";
+          #   oauth = false;
+          #   headers = {
+          #     "Authorization" = "Bearer {env:GITHUB_PERSONAL_ACCESS_TOKEN}";
+          #   };
+          # };
           gmail = {
             type = "remote";
             url = "https://gmailmcp.googleapis.com/mcp/v1";
