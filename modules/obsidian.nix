@@ -15,6 +15,10 @@ with lib;
 
   config = mkIf cfg.enable {
     home = {
+      # TODO: nodejs_22 is added in manually here so npx works. Install globally? Can I run node npx from the store itself?
+      packages = with pkgs; [
+        nodejs_22
+      ];
       activation = {
         obsidianActivationResync =
           hm.dag.entryAfter [ "writeBoundary" ] # sh
@@ -36,6 +40,23 @@ with lib;
     };
 
     programs = {
+      mcp = {
+        enable = true;
+        servers = {
+          obsidian = mkIf config.home.obsidian.enable {
+            type = "local";
+            command = lib.getExe' pkgs.nodejs_22 "npx";
+            args = [
+              "-y"
+              "seekstone@latest" # NOTE: see: https://github.com/shaqmughal/seekstone
+            ];
+            env = {
+              SEEKSTONE_VAULT = "${config.home.homeDirectory}/Documents/Obsidian";
+              SEEKSTONE_WRITE_PATHS = "Inbox/**,AI/**,Projecten/**,Aandachtsgebieden/**,Archief/**,Hulpbronnen/**,Dagboek/**";
+            };
+          };
+        };
+      };
       obsidian = {
         enable = true;
         cli.enable = true;
