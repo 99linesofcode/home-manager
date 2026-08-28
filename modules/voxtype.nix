@@ -52,6 +52,9 @@ with lib;
           model = "parakeet-tdt-0.6b-v3";
           model_type = "tdt";
         };
+        meeting = {
+          enabled = true;
+        };
         whisper = rec {
           mode = "remote";
           model = remote_model;
