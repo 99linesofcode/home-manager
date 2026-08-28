@@ -43,8 +43,8 @@ with lib;
           fallback_to_clipboard = true;
           mode = "type";
           notification = {
-            on_recording_start = true;
-            on_recording_end = true;
+            on_recording_start = false;
+            on_recording_end = false;
             on_transcription = false;
           };
         };
@@ -65,6 +65,48 @@ with lib;
       Service = {
         EnvironmentFile = config.sops.secrets.voxtype.path;
       };
+    };
+
+    programs.waybar = mkIf config.home.waybar.enable {
+      settings.main = {
+        modules-right = mkAfter [
+          "custom/voxtype"
+        ];
+
+        "custom/voxtype" = {
+          exec = "voxtype status --follow --format json";
+          return-type = "json";
+          format = "{}";
+          tooltip = true;
+          on-click = "systemctl --user restart voxtype";
+        };
+      };
+      style =
+        mkAfter
+          # css
+          ''
+            #custom-voxtype {
+              padding: 0 5px;
+            }
+            #custom-voxtype.recording {
+              color: #ff5555;
+              animation: pulse 1s ease-in-out infinite;
+            }
+            #custom-voxtype.transcribing {
+              color: #f1fa8c;
+            }
+            #custom-voxtype.idle {
+              color: #50fa7b;
+            }
+            #custom-voxtype.stopped {
+              color: #6272a4;
+            }
+            @keyframes pulse {
+              0% { opacity: 1; }
+              50% { opacity: 0.5; }
+              100% { opacity: 1; }
+            }
+          '';
     };
 
     wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
