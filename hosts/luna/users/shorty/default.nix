@@ -54,6 +54,7 @@ with lib;
     nvim.enable = true;
     obs.enable = true;
     obsidian.enable = true;
+    opencode.enable = true;
     openssh.enable = true;
     playerctl.enable = true;
     pwvucontrol.enable = true;
