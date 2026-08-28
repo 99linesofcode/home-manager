@@ -25,16 +25,24 @@ with lib;
             ''
               #!/usr/bin/env sh
 
-              ${pkgs.coreutils}/bin/mkdir -p "$HOME/Documents/Obsidian"
+              DIRECTORY="$HOME/Documents/Obsidian"
 
-              ${pkgs.rclone}/bin/rclone bisync gdrive:Obsidian/ $HOME/Documents/Obsidian/ \
-              --compare size,modtime,checksum \
-              --config "$XDG_CONFIG_HOME/rclone/rclone.conf" \
-              --create-empty-src-dirs \
-              --fix-case \
-              --max-lock 2m \
-              --resync \
-              --slow-hash-sync-only
+              if [ ! -d "$DIRECTORY" ]; then
+                echo "Obsidian directory not found. Running first-time initial sync..."
+
+                ${pkgs.coreutils}/bin/mkdir -p "$DIRECTORY"
+
+                ${pkgs.rclone}/bin/rclone bisync gdrive:Obsidian/ $HOME/Documents/Obsidian/ \
+                --compare size,modtime,checksum \
+                --config "$XDG_CONFIG_HOME/rclone/rclone.conf" \
+                --create-empty-src-dirs \
+                --fix-case \
+                --max-lock 2m \
+                --resync \
+                --slow-hash-sync-only
+              else
+                echo "Obsidian directory already exists. Skipping first-run sync."
+              fi
             '';
       };
     };
