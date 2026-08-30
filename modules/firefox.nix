@@ -157,6 +157,13 @@ with lib;
               installation_mode = "force_installed";
               updates_disabled = true;
             };
+
+            # TODO: extract to Obsidian module. Maybe add a firefox.addons setting?
+            "clipper@obsidian.md" = {
+              install_url = moz "web-clipper-obsidian";
+              installation_mode = "force_installed";
+              updates_disabled = true;
+            };
           };
       };
       profiles = {
