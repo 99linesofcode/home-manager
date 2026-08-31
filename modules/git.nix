@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  self,
   specialArgs,
   ...
 }:
@@ -16,6 +17,13 @@ with lib;
   };
 
   config = mkIf cfg.enable {
+    sops.secrets = {
+      github_token = {
+        format = "binary";
+        sopsFile = "${self}/hosts/shared/secrets/github_token";
+      };
+    };
+
     home = {
       packages = with pkgs; [
         act # run GitHub Actions locally
@@ -86,24 +94,41 @@ with lib;
           git.overrideGpg = true; # do not spawn a separate process when using GPG
         };
       };
+      mcp = {
+        enable = true;
+        servers = {
+          github = {
+            type = "remote";
+            url = "https://api.githubcopilot.com/mcp";
+            oauth = false;
+            headers = {
+              "Authorization" = "Bearer {env:GH_TOKEN}";
+            };
+          };
+        };
+      };
       zsh = mkIf config.programs.zsh.enable {
-        initContent = # sh
-          ''
-            # automatically prune branches both local and remote
-            function gpb() {
-              git checkout "$(git_main_branch)"
-              git fetch
-              git remote prune origin
-              git branch --merged | grep -vE "$(git_main_branch)|$(git_develop_branch)" | xargs -r git branch -d
-            }
+        initContent =
+          mkAfter
+            # sh
+            ''
+              export GH_TOKEN=$(cat ${config.sops.secrets.github_token.path})
 
-            # git remove submodule
-            function grms() {
-              git rm $PWD/$1
-              rm -rf $PWD/.git/modules/$1
-              git config --remove-section submodule.$1
-            }
-          '';
+              # automatically prune branches both local and remote
+              function gpb() {
+                git checkout "$(git_main_branch)"
+                git fetch
+                git remote prune origin
+                git branch --merged | grep -vE "$(git_main_branch)|$(git_develop_branch)" | xargs -r git branch -d
+              }
+
+              # git remove submodule
+              function grms() {
+                git rm $PWD/$1
+                rm -rf $PWD/.git/modules/$1
+                git config --remove-section submodule.$1
+              }
+            '';
         shellAliases = {
           gl = "git sla";
           gfix = "git fix";
