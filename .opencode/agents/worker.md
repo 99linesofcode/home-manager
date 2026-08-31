@@ -5,12 +5,6 @@ hidden: true
 model: openrouter/deepseek/deepseek-v4-flash-0731
 temperature: 0.0
 permission:
-    bash: allow
-    edit: allow
-    write: allow
-    read: allow
-    grep: allow
-    glob: allow
     task: deny
     question: deny
     webfetch: deny

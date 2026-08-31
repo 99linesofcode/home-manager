@@ -25,6 +25,25 @@ with lib;
             explore.disable = true;
             scout.disable = true;
           };
+          permission = {
+            bash = "ask";
+            edit = "allow";
+            external_directory = {
+              "/nix/store/**" = "allow";
+              "$HOME/Development/**" = "allow";
+              "$HOME/Documents/Obsidian/**" = "allow";
+            };
+            glob = "allow";
+            grep = "allow";
+            lsp = "allow";
+            question = "allow";
+            read = "allow";
+            skill = "allow";
+            todowrite = "deny"; # NOTE: todos are managed by wayfinder skill
+            webfetch = "allow";
+            websearch = "allow";
+            write = "allow";
+          };
           watcher = {
             ignore = [
               ".direnv/**"
@@ -72,6 +91,10 @@ with lib;
           todoist = {
             type = "remote";
             url = "https://ai.todoist.net/mcp";
+          };
+          beeper = {
+            type = "remote";
+            url = "http://localhost:23373/v0/mcp";
           };
         };
       };
