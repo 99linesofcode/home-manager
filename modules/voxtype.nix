@@ -114,10 +114,7 @@ with lib;
 
     wayland.windowManager.hyprland.settings = mkIf config.home.hyprland.enable {
       bind = [
-        "SUPER, R, exec, voxtype record start"
-      ];
-      bindr = [
-        "SUPER, R, exec, voxtype record stop"
+        "SUPER, R, exec, voxtype record toggle"
       ];
     };
   };
