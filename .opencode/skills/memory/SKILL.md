@@ -98,6 +98,44 @@ Append only. Never edit prior episodes. Use the actor convention (§7):
 `<producer>/<version>` for the agent, `human:<id>` for you,
 `process:<id>` for automation.
 
+### Example — a full event file
+
+```markdown
+---
+type: Decision
+generated: { by: orchestrator/1, at: 2026-09-04T19:30:00+02:00 }
+importance: 7
+evidence: [2026-09-04-typst-skill-zakelijk]
+tags: [skills, typst]
+---
+# Decided: typst-document skill command
+
+The command is `cd ~/Development/99linesofcode-typst-template && pandoc ...`.
+Output defaults to `~/Documents/`.
+```
+
+### Example — a HOT.md rewrite (milestone)
+
+After a unit of work reaches done, rewrite `HOT.md` with the new focus, the
+closed loop moved out of Open loops, the decision recorded under Last
+decisions, and the next action updated. Keep it under 2000 tokens.
+
+## Edge cases
+
+- **Importance inflation** — scoring every event 8–10 drags reflection and
+  retrieval. Reserve high scores for genuinely consequential state changes;
+  most events are 3–6.
+- **Over-logging** — writing an event per message or tool call floods the
+  stream. The filter is "will I need this next session?"; if not, it stays in
+  chat.
+- **Contradictory semantic facts** — never let two "active" facts coexist.
+  Newer `generated.at` supersedes older; add a `supersedes` link when one
+  replaces another.
+- **HOT.md over budget** — discard richest detail first, keep `Handoff` and
+  `Next action` last.
+- **Reflection threshold** — if the unreflected importance-sum is near ~150,
+  run reflection before writing more episodes, or the backlog grows unbounded.
+
 ## Semantic (`semantic/`) — OKF concepts
 
 Durable, de-contextualized. Three files: `user.md`, `decisions.md`,
@@ -124,7 +162,8 @@ Process:
 
 ## Governance (this is what makes files *memory*, not a dump)
 
-- `raw/` is read-only (human-owned).
+- `Inbox/` is the capture point; contents are immutable source material —
+  process + discard original, never edit in place.
 - `log.md` append-only; never rewrite history (OKF §9).
 - `index.md` updated on every ingest/consolidation (OKF §8).
 - Every episodic/semantic concept carries non-empty `type` (OKF §4.1).

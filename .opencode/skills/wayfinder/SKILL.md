@@ -82,6 +82,8 @@ any active planning effort (`type: Decision Map`).
    Emit **resolved** implementation tickets → GitHub Issues (one per ticket,
    linking the spec section). Mid-flight decision tickets are NEVER mirrored
    into GitHub. **Never touch Todoist** (manual sync).
+   Delivery mechanics (branching, commits, PRs, releases) follow the
+   `git-workflow` skill — load it when executing the ticket-out.
 7. **Memory** — update `HOT.md`, append `wiki/log.md`, record durable decisions.
 
 ## Spec format (obligatory)
