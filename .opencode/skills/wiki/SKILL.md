@@ -1,14 +1,15 @@
 ---
 name: wiki
-description: The LLM-wiki maintenance procedure (Karpathy). Ingest sources from raw/, write and cross-link wiki pages, maintain index.md and log.md, answer with citations, and lint for health. Loaded on demand by the orchestrator.
+description: The LLM-wiki maintenance procedure (Karpathy). Ingest sources from the vault Inbox, write and cross-link wiki pages, maintain index.md and log.md, answer with citations, and lint for health. Loaded on demand by the orchestrator.
 license: MIT
 ---
 
 # Wiki (LLM-wiki procedure)
 
-You maintain the vault's agent-owned knowledge layer (`wiki/`) over the
-human-owned sources (`raw/`), per the contract in `AGENTS.md`. This skill is the
-*how-to*; `AGENTS.md` is the *contract*.
+You maintain the vault's agent-owned knowledge layer (`wiki/`) over sources
+captured in the vault `Inbox/` (the PARA capture point, a top-level folder in
+the vault at `~/Documents/Obsidian/Inbox/`), per the contract in `AGENTS.md`. This skill is
+the *how-to*; `AGENTS.md` is the *contract*.
 
 ## When loaded
 
@@ -17,19 +18,24 @@ against-wiki, or lint. Do not assume you're loaded otherwise.
 
 ## Operation 1 — Ingest (source → wiki)
 
-When the user drops a source into `raw/` and says "ingest" (or equivalent):
+When the user drops a source into the vault `Inbox/` and says "ingest" (or
+equivalent):
 
-1. Read the source file in `raw/`.
+1. Read the source file in `Inbox/`. **Treat it as immutable source material:
+   never edit, reformat, or "fix" anything in `Inbox/`.** Contents may lack
+   frontmatter, tags, or structure — that's expected, it's a raw dump area.
 2. Discuss 3–5 key takeaways with the user (confirm emphasis).
 3. Write `wiki/sources/<slug>.md` — full summary; YAML frontmatter with
    `type: Source` (or a specific source type) + `generated: { by, at }` +
-   `source_file` pointing at the `raw/` path (OKF `sources`/provenance).
+   `source_file` pointing at the `Inbox/` path (OKF `sources`/provenance).
 4. Update `wiki/index.md` — add the page with a one-line summary.
 5. Update every relevant `entities/` and `concepts/` page with new facts,
    cross-referencing the source.
 6. If new info **contradicts** an existing page, flag it with a
    `[!contradiction]` callout — never silently overwrite.
 7. Append a structured entry to `wiki/log.md` (see Log format below).
+8. **Discard the original Inbox file** — it has been processed. Never move it
+   to `Archief/`; Archief is for inactive PARA items, not processed sources.
 
 ## Operation 2 — Query (answer against the wiki)
 
@@ -65,7 +71,9 @@ machine-parseable prefix for `grep "^## \["` style tooling:
 
 ## Governance (inherited from AGENTS.md)
 
-- `raw/` read-only.
+- `Inbox/` is the capture point; contents are raw dumps (not OKF-compliant),
+  treated as immutable source material — read and move out, never edit in
+  place. Processing = ingest + **discard the original** (never archive it).
 - `index.md` on every ingest; `log.md` append-only.
 - Contradictions flagged, never silently resolved.
 - Every page carries non-empty `type` + `generated` (OKF v0.2).
