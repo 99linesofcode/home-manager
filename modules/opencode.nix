@@ -26,13 +26,99 @@ with lib;
             scout.disable = true;
           };
           permission = {
-            bash = "ask";
-            edit = "allow";
-            external_directory = {
-              "/nix/store/**" = "allow";
-              "$HOME/Development/**" = "allow";
-              "$HOME/Documents/Obsidian/**" = "allow";
+            bash = {
+              "*" = "allow";
+              # privilege escalation
+              "doas *" = "deny";
+              "su *" = "deny";
+              "sudo *" = "deny";
+              # system state changes
+              "halt *" = "deny";
+              "poweroff *" = "deny";
+              "reboot *" = "deny";
+              "shutdown *" = "deny";
+              "systemctl emergency *" = "deny";
+              "systemctl halt *" = "deny";
+              "systemctl isolate *" = "deny";
+              "systemctl kexec *" = "deny";
+              "systemctl poweroff *" = "deny";
+              "systemctl reboot *" = "deny";
+              "systemctl rescue *" = "deny";
+              "systemctl switch-root *" = "deny";
+              # disk / partition destruction
+              "blkdiscard *" = "deny";
+              "btrfs *" = "deny";
+              "cryptsetup *" = "deny";
+              "dd *" = "deny";
+              "fdisk *" = "deny";
+              "gdisk *" = "deny";
+              "lvcreate *" = "deny";
+              "lvreduce *" = "deny";
+              "lvremove *" = "deny";
+              "lvresize *" = "deny";
+              "mdadm *" = "deny";
+              "mkfs *" = "deny";
+              "parted *" = "deny";
+              "pvcreate *" = "deny";
+              "pvremove *" = "deny";
+              "sfdisk *" = "deny";
+              "shred *" = "deny";
+              "vgcreate *" = "deny";
+              "vgremove *" = "deny";
+              "wipefs *" = "deny";
+              "zfs destroy *" = "deny";
+              "zpool *" = "deny";
+              # recursive permission changes on system roots
+              "chmod -R 777 /" = "deny";
+              "chmod -R 777 / *" = "deny";
+              "chown -R * /" = "deny";
+              "chown -R * /*" = "deny";
+              # destructive rm on system paths
+              "find / -delete *" = "deny";
+              "rm -rf ${config.home.homeDirectory}*" = "deny";
+              "rm -rf ${config.home.homeDirectory}/Development*" = "allow";
+              "rm -rf ${config.home.homeDirectory}/Documents/Obsidian*" = "allow";
+              "rm -rf ${config.xdg.configHome}*" = "deny";
+              "rm -rf /" = "deny";
+              "rm -rf /boot*" = "deny";
+              "rm -rf /etc*" = "deny";
+              "rm -rf /nix*" = "deny";
+              "rm -rf /usr*" = "deny";
+              "rm -rf /var*" = "deny";
+              # remote code execution via pipe-to-shell
+              "curl * | sh" = "deny";
+              "curl * | bash" = "deny";
+              "wget * | sh" = "deny";
+              "wget * | bash" = "deny";
+              # nix store / system config destruction
+              "nix-collect-garbage -d" = "deny";
+              "nix-store --delete *" = "deny";
+              "nixos-rebuild switch *" = "deny";
+              "nixos-rebuild boot *" = "deny";
+              "nixos-rebuild test *" = "deny";
+              "home-manager switch *" = "deny";
+              # git history destruction
+              "git push --force *" = "deny";
+              "git push -f *" = "deny";
+              "git filter-branch *" = "deny";
+              "git filter-repo *" = "deny";
+              # git branch force-delete (unmerged/unpushed work)
+              "git branch -D *" = "deny";
+              "git branch -Df *" = "deny";
+              "git branch -fD *" = "deny";
+              "git branch -df *" = "deny";
+              "git branch -fd *" = "deny";
+              "git branch -d -f *" = "deny";
+              "git branch -f -d *" = "deny";
+              "git branch --delete --force *" = "deny";
+              "git branch --force --delete *" = "deny";
+              # git remote branch deletion
+              "git push --delete *" = "deny";
+              "git push * --delete *" = "deny";
+              "git push * :*" = "deny";
             };
+            edit = "allow";
+            external_directory = "allow";
             glob = "allow";
             grep = "allow";
             lsp = "allow";
@@ -52,6 +138,9 @@ with lib;
               "node_modules/**"
             ];
           };
+          # plugin = [
+          #   "/home/shorty/Development/opencode-socket-plugin"
+          # ];
         };
       };
     };
@@ -95,6 +184,14 @@ with lib;
           beeper = {
             type = "remote";
             url = "http://localhost:23373/v0/mcp";
+          };
+          shopify-dev = {
+            type = "local";
+            command = lib.getExe' pkgs.nodejs_22 "npx";
+            args = [
+              "-y"
+              "@shopify/dev-mcp@latest"
+            ];
           };
         };
       };
