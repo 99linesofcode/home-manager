@@ -152,6 +152,14 @@ with lib;
         format = "dotenv";
         sopsFile = "${self}/hosts/shared/secrets/opencode.env";
       };
+      discord_token = {
+        format = "binary";
+        sopsFile = "${self}/hosts/shared/secrets/opencode_discord_token";
+      };
+      todoist_api_key = {
+        format = "binary";
+        sopsFile = "${self}/hosts/shared/secrets/todoist_api_key";
+      };
     };
 
     programs = {
@@ -165,6 +173,10 @@ with lib;
       mcp = {
         enable = true;
         servers = {
+          beeper = {
+            type = "remote";
+            url = "http://localhost:23373/v0/mcp";
+          };
           gmail = {
             type = "remote";
             url = "https://gmailmcp.googleapis.com/mcp/v1";
@@ -177,13 +189,16 @@ with lib;
             type = "remote";
             url = "https://calendarmcp.googleapis.com/mcp/v1";
           };
-          todoist = {
-            type = "remote";
-            url = "https://ai.todoist.net/mcp";
-          };
-          beeper = {
-            type = "remote";
-            url = "http://localhost:23373/v0/mcp";
+          discord = {
+            type = "local";
+            command = lib.getExe' pkgs.nodejs_22 "npx";
+            args = [
+              "-y"
+              "@pasympa/discord-mcp"
+            ];
+            env = {
+              DISCORD_TOKEN.file = config.sops.secrets.discord_token.path;
+            };
           };
           shopify-dev = {
             type = "local";
@@ -192,6 +207,13 @@ with lib;
               "-y"
               "@shopify/dev-mcp@latest"
             ];
+          };
+          todoist = {
+            type = "remote";
+            url = "https://ai.todoist.net/mcp";
+            headers = {
+              TODOIST_API_KEY = "{file:${config.sops.secrets.todoist_api_key.path}}";
+            };
           };
         };
       };
