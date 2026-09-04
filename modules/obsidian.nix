@@ -15,27 +15,56 @@ with lib;
 
   config = mkIf cfg.enable {
     home = {
+      # TODO: nodejs_22 is added in manually here so npx works. Install globally? Can I run node npx from the store itself?
+      packages = with pkgs; [
+        nodejs_22
+      ];
       activation = {
         obsidianActivationResync =
           hm.dag.entryAfter [ "writeBoundary" ] # sh
             ''
               #!/usr/bin/env sh
 
-              ${pkgs.coreutils}/bin/mkdir -p "$HOME/Documents/Obsidian"
+              DIRECTORY="$HOME/Documents/Obsidian"
 
-              ${pkgs.rclone}/bin/rclone bisync gdrive:Obsidian/ $HOME/Documents/Obsidian/ \
-              --compare size,modtime,checksum \
-              --config "$XDG_CONFIG_HOME/rclone/rclone.conf" \
-              --create-empty-src-dirs \
-              --fix-case \
-              --max-lock 2m \
-              --resync \
-              --slow-hash-sync-only
+              if [ ! -d "$DIRECTORY" ]; then
+                echo "Obsidian directory not found. Running first-time initial sync..."
+
+                ${pkgs.coreutils}/bin/mkdir -p "$DIRECTORY"
+
+                ${pkgs.rclone}/bin/rclone bisync gdrive:Obsidian/ $HOME/Documents/Obsidian/ \
+                --compare size,modtime,checksum \
+                --config "$XDG_CONFIG_HOME/rclone/rclone.conf" \
+                --create-empty-src-dirs \
+                --fix-case \
+                --max-lock 2m \
+                --resync \
+                --slow-hash-sync-only
+              else
+                echo "Obsidian directory already exists. Skipping first-run sync."
+              fi
             '';
       };
     };
 
     programs = {
+      mcp = {
+        enable = true;
+        servers = {
+          obsidian = mkIf config.home.obsidian.enable {
+            type = "local";
+            command = lib.getExe' pkgs.nodejs_22 "npx";
+            args = [
+              "-y"
+              "seekstone@latest" # NOTE: see: https://github.com/shaqmughal/seekstone
+            ];
+            env = {
+              SEEKSTONE_VAULT = "${config.home.homeDirectory}/Documents/Obsidian";
+              SEEKSTONE_WRITE_PATHS = "Inbox/**,AI/**,Projecten/**,Aandachtsgebieden/**,Archief/**,Hulpbronnen/**,Dagboek/**";
+            };
+          };
+        };
+      };
       obsidian = {
         enable = true;
         cli.enable = true;
@@ -84,7 +113,7 @@ with lib;
             ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Documents/Obsidian";
             ExecStart = # sh
               ''
-                ${pkgs.rclone}/bin/rclone bisync gdrive:Obsidian/ "%h/Documents/Obsidian" \
+                ${pkgs.rclone}/bin/rclone bisync gdrive:Obsidian/ "%h/Documents/Obsidian/" \
                 --compare size,modtime,checksum \
                 --config "%h/.config/rclone/rclone.conf" \
                 --conflict-resolve newer \

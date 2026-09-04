@@ -20,8 +20,6 @@ in
 
     gesture = "3, horizontal, workspace";
 
-    cursor.no_hardware_cursors = true;
-
     decoration = {
       rounding = 3;
       blur = {

@@ -45,7 +45,7 @@ with lib;
         export GDK_BACKEND="wayland,x11,*"
         export GTK_USE_PORTAL=1
         export QT_AUTO_SCREEN_SCALE_FACTOR=1
-        export QT_QPA_PLATFORM="waylandxcb"
+        export QT_QPA_PLATFORM="wayland;xcb"
         export QT_QPA_PLATFORMTHEME="qt6ct"
         export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
         export SDL_VIDEODRIVER="wayland"
@@ -57,10 +57,10 @@ with lib;
     home = {
       pointerCursor = {
         enable = true;
-        hyprcursor = {
-          enable = true;
-          size = 24;
-        };
+        size = 24;
+        gtk.enable = true;
+        hyprcursor.enable = true;
+        x11.enable = true;
       };
 
       hypridle.enable = true;

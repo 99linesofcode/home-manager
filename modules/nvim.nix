@@ -61,6 +61,7 @@ with lib;
         };
 
         opts = {
+          autoread = true; # automatically read a changed file again
           autowrite = true; # write the contents of the file automatically on certain commands
           clipboard = "unnamedplus"; # use system clipboard
           colorcolumn = "80,120,160"; # color line length columns

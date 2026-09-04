@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  self,
   specialArgs,
   ...
 }:
@@ -26,13 +27,13 @@ with lib;
     sops.secrets = {
       "ssh/id_ed25519" = {
         format = "binary";
-        sopsFile = ../hosts/${hostname}/users/${config.home.username}/secrets/id_ed25519;
+        sopsFile = "${self}/hosts/${hostname}/users/${config.home.username}/secrets/id_ed25519";
         path = config.home.homeDirectory + "/.ssh/id_ed25519";
         mode = "600";
       };
       "ssh/id_ed25519.pub" = {
         format = "binary";
-        sopsFile = ../hosts/${hostname}/users/${config.home.username}/secrets/id_ed25519.pub;
+        sopsFile = "${self}/hosts/${hostname}/users/${config.home.username}/secrets/id_ed25519.pub";
         path = config.home.homeDirectory + "/.ssh/id_ed25519.pub";
         mode = "600";
       };
@@ -57,6 +58,10 @@ with lib;
         "*.${s}${_p}${_a}${m}${t}${r}${a_}${p_}" = {
         };
       };
+    };
+
+    services.ssh-agent = {
+      enable = true;
     };
   };
 }

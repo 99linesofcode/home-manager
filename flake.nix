@@ -2,13 +2,15 @@
   description = "Home Manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs.url = "github:nixos/nixpkgs/fd1462031fdee08f65fd0b4c6b64e22239a77870";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim/nixos-26.05";
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     sops-nix = {
       url = "github:mic92/sops-nix";
@@ -19,15 +21,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Visual Studio Code
-    nix-vscode-extensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    vscode-server = {
-      url = "github:nix-community/nixos-vscode-server";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixvim.url = "github:nix-community/nixvim/nixos-26.05";
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 
   outputs =
@@ -53,7 +49,8 @@
           inherit system;
           overlays = [
             inputs.nix-vscode-extensions.overlays.default
-          ];
+          ]
+          ++ builtins.attrValues (import ./overlays { inherit inputs; });
         };
 
       HomeConfiguration =
@@ -73,7 +70,7 @@
     {
       formatter = forEachSystem (s: nixpkgs.legacyPackages.${s}.nixfmt);
 
-      legacyPackages = forEachSystem (_: {
+      packages = forEachSystem (_: {
         homeConfigurations = {
           "luna.shorty" = HomeConfiguration {
             extraSpecialArgs = {

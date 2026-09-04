@@ -24,11 +24,22 @@ with lib;
     programs = {
       obs-studio = {
         enable = true;
-        plugins = with pkgs.obs-studio-plugins; [
-          droidcam-obs
-          input-overlay
-          obs-pipewire-audio-capture
-        ];
+        # TODO: optionally override when device has Nvidia GPU
+        package = (
+          pkgs.obs-studio.override {
+            cudaSupport = true;
+          }
+        );
+        plugins =
+          with pkgs.obs-studio-plugins;
+          [
+            droidcam-obs
+            input-overlay
+            obs-pipewire-audio-capture
+          ]
+          ++ optionals config.home.wayland.enable [
+            wlrobs
+          ];
       };
     };
 
