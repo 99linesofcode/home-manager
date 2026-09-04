@@ -35,7 +35,10 @@ with lib;
       enable = true;
       package = pkgs.voxtype-onnx;
       settings = {
-        audio.feedback.enabled = false;
+        audio = {
+          feedback.enabled = false;
+          max_duration_secs = 300;
+        };
         engine = "parakeet";
         hotkey.enabled = false;
         osd.enabled = false;
