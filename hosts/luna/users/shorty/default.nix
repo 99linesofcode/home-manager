@@ -9,7 +9,6 @@ with lib;
   home = {
     packages = with pkgs; [
       android-tools
-      beeper
       electron
       etlegacy
       freecad
@@ -55,6 +54,7 @@ with lib;
     obs.enable = true;
     obsidian.enable = true;
     opencode.enable = true;
+    beeper.enable = true;
     openssh.enable = true;
     playerctl.enable = true;
     pwvucontrol.enable = true;

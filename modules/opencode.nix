@@ -138,9 +138,9 @@ with lib;
               "node_modules/**"
             ];
           };
-          # plugin = [
-          #   "/home/shorty/Development/opencode-socket-plugin"
-          # ];
+          plugin = [
+            "/home/shorty/Development/opencode-socket-plugin"
+          ];
         };
       };
     };
