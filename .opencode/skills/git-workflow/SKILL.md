@@ -179,8 +179,8 @@ skeleton and wire it up following the user's conventions.
 
 | Repo | Role |
 |---|---|
-| `git-skeleton` | Universal seed: `.editorconfig`, `.prettierrc`, `.gitignore`, `.ignore`, MIT `LICENSE`, `README.md` |
-| `.github` | Shared org files: `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SECURITY.md`, `dependabot.yaml`, 6 workflows |
+| `git-skeleton` | Universal base: `.editorconfig`, `.prettierrc`, `.gitignore`, `.ignore` (config flows via remote + rebase) |
+| `.github` | Shared org files: `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SECURITY.md`, `dependabot.yaml`, 6 workflows (README/LICENSE render natively in repos lacking their own) |
 | `.github-php` | PHP/Laravel GitHub skeleton: thin workflow wrappers (`uses: 99linesofcode/.github/...@main`), `devshell-php` submodule |
 | `devshell-php` / `devshell-rust` | Nix dev environments (`flake.nix`) |
 | `laravel-package-skeleton` | Laravel module seed: composer.json, `src/` (App/Domain/Infra), database/, tests/, workbench/, `devshell-php` submodule |
@@ -200,18 +200,31 @@ skeleton and wire it up following the user's conventions.
 |---|---|
 | **remote + rebase** | The **base skeleton** you build on and rarely override (conflicts on rebase are the point — they surface override-vs-upstream decisions) |
 | **submodule** | **Standalone** self-contained deps (devshell) — pinned, isolated |
-| **subtree** | **Shared code that must live inside the repo** (config files, `.github`) — updates flow, you own + override |
+| **subtree** | **Shared code that must live inside the repo** (community files in `.github/`) — updates flow, you own + override |
 
 **Rule of thumb:** standalone → submodule; shared/must-live-in-repo → subtree;
 base → remote + rebase.
 
+**Config files (`.editorconfig`, `.prettierrc`, `.gitignore`) are remote +
+rebase, NOT subtree.** Verified 2026-09-06: `git subtree add --prefix=.` fails
+with `fatal: prefix '.' already exists` — git refuses the repo root as a
+subtree prefix. Root-level config can't be subtreed. The user's skeleton
+ecosystem uses remote + rebase for config: `git-skeleton` is the base remote,
+each repo pulls it and overrides freely.
+
+**README/LICENSE are never synced.** GitHub natively renders the `.github`
+repo's README/LICENSE in any repo lacking its own — the fallback is
+server-side, no git mechanism involved. Repos keep their own README/LICENSE
+and diverge.
+
 ### ⚠️ GitHub caveat (submodule → subtree)
 
 **GitHub does not traverse submodules.** If shared files must be *available to
-GitHub* (workflows, community files, config), a submodule won't work — the
-files won't be there when GitHub runs. **Substitute a subtree for the
-submodule.** This is the `.github-php` scenario: it pulls in the shared
-`.github` repo, so `.github` should be a **subtree**, not copied manually:
+GitHub* (workflows, community files), a submodule won't work — the files won't
+be there when GitHub runs. **Substitute a subtree for the submodule.** This is
+the `.github-php` scenario: it pulls in the shared `.github` repo, so `.github`
+community files (CODE_OF_CONDUCT, CONTRIBUTING, SECURITY) should be a
+**subtree**, not copied manually:
 
 ```bash
 git subtree add --prefix=.github git@github.com:99linesofcode/.github.git main --squash
@@ -221,6 +234,12 @@ Subtree inlines the files AND records the upstream link (`git-subtree-dir:`
 annotation), so `git subtree pull` later gets updates. Manual copy loses the
 link. Detect existing subtrees via `git log --grep="git-subtree-dir"` (no
 central registry like `.gitmodules`).
+
+**Workflows are thin-wrapper delegation, not subtree.** The `.github-php`
+workflows `uses: 99linesofcode/.github/.github/workflows/<name>.yaml@main` —
+GitHub resolves the latest generic logic at runtime. This is deliberate:
+delegation always runs the latest, while a subtree would inline stale content
+until `subtree pull`.
 
 ### Scaffolding a generic repo (remote + rebase)
 
@@ -245,14 +264,32 @@ git submodule add git@github.com:99linesofcode/devshell-php.git devshell
 
 Standalone, pinned. Update with `git submodule update --remote`.
 
-### Wiring shared config files (subtree)
+### Wiring shared config files (remote + rebase)
+
+Config flows from `git-skeleton` via remote + rebase (NOT subtree — root-level
+config can't be subtreed, see above):
 
 ```bash
-git subtree add --prefix=. git@github.com:99linesofcode/git-skeleton.git main --squash
+git remote add git-skeleton git@github.com:99linesofcode/git-skeleton.git
+git fetch git-skeleton
+git rebase git-skeleton/main
 ```
 
-Inlines `.editorconfig`/`.prettierrc`/`.gitignore` + records the link; you own
-+ override freely (no rebase-conflict ceremony).
+**Adopting an existing repo** (one that predates the remote + rebase model and
+has no shared history with git-skeleton): use a one-time adoption merge instead
+of a rebase, so history isn't rewritten:
+
+```bash
+git remote add git-skeleton git@github.com:99linesofcode/git-skeleton.git
+git fetch git-skeleton
+git merge git-skeleton/main --allow-unrelated-histories
+```
+
+Resolve the merge keeping the repo's own README/LICENSE and repo-specific
+config overrides; take git-skeleton's config where the repo is missing it.
+From then on, updates flow via `git fetch git-skeleton && git rebase
+git-skeleton/main` (or `git merge git-skeleton/main` for repos that prefer
+merge history).
 
 ### Wiring the GitHub workflows (thin-wrapper delegation)
 
