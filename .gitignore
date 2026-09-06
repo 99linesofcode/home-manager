@@ -1,0 +1,45 @@
+.env
+.env.backup
+.env.production
+
+# devshell
+/.direnv
+
+# frontend
+auth.json
+/node_modules
+
+# backend
+/vendor
+
+# logs
+npm-debug.log
+
+# cache
+/.phpunit.cache
+/.phpunit.result.cache
+/build
+
+# editors
+/.vscode
+
+# laravel ide helper
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+
+# Playwright
+/test-results
+/playwright-report
+/blob-report
+/playwright/.cache
+/playwright/.auth
+
+# Pest
+/tests/Browser/Screenshots
+
+phpstan.neon
+phpunit.xml
+
+# Workbench
+/workbench/storage
