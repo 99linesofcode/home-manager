@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: Git and GitHub workflow for this user's projects. GitHub Flow by default, always checking CONTRIBUTING.md first; Conventional Commits; ask before commit/push/PR; safe git operations (no force-push, no history rewriting). Use when the user asks to commit, branch, merge, push, pull, open or review a pull request, file or triage a GitHub issue, create a release, or when starting work in a repo and the workflow needs to be determined.
+description: Git and GitHub workflow for this user's projects. GitHub Flow by default, always checking CONTRIBUTING.md first; Conventional Commits; ask before commit/push/PR; safe git operations (no force-push, no history rewriting). Also encodes the development discipline: incremental atomic changes, cleanup-as-you-go (no dangling code), and history hygiene (squash by feature before push). Use when the user asks to commit, branch, merge, push, pull, open or review a pull request, file or triage a GitHub issue, create a release, or when starting work in a repo and the workflow needs to be determined.
 ---
 
 # git-workflow
@@ -78,6 +78,83 @@ Before any git work in a repo, determine the methodology:
 4. Request review if the repo expects it; run CI.
 5. Merge when green + approved (or per repo rules).
 6. Delete the branch locally + remotely.
+
+## Development discipline: incremental, atomic, self-cleaning
+
+The user's standard for how code changes are made and committed. The goal: no
+dangling code, no messy history, no "cleanup later" debt. Cleanup is part of
+the work, not a follow-up task.
+
+### Work incrementally and atomically
+
+- **One concern per change.** A change is a single coherent unit: one feature,
+  one fix, one refactor. If a task spans multiple concerns, split it into
+  sequential commits — never one commit that mixes them.
+- **Verify as you go.** After each change, run the project's checks
+  (typecheck, tests, build) before moving on. A change that doesn't verify is
+  not done.
+- **Commit early, commit often.** A verified unit of work gets committed
+  immediately. Don't accumulate uncommitted work across multiple concerns.
+
+### Clean up as you go (the anti-dangling rule)
+
+When a change supersedes or invalidates existing code, remove the dead code
+**in the same change** — not later:
+
+- **Removed a call site?** Delete the now-unused function, type, import, or
+  parameter in the same commit.
+- **Changed a design direction?** Delete the code the old direction left
+  behind (dead branches, unused helpers, superseded modules) in the same
+  commit.
+- **Changed a contract?** Update callers, docs, and config in the same commit.
+- **After each change, grep for dangling references** to anything you renamed
+  or removed: `grep -rn "<removed-symbol>" src/`. A symbol with no callers is
+  dead — remove it or justify keeping it.
+
+The test: **after every commit, the tree should contain no code that isn't
+reachable from a live entry point, and no docs that describe behavior that
+doesn't exist.**
+
+### Verify the whole before committing
+
+Before committing a change:
+
+1. Run the project's checks (typecheck, tests, build, lint).
+2. Grep for dangling references to renamed/removed symbols.
+3. Review the diff — does it contain only this change's concern?
+4. Update docs (README, comments) that the change affects, in the same commit.
+
+### History hygiene (before push)
+
+History is rewritten **only before push** (never after). When a feature
+spanned multiple commits, squash them into one coherent commit per feature
+before pushing:
+
+- **Squash by feature.** A feature's debugging journey (fix → fix → fix)
+  collapses into one `feat:` commit. The history tells the story of *where it
+  landed*, not the journey.
+- **Reword for clarity.** The message states the final state, not the
+  intermediate steps: "feat: transcribe voice notes locally (ffmpeg +
+  voxtype, incl. encrypted mxc://)" — not "add transcribe, fix ffmpeg, fix
+  voxtype".
+- **Verify the squashed tree.** After squashing, `git diff <squashed> <pre-squash-tip>`
+  must be empty — the tree is identical, only the history changed.
+- **Safe rebase mechanics:** use `git rebase -i` with a sequence editor
+  (`GIT_SEQUENCE_EDITOR`) and a message editor (`GIT_EDITOR`) for
+  non-interactive squash/reword. On NixOS, scripts need `#!/usr/bin/env bash`
+  (no `/bin/bash`). Abort and reset cleanly if a rebase goes sideways —
+  reflog preserves the pre-rebase tip.
+
+### The user's definition of done
+
+A change is done when:
+
+- [ ] It works (verified by running it)
+- [ ] It's atomic (one concern, one commit)
+- [ ] It's clean (no dead code, no dangling references, docs updated)
+- [ ] It's committed with a clear Conventional Commit message
+- [ ] History is squashed by feature before push (if it spanned multiple
+      commits)
 
 ## Conventional Commits
 
