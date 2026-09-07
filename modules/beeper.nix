@@ -48,8 +48,8 @@ with lib;
         Environment = [
           "BEEPER_CHAT_ID=%i"
           "OPENCODE_SOCKET_PATH=${cfg.socketPath}"
-          # ffmpeg + voxtype for voice-note transcription.
-          "PATH=${lib.getExe pkgs.ffmpeg}:${lib.getExe pkgs.voxtype}"
+          # ffmpeg + voxtype for voice-note transcription (bin dirs on PATH).
+          "PATH=${lib.getBin pkgs.ffmpeg}:${lib.getBin pkgs.voxtype}"
         ];
         ExecStart = "${lib.getExe pkgs.bun} run src/index.ts";
         StandardOutput = "journal";
