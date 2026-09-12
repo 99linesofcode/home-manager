@@ -101,3 +101,19 @@ any active planning effort (`type: Decision Map`).
 - planning/<slug>/spec.md
 - specs/<slug>.md
 - logs/<slug>/<ticket-id>.md
+
+## Cleanup (on task completion)
+
+The folders `planning/`, `specs/`, and `logs/` **remain** as structural
+locations in `AI/`. What is transient is the working files wayfinder creates
+inside them (map.md, interviews.md, research/, spec.md, worker logs). When the
+task completes:
+
+1. **Consolidate** any durable insight into `wiki/concepts/`,
+   `memory/semantic/`, or `memory/episodic/` as warranted (the durable output
+   of a planning task lives in the wiki, memory, or a skill — not in the
+   working files).
+2. **Trash or archive** the transient working files for the completed task
+   (move to `.trash`, or archive if worth keeping).
+3. Do not leave completed working files lying around in `planning/`, `specs/`,
+   or `logs/`.
