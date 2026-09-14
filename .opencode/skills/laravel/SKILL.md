@@ -1,58 +1,41 @@
 ---
-name: laravel-architecture
-description: The user's Laravel architecture conventions — modular monolith as Composer packages, hexagonal-flavored App/Domain/Infrastructure layering, action objects + DTOs, Filament integration, and Pest/Testbench testing. Use when building, extending, or reviewing a Laravel module or application in the user's style, or when the user references their Laravel modules, action objects, DTOs, ServiceProvider, or Filament resources.
+name: laravel
+description: The user's Laravel mechanics — modular monolith as Composer packages, hexagonal-flavored App/Domain/Infrastructure layering, action objects + DTOs, ServiceProvider bootstrap, composer wiring, and Pest + Testbench testing. The concrete Laravel expression of the software-architecture contract. Use when building, extending, or reviewing a Laravel module or application in the user's style, or when the user references their modules, action objects, DTOs, ServiceProvider, or composer wiring.
 ---
 
-# laravel-architecture
+# laravel
 
-The user's Laravel architecture: a **modular monolith** of Composer packages,
-each with **hexagonal-flavored layering** (App/Domain/Infrastructure), using
-**action objects + DTOs** for use cases, **Filament** for the admin UI, and
-**Pest + Testbench** for testing. This is the _how we do it here_ — grounded in
-the user's repos (`laravel-skeleton`, `laravel-package-skeleton`,
-`laravel-module-support`, `laravel-module-news`, `laravel-module-user`).
+The user's Laravel mechanics: a **modular monolith** of Composer packages, each
+with **hexagonal-flavored layering** (App/Domain/Infrastructure), using
+**action objects + DTOs** for use cases, and **Pest + Testbench** for testing.
+This is the _how we do it here_ in Laravel, grounded in the user's repos
+(`laravel-skeleton`, `laravel-package-skeleton`, `laravel-module-support`,
+`laravel-module-news`, `laravel-module-user`).
 
-The abstract _why_ lives in the wiki concepts:
-`~/Documents/Obsidian/AI/wiki/concepts/ddd.md`,
-`hexagonal-architecture.md`, `action-objects.md`, `modular-monolith.md`,
-`software-architecture-principles.md`. Load those for the reasoning; this skill
-is the Laravel mechanics.
+The general architecture contract (language-agnostic) lives in the
+`software-architecture` skill; the Filament admin UI mechanics live in the
+`filament` skill. Load those for the reasoning; this skill is the Laravel
+mechanics.
 
 ## When to use
 
 - Building a new Laravel module or application in the user's style.
-- Extending an existing module (new action, DTO, Filament resource, migration).
+- Extending an existing module (new action, DTO, migration, ServiceProvider).
 - Reviewing Laravel code against the user's conventions.
 - The user references their modules, action objects, DTOs, ServiceProvider, or
-  Filament resources.
-
-## Core principles
-
-1. **Modular monolith** — each module is a self-contained Composer package with
-   its own schema, routes, views, tests, and a `*ServiceProvider` entry point.
-2. **Hexagonal-flavored layering** — `src/App/` (UI) + `src/Domain/` (logic) +
-   `src/Infrastructure/` (adapters). UI reaches the domain **only through
-   actions and DTOs**.
-3. **Action objects + DTOs** — every write goes through an invokable `*Action`
-   taking a readonly `*Data` DTO. Pages never call Eloquent directly.
-4. **Pragmatic DDD-lite** — use the parts that earn their keep (layering,
-   actions, DTOs, rich enums, modules); skip what isn't warranted (repositories,
-   ports, value objects, services). See
-   `~/Documents/Obsidian/AI/wiki/concepts/software-architecture-principles.md`.
-5. **Lean** — only build what's needed; only abstract after duplication (Rule
-   of Three).
+  composer wiring.
 
 ## How a Laravel app with this architecture looks
 
-A host Laravel app is built on the `laravel-package-skeleton`
-folder structure and pulls in modules as Composer packages. Each module is a
-bounded context with its own hexagonal-flavored layering (`App/`/`Domain/`/
-`Infrastructure/`); the UI reaches the domain only through actions + DTOs. The
-modules are Composer dependencies resolved into `vendor/` — they are not nested
-in the project tree. The project's `src/` holds only app-specific code; each
-module brings its own `src/` (with its own layers) inside its package.
+A host Laravel app is built on the `laravel-package-skeleton` folder structure
+and pulls in modules as Composer packages. Each module is a bounded context with
+its own hexagonal-flavored layering (`App/`/`Domain/`/`Infrastructure/`); the UI
+reaches the domain only through actions + DTOs. The modules are Composer
+dependencies resolved into `vendor/` — they are not nested in the project tree.
+The project's `src/` holds only app-specific code; each module brings its own
+`src/` (with its own layers) inside its package.
 
-The flow for a write operation: **Filament page → `PostData::fromArray(...)` →
+The flow for a write operation: **UI page → `PostData::fromArray(...)` →
 `app(CreatePostAction::class)` → Eloquent model**. The page never touches
 Eloquent directly; the action is the single seam.
 
@@ -66,12 +49,7 @@ laravel-module-<name>/
 │   ├── <Module>ServiceProvider.php   # Package bootstrap (Spatie PackageServiceProvider)
 │   ├── App/                          # UI layer (Filament + Livewire)
 │   │   ├── Console/Commands/         # artisan commands
-│   │   ├── Filament/
-│   │   │   ├── Pages/                # Create*, Edit*, List* (record pages)
-│   │   │   ├── Plugins/              # *Plugin (registers resource on a Panel)
-│   │   │   ├── Resources/            # *Resource (Filament resource)
-│   │   │   ├── Schemas/              # *Form (form schema, static configure())
-│   │   │   └── Tables/               # *Table (table schema, static configure())
+│   │   ├── Filament/                 # see the filament skill
 │   │   ├── Livewire/                 # public-facing components
 │   │   └── Providers/
 │   ├── Domain/                       # Domain layer
@@ -103,13 +81,14 @@ laravel-module-<name>/
 | DTO               | `*Data`                   | `PostData`            |
 | Enum              | `*Status`                 | `PostStatus`          |
 | Model             | (none)                    | `Post`                |
-| Filament resource | `*Resource`               | `PostResource`        |
-| Filament plugin   | `*Plugin`                 | `PostPlugin`          |
-| Form schema       | `*Form` (in `Schemas/`)   | `PostForm`            |
-| Table schema      | `*Table` (in `Tables/`)   | `PostsTable`          |
-| Pages             | `Create*`/`Edit*`/`List*` | `CreatePost`          |
 | Factory           | `*Factory`                | `PostFactory`         |
 | ServiceProvider   | `*ServiceProvider`        | `NewsServiceProvider` |
+
+**Module repo names are singular** (`laravel-module-todo`, `laravel-module-news`,
+`laravel-module-user`), matching the PSR-4 root `Lines\<Module>\`.
+
+(Filament naming — `*Resource`, `*Plugin`, `*Form`, `*Table`, `Create*`/`Edit*`/
+`List*` pages — lives in the `filament` skill.)
 
 ## Action objects + DTOs
 
@@ -197,19 +176,6 @@ final readonly class PostData extends DataTransferObject
   function; each cast receives `($value, $data)`.
 - `fromArray([...])` is the factory used by pages.
 
-## Filament integration
-
-- **Resource** delegates to form/table `configure()`:
-  `src/App/Filament/Resources/PostResource.php` → `PostForm::configure` /
-  `PostsTable::configure`, maps pages, handles soft-delete route binding.
-- **Form/Table** expose `public static function configure(Schema|Table $schema)`
-  with private static per-field builder methods (`title()`, `body()`, `status()`).
-- **Plugin** registers the resource on a panel:
-  `PostPlugin::make()` → host panel `->plugin(PostPlugin::make())`.
-- **Pages** are the UI→Domain seam: `handleRecordCreation` builds
-  `PostData::fromArray([...$data, 'author_id' => auth()->user()->id])` and calls
-  `app(CreatePostAction::class)`.
-
 ## ServiceProvider (module bootstrap)
 
 `src/<Module>ServiceProvider.php` extends
@@ -252,10 +218,9 @@ host app knows which `*ServiceProvider` to boot.
 
 ### Including a module in development (local machine)
 
-> **Footnote — local development.** When you're working on a module and the
-> host app together, you don't want to publish the module on every change.
-> Instead, point Composer at the local copy with a **path repository**. This
-> symlinks the local module into `vendor/` so edits are picked up immediately.
+When you're working on a module and the host app together, point Composer at
+the local copy with a **path repository**. This symlinks the local module into
+`vendor/` so edits are picked up immediately:
 
 ```json
 {
@@ -307,7 +272,16 @@ registers its `*ServiceProvider` via `extra.laravel.providers`.
 - **Fixtures**: factories with fluent states (`draft()`, `scheduled()`,
   `published()`, `existing()`).
 - **Naming**: `describe('CreatePostAction', ...)` / `it('creates a post', ...)`;
-  nested `describe` for states.
+  nested `describe` for states. See the `software-testing` skill for the
+  BDD/TDD contract.
+
+## Models, migrations & workbench
+
+Models use **UUID primary keys** (`HasUuids` + `uuid('id')->primary()` +
+`foreignUuid`), which drives the DTO `id` type (`?string`). The workbench is
+the Testbench host that runs the module's Filament panel (registers the plugin,
+needs a `UserFactory`, and `filament:assets` before serving). Full detail:
+`references/models-and-migrations.md` and `references/workbench.md`.
 
 ## Gotchas
 
@@ -325,6 +299,9 @@ registers its `*ServiceProvider` via `extra.laravel.providers`.
 
 ## Related
 
+- **Loads:** (none — loaded on demand)
+- **References:** `software-architecture` (the general contract), `filament`
+  (the Filament UI mechanics), `software-testing` (the testing contract).
 - Wiki concepts (under `~/Documents/Obsidian/AI/wiki/concepts/`): `ddd.md`,
   `hexagonal-architecture.md`, `action-objects.md`, `modular-monolith.md`,
   `software-architecture-principles.md`.
