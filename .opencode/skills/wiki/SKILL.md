@@ -95,6 +95,26 @@ machine-parseable prefix for `grep "^## \["` style tooling:
 * Wrote wiki/sources/<slug>.md; updated entities/a.md, concepts/b.md
 ```
 
+## OKF v0.2 format
+
+Every knowledge document under `wiki/`, `planning/`, `specs/`, and `logs/` is
+an **Open Knowledge Format (OKF) v0.2** concept unless it is a reserved file
+(`index.md`, `log.md`). This means, minimally:
+
+- YAML frontmatter with a non-empty `type` field (§4.1).
+- Reserved filenames `index.md` and `log.md` follow OKF §8/§9.
+- Optional frontmatter families `sources`, `generated`, `verified`, `status`,
+  `stale_after` follow OKF §5.
+- `timestamp` is superseded by `generated: { by, at }` — never emit `timestamp`.
+
+Producer extensions (keys OKF doesn't define) are permitted and preserved. Our
+`importance` and `evidence` fields are such extensions.
+
+**The vault `Inbox/` is explicitly excluded from OKF.** It is a raw dump area:
+anything pasted there may lack frontmatter, tags, or structure — it is not
+OKF-compliant and is not expected to be. Treat Inbox contents as immutable
+source material: process + discard original, never edit in place.
+
 ## Governance (inherited from AGENTS.md)
 
 - `Inbox/` is the capture point; contents are raw dumps (not OKF-compliant),
@@ -103,3 +123,8 @@ machine-parseable prefix for `grep "^## \["` style tooling:
 - `index.md` on every ingest; `log.md` append-only.
 - Contradictions flagged, never silently resolved.
 - Every page carries non-empty `type` + `generated` (OKF v0.2).
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `vault-notes` (the vault structure the wiki lives in),
+  `memory` (the memory tiers the log feeds).

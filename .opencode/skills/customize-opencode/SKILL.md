@@ -395,3 +395,8 @@ When a user's config is broken and opencode won't start, these env vars help:
   session.
 - After saving any config change, remind the user to quit and restart opencode
   — running sessions keep using the already-loaded config.
+
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `skill-authoring` (when the config change is a skill).

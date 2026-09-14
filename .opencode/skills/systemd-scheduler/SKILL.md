@@ -15,8 +15,9 @@ opencode agent on a schedule. Two modes:
 - **attach**: each run injects the prompt into the currently active session
   through the opencode Unix socket plugin (`curl --unix-socket <socket> ...`),
   so the job talks to the live session and its context. This is how you build
-  bridges — e.g. watch a Beeper chat and forward messages into your live
-  session.
+  bridges — e.g. watch a chat and forward messages into your live session.
+  For Beeper specifically, use the dedicated `beeper-bridge` skill instead:
+  it is a long-running bidirectional service, not a scheduled job.
 
 ## What I do
 
@@ -267,4 +268,46 @@ Help the user translate natural language into OnCalendar expressions:
 | Twice a day               | `*-*-* 09,18:00:00`       |
 | On boot (once)            | use `After=` not a timer  |
 
-If unsure, suggest `systemd-analyze calendar "<expression>"` to validate.
+**Monotonic timers** (relative, not wall-clock) — for "every N minutes/hours"
+prefer these over `OnCalendar` when the interval matters more than the clock
+time:
+
+- `OnBootSec=5min` — 5 min after boot.
+- `OnUnitActiveSec=6h` — 6 h after the service last ran (a repeating
+  interval). Combine with `OnBootSec=` to seed the first run on a fresh boot.
+- `OnUnitInactiveSec=1h` — 1 h after it last *finished* (a slow run doesn't
+  compress the gap).
+
+**Validate every expression** before writing it:
+
+- `systemd-analyze calendar "<expr>"` — normalizes it and prints the next
+  occurrences (local + UTC); use the normalized form in the file.
+- `systemd-analyze verify <unit>` — catches typos (e.g. `OnClendar=`) that
+  are otherwise silently ignored when another timer directive is present.
+
+## Fine-tuning (AccuracySec, RandomizedDelaySec, Persistent)
+
+The timer fires within a window, not at the exact second, unless you tune it:
+
+- **`AccuracySec=`** — default `1min`: the timer may fire up to a minute
+  late, coalesced with other timers to save power. Set `AccuracySec=1us` for
+  exact timing; raise it (e.g. `10min`) on battery/non-critical tasks.
+- **`RandomizedDelaySec=`** — adds a random delay of up to the value to
+  spread similarly-scheduled timers apart (avoid the thundering herd). To get
+  an exact spread, pair it with `AccuracySec=1us` (otherwise the accuracy
+  window re-coalesces them).
+- **`Persistent=true`** — only affects `OnCalendar=` timers. Fires once on
+  activation if a run was missed while the machine was off (catch-up). It
+  does **not** replay every missed run. For high-frequency timers, a long
+  outage means a burst of catch-up runs — pair with `RandomizedDelaySec=` to
+  spread them. Leave off when a missed run should stay missed.
+
+Full reference: `wiki/concepts/systemd-timers.md` (including the Laravel
+scheduler → systemd mapping).
+
+## Related
+
+- **Loads:** none
+- **References:** `beeper-bridge` — for Beeper chat ↔ opencode session
+  bridging; the dedicated bridge supersedes hand-rolled attach-mode jobs for
+  that case

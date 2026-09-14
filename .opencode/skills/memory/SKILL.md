@@ -1,6 +1,6 @@
 ---
 name: memory
-description: Two-tier file-native memory system (working + episodic/semantic with milestone-triggered reflection and codification pruning), grounded in Generative Agents and Files-as-Memory research. Emits OKF v0.2-conformant concepts.
+description: Two-tier file-native memory system (working memory HOT.md + episodic stream + semantic facts, with milestone-triggered reflection and codification pruning), grounded in Generative Agents and Files-as-Memory research. Emits OKF v0.2-conformant concepts. Use when reading or writing HOT.md, recording episodic events, updating semantic memory, running reflection, or when the user says "consolidate memory".
 license: MIT
 ---
 
@@ -196,3 +196,8 @@ Process:
   does not duplicate codified artifacts.
 - `HOT.md` rewritten on session end, milestones, and pre-compaction; pruned
   below cap. A milestone (see above) also triggers a reflection pass.
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `wiki` (log.md appends), `vault-notes` (the vault the
+  memory lives in).

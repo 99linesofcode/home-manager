@@ -180,6 +180,95 @@ the full spec above for portability across clients.
   For portability, reference resources by the skill's base directory (e.g.
   `cd <skill-dir> && ...`) or use absolute paths.
 
+## Skill-to-skill references (Loads vs References)
+
+Skills reference each other. The convention distinguishes **required** from
+**optional** references, so the orchestrator knows what to activate together and
+what to load on demand.
+
+- **Loads:** — skills that must activate **together** with this one. When this
+  skill is loaded, the listed skills are loaded too. Use for skills that are
+  part of the same workflow (e.g. `new-project` Loads `git-workflow` and
+  `software-architecture`).
+- **References:** — skills that are **optional**, loaded on demand when the
+  task needs them. Use for related skills that aren't always required (e.g.
+  `software-architecture` References `laravel` and `filament`).
+
+Declare both as a short section at the end of the body, under `## Related`:
+
+```markdown
+## Related
+
+- **Loads:** `git-workflow`, `software-architecture`
+- **References:** `laravel`, `filament`
+```
+
+Rules:
+
+- A skill lists its Loads and References explicitly; there is no separate
+  registry file. The convention lives here and each skill declares its own.
+- **Loads** is for required, always-activate-together skills. Keep it small —
+  loading too much defeats progressive disclosure.
+- **References** is for optional, on-demand skills. Most cross-skill links are
+  References.
+- The orchestrator loads the Loads list when it activates a skill, and reaches
+  into References when the task calls for them.
+
+## Discovery and routing (this library's convention)
+
+The Agent Skills spec handles discovery via progressive disclosure; this
+library adds two conventions on top:
+
+1. **Descriptions carry every trigger.** The `description` is read at
+   session start for ALL skills — it is the only discovery surface. It must
+   front-load trigger keywords for every task the skill governs, including
+   style and formatting topics (the whitespace rule lives in
+   `self-documenting-code`, so its description says "whitespace", "blank
+   lines", "formatting rhythm"). Audit the description on every skill edit:
+   a task that should route to this skill but wouldn't match its description
+   is a defect.
+2. **The routing matrix is authoritative.** `software-development`'s skill
+   gate holds the task → skills matrix for the software development cluster;
+   `AGENTS.md`'s operations table routes non-dev work. When a skill is
+   added, renamed, or rescoped, update its row there. The layering: the
+   **description triggers**, the **matrix routes**, `## Related`
+   (Loads/References) **navigates**.
+3. **Atomic activation for inseparable sets.** When skills must always load
+   together, prefer a composite skill (one `SKILL.md` whose body instructs
+   reading its components; one description for the router) over relying on
+   the model to load a set. The loading model has four layers: registry
+   metadata at startup (name + description), the routing matrix on task
+   match, the skill body on activation, references/scripts on demand. Fail
+   closed: a missing governing skill blocks the work — never proceed on
+   partial activation. Dependency manifests, version pinning, and capability
+   profiles are deferred until the library's scale demands them (see
+   [[agent-skill-retrieval-research]]).
+
+## Conditioning-aware authoring (how the model reads skills)
+
+Skills steer the model by conditioning its next-token distribution — they
+are context, not weights. Recent research (see
+`wiki/concepts/llm-context-conditioning.md`) gives concrete authoring rules:
+
+- **Multiple consistent examples per rule.** In-context learning follows a
+  sigmoidal curve: one exemplar may sit below the threshold and do nothing;
+  2–3 *consistent* ones flip behavior. Give every important rule 2–3
+  consistent examples, and keep them consistent — contradictions dilute the
+  evidence for any single concept.
+- **Critical rules at the edges.** The model attends less to the middle of
+  long context (lost-in-the-middle). Put the most critical rule of a skill
+  at the start or end, not buried mid-file.
+- **Terminology consistency is mechanistic.** Consistent terms keep the
+  model in one concept region; synonyms scatter it. Define a term once, use
+  it identically everywhere. When two skills name the same concept
+  differently, that is a defect to fix at the source.
+- **Repetition accumulates evidence, but respect the ceiling.** Restating a
+  core rule in different forms helps; past the sigmoid's plateau, more
+  repetition adds nothing.
+- **Lean + progressive disclosure is validated.** Context overload degrades
+  performance past ~50% fullness. Keep the body tight; push depth into
+  `references/`.
+
 ## Authoring checklist
 
 - [ ] Folder named after `name`; `SKILL.md` spelled exactly.
@@ -190,3 +279,9 @@ the full spec above for portability across clients.
 - [ ] `scripts/` self-contained with helpful errors; `references/` small and focused.
 - [ ] Resources referenced by skill base directory (not bare relative paths).
 - [ ] Validated by re-reading the finished file and linting frontmatter.
+
+## Related
+
+- **Loads:** `skill-design-principles` (decide before you author).
+- **References:** `software-development` (the routing matrix this
+  convention feeds).

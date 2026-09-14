@@ -404,3 +404,8 @@ tags:
   `Archief/` as-is (flat — no subfolder).
 - **Sweep:** on request, scan for stale links, missing affiliations, and files
   that should be promoted or archived.
+
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `wiki` (the agent-owned knowledge layer inside the vault).

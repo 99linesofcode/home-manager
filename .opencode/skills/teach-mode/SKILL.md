@@ -103,3 +103,8 @@ move on.
   answer; teach mode is when they want to learn.
 - **Wiki lacks coverage** — teach from general knowledge, say so, and offer to
   capture the material as a wiki concept page afterwards.
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `communication-standards` (how lessons are written),
+  `wiki` (wiki-first grounding).
