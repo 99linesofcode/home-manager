@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: Git and GitHub workflow for this user's projects. GitHub Flow by default, always checking CONTRIBUTING.md first; Conventional Commits; ask before commit/push/PR; safe git operations (no force-push, no history rewriting). Use when the user asks to commit, branch, merge, push, pull, open or review a pull request, file or triage a GitHub issue, create a release, or when starting work in a repo and the workflow needs to be determined.
+description: Git and GitHub workflow for this user's projects. GitHub Flow by default, always checking CONTRIBUTING.md first; Conventional Commits (including commit message wording); ask before commit/push/PR; safe git operations (no force-push, no history rewriting). Includes collapsing commits (fixup + squash by feature before push), rebasing, and stashing. The broader development discipline (incremental atomic changes, cleanup-as-you-go) lives in the software-development skill. Use when the user asks to commit, branch, merge, rebase, stash, push, pull, open or review a pull request, file or triage a GitHub issue, create a release, author a CONTRIBUTING.md, or when starting work in a repo and the workflow needs to be determined.
 ---
 
 # git-workflow
@@ -53,6 +53,10 @@ Before any git work in a repo, determine the methodology:
 
 ## GitHub Flow (default)
 
+- **Never work on `main`.** Create the branch *before* making any change, and
+  do all work there. `main` is only ever touched by a merge. If you're about to
+  edit files while on `main`, stop and branch first. This is a hard rule, not a
+  preference — working on `main` is a workflow violation.
 - `main` is always deployable.
 - Every change gets a short-lived branch off `main`:
   `feat/<slug>`, `fix/<slug>`, `chore/<slug>`, `docs/<slug>`
@@ -60,8 +64,11 @@ Before any git work in a repo, determine the methodology:
   Commits.
 - Open a PR when the branch is ready (or early as a draft for visibility).
 - The PR is the integration point: review + CI checks.
-- Merge back to `main` (squash or merge — match repo history), delete the
-  branch.
+- Merge back to `main` via **squash** — one commit per change/use case on
+  `main` (the change chain's atomic-commit rule). Delete the branch after
+  merge.
+- Exception: a repo's **initial scaffold** may push directly to `main`
+  (`new-project` step 7). Everything after goes through a branch + PR.
 - No feature flags needed — unfinished work simply stays on the branch.
 
 ### Branch naming
@@ -79,17 +86,95 @@ Before any git work in a repo, determine the methodology:
 5. Merge when green + approved (or per repo rules).
 6. Delete the branch locally + remotely.
 
+## Collapsing commits (fixup + squash)
+
+The user works with many small commits — including `fixup!` commits during
+development — and collapses them into a clean history before push. History is
+rewritten **only before push** (never after).
+
+### The workflow
+
+1. **Commit freely during development.** Small commits, `fixup! <subject>`
+   commits, whatever keeps the work moving. `git commit --fixup=<sha>` or
+   `git commit --fixup=HEAD` for the last commit.
+2. **Before push, collapse by feature.** A feature's debugging journey
+   (feat → fix → fix → fixup) collapses into one coherent commit per feature.
+   The history tells the story of *where it landed*, not the journey.
+3. **Reword for clarity.** The message states the final state, not the
+   intermediate steps: "feat: transcribe voice notes locally (ffmpeg +
+   voxtype, incl. encrypted mxc://)" — not "add transcribe, fix ffmpeg, fix
+   voxtype".
+
+### Autosquash (the fast path for fixup commits)
+
+If you've been using `git commit --fixup=<sha>`, `--autosquash` does the
+arrangement for you — it moves each `fixup!`/`squash!` commit onto its target
+automatically:
+
+```bash
+git rebase -i --autosquash <base>
+```
+
+The todo list comes pre-arranged with the fixups marked `fixup` next to their
+targets. Just review and save.
+
+### Manual squash (interactive rebase)
+
+```bash
+git rebase -i <base>
+```
+
+In the todo list, change `pick` to `squash` for the commits to fold into the
+one above them. The squash target keeps its message; the squashed commits'
+messages are combined — edit to the final message.
+
+### Non-interactive (scripted) rebase
+
+For automation or when the editor is awkward:
+
+- `GIT_SEQUENCE_EDITOR` rewrites the todo list (e.g. `sed` to change `pick`
+  to `squash`/`reword` for specific SHAs).
+- `GIT_EDITOR` supplies the commit message for each reword/squash.
+- **NixOS gotcha:** scripts need `#!/usr/bin/env bash` — there is no
+  `/bin/bash`.
+- **Reword one commit at a time.** Batch-reword in a single rebase can create
+  duplicate commits when SHAs shift mid-rebase. Do one `reword` per rebase
+  run, verify, then the next.
+
+### Verify the collapsed tree
+
+After squashing, the tree must be identical to the pre-squash tip:
+
+```bash
+git diff <squashed-tip> <pre-squash-tip>   # must be empty
+```
+
+Only the history changed, never the content.
+
+### Recovery if a rebase goes sideways
+
+- `git rebase --abort` to bail out cleanly.
+- If a `git reset` lands wrong, the reflog preserves the pre-rebase tip:
+  `git reflog` → find the old tip → `git reset --hard <sha>`.
+- `git rebase --continue` after resolving conflicts.
+
 ## Conventional Commits
 
-Format: `<type>(<scope>): <description>`
+Format: `<type>(<scope>): <description>` — types: `feat`, `fix`, `docs`,
+`style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`. Scope
+optional. Breaking changes: `feat!: ...` or a `BREAKING CHANGE:` footer.
 
-- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`,
-  `ci`, `chore`, `revert`
-- Scope optional: `feat(offertes): add PDF export`
-- Imperative, lowercase, ≤ ~72 chars: "add", "fix", not "added"/"fixes"
-- Breaking changes: `feat!: ...` or a `BREAKING CHANGE:` footer
-- Body: what + why, not how. Bullet points for multiple concerns.
-- Match the repo's existing style if it differs (Step 0).
+**The description (~80 chars baseline) tells the user what they can now do.**
+Accessible, plain language, no jargon — understandable to non-native
+speakers without being pedantic or plebeian. Write it for the person using
+the feature, not the person who wrote it: "sync GitHub task changes into
+vault notes", not "add fetchChangedTasks to ProjectManagementPort".
+
+**The body introduces the developer to the change**: what it does and why,
+with the how in enough detail to orient before reading the code. A few short
+lines beat one dense paragraph.
+
+Match the repo's existing style if it differs (Step 0).
 
 ## Local git operations
 
@@ -110,13 +195,22 @@ Format: `<type>(<scope>): <description>`
 
 - `git switch -c <type>/<slug>` to create
 - `git switch main && git pull` before branching (stay current)
-- Merge via PR (GitHub Flow). For local-only merges, prefer `--no-ff` when
-  the repo history uses merge commits, `--ff-only` when it's linear.
+- Merge via PR (GitHub Flow). For local-only merges, prefer `--ff-only` —
+  the user dislikes merge commits. `--no-ff` only when the repo history
+  clearly uses merge commits.
 
 ### Rebase
 
 - Rebase your *own* unpushed branch onto `main` to stay current:
   `git rebase main` (or `git pull --rebase`)
+- **Branch updates are rebase, never merge.** Bringing an in-flight branch
+  up to date (from `main` or its upstream) goes through rebase — no merge
+  commits. Stash dirty files first, rebase, then pop:
+
+  ```bash
+  git stash && git rebase main && git stash pop
+  ```
+
 - Never rebase shared/pushed branches.
 
 ### History hygiene
@@ -151,24 +245,27 @@ MCP doesn't cover or where a CLI is more natural.
 - Amending or rewriting any commit that has been pushed
 - Committing secrets, `.env` files, keys, tokens (scan first)
 - `git add -A` / `git add .` without reviewing what it stages
+- `git reset --hard` when there are uncommitted changes — it silently discards
+  them. Commit or `git stash` first. Branches share a working tree, so a
+  `reset --hard` on one branch destroys uncommitted work on every branch.
 
 These match the user's opencode permission deny-list (decisions.md): the
 config blocks force-push, force branch deletion, and history rewriting at the
 shell level too.
 
-## Authoring CONTRIBUTING.md
+## CONTRIBUTING.md (extend, don't fork)
 
-For the user's own repos, offer to define the workflow together and encode it
-in a `CONTRIBUTING.md`:
+The org-wide source of truth is the shared `CONTRIBUTING.md` in the
+`.github` repo — GitHub renders it in every repo that lacks its own. Repos
+do NOT get their own file unless their flow genuinely diverges.
 
-1. Propose a methodology for the project's size (GitHub Flow for most;
-   Git Flow only for versioned release trains; GitLab Flow for environment
-   staging).
-2. Agree on: branching model, PR requirements, commit style, review rules,
-   CI expectations.
-3. Write `CONTRIBUTING.md` at the repo root, concise and concrete.
-4. The skill then reads it back on the next session (Step 0) — the file
-   becomes the source of truth.
+- **Step 0 resolution order:** the repo's own `CONTRIBUTING.md` → the
+  `.github` fallback → the default (GitHub Flow).
+- If the shared file is missing or stale, **fix it there** — one edit
+  teaches every repository at once (2026-09-18: it was missing entirely,
+  which is how a scaffold bypassed the branch+PR flow unnoticed).
+- Author a per-repo `CONTRIBUTING.md` only for a genuine override (e.g. a
+  different merge style), and say why at the top.
 
 ## Scaffolding a new repo (the user's skeleton ecosystem)
 
@@ -179,20 +276,31 @@ skeleton and wire it up following the user's conventions.
 
 | Repo | Role |
 |---|---|
-| `git-skeleton` | Universal seed: `.editorconfig`, `.prettierrc`, `.gitignore`, `.ignore`, MIT `LICENSE`, `README.md` |
-| `.github` | Shared org files: `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SECURITY.md`, `dependabot.yaml`, 6 workflows |
-| `.github-php` | PHP/Laravel GitHub skeleton: thin workflow wrappers (`uses: 99linesofcode/.github/...@main`), `devshell-php` submodule |
-| `devshell-php` / `devshell-rust` | Nix dev environments (`flake.nix`) |
+| `git-skeleton` | Universal base: `.editorconfig`, `.prettierrc`, `.gitignore`, `.ignore` (config flows via remote + rebase) |
+| `.github` | Shared org files: `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SECURITY.md`, `dependabot.yaml`, 6 workflows (README/LICENSE render natively in repos lacking their own) |
+| `.github-php` | PHP/Laravel workflow wrapper: thin workflow wrappers (`uses: 99linesofcode/.github/...@main`), `devshell-php` submodule |
+| `.github-js` | Node/pnpm workflow wrapper: thin workflow wrappers, `devshell-node` submodule |
+| `devshell-php` / `devshell-rust` / `devshell-node` | Nix dev environments (`flake.nix`) |
+| `laravel-skeleton` | Laravel application starter (composer.json, `src/`, database/, tests/, workbench/) |
 | `laravel-package-skeleton` | Laravel module seed: composer.json, `src/` (App/Domain/Infra), database/, tests/, workbench/, `devshell-php` submodule |
+| `node-skeleton` | Node package starter (private) |
+| `rails-skeleton` | Rails starter (private) |
+| `kubernetes-base` / `kubernetes-php` | Kubernetes manifests / Helm charts |
+
+**Not skeletons:** `kubernetes-fleet` (a fleet config) is NOT a skeleton
+repository — it doesn't seed new projects.
 
 ### Choosing the right skeleton
 
 | Project type | Start from | Wire in |
 |---|---|---|
 | Generic repo | `git-skeleton` | — |
+| Laravel application | `laravel-skeleton` | `.github-php` workflows + `devshell-php` submodule |
 | Laravel module | `laravel-package-skeleton` | `.github-php` workflows + `devshell-php` submodule |
 | PHP app | `git-skeleton` + `.github-php` | `devshell-php` submodule |
 | Rust app | `git-skeleton` + `devshell-rust` | `devshell-rust` submodule |
+| Node package | `node-skeleton` | `.github-js` workflows + `devshell-node` submodule |
+| Rails app | `rails-skeleton` | — |
 
 ### The three mechanisms (pull + override)
 
@@ -200,18 +308,31 @@ skeleton and wire it up following the user's conventions.
 |---|---|
 | **remote + rebase** | The **base skeleton** you build on and rarely override (conflicts on rebase are the point — they surface override-vs-upstream decisions) |
 | **submodule** | **Standalone** self-contained deps (devshell) — pinned, isolated |
-| **subtree** | **Shared code that must live inside the repo** (config files, `.github`) — updates flow, you own + override |
+| **subtree** | **Shared code that must live inside the repo** (community files in `.github/`) — updates flow, you own + override |
 
 **Rule of thumb:** standalone → submodule; shared/must-live-in-repo → subtree;
 base → remote + rebase.
 
+**Config files (`.editorconfig`, `.prettierrc`, `.gitignore`) are remote +
+rebase, NOT subtree.** Verified 2026-09-06: `git subtree add --prefix=.` fails
+with `fatal: prefix '.' already exists` — git refuses the repo root as a
+subtree prefix. Root-level config can't be subtreed. The user's skeleton
+ecosystem uses remote + rebase for config: `git-skeleton` is the base remote,
+each repo pulls it and overrides freely.
+
+**README/LICENSE are never synced.** GitHub natively renders the `.github`
+repo's README/LICENSE in any repo lacking its own — the fallback is
+server-side, no git mechanism involved. Repos keep their own README/LICENSE
+and diverge.
+
 ### ⚠️ GitHub caveat (submodule → subtree)
 
 **GitHub does not traverse submodules.** If shared files must be *available to
-GitHub* (workflows, community files, config), a submodule won't work — the
-files won't be there when GitHub runs. **Substitute a subtree for the
-submodule.** This is the `.github-php` scenario: it pulls in the shared
-`.github` repo, so `.github` should be a **subtree**, not copied manually:
+GitHub* (workflows, community files), a submodule won't work — the files won't
+be there when GitHub runs. **Substitute a subtree for the submodule.** This is
+the `.github-php` scenario: it pulls in the shared `.github` repo, so `.github`
+community files (CODE_OF_CONDUCT, CONTRIBUTING, SECURITY) should be a
+**subtree**, not copied manually:
 
 ```bash
 git subtree add --prefix=.github git@github.com:99linesofcode/.github.git main --squash
@@ -222,20 +343,31 @@ annotation), so `git subtree pull` later gets updates. Manual copy loses the
 link. Detect existing subtrees via `git log --grep="git-subtree-dir"` (no
 central registry like `.gitmodules`).
 
+**Workflows are thin-wrapper delegation, not subtree.** The `.github-php`
+workflows `uses: 99linesofcode/.github/.github/workflows/<name>.yaml@main` —
+GitHub resolves the latest generic logic at runtime. This is deliberate:
+delegation always runs the latest, while a subtree would inline stale content
+until `subtree pull`.
+
 ### Scaffolding a generic repo (remote + rebase)
 
 ```bash
 git init
 git remote add origin <REPOSITORY>
-git remote add git-skeleton git@github.com:99linesofcode/git-skeleton.git
-git fetch git-skeleton
-git rebase git-skeleton/main
+git remote add skeleton git@github.com:99linesofcode/git-skeleton.git
+git fetch skeleton
+git rebase skeleton/main
 ```
 
+- **Empty repo gotcha:** `git rebase` fails on a fresh repo with no base commit
+  (`fatal: Could not resolve HEAD to a commit`). For a brand-new empty repo,
+  use `git reset --hard <skeleton>/main` instead of rebase — it sets `main` to
+  the skeleton's tip directly. Rebase is only for adopting an existing repo
+  that already has history.
 - **Override is expected.** When you've locally modified a shared file (e.g.
   `.gitignore`) and rebase, you'll get a merge conflict. **Resolve it** — you
   want the new upstream change AND your override. This is intended.
-- Pull updates later: `git fetch git-skeleton && git rebase git-skeleton/main`.
+- Pull updates later: `git fetch skeleton && git rebase skeleton/main`.
 
 ### Wiring the devshell (submodule)
 
@@ -245,23 +377,45 @@ git submodule add git@github.com:99linesofcode/devshell-php.git devshell
 
 Standalone, pinned. Update with `git submodule update --remote`.
 
-### Wiring shared config files (subtree)
+### Wiring shared config files (remote + rebase)
+
+Config flows from `git-skeleton` via remote + rebase (NOT subtree — root-level
+config can't be subtreed, see above):
 
 ```bash
-git subtree add --prefix=. git@github.com:99linesofcode/git-skeleton.git main --squash
+git remote add skeleton git@github.com:99linesofcode/git-skeleton.git
+git fetch skeleton
+git rebase skeleton/main
 ```
 
-Inlines `.editorconfig`/`.prettierrc`/`.gitignore` + records the link; you own
-+ override freely (no rebase-conflict ceremony).
+**Adopting an existing repo** (one that predates the remote + rebase model and
+has no shared history with git-skeleton): use a one-time adoption merge instead
+of a rebase, so history isn't rewritten:
+
+```bash
+git remote add skeleton git@github.com:99linesofcode/git-skeleton.git
+git fetch skeleton
+git merge skeleton/main --allow-unrelated-histories
+```
+
+Resolve the merge keeping the repo's own README/LICENSE and repo-specific
+config overrides; take git-skeleton's config where the repo is missing it.
+From then on, updates flow via `git fetch skeleton && git rebase
+skeleton/main` (or `git merge skeleton/main` for repos that prefer
+merge history).
 
 ### Wiring the GitHub workflows (thin-wrapper delegation)
 
-For a **project** consuming `.github-php`, copy the thin-wrapper `.yaml` files
-into the project's `.github/workflows/`:
+The framework skeletons (`laravel-skeleton`, `laravel-package-skeleton`) ship
+the thin-wrapper workflows in their own `.github/workflows/`, so they come
+along with the scaffold — no copy step. For a generic language repo (base
+`git-skeleton`), copy the wrappers from the language wrapper repo
+(`.github-php` for PHP, `.github-js` for Node):
 
 ```bash
 mkdir -p .github/workflows
-cp ~/Development/.github-php/workflows/*.yaml .github/workflows/
+cp ~/Development/.github-php/workflows/*.yaml .github/workflows/   # PHP
+cp ~/Development/.github-js/workflows/*.yaml .github/workflows/    # Node
 ```
 
 The wrappers `uses: 99linesofcode/.github/.github/workflows/<name>.yaml@main`,
@@ -269,13 +423,20 @@ so GitHub resolves the latest generic logic at runtime — no sync step. **This
 is delegation, not subtree** — deliberate: a subtree would inline the workflow
 content (stale until `subtree pull`), while delegation always runs the latest.
 
+**Why copy, not subtree:** the thin-wrapper files must physically exist in the
+repo for GitHub to trigger them, and git subtree operates on whole repos, not
+subdirectories — subtree-ing `.github-php` would drag in `.editorconfig`,
+`.envrc`, `.gitignore`, and the `devshell` submodule, none of which belong in a
+consuming project. The wrappers are tiny and stable, so the copy is effectively
+one-time, not a recurring sync.
+
 ### Scaffolding a Laravel module
 
 1. Start from `laravel-package-skeleton` (remote + rebase, as above).
 2. Wire the `devshell-php` submodule (already in the skeleton's `.gitmodules`).
 3. Copy the `.github-php` workflows.
 4. Rename the namespace: `Lines\Skeleton\` → `Lines\<Module>\` in
-   `composer.json` (see the `laravel-architecture` skill).
+   `composer.json` (see the `laravel` skill).
 
 ## Wayfinder integration
 
@@ -299,3 +460,9 @@ Wayfinder is the planning model; this skill is the delivery mechanics.
   unrelated files.
 - **`gh` not authenticated:** check `gh auth status`; the GitHub MCP is the
   fallback.
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `software-development` (the change chain and definition of
+  done that govern commits), `new-project` (the scaffolding procedure this
+  skill's mechanics serve), `github` (the platform layer for issues/PRs).

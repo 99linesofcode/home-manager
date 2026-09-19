@@ -15,8 +15,9 @@ opencode agent on a schedule. Two modes:
 - **attach**: each run injects the prompt into the currently active session
   through the opencode Unix socket plugin (`curl --unix-socket <socket> ...`),
   so the job talks to the live session and its context. This is how you build
-  bridges — e.g. watch a Beeper chat and forward messages into your live
-  session.
+  bridges — e.g. watch a chat and forward messages into your live session.
+  For Beeper specifically, use the dedicated `beeper-bridge` skill instead:
+  it is a long-running bidirectional service, not a scheduled job.
 
 ## What I do
 
@@ -268,3 +269,10 @@ Help the user translate natural language into OnCalendar expressions:
 | On boot (once)            | use `After=` not a timer  |
 
 If unsure, suggest `systemd-analyze calendar "<expression>"` to validate.
+
+## Related
+
+- **Loads:** none
+- **References:** `beeper-bridge` — for Beeper chat ↔ opencode session
+  bridging; the dedicated bridge supersedes hand-rolled attach-mode jobs for
+  that case

@@ -74,6 +74,14 @@ any active planning effort (`type: Decision Map`).
 4. **Dispatch** — independent tickets may run workers in parallel. Each package:
    spec excerpt + bounded task + file list. No inter-agent comm; state flows via
    map + files. Worker output → `logs/<slug>/<ticket-id>.md`.
+   **Skill gate (mandatory):** before writing a package, name the skill(s)
+   that govern the task type (new repo → `new-project`; git delivery →
+   `git-workflow`; tests → `software-testing`; architecture →
+   `software-architecture`). Either compose the package from the loaded
+   skill or instruct the worker to load and follow it. A package written
+   from memory for a skill-governed operation is a defect — that is how
+   steps get dropped (2026-09-18: a scaffold dispatched without
+   `new-project` shipped the wrong package manager and no devshell).
 5. **Spec** — when fully resolved, synthesize `planning/<slug>/spec.md` (dense,
    implementation-ready; `type: Spec`, `status: draft`). Present via `question`
    for approval.
@@ -82,6 +90,13 @@ any active planning effort (`type: Decision Map`).
    Emit **resolved** implementation tickets → GitHub Issues (one per ticket,
    linking the spec section). Mid-flight decision tickets are NEVER mirrored
    into GitHub. **Never touch Todoist** (manual sync).
+   **Ticket template** — assume a human reader with little prior knowledge
+   needs to make sense of it (Shape Up's pitch elements as the context
+   standard): **User story** (what the user can do), **Context** (the
+   problem today + what already exists that this builds on), **Scope** (what
+   changes, where — accessible terms), **Scenarios** (Given/When/Then),
+   **Acceptance criteria**, **Out of scope** (rabbit holes / no-gos). Worker
+   packages carry the same shape.
    Delivery mechanics (branching, commits, PRs, releases) follow the
    `git-workflow` skill — load it when executing the ticket-out.
 7. **Memory** — update `HOT.md`, append `wiki/log.md`, record durable decisions.
@@ -101,3 +116,24 @@ any active planning effort (`type: Decision Map`).
 - planning/<slug>/spec.md
 - specs/<slug>.md
 - logs/<slug>/<ticket-id>.md
+
+## Cleanup (on task completion)
+
+The folders `planning/`, `specs/`, and `logs/` **remain** as structural
+locations in `AI/`. What is transient is the working files wayfinder creates
+inside them (map.md, interviews.md, research/, spec.md, worker logs). When the
+task completes:
+
+1. **Consolidate** any durable insight into `wiki/concepts/`,
+   `memory/semantic/`, or `memory/episodic/` as warranted (the durable output
+   of a planning task lives in the wiki, memory, or a skill — not in the
+   working files).
+2. **Trash or archive** the transient working files for the completed task
+   (move to `.trash`, or archive if worth keeping).
+3. Do not leave completed working files lying around in `planning/`, `specs/`,
+   or `logs/`.
+## Related
+
+- **Loads:** `git-workflow` (delivery mechanics at ticket-out).
+- **References:** `github` (issues/PRs as destinations), `shape-up`
+  (the pitch elements behind the ticket template).

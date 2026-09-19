@@ -18,6 +18,8 @@ with lib;
         default = {
           autoupdate = false;
           default_agent = "orchestrator";
+          model = "openrouter/deepseek/deepseek-v4-flash-0731";
+          small_model = "openrouter/deepseek/deepseek-v4-flash-0731";
           agent = {
             build.disable = true;
             plan.disable = true;
@@ -138,9 +140,9 @@ with lib;
               "node_modules/**"
             ];
           };
-          # plugin = [
-          #   "/home/shorty/Development/opencode-socket-plugin"
-          # ];
+          plugin = [
+            "/home/shorty/Development/opencode-socket-plugin"
+          ];
         };
       };
     };

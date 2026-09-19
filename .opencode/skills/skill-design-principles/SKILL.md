@@ -84,3 +84,7 @@ If any answer is no, reconsider whether a skill is the right tool.
 ## References
 
 - `references/examples.md` — worked examples: research, code review, writing standards
+## Related
+
+- **Loads:** `skill-authoring` (the mechanics once the decision is made).
+- **References:** (none)
