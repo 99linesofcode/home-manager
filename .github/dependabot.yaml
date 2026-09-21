@@ -12,6 +12,3 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
-    ignore:
-      - update-types:
-          - version-update:semver-patch
