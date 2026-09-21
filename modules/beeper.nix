@@ -40,6 +40,7 @@ with lib;
       Service = {
         Type = "simple";
         Restart = "no";
+        PrivateTmp = true;
         WorkingDirectory = "/home/shorty/Development/opencode-beeper-bridge";
         EnvironmentFile = config.sops.secrets.beeper.path;
         Environment = [
