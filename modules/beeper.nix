@@ -33,9 +33,6 @@ with lib;
       ];
     };
 
-    # Template unit: instance name = Beeper chat ID. Started on demand, never
-    # at login: systemctl --user start|stop opencode-beeper-bridge@<chatId>.
-    # Default chat is 5846 (user's private notes channel).
     systemd.user.services."opencode-beeper-bridge@" = {
       Unit = {
         Description = "Bridge Beeper messages to the active opencode session";
@@ -48,9 +45,6 @@ with lib;
         Environment = [
           "BEEPER_CHAT_ID=%i"
           "OPENCODE_SOCKET_PATH=${cfg.socketPath}"
-          # ffmpeg + voxtype-onnx for voice-note transcription (bin dirs on PATH).
-          # voxtype-onnx is compiled with the parakeet engine; plain voxtype
-          # is not.
           "PATH=${lib.getBin pkgs.ffmpeg}/bin:${lib.getBin pkgs.voxtype-onnx}/bin"
         ];
         ExecStart = "${lib.getExe pkgs.bun} run src/index.ts";

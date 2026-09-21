@@ -18,7 +18,7 @@ with lib;
         default = {
           autoupdate = false;
           default_agent = "orchestrator";
-          model = "openrouter/deepseek/deepseek-v4-flash-0731";
+          model = "openrouter/z-ai/glm-5.3-flash-20260826";
           small_model = "openrouter/deepseek/deepseek-v4-flash-0731";
           agent = {
             build.disable = true;
@@ -26,6 +26,11 @@ with lib;
             general.disable = true;
             explore.disable = true;
             scout.disable = true;
+          };
+          compaction = {
+            auto = true;
+            prune = true;
+            reserved = 100000;
           };
           permission = {
             bash = {
@@ -78,6 +83,7 @@ with lib;
               # destructive rm on system paths
               "find / -delete *" = "deny";
               "rm -rf ${config.home.homeDirectory}*" = "deny";
+              "rm -rf ${config.home.homeDirectory}/Documents/Google\ Drive*" = "deny";
               "rm -rf ${config.home.homeDirectory}/Development*" = "allow";
               "rm -rf ${config.home.homeDirectory}/Documents/Obsidian*" = "allow";
               "rm -rf ${config.xdg.configHome}*" = "deny";
@@ -154,6 +160,10 @@ with lib;
         format = "dotenv";
         sopsFile = "${self}/hosts/shared/secrets/opencode.env";
       };
+      inceptron_api_key = {
+        format = "binary";
+        sopsFile = "${self}/hosts/shared/secrets/inceptron_api_key";
+      };
       discord_token = {
         format = "binary";
         sopsFile = "${self}/hosts/shared/secrets/opencode_discord_token";
@@ -214,7 +224,7 @@ with lib;
             type = "remote";
             url = "https://ai.todoist.net/mcp";
             headers = {
-              TODOIST_API_KEY = "{file:${config.sops.secrets.todoist_api_key.path}}";
+              Authorization = "Bearer {file:${config.sops.secrets.todoist_api_key.path}}";
             };
           };
         };
