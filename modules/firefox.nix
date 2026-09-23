@@ -170,16 +170,15 @@ with lib;
         ${username} = {
           search = {
             force = true;
-            default = "google";
+            default = "ddg";
             privateDefault = "ddg";
             order = [
               "ddg"
-              "google"
             ];
             engines = {
               "bing".metaData.hidden = true;
               "ddg".metaData.alias = "@d";
-              "google".metaData.alias = "@g";
+              "google".metaData.hidden = true;
               "wikipedia".metaData.alias = "@w";
 
               "archlinux" = {

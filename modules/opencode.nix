@@ -7,6 +7,42 @@
 }:
 let
   cfg = config.home.opencode;
+  mkScheduledJob =
+    {
+      skill,
+      schedule,
+      model,
+    }:
+    {
+      services."opencode-${skill}" = {
+        Unit = {
+          Description = "opencode scheduled job: ${skill}";
+          StartLimitIntervalSec = "60min";
+          StartLimitBurst = 3;
+        };
+        Service = {
+          Type = "oneshot";
+          Environment = [ "DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus" ];
+          EnvironmentFile = config.sops.secrets.opencode.path;
+          ExecStart = ''
+            ${lib.getExe config.programs.opencode.package} run \
+            --model ${model} "Execute the attached skill instructions fully." \
+            --file ${self}/.opencode/skills/${skill}/SKILL.md
+          '';
+          Restart = "on-failure";
+          RestartSec = "5min";
+          WorkingDirectory = "${config.home.homeDirectory}/Documents/Obsidian/AI";
+        };
+      };
+      timers."opencode-${skill}" = {
+        Unit.Description = "opencode scheduler timer: ${skill}";
+        Timer = {
+          OnCalendar = schedule;
+          Persistent = true;
+        };
+        Install.WantedBy = [ "timers.target" ];
+      };
+    };
 in
 with lib;
 {
@@ -18,12 +54,19 @@ with lib;
         default = {
           autoupdate = false;
           default_agent = "orchestrator";
+          model = "openrouter/z-ai/glm-5.3-flash-20260826";
+          small_model = "openrouter/deepseek/deepseek-v4-flash-0731";
           agent = {
             build.disable = true;
             plan.disable = true;
             general.disable = true;
             explore.disable = true;
             scout.disable = true;
+          };
+          compaction = {
+            auto = true;
+            prune = true;
+            reserved = 100000;
           };
           permission = {
             bash = {
@@ -76,6 +119,7 @@ with lib;
               # destructive rm on system paths
               "find / -delete *" = "deny";
               "rm -rf ${config.home.homeDirectory}*" = "deny";
+              "rm -rf ${config.home.homeDirectory}/Documents/Google\ Drive*" = "deny";
               "rm -rf ${config.home.homeDirectory}/Development*" = "allow";
               "rm -rf ${config.home.homeDirectory}/Documents/Obsidian*" = "allow";
               "rm -rf ${config.xdg.configHome}*" = "deny";
@@ -138,10 +182,33 @@ with lib;
               "node_modules/**"
             ];
           };
-          # plugin = [
-          #   "/home/shorty/Development/opencode-socket-plugin"
-          # ];
+          plugin = [
+            "/home/shorty/Development/opencode-socket-plugin"
+          ];
         };
+      };
+      scheduledJobs = mkOption {
+        type = types.listOf (
+          types.submodule {
+            options = {
+              skill = mkOption { type = types.str; };
+              schedule = mkOption {
+                type = types.str;
+                default = "*-*-01 12:00";
+              };
+              model = mkOption {
+                type = types.str;
+                default = "openrouter/z-ai/glm-5.3-flash";
+              };
+            };
+          }
+        );
+        default = [
+          {
+            skill = "research-prompt-skills";
+            schedule = "*-*-01 12:00";
+          }
+        ];
       };
     };
   };
@@ -151,6 +218,10 @@ with lib;
       opencode = {
         format = "dotenv";
         sopsFile = "${self}/hosts/shared/secrets/opencode.env";
+      };
+      inceptron_api_key = {
+        format = "binary";
+        sopsFile = "${self}/hosts/shared/secrets/inceptron_api_key";
       };
       discord_token = {
         format = "binary";
@@ -212,7 +283,7 @@ with lib;
             type = "remote";
             url = "https://ai.todoist.net/mcp";
             headers = {
-              TODOIST_API_KEY = "{file:${config.sops.secrets.todoist_api_key.path}}";
+              Authorization = "Bearer {file:${config.sops.secrets.todoist_api_key.path}}";
             };
           };
         };
@@ -223,5 +294,7 @@ with lib;
         export $(cat ${config.sops.secrets.opencode.path})
       '');
     };
+
+    systemd.user = mkMerge (map mkScheduledJob cfg.scheduledJobs);
   };
 }

@@ -79,6 +79,77 @@ with lib;
             showLineNumber = true;
             showUnsupportedFiles = true;
           };
+          corePlugins = [
+            "backlink"
+            "bases"
+            "bookmarks"
+            "command-palette"
+            {
+              name = "daily-notes";
+              settings = {
+                format = "YYYY-MM-DD";
+                folder = "Inbox/";
+                template = "Templates/Journal";
+              };
+            }
+            "file-recovery"
+            "file-explorer"
+            "graph"
+            "note-composer"
+            "outgoing-link"
+            "outline"
+            {
+              name = "switcher";
+              settings = {
+                showExistingOnly = false;
+                showAttachments = true;
+                showAllFileTypes = false;
+              };
+            }
+            "global-search"
+            "slash-command"
+            "slides"
+            "tag-pane"
+            {
+              name = "templates";
+              settings = {
+                folder = "Templates";
+                dateFormat = "YYYY-MM-DD";
+                timeFormat = "HH:mm";
+              };
+            }
+            "editor-status"
+            "word-count"
+            "workspaces"
+            {
+              name = "zk-prefixer";
+              settings = {
+                folder = "Inbox/";
+                template = ""; # NOTE: depends on the type of note so left empty
+                format = "YYYY-MM-DD HHmm";
+              };
+            }
+          ];
+          hotkeys = {
+            "insert-template" = [
+              {
+                modifiers = [ "CTRL" ];
+                key = "T";
+              }
+            ];
+            "switcher:open" = [
+              {
+                modifiers = [ "CTRL" ];
+                key = "K";
+              }
+            ];
+            "zk-prefixer" = [
+              {
+                modifiers = [ "CTRL" ];
+                key = "N";
+              }
+            ];
+          };
         };
       };
     };
