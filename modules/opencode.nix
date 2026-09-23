@@ -7,6 +7,42 @@
 }:
 let
   cfg = config.home.opencode;
+  mkScheduledJob =
+    {
+      skill,
+      schedule,
+      model,
+    }:
+    {
+      services."opencode-${skill}" = {
+        Unit = {
+          Description = "opencode scheduled job: ${skill}";
+          StartLimitIntervalSec = "60min";
+          StartLimitBurst = 3;
+        };
+        Service = {
+          Type = "oneshot";
+          Environment = [ "DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus" ];
+          EnvironmentFile = config.sops.secrets.opencode.path;
+          ExecStart = ''
+            ${lib.getExe config.programs.opencode.package} run \
+            --model ${model} "Execute the attached skill instructions fully." \
+            --file ${self}/.opencode/skills/${skill}/SKILL.md
+          '';
+          Restart = "on-failure";
+          RestartSec = "5min";
+          WorkingDirectory = "${config.home.homeDirectory}/Documents/Obsidian/AI";
+        };
+      };
+      timers."opencode-${skill}" = {
+        Unit.Description = "opencode scheduler timer: ${skill}";
+        Timer = {
+          OnCalendar = schedule;
+          Persistent = true;
+        };
+        Install.WantedBy = [ "timers.target" ];
+      };
+    };
 in
 with lib;
 {
@@ -151,6 +187,29 @@ with lib;
           ];
         };
       };
+      scheduledJobs = mkOption {
+        type = types.listOf (
+          types.submodule {
+            options = {
+              skill = mkOption { type = types.str; };
+              schedule = mkOption {
+                type = types.str;
+                default = "*-*-01 12:00";
+              };
+              model = mkOption {
+                type = types.str;
+                default = "openrouter/z-ai/glm-5.3-flash";
+              };
+            };
+          }
+        );
+        default = [
+          {
+            skill = "research-prompt-skills";
+            schedule = "*-*-01 12:00";
+          }
+        ];
+      };
     };
   };
 
@@ -235,5 +294,7 @@ with lib;
         export $(cat ${config.sops.secrets.opencode.path})
       '');
     };
+
+    systemd.user = mkMerge (map mkScheduledJob cfg.scheduledJobs);
   };
 }

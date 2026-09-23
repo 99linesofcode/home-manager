@@ -167,19 +167,44 @@ EOF
 
 Keep `dependencies` and `github_actions` (added by Dependabot/Actions).
 
-Then set the Actions workflow permissions so the automatic-updates workflow can
-approve and merge Dependabot PRs:
+Then apply the four repo settings the automatic-updates workflow depends on —
+auto-merge, Actions policy, fork-PR approval, and workflow permissions. Each
+lives on its own endpoint; the parameters are not interchangeable (see the
+endpoint warning below):
 
 ```bash
-gh api -X PUT repos/99linesofcode/<name>/actions/permissions \
-  -f enabled=true \
-  -f default_workflow_permissions=write \
-  -f can_approve_pull_request_reviews=true
+REPO=<name>
+
+# Allow auto-merge — the workflow merges Dependabot PRs with `gh pr merge --auto`
+gh api -X PATCH repos/99linesofcode/$REPO -F allow_auto_merge=true
+
+# Allow all actions and reusable workflows
+gh api -X PUT repos/99linesofcode/$REPO/actions/permissions \
+  -F enabled=true -F allowed_actions=all
+
+# Require approval for all external contributors (fork PR workflows)
+gh api -X PUT repos/99linesofcode/$REPO/actions/permissions/fork-pr-contributor-approval \
+  -F approval_policy=all_external_contributors
+
+# GITHUB_TOKEN: read/write + may approve PRs (the workflow runs `gh pr review --approve`)
+gh api -X PUT repos/99linesofcode/$REPO/actions/permissions/workflow \
+  -F default_workflow_permissions=write -F can_approve_pull_request_reviews=true
 ```
 
-- `default_workflow_permissions=write` — read/write for the `GITHUB_TOKEN`.
-- `can_approve_pull_request_reviews=true` — lets the token approve PRs (the
-  automatic-updates workflow runs `gh pr review --approve`).
+- `allow_auto_merge=true` — without it `gh pr merge --auto` fails with
+  "Auto merge is not allowed for this repository".
+- `allowed_actions=all` — "Allow all actions and reusable workflows".
+- `approval_policy=all_external_contributors` — "Require approval for all
+  external contributors". Private repos reject this endpoint with a 422 (the
+  setting does not exist there) — skip it for private repos.
+- `default_workflow_permissions=write` + `can_approve_pull_request_reviews=true`
+  — read/write for the `GITHUB_TOKEN` and permission to approve PRs.
+
+**Endpoint warning.** The workflow-permission parameters only exist on
+`/actions/permissions/workflow`. Passing them to `/actions/permissions`
+silently drops them (the API ignores unknown parameters), leaving the token
+read-only and unable to approve — which surfaces later as "GitHub Actions is
+not permitted to approve pull requests" in the automatic-updates workflow.
 
 **Permissions principle.** The caller (thin wrapper) declares the `GITHUB_TOKEN`
 ceiling; called (reusable) workflows inherit it and can only downgrade, never
@@ -187,6 +212,32 @@ elevate. So thin-wrapper workflows declare the permissions they need
 (`automatic-updates` → `pull-requests: write, contents: write`; `changelog` →
 `contents: write`), and shared reusable workflows declare nothing unless they
 downgrade.
+
+**Repository secrets.** Every repo gets the two fleet-standard secrets before
+its first workflow run:
+
+| Secret | Why |
+|---|---|
+| `GH_PAT` | Shared GitHub personal access token. The automatic-updates agent posts its briefing comments with it — `GITHUB_TOKEN`-created events never trigger workflows, so anything that must kick off another workflow needs a PAT. |
+| `OPENROUTER_API_KEY` | OpenRouter API key. Model access for the opencode agent runner (`opencode-agent.yaml` → shared `opencode.yaml`). |
+
+**Secret naming convention.** `{PROVIDER}_{QUALIFIER}_{TYPE}`:
+
+- Prefix with the provider or domain the credential authenticates against:
+  `SSH_`, `GH_`, `OPENROUTER_`.
+- Suffix with what the credential is: `PAT`, `API_KEY`, `PRIVATE_KEY`,
+  `PASSWORD`, `TOKEN`.
+- Insert a middle qualifier only when the provider alone is ambiguous about
+  which credential of that type it is (a future `GH_DEPLOY_PAT` next to
+  `GH_PAT`).
+- Never name a credential after its consumer. `OPENCODE_PAT` was wrong:
+  opencode is merely the current user of a general Actions PAT — consumers
+  change, the credential's identity does not. Derive the name from what the
+  key IS; when unsure, research the provider's own terminology (GitHub calls
+  it a personal access token, OpenRouter an API key) and use their words.
+- Platform constraint: GitHub Actions rejects secret names starting with
+  `GITHUB_` (HTTP 422), so GitHub-side credentials use the `GH_` abbreviation
+  as the provider prefix.
 
 ## Step 5: Optionally create a Shape Up project
 
