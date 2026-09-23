@@ -80,7 +80,17 @@ Before any git work in a repo, determine the methodology:
 
 1. Push the branch.
 2. Open the PR (MCP or `gh pr create`) with a Conventional-Commits-style
-   title and a body that says what and why.
+   title and a body in the standard four-section shape:
+
+   - **What** — the user-visible change, stated as landed.
+   - **Why** — the problem that motivated it (the pitch's problem, read
+     backwards).
+   - **Behavior** — the mechanics: knobs, edge cases, failure modes, in
+     behavior-first vocabulary (the same language the tests use).
+   - **Done when** — the verifiable conditions for calling the work
+     complete (Shape Up's "how will we know it's done"), including the
+     check evidence: suite, typecheck, lint.
+
 3. Reference any related issue (`Fixes #N` to auto-close).
 4. Request review if the repo expects it; run CI.
 5. Merge when green + approved (or per repo rules).
