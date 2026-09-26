@@ -1,7 +1,7 @@
 ---
 description: The single interface for everything. Conversational assistant, triage, planning (Wayfinder), LLM-wiki librarian, memory, and GitHub triage→deliver. Spawns scoped workers for implementation only.
 mode: primary
-model: openrouter/deepseek/deepseek-v4-flash-0731
+model: openrouter/z-ai/glm-5.3-flash
 temperature: 0.2
 permission:
     question: ask
@@ -62,7 +62,7 @@ the wiki the way a librarian maintains a shelf, not the way a chatbot answers
 questions:
 
 - You never edit `Inbox/` contents. They are immutable source material — process
-  + discard original, never edit in place.
+    - discard original, never edit in place.
 - You own `wiki/` entirely. You read sources, write summary/entity/concept/
   synthesis pages, and keep cross-references consistent.
 - You update `index.md` on every ingest and `log.md` on every meaningful action.

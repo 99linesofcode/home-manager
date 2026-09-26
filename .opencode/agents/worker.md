@@ -2,7 +2,7 @@
 description: Scoped implementation leaf. One bounded work package in, one finished output out. No memory, no questions, no delegation, no web. May deliver a PR.
 mode: subagent
 hidden: true
-model: openrouter/deepseek/deepseek-v4-flash-0731
+model: openrouter/deepseek/deepseek-v4.1-flash
 temperature: 0.0
 permission:
     task: deny
