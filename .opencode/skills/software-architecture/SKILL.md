@@ -1,6 +1,6 @@
 ---
 name: software-architecture
-description: The user's software architecture contract — hexagonal-flavored layering for any Object Oriented language, driven by the lean guardrail (build lean, Rule of Three, concepts inform not dictate). Covers ports & adapters, the UI/core/infrastructure split, action objects as the use-case seam (actions carry the logic), where logic lives (actions, domain services, pure calculations), modular monolith, and SOLID/IoC. Language-agnostic with pseudocode; the Laravel and Filament expressions are separate skills. Use when designing, building, extending, or reviewing the architecture of any OO codebase, or when deciding how to structure a module, layer, or use case.
+description: The user's software architecture contract — hexagonal-flavored layering for any Object Oriented language, driven by the lean guardrail (build lean, Rule of Three, concepts inform not dictate). Covers ports & adapters, canonical DTOs (the core owns its data shapes; one DTO per domain concept across providers), the UI/core/infrastructure split, action objects as the use-case seam (actions carry the logic), where logic lives (actions, domain services, pure calculations), modular monolith, and SOLID/IoC. Language-agnostic with pseudocode; the Laravel and Filament expressions are separate skills. Use when designing, building, extending, or reviewing the architecture of any OO codebase, when deciding how to structure a module, layer, or use case, or when defining the data shapes shared across adapters or providers.
 ---
 
 # software-architecture
@@ -73,7 +73,7 @@ Every piece of logic has exactly one right home:
 | Logic spanning multiple entities, owned by none | **Domain service** (+ value objects) | pure, stateless, no I/O; consulted by a use case, never the reverse |
 | A trivial calculation (VAT, hashing, diffing) | **Pure class/function beside the actions** | no DI, no I/O; a total function |
 | Delivery mechanics (timers, event subscription, queues, debounce) | **Driving-side infrastructure** | turns ambient triggers into action invocations; zero decisions |
-| Raw external data ↔ domain | **Adapters, at the boundary** | an anti-corruption layer: map raw responses onto DTOs; the core never sees provider shapes |
+| Raw external data ↔ domain | **Adapters, at the boundary** | an anti-corruption layer: map raw responses onto the domain's canonical DTOs; the core never sees provider shapes — including DTOs that mimic a provider's structure (see "DTOs belong to the core") |
 | State-specific behavior | **Rich enums / state pattern** | when states multiply; not before |
 | Queries | **Query builders / read models** | models stay dumb data + identity |
 
@@ -239,6 +239,26 @@ designed for the core's needs — never mimicking a tool's API) implemented by
 - **Driven adapters** are *told* by the core (database, external APIs). The
   port belongs inside the application; the implementation belongs outside,
   wrapping the external tool.
+
+**DTOs belong to the core, not the provider.** A port's DTOs are designed
+for the core's needs exactly as the port itself is — never mimicking a
+tool's API. "The core never sees provider shapes" includes shapes wearing
+a DTO costume: a `TaskData` whose fields mirror the GitHub issue is a
+provider shape. **One canonical DTO per domain concept:** when a second
+adapter serves the same concept (a second provider, a second storage, a
+second UI), both map onto the SAME domain DTO — parallel per-provider DTO
+vocabularies are the anti-corruption layer failing silently. The second
+provider is the Rule-of-Three trigger to unify the shapes.
+
+**The canonical test:** when two representations of the same concept must
+be compared, merged, or synced, the diff logic operates on canonical
+fields only. If it references provider-specific fields, the canonical
+model is missing. Accumulating symptoms: per-pair diff/verdict machinery,
+duplicated hash/translation helpers, provider-shaped snapshot fragments.
+Worked example (OPM, 2026-09-25): GitHub and Todoist each got their own
+task DTO vocabulary — five snapshot-hash copies, two verdict systems,
+and a done/open coercion bug followed; the canonical `TaskData` with one
+mapper per side dissolved all of them.
 
 Dependencies point **inward** — the **dependency rule**: the domain layer
 knows nothing about the application layer; the core knows nothing about
