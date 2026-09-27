@@ -21,6 +21,7 @@ Wayfinder's persistent artifacts are **OKF v0.2 concepts**:
 - `planning/<slug>/map.md`     → `type: Decision Map`
 - `planning/<slug>/interviews.md` → `type: Interview Log`
 - `planning/<slug>/research/*.md` → `type: Research` (or `Attested Computation`)
+- `planning/<slug>/signoff.md` → `type: Sign-off Doc`
 - `planning/<slug>/spec.md`    → `type: Spec`
 - `specs/<slug>.md` (promoted) → `type: Spec`, `status: stable`, `verified`
 - `logs/<slug>/<ticket-id>.md` → `type: Session Log`
@@ -67,23 +68,40 @@ any active planning effort (`type: Decision Map`).
    Q&A to `planning/<slug>/interviews.md`. If inbound is a GitHub Issue, read it
    **scoped** (that issue + bounded comments + relevant files); do not pull
    unrelated repo state. Stop when the shape is clear. Do not over-interview.
+   **DDD discovery** — when the seed carries domain material (storm output, a
+   process description, a client pitch), run `ddd-event-storming-to-domain-model`
+   inside the interview to structure it (contexts, aggregates, hotspots);
+   hotspots feed `ddd-discovery-questions`, whose client-facing phrasings are
+   logged as `real-world` decision tickets — the session parks on async answers
+   like any session boundary. Depth is emergent: a small domain converges in
+   one or two proposals.
 2. **Draft map** — write `map.md` with all known/suspected tickets, `blocked-by`,
    and `fogged` status.
 3. **Resolve** — dependency order; graph must be a DAG. `discussion`/`research`
    in-session; `prototype` → worker spike; `real-world` → ask the user.
+   Once domain tickets are resolved and the model is stable, run
+   `ddd-slice-planning`: the slice plan becomes the build order for
+   implementation tickets, and the sign-off doc (`planning/<slug>/signoff.md`,
+   presented to the client) gates the build — implementation scheduling does
+   not begin before it exists.
 4. **Dispatch** — independent tickets may run workers in parallel. Each package:
    spec excerpt + bounded task + file list. No inter-agent comm; state flows via
    map + files. Worker output → `logs/<slug>/<ticket-id>.md`.
    **Skill gate (mandatory):** before writing a package, name the skill(s)
    that govern the task type (new repo → `new-project`; git delivery →
    `git-workflow`; tests → `software-testing`; architecture →
-   `software-architecture`). Either compose the package from the loaded
-   skill or instruct the worker to load and follow it. A package written
-   from memory for a skill-governed operation is a defect — that is how
-   steps get dropped (2026-09-18: a scaffold dispatched without
-   `new-project` shipped the wrong package manager and no devshell).
+   `software-architecture`). For a slice's implementation package,
+   `ddd-implementation-elicitation` runs first (per-slice sparring); its
+   recap is the working spec the package is composed from. Either compose
+   the package from the loaded skill or instruct the worker to load and
+   follow it. A package written from memory for a skill-governed operation
+   is a defect — that is how steps get dropped (2026-09-18: a scaffold
+   dispatched without `new-project` shipped the wrong package manager and
+   no devshell).
 5. **Spec** — when fully resolved, synthesize `planning/<slug>/spec.md` (dense,
-   implementation-ready; `type: Spec`, `status: draft`). Present via `question`
+   implementation-ready; `type: Spec`, `status: draft`). Architecture and
+   Data model draw from the stage-1 domain model; the sign-off doc is the
+   client-level contract the spec implements. Present via `question`
    for approval.
 6. **Promote + ticket-out** — on approval set `status: stable` and add
    `verified: { by: human:<id>, at: <ISO 8601> }`, move spec to `specs/<slug>.md`.
@@ -113,6 +131,7 @@ any active planning effort (`type: Decision Map`).
 - planning/<slug>/map.md
 - planning/<slug>/interviews.md
 - planning/<slug>/research/*.md
+- planning/<slug>/signoff.md
 - planning/<slug>/spec.md
 - specs/<slug>.md
 - logs/<slug>/<ticket-id>.md
@@ -132,8 +151,12 @@ task completes:
    (move to `.trash`, or archive if worth keeping).
 3. Do not leave completed working files lying around in `planning/`, `specs/`,
    or `logs/`.
+
 ## Related
 
 - **Loads:** `git-workflow` (delivery mechanics at ticket-out).
 - **References:** `github` (issues/PRs as destinations), `shape-up`
-  (the pitch elements behind the ticket template).
+  (the pitch elements behind the ticket template), and the DDD discovery
+  pipeline — the domain track invoked at the phases above:
+  `ddd-event-storming-to-domain-model`, `ddd-discovery-questions`,
+  `ddd-slice-planning`, `ddd-implementation-elicitation`.

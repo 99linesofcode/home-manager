@@ -96,6 +96,31 @@ Before any git work in a repo, determine the methodology:
 5. Merge when green + approved (or per repo rules).
 6. Delete the branch locally + remotely.
 
+## Issue lifecycle (close what you open)
+
+Every issue created for work — ticket, slice tracker, dogfood/test issue —
+must reach a terminal state. An open issue is an open promise; delivered work
+with an open issue is a process failure (2026-09-26: the OPM sync-restructure
+tickets #52–#59 and slice trackers #40–#42 shipped while staying open).
+
+1. **The PR that lands the work closes its issues.** Put `Closes #N` (or
+   `Fixes #N`) in the PR body for every issue the PR fully delivers — GitHub
+   auto-closes them at merge. `Refs #N` does NOT close anything; use it only
+   for partial work and say what remains.
+2. **Trackers close manually at the merge that ships them.** A slice/epic
+   issue spans multiple PRs, so no single PR closes it: at the merge (or
+   release) that completes it, close it with a one-line comment pointing at
+   the PR or tag.
+3. **Dogfood/test issues close when verified.** Note the evidence in the
+   closing comment, then close — the issue has served its purpose.
+4. **The merge sweep.** After every merge, list the repo's open issues
+   (`gh issue list --state open`) and verify none of them is delivered work.
+   This is the cleanup step that catches what rules 1–3 missed; it takes one
+   minute and it is part of merging, not an optional extra.
+5. **Blocked/deferred issues stay open only with a reason.** If work is
+   deferred, say so on the issue (comment + label) so an open issue always
+   means "someone intends to do this".
+
 ## Collapsing commits (fixup + squash)
 
 The user works with many small commits — including `fixup!` commits during

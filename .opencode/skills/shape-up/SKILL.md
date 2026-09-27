@@ -39,6 +39,13 @@ it's done.
 - **Rabbit holes** — the traps to avoid; shaping names them so the builder
   doesn't fall in.
 
+The domain engine for shaping is the DDD discovery pipeline:
+`ddd-event-storming-to-domain-model` structures the idea's domain,
+`ddd-discovery-questions` closes what the room didn't, and
+`ddd-slice-planning` converts the shaped pitch into a concrete first slice.
+Shape Up frames the bet (problem, appetite, rabbit holes); the pipeline gives
+it domain shape.
+
 ### Betting
 
 A **bet** is a commitment to spend a fixed appetite on a shaped pitch. Unlike a
@@ -84,4 +91,6 @@ The GitHub mechanics that support this:
 
 - **Loads:** (none — loaded on demand)
 - **References:** `new-project` (the labels + project template mechanics),
-  `github` (the platform interface), `wayfinder` (planning complex work).
+  `github` (the platform interface), `wayfinder` (planning complex work),
+  `ddd-event-storming-to-domain-model`, `ddd-discovery-questions`,
+  `ddd-slice-planning` (the DDD pipeline — shaping's domain engine).

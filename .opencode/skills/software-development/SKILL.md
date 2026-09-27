@@ -34,6 +34,7 @@ they are contracts, not suggestions.**
   | Filament UI work | `filament` (+ `laravel`) |
   | Review a change end-to-end | `code-review` (+ that change's governing skills) |
   | Security review / red-team | `code-review` (Loads `security-review`, `threat-modeling`, `edge-case-analysis`) |
+  | Shape or plan dev/architecture work (domain model, discovery questions, slice plan, pre-build sparring) | the matching `ddd-*` stage (+ `wayfinder` when multi-session) |
   | Plan or dispatch multi-session work | `wayfinder` |
 
   Routing rules: the matrix routes the task; each skill's `description`
