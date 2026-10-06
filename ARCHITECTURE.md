@@ -83,7 +83,7 @@ imperative glue — the module system is the composition engine.
 | `overlays/default.nix` | Exposes `nix-unstable` and `hm-unstable` package sets | nixpkgs overlay | build time |
 | `modules/sops.nix` + `.sops.yaml` | Encrypted secret materialization | sops-nix + age | user env |
 | `modules/opencode.nix` | Deploys agents/skills and schedules opencode jobs | opencode + systemd --user timers | user env |
-| `modules/obsidian.nix` | Obsidian + the vault: CLI, rclone bisync, the seekstone MCP | Obsidian, rclone, MCP | user env |
+| `modules/obsidian.nix` | The vault application: CLI, rclone bisync, the seekstone MCP | vault app, rclone, MCP | user env |
 
 ### Ports & adapters
 
@@ -105,9 +105,9 @@ the module system, not by a component calling another component directly.
   into place.
 - **`flake.lock`** — pinned input revisions (nixpkgs, home-manager, sops-nix,
   stylix, nixvim, …).
-- **User state** — XDG dirs (`~/.config`, `~/.local/state`, …) and the
-  Obsidian vault at `~/Documents/Obsidian` (kept in sync with Google Drive by
-  `rclone bisync`). Not a database.
+- **User state** — XDG dirs (`~/.config`, `~/.local/state`, …) and the vault
+  directory (kept in sync with Google Drive by `rclone bisync`). Not a
+  database.
 
 ## 5. External Integrations / APIs
 
@@ -116,8 +116,8 @@ the module system, not by a component calling another component directly.
   nixos-vscode-server). Method: Nix flake fetchers; pinned in `flake.lock`.
 - **sops / age** — secret decryption. Method: sops-nix; age private key at
   `$XDG_CONFIG_HOME/sops/age/keys.txt`.
-- **Google Drive** — the Obsidian vault mirror. Method: `rclone bisync`
-  against `gdrive:Obsidian/`, run by a `systemd --user` timer every 5
+- **Google Drive** — the vault mirror. Method: `rclone bisync` against the
+  `gdrive` remote's vault folder, run by a `systemd --user` timer every 5
   minutes (`modules/obsidian.nix`).
 - **MCP servers** — `obsidian` (seekstone), `beeper`, `gmail`,
   `google-drive`, `google-calendar`, `discord`, `shopify-dev`, `todoist`.
@@ -153,8 +153,8 @@ the module system, not by a component calling another component directly.
   `bash` commands (privilege escalation, disk/partition destruction,
   pipe-to-shell, nix store/system-config destruction, git history rewrite and
   force-push/force-delete, recursive `rm` on system roots). `todowrite` is
-  denied because todos are managed by the wayfinder skill. The allow-list is
-  explicit for the safe verbs.
+  denied because todo management is handled outside this agent. The allow-list
+  is explicit for the safe verbs.
 - **Package trust**: `allowUnfree = true`; extra substituters are pinned by
   public key in `flake.nix`.
 - **Integrity**: `flake.lock` pins every input; `flake.lock` is intentionally
