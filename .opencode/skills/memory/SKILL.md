@@ -50,7 +50,8 @@ is any of, whichever comes first:
 
 1. A unit of work reaches "done" (a triage class-2/3 task completes).
 2. An open loop is closed or a decision is recorded.
-3. A Wayfinder phase transition occurs (interview → map → resolve → spec → promote).
+3. A spec-driven delivery phase transition occurs (seed → discovery → spec →
+   architecture → slice).
 4. Fallback: 5+ episodic events written since the last milestone, or ~30 min of
    active work.
 

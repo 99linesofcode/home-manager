@@ -34,8 +34,13 @@ they are contracts, not suggestions.**
   | Filament UI work | `filament` (+ `laravel`) |
   | Review a change end-to-end | `code-review` (+ that change's governing skills) |
   | Security review / red-team | `code-review` (Loads `security-review`, `threat-modeling`, `edge-case-analysis`) |
-  | Shape or plan dev/architecture work (domain model, discovery questions, slice plan, pre-build sparring) | the matching `ddd-*` stage (+ `wayfinder` when multi-session) |
-  | Plan or dispatch multi-session work | `wayfinder` |
+  | Start a new project / seed the foundation | `project-seed` |
+  | Discover what we're building (vague brief, raw material) | `discovery-interview` |
+  | Write or update a feature spec | `feature-spec` |
+  | Choose a stack / build the walking skeleton | `architecture-and-skeleton` |
+  | Deliver a slice | `slice-delivery` |
+  | Handle changed intent or new ambiguity mid-build | `spec-change` |
+  | Dispatch a worker | `agent-delegation` |
 
   Routing rules: the matrix routes the task; each skill's `description`
   carries the trigger keywords for every task it governs (the discovery
@@ -116,6 +121,18 @@ describe behavior. On every feature or refactor:
 - Inherited boilerplate (e.g. a skeleton README) counts as stale the moment
   the project diverges from it — rewrite it for the project, don't patch it.
 
+## The environment (devshells)
+
+Repos carry a Nix devshell (flake + `.envrc`) — the environment the
+project's gates are defined against. Run project commands through it:
+
+- `direnv exec . <cmd>` from the repo root (works without a hooked shell).
+- Fall back to `nix develop -c <cmd>` or `nix run nixpkgs#<tool> -- <args>`
+  when direnv isn't available.
+
+Never bypass the devshell with ad-hoc global binaries; a gate run outside
+the devshell proves nothing about the environment the change ships in.
+
 ## The definition of done
 
 A change is done when all of these hold:
@@ -133,5 +150,5 @@ A change is done when all of these hold:
 
 - **Loads:** (none — this is the gate; it routes via the matrix above)
 - **References:** `software-architecture`, `software-testing`,
-  `git-workflow`, `self-documenting-code`, `new-project`, `wayfinder`,
+  `git-workflow`, `self-documenting-code`, `new-project`,
   `code-review` (the cluster the matrix routes to).

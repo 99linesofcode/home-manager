@@ -238,6 +238,7 @@ with lib;
         enable = true;
         enableMcpIntegration = true;
         agents = ../.opencode/agents;
+        context = ../.opencode/AGENTS.md;
         settings = cfg.settings;
         skills = ../.opencode/skills;
       };

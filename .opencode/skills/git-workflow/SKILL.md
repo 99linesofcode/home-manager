@@ -93,8 +93,14 @@ Before any git work in a repo, determine the methodology:
 
 3. Reference any related issue (`Fixes #N` to auto-close).
 4. Request review if the repo expects it; run CI.
-5. Merge when green + approved (or per repo rules).
-6. Delete the branch locally + remotely.
+5. **Before merging: collapse the branch's commits by feature** (the end
+   result, not the journey — see Collapsing commits), reword to
+   final-state messages, and update the PR description to match the merged
+   reality, verified against the code.
+6. Merge when green + approved (or per repo rules).
+7. Delete the branch locally + remotely. Note: deleting a base branch
+   auto-closes PRs targeting it — merge stacked PRs in order and retarget
+   before deleting.
 
 ## Issue lifecycle (close what you open)
 
@@ -125,7 +131,14 @@ tickets #52–#59 and slice trackers #40–#42 shipped while staying open).
 
 The user works with many small commits — including `fixup!` commits during
 development — and collapses them into a clean history before push. History is
-rewritten **only before push** (never after).
+rewritten **only before push** (never after) — with one owner-sanctioned
+exception: **the collapse also happens before MERGE** (2026-10-06, the OPM
+identity-model merge). The commits a merge lands tell the end result, not
+the design journey — so at merge time the branch's history is collapsed by
+feature, reworded to final-state messages, and the PR description is
+updated to match the merged reality (verified against the code). On a
+pushed feature branch this is a `--force-with-lease` after the collapse,
+with the owner's explicit merge-time authorization.
 
 ### The workflow
 
@@ -261,8 +274,8 @@ Prefer the GitHub MCP for structured operations; use `gh` for anything the
 MCP doesn't cover or where a CLI is more natural.
 
 - **Issues:** read scoped (one issue + its bounded comments), create/update
-  with clear titles + bodies, triage with labels. Issues may seed Wayfinder
-  planning sessions.
+  with clear titles + bodies, triage with labels. Issues may seed discovery
+  (`discovery-interview`).
 - **PRs:** create, review (approve/request changes/comment), merge, update
   branch. Inspect status, diff, files, commits, check runs before acting.
 - **Releases:** list, create, get by tag. Tag + release notes from
@@ -410,7 +423,15 @@ git rebase skeleton/main
 git submodule add git@github.com:99linesofcode/devshell-php.git devshell
 ```
 
-Standalone, pinned. Update with `git submodule update --remote`.
+Standalone, pinned. `git submodule add` clones the submodule, so a fresh
+scaffold is initialized; a repo **adopted or cloned without
+`--recurse-submodules`** is not — run `git submodule update --init` and confirm
+`git submodule status` shows no leading `-` (a `-` means declared-but-empty;
+`.github` and `.github-php` were found that way on 2026-10-09). Update a pinned
+submodule with `git submodule update --remote`.
+
+Every devshell ships `actionlint` and `shellcheck`, so workflow YAML and the
+shell inside `run:` blocks lint locally.
 
 ### Wiring shared config files (remote + rebase)
 
@@ -473,15 +494,17 @@ one-time, not a recurring sync.
 4. Rename the namespace: `Lines\Skeleton\` → `Lines\<Module>\` in
    `composer.json` (see the `laravel` skill).
 
-## Wayfinder integration
+## Planning integration
 
-Wayfinder is the planning model; this skill is the delivery mechanics.
+The spec-driven delivery method is the planning model; this skill is the
+delivery mechanics.
 
-- Wayfinder's map lives in `planning/<slug>/map.md`; GitHub is a destination.
-- When Wayfinder resolves a ticket into an Issue/PR, use this skill's
-  procedures to execute the delivery.
-- Mid-flight decision tickets never mirror into GitHub — only resolved
-  deliverables do.
+- The scratchpad lives in `planning/<slug>/` in the vault; GitHub is a
+  destination.
+- When a slice materializes as an Issue/PR, use this skill's procedures to
+  execute the delivery.
+- Mid-flight thinking never mirrors into GitHub — only materialized slices and
+  resolved deliverables do.
 
 ## Edge cases & gotchas
 

@@ -244,6 +244,15 @@ library adds two conventions on top:
    profiles are deferred until the library's scale demands them (see
    [[agent-skill-retrieval-research]]).
 
+## Roles and templates (not skills)
+
+Reusable role briefs and artifact templates are **not** skills — they need no
+discovery trigger, and workers cannot load skills anyway. They live inside a
+skill's `references/` or `assets/` (e.g.
+`agent-delegation/references/roles/<role>.md`,
+`feature-spec/assets/spec.template.md`) and are passed to a worker by path, or
+pasted into a package. The skill that owns the workflow owns its templates.
+
 ## Conditioning-aware authoring (how the model reads skills)
 
 Skills steer the model by conditioning its next-token distribution — they

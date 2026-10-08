@@ -173,6 +173,18 @@ each component:
 group as the need arises — *"it is overzealous to create a folder to put
 just one class in it"* (Graça). A role folder appears when a **second class
 of that role** exists; the taxonomy is a menu, not an upfront scaffold.
+
+**Language conventions win for naming and folder shape.** Folder structure
+and file naming follow whatever is conventional for the language — PSR-4 in
+PHP, lowercase module folders with PascalCase class files and camelCase
+function files in TypeScript — as long as the module boundaries stay
+expressible; when this skill's structure and the language's convention
+conflict, the language's convention wins. The discipline that transfers
+across languages: the path locates the module, the name locates the role,
+the entry point sits at the conventional root, and the module dependency
+matrix is enforced mechanically (a boundary gate) — a naming standard
+without a gate erodes one dispatch at a time. Language-specific expressions
+live in the language's skeleton or expression skill, never here.
 When one business concept comes to dominate a role folder, split by concept
 *inside* the role folder — or, if the concept has outgrown the module, that
 is the signal to extract it into its own module. At the leaf, grouping by
@@ -279,6 +291,35 @@ dependencies between layers, build fails on violation. This is what keeps
 the structure from **architectural drift** — the structure decays one
 import at a time unless a gate rejects it.
 
+### Provider neutrality (the vocabulary rule, mechanically enforced)
+
+The dependency direction can be clean while the vocabulary still leaks: a
+core whose type names, identifiers, or comments say "GitHub" or "Todoist"
+depends on concretions at the type level, and adding a second provider
+becomes a core edit (OCP broken) instead of a new adapter. The rule:
+
+- Provider names appear ONLY in: the provider's own module (adapter,
+  transport DTOs, mapper, provider-specific actions — co-located with the
+  port they serve), the composition root where adapters are wired, and
+  port-id VALUES (`'github'` as a registry key is a value, not a type).
+- Everywhere else — shared kernels, cross-cutting modules, neutral actions,
+  comments — the vocabulary is provider-neutral: `remote`, `mirror`,
+  `task manager`, `code host`. A WHY comment explaining a provider quirk
+  belongs in the provider module that handles it.
+- If shared code seems to need provider knowledge, the design is wrong:
+  push the knowledge behind the port (a neutral field, a port method), or
+  move the code into the provider module.
+
+**Enforcement is mechanical, not aspirational:** a boundary gate (a grep
+script or ESLint restriction, wired into the build) fails when a provider
+name appears outside its allowed zones. Conventions without a gate erode one
+worker dispatch at a time — prose in a brief is not a boundary. Reviewers
+and workers run the gate; a violation is a blocking finding. Worked example
+(OPM, 2026-10-06): the layering audit passed — dependency direction was
+clean — while `GithubTaskData`/`TodoistTaskData` sat in the shared kernel and
+core comments explained GitHub quirks. Clean direction, concreted vocabulary;
+the gate is what would have caught it on day one.
+
 ## Action objects (the use-case seam)
 
 Each meaningful business operation is its own class — a **transaction
@@ -370,6 +411,17 @@ The user wants a common conception of good software architecture — a
 ubiquitous language for pair programming. In exchange, the agent is expected
 to **push back on architecture when the context warrants it**, not just apply
 conventions. When a convention would hurt in a given context, say so.
+
+## The ARCHITECTURE.md contract
+
+Every repository carries one `ARCHITECTURE.md` at the root — the merged
+developer manual: where a new agent or developer finds their way around the
+codebase and learns the conventions and best practices that shape it. It holds
+the module map and boundaries, the flows as mermaid diagrams, the invariants,
+and the enforced conventions. The stub is seeded by `project-seed` and filled
+in by `architecture-and-skeleton` from the actual code; the same change that
+alters the architecture updates it. Reviewers treat an architecture change
+without the document update as blocking.
 
 ## Related
 

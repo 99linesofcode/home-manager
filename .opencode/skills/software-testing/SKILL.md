@@ -23,8 +23,9 @@ language-agnostic; Pest is the expression.
 ## Core principles
 
 1. **TDD is a hard requirement.** The order is always: **spec → tests → code**,
-   one use case at a time (one task at a time in Shape Up). Write the failing
-   test first (red), make it pass (green), then refactor. Never write the
+   one use case at a time. The spec is the feature spec — stable criterion IDs
+   and Given/When/Then scenarios (see `feature-spec`). Write the failing test
+   first (red), make it pass (green), then refactor. Never write the
    implementation before its test. This is not optional — it is how all
    software work is done.
 2. **BDD frames the test as a behavior scenario.** Every test reads as a
@@ -132,15 +133,17 @@ Filament page flows are tested with `livewire(...)`. Set the current panel in a
 (`fillForm` + `call('create')` + `assertHasNoFormErrors` + `assertRedirect`).
 Full example: `references/filament-page-tests.md`.
 
-## TDD loop (per use case / task)
+## TDD loop (per use case / slice)
 
-Work one use case at a time (one task at a time in Shape Up). The **spec is the
-slice or task definition** — the shaped work item that already states the
-behavior. For each:
+Work one use case at a time. The **spec is the feature spec** — the vault
+artifact with stable criterion IDs and Given/When/Then scenarios (see
+`feature-spec`). A slice cites the IDs it satisfies; the acceptance tests are
+the spec's executable expression. For each:
 
-1. **Spec** — the slice/task definition is the spec; it states the behavior in
-   one sentence (which becomes the `it('...')` description).
-2. **Write the failing test** that describes the behavior (red).
+1. **Spec** — the criterion (its ID) states the behavior; it becomes the
+   `it('...')` description.
+2. **Write the failing test** that describes the behavior (red) — and show it
+   failing for the right reason (missing behavior, not syntax).
 3. **Write the minimum code** to make it pass (green).
 4. **Refactor**, keeping the test green.
 5. Commit the code and its tests together (see `software-development`).

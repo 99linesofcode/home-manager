@@ -1,6 +1,6 @@
 ---
 name: github
-description: The user's GitHub platform interface — reading issues, joining discussions, sending updates, and creating pull requests linked to issues. The GitHub API/platform layer, distinct from git-workflow (local git mechanics). Optional: used by the orchestrator or a worker when work needs to flow through GitHub. Use when reading or triaging issues, participating in discussions, posting updates, or creating PRs that reference issues.
+description: The user's GitHub platform interface — reading issues, joining discussions, sending updates, creating pull requests linked to issues, and the milestone note. The GitHub API/platform layer, distinct from git-workflow (local git mechanics). Optional: used by the orchestrator or a worker when work needs to flow through GitHub. Use when reading or triaging issues, participating in discussions, posting updates, or creating PRs that reference issues.
 ---
 
 # github
@@ -12,7 +12,7 @@ layer — issues, discussions, PRs, and updates.
 
 This skill is **optional**: it's loaded when the orchestrator or a worker needs
 to interface with GitHub. It pairs with `git-workflow` for the local mechanics
-and with `wayfinder` for how resolved tickets become GitHub deliverables.
+and with `slice-delivery` for how a slice becomes an issue and a PR.
 
 ## When to use
 
@@ -28,7 +28,8 @@ and with `wayfinder` for how resolved tickets become GitHub deliverables.
 
 - Read an issue **scoped**: that issue + its bounded comments + the relevant
   files. Never pull unrelated repo state into context.
-- An issue may seed a Wayfinder planning session (see `wayfinder`).
+- An issue may seed a discovery session (`discovery-interview`) — it is a seed,
+  not a plan.
 - Triage with the canonical labels (`type: slice/pitch/task/bug/chore`).
 
 ### Join discussions
@@ -45,17 +46,26 @@ and with `wayfinder` for how resolved tickets become GitHub deliverables.
 
 ### Create pull requests (linked to issues)
 
-- Create the PR with a Conventional-Commits-style title and a body that says
-  what and why.
+- Create the PR with a Conventional-Commits-style title and a body in the
+  standard four-section shape (What / Why / Behavior / Done when). The
+  **Behavior** section restates the architectural constraints that bind the
+  slice.
 - Reference the issue it resolves (`Fixes #N` to auto-close).
 - Link the PR to the appropriate issue(s).
 - Return the PR URL when you create it.
 
+## Milestones (the roadmap)
+
+A roadmap takes shape as a **GitHub milestone**; a slice is an issue in it. OPM
+does not sync milestones yet, so creating and updating milestones is a **manual
+step** until it does. The vault scratchpad and the slice tasks remain the source
+of truth; the milestone mirrors them.
+
 ## Workflow
 
 1. **Read scoped** — the issue, its bounded comments, the relevant files.
-2. **Plan** — if the work is large, run it through `wayfinder`; the issue is a
-   seed, not a plan.
+2. **Plan** — if the work is large, run it through `discovery-interview`; the
+   issue is a seed, not a plan.
 3. **Execute** — do the work following `software-development` and
    `git-workflow` (branch, commit, squash).
 4. **Deliver** — push, open the PR, link it to the issue, post an update.
@@ -65,12 +75,13 @@ and with `wayfinder` for how resolved tickets become GitHub deliverables.
 
 - `git-workflow` — local git mechanics (branching, commits, squash, safety).
   Load it when executing the delivery.
-- `wayfinder` — the planning model; GitHub is a destination. Resolved tickets
-  emit to GitHub as issues/PRs; mid-flight decision tickets never mirror.
+- `slice-delivery` — a slice is a project task of type `slice`; when it
+  materializes it becomes a GitHub issue carrying its criterion IDs and the
+  architectural constraints that bind it.
 - `code-review` — the review contract applied to the PR before merge.
 
 ## Related
 
 - **Loads:** (none — optional, loaded on demand)
-- **References:** `git-workflow` (local mechanics), `wayfinder` (planning),
-  `code-review` (review contract).
+- **References:** `git-workflow` (local mechanics), `slice-delivery` (how work
+  becomes issues/PRs), `code-review` (review contract).

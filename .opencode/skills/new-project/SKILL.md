@@ -20,9 +20,15 @@ now**.
 
 Non-negotiables whatever the project type:
 
-- The **devshell submodule** is wired for every language project. Never
-  install language tooling ad-hoc on the host — NixOS rejects ad-hoc
-  dynamically-linked binaries; the devshell exists so you never fight that.
+- **Every repo gets its devshell submodule, initialized.** Generic and org
+  repos (`.github`, `.github-php`, `.github-js`) carry one too — not only
+  language projects. `git submodule add` clones it; a repo adopted or cloned
+  without `--recurse-submodules` needs `git submodule update --init` before
+  `direnv allow`. Verify with `git submodule status`: a leading `-` means
+  declared-but-empty — a devshell on paper, not wired (`.github` and
+  `.github-php` were found in exactly that state, 2026-10-09). Never install
+  language tooling ad-hoc on the host — NixOS rejects ad-hoc dynamically-linked
+  binaries; the devshell exists so you never fight that.
 - The **package manager follows the skeleton default** (pnpm for node),
   overridden only when the runtime itself is that tool (bun-runtime → bun).
 - Worker packages for scaffolds **instruct the worker to load and follow
@@ -299,5 +305,6 @@ skill (they're only relevant when scaffolding).
 - **Loads:** `git-workflow` (scaffolding mechanics), `software-architecture`
   (the architecture contract).
 - **References:** `laravel` (Laravel conventions), `shape-up` (labels + project
-  template), `github` (platform interface).
+  template), `github` (platform interface), `project-seed` (the spec-driven
+  foundation that orchestrates this skill).
 - Wiki: [[modular-monolith]], [[hexagonal-architecture]], [[action-objects]].
