@@ -197,6 +197,34 @@ with lib;
               '';
           };
         };
+        obsidian-force = {
+          Unit = {
+            Description = "rclone: forced bidirectional syncing of Obsidian.md (bypasses delete safety check)";
+            Documentation = "man:rclone(1)";
+            After = [ "network-online.target" ];
+            Wants = [ "network-online.target" ];
+          };
+          Service = {
+            Type = "oneshot";
+            Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
+            ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Documents/Obsidian";
+            ExecStart = # sh
+              ''
+                ${pkgs.rclone}/bin/rclone bisync gdrive:Obsidian/ "%h/Documents/Obsidian/" \
+                --compare size,modtime,checksum \
+                --config "%h/.config/rclone/rclone.conf" \
+                --conflict-resolve newer \
+                --create-empty-src-dirs \
+                --fix-case \
+                --max-lock 2m \
+                --recover \
+                --resilient \
+                --slow-hash-sync-only \
+                --force \
+                -v
+              '';
+          };
+        };
       };
     };
   };
