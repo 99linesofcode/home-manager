@@ -14,3 +14,4 @@ jobs:
     uses: 99linesofcode/.github/.github/workflows/automatic-updates.yaml@main
   agent:
     uses: 99linesofcode/.github/.github/workflows/update-agent.yaml@main
+    secrets: inherit
