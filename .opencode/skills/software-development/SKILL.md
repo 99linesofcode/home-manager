@@ -142,6 +142,8 @@ A change is done when all of these hold:
 - [ ] It's atomic — one concern (one use case), one change.
 - [ ] It's clean — no dead code, no dangling references; affected docs
       updated in the same change.
+- [ ] It's formatted — the formatter ran as part of the change, never
+      deferred to a later cleanup.
 - [ ] The diff contains only this change's concern.
 - [ ] It's committed with a clear Conventional Commit message; history is
       squashed by feature before push when it spanned multiple commits.
