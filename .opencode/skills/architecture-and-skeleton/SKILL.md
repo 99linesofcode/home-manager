@@ -8,6 +8,19 @@ description: Propose 2-3 architecture/stack options with trade-offs and a recomm
 Phase 4. Propose, decide, spike the risky parts, then prove the shape with a
 walking skeleton.
 
+## Related
+
+- **Loads:** `agent-delegation`.
+- **References:** `software-architecture`, `new-project`, `software-development`.
+
+## Files
+
+Before acting, read every `required` file below.
+
+| File | Load | Read when |
+|---|---|---|
+| `assets/adr.template.md` | required | when recording the architecture decision as an ADR |
+
 ## When to use
 
 - Choosing a stack or architecture for a project.
@@ -62,7 +75,3 @@ walking skeleton.
 - Let a spike's code graduate into the main tree.
 - Choose the architecture for the user.
 
-## Related
-
-- **Loads:** `agent-delegation`.
-- **References:** `software-architecture`, `new-project`, `software-development`.

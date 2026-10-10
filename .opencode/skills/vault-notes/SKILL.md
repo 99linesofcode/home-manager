@@ -20,6 +20,12 @@ is **not** a filing location for vault notes. The capture inbox is the
 **vault-root** `Inbox/` (`~/Documents/Obsidian/Inbox/`); agent-written notes
 for the human go there, never to `AI/Inbox/`.
 
+## Related
+
+- **Loads:** always — loaded in full at session startup, not on demand. It is
+  the filing contract for every vault write.
+- **References:** `wiki` (the agent-owned knowledge layer inside the vault).
+
 ## The model in one line
 
 **Categories are the kind of thing a note is** (Books, Recipes, Poems,
@@ -416,8 +422,3 @@ tags:
 - **Sweep:** on request, scan for stale links, missing affiliations, and files
   that should be promoted or archived.
 
-## Related
-
-- **Loads:** always — loaded in full at session startup, not on demand. It is
-  the filing contract for every vault write.
-- **References:** `wiki` (the agent-owned knowledge layer inside the vault).

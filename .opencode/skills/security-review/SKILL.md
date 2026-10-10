@@ -7,6 +7,11 @@ description: Adversarial security review of source code — hunt for vulnerabili
 
 The adversarial "red team" pass over source code: treat the code as a hostile target and find a path to break it. This is the core of red-team testing — not linting, but actively attacking.
 
+## Related
+
+- **Loads:** (none)
+- **References:** `threat-modeling` (scope), `edge-case-analysis` (robustness), `code-review` (the review it feeds)
+
 ## When to use
 
 - Reviewing a diff or codebase for security vulnerabilities.
@@ -44,7 +49,3 @@ Walk the code against these classes (OWASP Top 10:2025-aligned). For each, trace
 - Adversarial framing only — never rewrite the code as a substitute for finding the issue.
 - High-severity findings are cross-checked (a second pass / different lens) before being reported as confirmed.
 
-## Related
-
-- **Loads:** (none)
-- **References:** `threat-modeling` (scope), `edge-case-analysis` (robustness), `code-review` (the review it feeds)

@@ -1,6 +1,6 @@
 ---
 name: software-architecture
-description: The user's software architecture contract — hexagonal-flavored layering for any Object Oriented language, driven by the lean guardrail (build lean, Rule of Three, concepts inform not dictate). Covers ports & adapters, canonical DTOs (the core owns its data shapes; one DTO per domain concept across providers), the UI/core/infrastructure split, action objects as the use-case seam (actions carry the logic), where logic lives (actions, domain services, pure calculations), modular monolith, and SOLID/IoC. Language-agnostic with pseudocode; the language expressions are separate skills (`laravel`/`filament`, `rails`/`avo`). Use when designing, building, extending, or reviewing the architecture of any OO codebase, when deciding how to structure a module, layer, or use case, or when defining the data shapes shared across adapters or providers.
+description: The user's software architecture contract — hexagonal-flavored layering for any Object Oriented language, driven by the lean guardrail (build lean, Rule of Three, concepts inform not dictate). Covers ports & adapters, canonical DTOs (the core owns its data shapes; one DTO per domain concept across providers), the UI/core/infrastructure split, action objects as the use-case seam (actions carry the logic), where logic lives (actions, domain services, pure calculations), modular monolith, and SOLID/IoC. Language-agnostic with pseudocode; the language expressions are separate skills (`laravel`/`filament`, `rails`/`avo`, `typescript`). Use when designing, building, extending, or reviewing the architecture of any OO codebase, when deciding how to structure a module, layer, or use case, or when defining the data shapes shared across adapters or providers.
 ---
 
 # software-architecture
@@ -15,6 +15,33 @@ skill is the contract.
 
 Concrete expressions: `laravel` (Laravel mechanics), `filament` (Filament UI
 mechanics).
+
+## Related
+
+- **Loads:** (none — this is a leaf contract)
+- **References:** `laravel` (the Laravel mechanics), `filament` (the Filament
+  UI mechanics), `rails` (the Rails mechanics), `avo` (the Avo UI mechanics),
+  `typescript` (the TypeScript/Node mechanics), `software-testing` (how the
+  layers are tested), `project-seed` (the ARCHITECTURE.md stub),
+  `architecture-and-skeleton` (fills ARCHITECTURE.md in).
+- **Leading reference:** Graça's reference implementations —
+  `hgraca/explicit-architecture-php` and `hgraca/explicit-architecture-reactjs`
+  — paired with our module-first convention. Where this skill and the reference
+  apps differ, this skill wins (we invert Graça's axes); where this skill is
+  silent, mirror the reference apps.
+- Wiki concepts: `architecturally-evident-structure.md` (Graça's taxonomy, which
+  this skill distills and inverts), `ddd.md`, `hexagonal-architecture.md`,
+  `action-objects.md`, `modular-monolith.md`,
+  `software-architecture-principles.md`.
+
+## Files
+
+Before acting, read every `required` file below.
+
+| File | Load | Read when |
+|---|---|---|
+| `references/file-organization.md` | required | before creating or moving any file — folder shape, role suffixes, co-location, Support, and the boundary rules |
+| `references/domain-building-blocks.md` | on-demand | when defining domain building blocks or judging whether an architectural pattern earns its keep |
 
 ## When to use
 
@@ -130,6 +157,11 @@ how it is invoked, its suffix) — `InvoiceRepository`: `Invoice` domain, `Repos
     └── <tool>/<vendor>/
 ```
 
+**Each level groups by its own axis.** `ui/` by UI-type, `infrastructure/` by
+tool, `core/` by component (collapsed for a single-context module); inside a
+component, `application/` and `domain/`; and at that leaf, by subject or role.
+The full per-level tree is in `references/file-organization.md`.
+
 **The role is the suffix** (in the filename and the symbol name). The table is
 closed: every role has exactly one suffix; a name that carries none is either a
 carve-out or wrong.
@@ -160,6 +192,11 @@ carve-out or wrong.
 | View model              | `ViewModel`    | `ui/` |
 | Scheduler               | `Scheduler`    | `ui/` |
 
+**Interfaces carry their role suffix, never a construct marker.** A port is
+`XPort`, a payload `XDataTransferObject` — never `IX` or `XInterface`. The
+construct (that a symbol is an interface) is not a role; naming it is noise.
+The TypeScript expression is in `typescript`.
+
 **The role menu** (closed; extend only by decision, never per repo):
 
 | Area                            | Roles |
@@ -170,7 +207,8 @@ carve-out or wrong.
 | `ui/`                           | `controllers/`, `commands/`, `requests/`, `resources/`, `view-models/`, `scheduling/` |
 | `infrastructure/<tool>/`        | `Adapter` — one subfolder per tool; a second vendor adapter earns a per-vendor subfolder |
 
-The rationale, the fractal, co-location, Support and the boundary rules are in `references/file-organization.md`.
+The rationale, the fractal, co-location, Support, the full per-level tree and
+the boundary rules are in `references/file-organization.md`.
 
 ## Domain building blocks & patterns
 
@@ -268,6 +306,13 @@ language-idiomatic), input as a payload/DTO, dependencies via constructor
 injection (never resolved inside the body). An action composes zero or more
 nested actions, each with its own single responsibility.
 
+**The story test decides what an action is.** Name it as a user story with its
+own inputs and its own reason to exist: `CreateInvoiceAction` calls
+`CreateInvoiceLineAction` in a loop, because a line is a small story. A
+mechanical step with no independent meaning — "render the checklist", "detect a
+rename" — is a function or a domain service the action calls, never a nested
+action. Actions are small *because they are stories*, and small stories compose.
+
 ```ruby
 class CreatePostAction
   def initialize(audit_trail:)
@@ -355,22 +400,3 @@ in by `architecture-and-skeleton` from the actual code; the same change that
 alters the architecture updates it. Reviewers treat an architecture change
 without the document update as blocking.
 
-## Related
-
-- **Loads:** (none — this is a leaf contract)
-- **References:** `laravel` (the Laravel mechanics), `filament` (the Filament
-  UI mechanics), `rails` (the Rails mechanics), `avo` (the Avo UI mechanics),
-  `software-testing` (how the layers are tested).
-- **Reference files:** `references/file-organization.md` (folder shape, role
-  suffixes, co-location, Support, boundary rules),
-  `references/domain-building-blocks.md` (domain building blocks, architectural
-  patterns, SOLID/DRY/IoC).
-- **Leading reference:** Graça's reference implementations —
-  `hgraca/explicit-architecture-php` and `hgraca/explicit-architecture-reactjs`
-  — paired with our module-first convention. Where this skill and the reference
-  apps differ, this skill wins (we invert Graça's axes); where this skill is
-  silent, mirror the reference apps.
-- Wiki concepts: `architecturally-evident-structure.md` (Graça's taxonomy, which
-  this skill distills and inverts), `ddd.md`, `hexagonal-architecture.md`,
-  `action-objects.md`, `modular-monolith.md`,
-  `software-architecture-principles.md`.

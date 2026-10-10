@@ -8,6 +8,23 @@ description: Run one slice end to end — shape it into a task with criterion ID
 Phase 6. One slice, start to finish: shape it, pin the behavior, write the tests
 first, lock them, implement, review independently, reconcile.
 
+## Related
+
+- **Loads:** `agent-delegation`, `git-workflow`.
+- **References:** `code-review` (the review step, not slice start),
+  `software-development`, `software-testing`, `spec-change`.
+
+## Files
+
+Before acting, read every `required` file below.
+
+| File | Load | Read when |
+|---|---|---|
+| `assets/slice-task.template.md` | required | before shaping the slice task |
+| `assets/spec-delta.template.md` | required | before running the spec-delta check |
+| `assets/review-report.template.md` | on-demand | when dispatching the reviewer (its report format) |
+| `references/implementation-sparring.md` | on-demand | when running the interactive sparring part of the spec-delta check |
+
 ## When to use
 
 - Starting a slice.
@@ -95,7 +112,3 @@ gate. "Done" = gates green **and** the independent review passed.
 - Close a slice that surfaced friction without recording the retrospective and
   any harness debt it produced.
 
-## Related
-
-- **Loads:** `agent-delegation`, `code-review`, `git-workflow`.
-- **References:** `software-development`, `software-testing`, `spec-change`.

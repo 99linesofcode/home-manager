@@ -19,6 +19,25 @@ methodology, roles vs. skills, skill boundaries). This skill covers the
 mechanics of writing a valid `SKILL.md`; the design principles cover the scope
 and content.
 
+## Related
+
+- **Loads:** `skill-design-principles` (decide before you author).
+- **References:** `software-development` (the routing matrix this convention
+  feeds), `git-workflow` (repo-scoped skills commit and travel like source),
+  `software-architecture` (convention over configuration), `new-project`
+  (repo-scoped skill scaffolding), `laravel`, `filament` (worked examples),
+  `self-documenting-code` (the whitespace/formatting trigger example).
+
+## Files
+
+Before acting, read (or run) every `required` file below.
+
+| File | Load | Read when |
+|---|---|---|
+| `scripts/lint-skills.mjs` | required | run on every change to the skill library, before committing |
+| `scripts/resolve-skills.mjs` | on-demand | when composing a worker package (flattens the `Loads` set to absolute paths) |
+| `scripts/test-lint.mjs` | on-demand | when changing the linter itself |
+
 ## Directory layout
 
 A skill is a directory containing, at minimum, a `SKILL.md` file:
@@ -81,8 +100,9 @@ quiet on adjacent topics.
 
 - Markdown after the frontmatter. No format restrictions — write whatever helps
   the agent perform the task effectively.
-- Keep `SKILL.md` under ~500 lines. Move detailed reference material into
-  `references/` so it loads on demand.
+- Respect the size budget and the normative-vs-lookup rule (see *Size and
+  reference policy* below). Never move normative content out of `SKILL.md` to
+  satisfy a line count.
 - Keep file references shallow (one level from `SKILL.md`); avoid deeply nested
   paths.
 
@@ -100,7 +120,8 @@ skill that *is* language- or framework-specific (Laravel, Filament, a CLI)
 uses its own language. This holds for every skill authored from now on.
 
 The agent loads the entire body once the skill is activated, so keep it
-self-contained enough to act on, and push depth into `references/`.
+self-contained enough to act on. Push *lookup* depth into `references/` — never
+normative rules (see *Size and reference policy*).
 
 ## Optional directories
 
@@ -126,8 +147,12 @@ Additional documentation the agent reads when needed. Common files:
 - `FORMS.md` — form templates or structured data formats.
 - Domain-specific files (`finance.md`, `legal.md`, etc.).
 
-Keep individual reference files **small and focused** — the agent loads them on
-demand, so smaller files mean less context used.
+**References are not auto-loaded.** The agent reads a `references/` file only
+when it chooses to. That makes `references/` safe for *lookup* content and
+dangerous for *normative* content: a rule moved into an undeclared reference is
+a rule that silently stops being followed. Every reference file must be
+declared in the skill's `## Files` table and classified `required` or
+`on-demand` (see *Size and reference policy*).
 
 ### `assets/`
 
@@ -140,10 +165,139 @@ Skills are loaded in three tiers. Author to take advantage of this:
 
 1. **Metadata** (~100 tokens): `name` + `description`, loaded at session start for all skills.
 2. **Instructions** (<5000 tokens recommended): the full `SKILL.md` body, loaded only when the skill is activated.
-3. **Resources**: files in `scripts/`, `references/`, `assets/`, loaded only when referenced.
+3. **Resources**: files in `scripts/`, `references/`, `assets/` — but only when
+   the agent actually reads them. They are **not** auto-loaded. A `required`
+   file is read in practice (the skill instructs it), so it belongs with tier 2
+   for budgeting.
 
 So the `description` carries the whole discovery burden, and the body should be
-self-contained enough to act on once loaded, with depth pushed into `references/`.
+self-contained enough to act on once loaded, with *lookup* depth pushed into
+`references/`.
+
+## Size and reference policy (the owning document)
+
+This is the single owner of the size and reference rules. Every other skill and
+`AGENTS.md` defer to it.
+
+### Budget by size, not lines
+
+Line count is gameable — a long line hides a lot. The budget is **by size**:
+
+- Default budget for `SKILL.md`: **500 lines and ~5,000 tokens (≈20 KB; estimate
+  tokens as bytes ÷ 4)**. Exceeding either is a warning.
+- **Documented exceptions.** A skill may exceed the default only as a recorded,
+  deliberate exception with a `max_kb` (hard cap **32 KB** ≈ 8,000 tokens) and a
+  one-line reason (e.g. "contract skill: all rules are normative and must be in
+  context together"). Exceptions live in the linter's `BUDGET_EXCEPTIONS`. Over
+  the 32 KB cap, or over its own `max_kb`, is a defect. A skill over the default
+  budget without a recorded exception is also a defect — exceptions must be
+  deliberate.
+- **Required reference files count toward the budget** for reporting purposes:
+  the report total is `SKILL.md` + its `required` *reference* files, because they
+  are loaded in practice. Required *scripts* are run, not loaded, so they do not.
+
+### Normative vs. lookup — the classification that governs every move
+
+**Files in `references/` are never loaded automatically.** The agent reads a
+reference file only when it chooses to. Moving content there silently converts a
+mandatory rule into optional reading. Classify before you move:
+
+- **Normative content stays in `SKILL.md`.** Anything an agent must always
+  follow: rules, MUST/NEVER statements, gates, definitions of done, decision
+  procedures, conventions. This never moves to `references/` unless the file is
+  declared **`required`** (see the `## Files` table below).
+- **Lookup content may live in `references/` or `assets/`:** templates, long
+  worked examples, schemas, large tables, rare variants, per-framework detail,
+  glossaries.
+
+**The justification test.** Before moving anything out, ask: *"Would the skill
+behave differently if this content was never read?"* If yes, it is normative —
+keep it in `SKILL.md`, or make it a `required` reference in the same commit.
+Moving normative content out as incidental "cleanup" of a long file is
+forbidden; it is exactly how a rule stops being followed.
+
+### Beyond the cap: split by skill, not by hiding
+
+When a skill genuinely exceeds the cap, the options are, in order:
+
+1. **Split by skill** — sibling skills joined by `Loads` (see *Splitting a
+   skill*), or a composite skill with an explicit required-reading list.
+2. **Declare a budget exception** — only when the content is all normative and
+   must be in context together, with a `max_kb` and a reason.
+
+Never an undeclared `references/` file. Never a `references/` file that carries
+normative rules without being declared `required`.
+
+### The `## Files` table (every extra file is declared)
+
+Every file physically under a skill's `references/`, `assets/` or `scripts/`
+MUST be declared in a `## Files` table in that skill's `SKILL.md`, placed
+directly after `## Related`. When the table has any `required` row, the skill
+MUST carry a one-line instruction directly above or below the table:
+
+> Before acting, read (or run) every `required` file below.
+
+```markdown
+## Files
+
+Before acting, read (or run) every `required` file below.
+
+| File | Load | Read when |
+|---|---|---|
+| `references/file-organization.md` | required | before creating or moving any file |
+| `references/glossary.md` | on-demand | when a term is unclear |
+```
+
+- **`required`** — the agent MUST read (or run) it before acting under this
+  skill. A required *reference* counts toward the size budget (loaded in
+  practice); a required *script* is run, not loaded, so it does not.
+- **`on-demand`** — read only when its trigger fires. The "Read when" cell MUST
+  be a concrete trigger, not "for more detail".
+
+Orphan files (present but undeclared) and declared-but-missing files are
+defects. `scripts/lint-skills.mjs` enforces all of this.
+
+## Tools (`scripts/`)
+
+The mechanical checks are JavaScript, bundled in this skill's `scripts/`
+directory. Run them from the repository root with `nix run` — no `node` on PATH
+is required.
+
+**Run the linter on every skill change.** `scripts/lint-skills.mjs` is a
+`required` step of this skill: run it before committing any change under
+`.opencode/skills/`.
+
+- **Lint the library** — validates frontmatter, the `Loads`/`References` graph
+  (targets exist, no overlap, no cycles, closure ≤ 4), every `## Files` table
+  (declared, classified, concrete triggers), the size budget, and the routing
+  matrix. Exit 1 on any error. Run it before committing any skill change:
+
+  ```bash
+  nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/lint-skills.mjs
+  ```
+
+  `--base <git-ref>` adds the anti-extraction tripwire (a `SKILL.md` that shrank
+  >20% without a `## Files` change), `--stats` prints the metrics, `--errors-only`
+  silences warnings, `--root <repo>` points it at another library.
+
+- **Resolve a skill or matrix row** — flattens the `Loads` closure in order and
+  prints absolute paths (each skill's `SKILL.md`, then its `required` files),
+  plus the `on-demand` files with their triggers. Paste the required set into a
+  worker package (a worker cannot load skills). Run it when dispatching:
+
+  ```bash
+  nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/resolve-skills.mjs slice-delivery
+  ```
+
+- **Self-test the linter** — proves it fails closed on each error type. Run it
+  after editing `lint-skills.mjs`:
+
+  ```bash
+  nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/test-lint.mjs
+  ```
+
+The scripts find the skill library by walking up from their own location for
+`.opencode/skills`, so they work from any repository root.
 
 ## Placement and discovery
 
@@ -205,9 +359,23 @@ the full spec above for portability across clients.
   skill may still bundle `scripts/` and instruct the agent to run them, but
   execution goes through the agent's normal tools (bash) under normal
   permission rules — there is no per-skill tool gating.
-- Relative paths in a skill resolve against the **project root** by default.
-  For portability, reference resources by the skill's base directory (e.g.
-  `cd <skill-dir> && ...`) or use absolute paths.
+- **Relative paths resolve from the skill's own directory.** The `skill` tool
+  returns the skill's base directory in the loaded content — `Base directory for
+  this skill: file://<skill-dir>` — and states that "relative paths in this
+  skill (e.g., scripts/, reference/) are relative to this base directory".
+  **Verified** against opencode 1.15.10 (2026-10-11, scratch session). Write
+  resource references relative to the skill directory; when a worker needs an
+  absolute path, resolve it against the skill's base directory.
+  The `## Files` table paths are likewise relative to the skill's base directory.
+- **The tool's file list is sampled.** The loaded content carries a
+  `<skill_files>` list marked "Note: file list is sampled" — it is not a
+  complete inventory. Never rely on it; declare files in `## Files`.
+- **Hiding a skill.** `metadata: { opencode/autoinvoke: "false" }` (in
+  frontmatter, not config) keeps a skill out of the model-facing list while it
+  can still be loaded by exact name. Use it for part-skills (see *Splitting a
+  skill*).
+- **Permissions.** A `deny` rule both hides a skill from the agent and rejects
+  loading; pattern rules such as `"laravel-*": "deny"` are supported.
 
 ## Skill-to-skill references (Loads vs References)
 
@@ -215,15 +383,20 @@ Skills reference each other. The convention distinguishes **required** from
 **optional** references, so the orchestrator knows what to activate together and
 what to load on demand.
 
-- **Loads:** — skills that must activate **together** with this one. When this
-  skill is loaded, the listed skills are loaded too. Use for skills that are
-  part of the same workflow (e.g. `new-project` Loads `git-workflow` and
-  `software-architecture`).
-- **References:** — skills that are **optional**, loaded on demand when the
-  task needs them. Use for related skills that aren't always required (e.g.
-  `software-architecture` References `laravel` and `filament`).
+- **Loads:** — skills that must activate **together** with this one. Use for
+  skills that are part of the same workflow (e.g. `new-project` Loads
+  `git-workflow` and `software-architecture`). Keep it small: the linter caps
+  the transitive `Loads` closure at **4**.
+- **References:** — skills that are **optional**, loaded on demand when the task
+  needs them (e.g. `software-architecture` References `laravel` and `filament`).
 
-Declare both as a short section at the end of the body, under `## Related`:
+`Loads` is **not** a loader feature — opencode has no dependency or bundle
+mechanism. It is a declaration the orchestrator resolves by hand: flatten the
+`Loads` closure in order, append each skill's `required` files as absolute paths,
+and paste that set into a worker package.
+
+Declare both under `## Related`, placed **directly after the intro paragraph**,
+before the body:
 
 ```markdown
 ## Related
@@ -235,13 +408,103 @@ Declare both as a short section at the end of the body, under `## Related`:
 Rules:
 
 - A skill lists its Loads and References explicitly; there is no separate
-  registry file. The convention lives here and each skill declares its own.
-- **Loads** is for required, always-activate-together skills. Keep it small —
-  loading too much defeats progressive disclosure.
-- **References** is for optional, on-demand skills. Most cross-skill links are
-  References.
-- The orchestrator loads the Loads list when it activates a skill, and reaches
-  into References when the task calls for them.
+  registry file.
+- The linter requires every target to be a real skill directory, forbids a
+  target appearing in both lists, and forbids `Loads` cycles.
+- A skill named in the body but not in `Related` is a lint warning — add it to
+  `References`, or reword so it is not a dependency. Add to `Loads` only if it
+  is genuinely always required.
+
+## Splitting a skill
+
+When a skill is too large (or should not be one skill), there are four patterns.
+Pick by the decision rule at the end.
+
+### A. Single skill + `required` files
+
+The `## Files` table with a `required` row (above). Use for a small split of
+lookup material the agent needs alongside the body. **Weakness:** the agent has
+to make a second call to read the file, and a `required` reference is only
+"required" if the agent obeys the instruction — say so explicitly, and keep the
+rule itself in `SKILL.md`.
+
+### B. Entry skill + part skills
+
+The parent is `<name>`; the parts are `<name>-<part>`. The parent's body begins
+(after the intro) with a `## Parts` table and this instruction:
+
+> Before acting, call the `skill` tool for every `required` part, in order. If
+> any part fails to load, stop and report a blocker.
+
+```markdown
+## Parts
+
+| Part | Order | Required | Load when |
+|---|---|---|---|
+| `foo-core` | 1 | required | always |
+| `foo-advanced` | 2 | optional | when the advanced path applies |
+```
+
+- The parent's `Loads:` equals its required parts.
+- Each part's `description` begins "Part of `<parent>`: load via the parent
+  only" so it does not trigger on its own.
+- Hide parts from discovery with `metadata.opencode/autoinvoke: "false"` where
+  supported (see *opencode-specific notes*); otherwise rely on the description
+  prefix.
+- Use B only when a part is independently useful or too large for pattern A.
+
+### C. Build-time composite
+
+Authors keep `parts/*.md` (never named `SKILL.md`). A Nix step concatenates them
+in a declared order into a generated `SKILL.md` with a "GENERATED, do not edit"
+header. Runtime is a single load. This is the preferred pattern for large skills
+whose content is all normative. The linter checks the generated output (not the
+`parts/` sources) and fails if it was hand-edited or out of sync.
+
+### D. Plugin or custom tool
+
+A plugin that expands `Loads` when `skill` is called. Research only — see the
+design note in the repo's planning scratchpad. Not built.
+
+### The decision rule
+
+1. Is all the content normative and always needed together? Use **C**, or one
+   skill within the budget exception.
+2. Is part of it lookup material? Use **A**.
+3. Is a part useful on its own? Use **B**.
+
+## Refactoring a long skill
+
+When a `SKILL.md` is over budget, work this procedure — in order:
+
+1. **Report size against the budget.** Run `scripts/lint-skills.mjs --stats` —
+   note the lines, bytes and estimated tokens, and whether the skill is a
+   recorded exception.
+2. **Classify the content** as normative or lookup, using the justification test
+   ("Would the skill behave differently if this was never read?").
+3. **If it is over the cap, split by skill** (pattern B or C above) — do not just
+   hide content in `references/`.
+4. **Only lookup content moves to `references/`.** Normative content stays in
+   `SKILL.md`, or moves to a `required` reference.
+5. **Declare every moved file in the `## Files` table** in the same commit, with
+   `required` or `on-demand` and a trigger.
+6. **Run the linter with `--base`** and the resolver before committing:
+
+   ```bash
+   nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/lint-skills.mjs --base origin/main
+   nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/resolve-skills.mjs <skill>
+   ```
+
+## Adding, renaming or rescoping a skill (the checklist)
+
+- [ ] Run the linter: `scripts/lint-skills.mjs` (and `--base origin/main`).
+- [ ] Update its **routing-matrix row** in `software-development` — or add it to
+      the non-matrix allowlist in the linter, with a reason.
+- [ ] Update its **`## Related`** (Loads/References) and its **`## Files`**
+      table.
+- [ ] Keep **normative content in `SKILL.md`** — never hide it in an undeclared
+      reference.
+- [ ] Update the `description` triggers (the discovery surface).
 
 ## Discovery and routing (this library's convention)
 
@@ -281,7 +544,8 @@ discovery trigger, and workers cannot load skills anyway. They live inside a
 skill's `references/` or `assets/` (e.g.
 `agent-delegation/references/roles/<role>.md`,
 `feature-spec/assets/spec.template.md`) and are passed to a worker by path, or
-pasted into a package. The skill that owns the workflow owns its templates.
+pasted into a package. The skill that owns the workflow owns its templates, and
+declares each one in its `## Files` table (`required` or `on-demand`).
 
 ## Conditioning-aware authoring (how the model reads skills)
 
@@ -336,15 +600,13 @@ three triggers.
       the skills root (no category directory).
 - [ ] `name` lowercase, hyphens only, ≤64 chars, matches folder.
 - [ ] `description` present, ≤1024 chars, what + when, trigger keywords front-loaded.
-- [ ] Body under ~500 lines; depth in `references/`.
+- [ ] Body within budget (≤500 lines and ≈20 KB unless a recorded exception);
+      normative content stays in `SKILL.md`.
+- [ ] `## Related` directly after the intro; `## Files` directly after
+      `## Related`; every extra file declared and classified.
 - [ ] Body includes step-by-step instructions, input/output examples, and common edge cases.
 - [ ] Language-agnostic skill: examples written in Ruby (see Body content).
-- [ ] `scripts/` self-contained with helpful errors; `references/` small and focused.
+- [ ] `scripts/` self-contained with helpful errors; `references/` holds lookup content only.
 - [ ] Resources referenced by skill base directory (not bare relative paths).
-- [ ] Validated by re-reading the finished file and linting frontmatter.
+- [ ] `scripts/lint-skills.mjs` passes with 0 errors.
 
-## Related
-
-- **Loads:** `skill-design-principles` (decide before you author).
-- **References:** `software-development` (the routing matrix this
-  convention feeds).

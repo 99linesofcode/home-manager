@@ -10,6 +10,11 @@ Compose environments. Docker Compose is for development; a language wrapper's
 multi-stage Dockerfile is for production. Deployment of that image is the
 `kubernetes` skill.
 
+## Related
+
+- **References:** `kubernetes` (the production deployment target),
+  `new-project` (scaffolding a wrapper), `git-workflow` (submodules).
+
 ## The three tiers
 
 | Tier | Repo | Role | Consumer adds it as |
@@ -107,7 +112,3 @@ copy `docker/docker-compose.yaml.dist` to `./docker-compose.yaml`, set
 The Docker story is expected to be redefined when the stack moves fully onto
 Kubernetes; treat this contract as current until then.
 
-## Related
-
-- **References:** `kubernetes` (the production deployment target),
-  `new-project` (scaffolding a wrapper), `git-workflow` (submodules).

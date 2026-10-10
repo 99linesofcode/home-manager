@@ -18,6 +18,12 @@ This is file-native by design. For a single-user knowledge base up to roughly
 tool. A vector DB / SQLite is only warranted for a large *external* corpus,
 and would then be a separate MCP layer beside this, not a replacement.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `wiki` (log.md appends), `vault-notes` (the vault the
+  memory lives in).
+
 ## Load order (startup)
 
 1. `memory/HOT.md` (working, ≤2000 tokens)
@@ -233,8 +239,3 @@ enforces the conflict, and the protocol says what to do when it fires.
 - **Single-file writes are CAS-guarded** — `HOT.md`, `wiki/index.md`,
   `wiki/log.md`, and `semantic/*.md` are written through the Obsidian MCP with
   `prevHash`; on `hash_conflict`, re-read and merge (see Concurrency).
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `wiki` (log.md appends), `vault-notes` (the vault the
-  memory lives in).

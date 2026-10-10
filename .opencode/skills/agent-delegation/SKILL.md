@@ -9,6 +9,32 @@ How the orchestrator hands work to workers. Every phase skill delegates through
 this one. Workers start cold, cannot ask the user anything, and know only what
 the package carries — so the package is the whole game.
 
+## Related
+
+- **Loads:** (none — loaded on demand by every phase skill)
+- **References:** `software-development` (the task-level routing matrix),
+  `git-workflow` (delivery), `memory` (the shared-vault caveat), the role briefs
+  in `references/roles/`.
+
+## Files
+
+Before acting, read every `required` file below.
+
+| File | Load | Read when |
+|---|---|---|
+| `assets/delegation-brief.template.md` | required | before composing a worker package |
+| `assets/worker-report.template.md` | required | before reading a worker report |
+| `references/roles/material-analyst.md` | on-demand | when dispatching the material-analyst role |
+| `references/roles/options-analyst.md` | on-demand | when dispatching the options-analyst role |
+| `references/roles/spike-engineer.md` | on-demand | when dispatching the spike-engineer role |
+| `references/roles/spec-writer.md` | on-demand | when dispatching the spec-writer role |
+| `references/roles/spec-adversary.md` | on-demand | when dispatching the spec-adversary role |
+| `references/roles/spec-reconciler.md` | on-demand | when dispatching the spec-reconciler role |
+| `references/roles/characterization-test-author.md` | on-demand | when dispatching the characterization-test-author role |
+| `references/roles/acceptance-test-author.md` | on-demand | when dispatching the acceptance-test-author role |
+| `references/roles/implementer.md` | on-demand | when dispatching the implementer role |
+| `references/roles/reviewer.md` | on-demand | when dispatching the reviewer role |
+
 ## When to use
 
 - Before dispatching any `task` worker, in any phase.
@@ -164,8 +190,3 @@ Consolidate and deduplicate before they reach the user. Each escalation carries
 what was ambiguous or conflicting, the options, and your recommendation. The
 user decides.
 
-## Related
-
-- **Loads:** (none — loaded on demand by every phase skill)
-- **References:** `software-development` (the task-level routing matrix),
-  `git-workflow` (delivery), the role briefs in `references/roles/`.

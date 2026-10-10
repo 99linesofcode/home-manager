@@ -10,6 +10,12 @@ compatibility: opencode
 You are running headless on a schedule in a standalone session. Work
 autonomously; do not ask questions.
 
+## Related
+
+- **Loads:** (none — runs as a scheduled standalone job)
+- **References:** `skill-authoring` (the skill wording it studies), `wiki` (the
+  pages it grounds in), `memory` (the episodic event it may append).
+
 ## Procedure
 
 1. Ground yourself in what we already know. Read these wiki pages (paths
@@ -77,8 +83,3 @@ When the schedule changes:
    `notify-send -u normal "research sweep" "Schedule changed to <cadence> (<N> verified findings). Run home-manager switch to apply."`
    and record the change (old → new, with the counts) in the note.
 
-## Related
-
-- **Loads:** (none — runs as a scheduled standalone job)
-- **References:** `skill-authoring` (the skill wording it studies), `wiki` (the
-  pages it grounds in), `memory` (the episodic event it may append).

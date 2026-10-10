@@ -12,6 +12,11 @@ Scheduled jobs live in `modules/opencode.nix` in the home-manager repo
 registry — the Nix config is the source of truth, the systemd journal is the
 run log.
 
+## Related
+
+- **beeper-bridge** skill — for injecting prompts into the *live* session
+  (chat bridging); scheduled jobs are always fresh headless sessions.
+
 ## How it works
 
 - `home.opencode.scheduledJobs` is a list of `{ skill, schedule ? "*-*-01
@@ -56,7 +61,3 @@ in Exec lines (`%s` = shell path) and consumes `\"` escapes — anything
 non-trivial belongs in the Nix-generated command or a script file, never
 inline `sh -c` with nested quoting.
 
-## Related
-
-- **beeper-bridge** skill — for injecting prompts into the *live* session
-  (chat bridging); scheduled jobs are always fresh headless sessions.

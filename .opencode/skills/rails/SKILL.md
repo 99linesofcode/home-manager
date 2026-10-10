@@ -19,6 +19,25 @@ and Rails' own convention conflict, **Rails' convention wins** (Zeitwerk, the
 generators, `app/`) — exactly as `software-architecture` says language
 conventions do — as long as the module boundary stays expressible.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `software-architecture` (the single source of truth for the
+  architecture), `software-testing` (the testing contract), `avo` (the admin UI
+  mechanics), `laravel` (the PHP sibling this mirrors), `new-project` (the
+  Rails scaffold branch once the repos exist).
+- Wiki concepts: `modular-monolith.md`, `hexagonal-architecture.md`,
+  `action-objects.md`, `architecturally-evident-structure.md`.
+
+## Files
+
+Before acting, read every `required` file below.
+
+| File | Load | Read when |
+|---|---|---|
+| `references/activerecord.md` | on-demand | when wiring ActiveRecord models (UUID keys, lean models) |
+| `references/dummy-app.md` | on-demand | when setting up the engine's `spec/dummy` host app |
+
 ## When to use
 
 - Building a new Rails app or engine module in the user's style.
@@ -121,6 +140,9 @@ file's path must match its constant) and the generators, and
 `software-architecture` says the language's convention wins where the boundary
 stays expressible. This is the one deliberate divergence from the Laravel
 expression, and it is explicit.
+
+**Reference repos (target):** `~/Development/rails-skeleton` (app),
+`rails-package-skeleton` (module/engine template), `rails-module-*` (modules).
 
 ## Naming conventions (Rails-specific roles)
 
@@ -304,16 +326,3 @@ in the build. Ship the gate.
 - **New modules** start from `rails-package-skeleton`; new apps from
   `rails-skeleton` (consumed via git remote + rebase).
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `software-architecture` (the single source of truth for the
-  architecture), `software-testing` (the testing contract), `avo` (the admin UI
-  mechanics), `laravel` (the PHP sibling this mirrors).
-- Reference repos (target): `~/Development/rails-skeleton` (app),
-  `rails-package-skeleton` (module/engine template), `rails-module-*` (modules).
-- `references/activerecord.md` — the ActiveRecord mechanic (UUID keys, lean
-  models).
-- `references/dummy-app.md` — the engine's host app (the Testbench analog).
-- Wiki concepts: `modular-monolith.md`, `hexagonal-architecture.md`,
-  `action-objects.md`, `architecturally-evident-structure.md`.

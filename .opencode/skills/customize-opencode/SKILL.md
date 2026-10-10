@@ -9,6 +9,12 @@ opencode validates its own config strictly and refuses to start when a field
 is wrong. The shapes below cover the common surface area, but they are a
 **summary, not the source of truth**.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `skill-authoring` (when the config change is a skill),
+  `skill-design-principles` (whether the config belongs in a skill at all).
+
 ## Full schema reference
 
 The authoritative list of every config option — with field types, enums,
@@ -396,7 +402,3 @@ When a user's config is broken and opencode won't start, these env vars help:
 - After saving any config change, remind the user to quit and restart opencode
   — running sessions keep using the already-loaded config.
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `skill-authoring` (when the config change is a skill).

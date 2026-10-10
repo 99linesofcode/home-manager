@@ -14,6 +14,13 @@ This skill is **optional**: it's loaded when the orchestrator or a worker needs
 to interface with GitHub. It pairs with `git-workflow` for the local mechanics
 and with `slice-delivery` for how a slice becomes an issue and a PR.
 
+## Related
+
+- **Loads:** `git-workflow` (local mechanics).
+- **References:** `slice-delivery` (how work becomes issues/PRs), `code-review`
+  (review contract), `discovery-interview` (issues seed discovery),
+  `software-development` (the change chain).
+
 ## When to use
 
 - Reading or triaging GitHub issues.
@@ -80,8 +87,3 @@ of truth; the milestone mirrors them.
   architectural constraints that bind it.
 - `code-review` — the review contract applied to the PR before merge.
 
-## Related
-
-- **Loads:** (none — optional, loaded on demand)
-- **References:** `git-workflow` (local mechanics), `slice-delivery` (how work
-  becomes issues/PRs), `code-review` (review contract).

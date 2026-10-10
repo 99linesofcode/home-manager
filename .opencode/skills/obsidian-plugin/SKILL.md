@@ -8,6 +8,12 @@ description: Obsidian community-plugin development contract — manifest.json an
 The contract for developing an Obsidian community plugin. Load it whenever work
 touches an Obsidian plugin, in any repository.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `git-workflow` (the tag-driven release), `new-project` (the
+  plugin repo scaffold).
+
 ## Version of record
 
 `manifest.json` is the plugin's version of record; it carries `version` and
@@ -50,8 +56,3 @@ it populated and maintained by the release workflow, not by hand.
 - The plugin id is stable; renaming it breaks installs.
 - Keep the vault as the system of record; treat external applications as mirrors.
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `git-workflow` (the tag-driven release), `new-project` (the
-  plugin repo scaffold).

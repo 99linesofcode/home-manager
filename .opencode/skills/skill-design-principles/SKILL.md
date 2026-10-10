@@ -9,6 +9,17 @@ compatibility: OpenCode and any agent compatible with the agentskills.io v1 spec
 
 A decision framework for skill scope and content. Use this *before* the skill-authoring workflow to determine whether a skill is needed and what it should contain.
 
+## Related
+
+- **Loads:** (none — a decision framework used before authoring).
+- **References:** `skill-authoring` (the mechanics once the decision is made).
+
+## Files
+
+| File | Load | Read when |
+|---|---|---|
+| `references/examples.md` | on-demand | when you want worked examples of applying these principles |
+
 ## The core rule: encode what's yours, not what the model already knows
 
 A skill is an onboarding guide, not a training manual. It tells an already-capable agent about *your* standards, *your* context, and *your* definition of done — not how to do a thing the model already knows how to do.
@@ -84,7 +95,3 @@ If any answer is no, reconsider whether a skill is the right tool.
 ## References
 
 - `references/examples.md` — worked examples: research, code review, writing standards
-## Related
-
-- **Loads:** `skill-authoring` (the mechanics once the decision is made).
-- **References:** (none)

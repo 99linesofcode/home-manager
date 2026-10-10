@@ -11,6 +11,12 @@ captured in the vault `Inbox/` (the PARA capture point, a top-level folder in
 the vault at `~/Documents/Obsidian/Inbox/`), per the contract in `AGENTS.md`. This skill is
 the *how-to*; `AGENTS.md` is the *contract*.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `vault-notes` (the vault structure the wiki lives in),
+  `memory` (the memory tiers the log feeds).
+
 ## When loaded
 
 The orchestrator loads you when a task is a wiki operation: ingest, query-
@@ -126,8 +132,3 @@ discard the original) is owned by `vault-notes`.
 - Contradictions flagged, never silently resolved.
 - Every page carries non-empty `type` + `generated` (OKF v0.2).
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `vault-notes` (the vault structure the wiki lives in),
-  `memory` (the memory tiers the log feeds).

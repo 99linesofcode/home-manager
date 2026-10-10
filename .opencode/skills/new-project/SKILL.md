@@ -10,6 +10,22 @@ language or framework. It orchestrates the git mechanics (from `git-workflow`)
 and the language/environment-specific wiring. The setup is the same shape for
 every project; only the skeleton, devshell, and workflows differ by language.
 
+## Related
+
+- **Loads:** `git-workflow` (scaffolding mechanics), `software-architecture`
+  (the architecture contract).
+- **References:** `laravel` (Laravel conventions), `shape-up` (labels + project
+  template), `github` (platform interface), `project-seed` (the spec-driven
+  foundation that orchestrates this skill).
+- Wiki: [[modular-monolith]], [[hexagonal-architecture]], [[action-objects]].
+
+## Files
+
+| File | Load | Read when |
+|---|---|---|
+| `scripts/scaffold.sh` | on-demand | when running the scripted generic scaffold (steps 1, 2, 4) |
+| `scripts/scaffold-php.sh` | on-demand | when running the scripted PHP scaffold (steps 3, 6) |
+
 ## MANDATORY gate — read before any scaffold
 
 This skill is the **only sanctioned path** to a new repository — for you or
@@ -300,11 +316,3 @@ skill (they're only relevant when scaffolding).
 - `scripts/scaffold-<lang>.sh <name>` — the environment-specific steps (3, 6):
   wire the devshell submodule, copy the workflows, install. One per language.
 
-## Related
-
-- **Loads:** `git-workflow` (scaffolding mechanics), `software-architecture`
-  (the architecture contract).
-- **References:** `laravel` (Laravel conventions), `shape-up` (labels + project
-  template), `github` (platform interface), `project-seed` (the spec-driven
-  foundation that orchestrates this skill).
-- Wiki: [[modular-monolith]], [[hexagonal-architecture]], [[action-objects]].

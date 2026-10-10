@@ -15,6 +15,11 @@ Architecture, data flow, and design decisions live in the wiki:
 `~/Documents/Obsidian/AI/wiki/concepts/beeper-bridge.md`. This skill is the
 operating procedure.
 
+## Related
+
+- **Loads:** none
+- **References:** none (architecture reference is the wiki page, linked above)
+
 ## Hard rules
 
 - **Never store a chat ID.** Chat IDs change on every Beeper re-link; stored
@@ -133,7 +138,3 @@ explicitly started.
 - Voice notes inbound are transcribed automatically (ffmpeg + voxtype-onnx);
   no action needed.
 
-## Related
-
-- **Loads:** none
-- **References:** none (architecture reference is the wiki page, linked above)

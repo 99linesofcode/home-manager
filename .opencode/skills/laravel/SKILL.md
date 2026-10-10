@@ -11,11 +11,28 @@ user's repos (`laravel-skeleton`, `laravel-package-skeleton`,
 composer wiring, the ServiceProvider composition root, Eloquent model
 mechanics, and Pest + Testbench testing.
 
+**Reference repos:** `~/Development/laravel-skeleton`, `laravel-package-skeleton`,
+`laravel-module-support`, `laravel-module-news`, `laravel-module-user`.
+
 The architecture — the module-first directory structure, the layers, the role
 suffixes, where logic lives — is **single-sourced in the `software-architecture`
 skill** and applies to every language. This skill adds only what is specific to
 Laravel/PHP, and never restates the architecture. The Filament admin UI
 mechanics live in the `filament` skill.
+
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `software-architecture` (the single source of truth for the
+  architecture), `filament` (the Filament UI mechanics), `software-testing`
+  (the testing contract).
+
+## Files
+
+| File | Load | Read when |
+|---|---|---|
+| `references/models-and-migrations.md` | on-demand | when wiring models, UUID keys, or migrations |
+| `references/workbench.md` | on-demand | when setting up the Testbench workbench host app |
 
 ## When to use
 
@@ -329,11 +346,3 @@ the dumping ground for it.
 - **New modules** start from `laravel-skeleton` / `laravel-package-skeleton`
   (consumed via git remote + rebase).
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `software-architecture` (the single source of truth for the
-  architecture), `filament` (the Filament UI mechanics), `software-testing`
-  (the testing contract).
-- Reference repos: `~/Development/laravel-skeleton`, `laravel-package-skeleton`,
-  `laravel-module-support`, `laravel-module-news`, `laravel-module-user`.

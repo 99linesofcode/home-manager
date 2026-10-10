@@ -7,6 +7,11 @@ description: Adversarial analysis of unhandled code paths and robustness — bou
 
 The adversarial pass for unhandled code paths and robustness. Where `security-review` hunts vulnerability classes, this hunts the boundary conditions, concurrency, and error paths that crash, hang, or exhaust the system — many of which are also security issues (DoS, TOCTOU).
 
+## Related
+
+- **Loads:** (none)
+- **References:** `security-review` (vulnerability classes), `threat-modeling` (scope), `code-review` (the review it feeds)
+
 ## When to use
 
 - Reviewing code for edge cases, crashes, hangs, and resource exhaustion.
@@ -42,7 +47,3 @@ Probe each systematically:
 - Report as **blocking** or **non-blocking**.
 - Adversarial framing only.
 
-## Related
-
-- **Loads:** (none)
-- **References:** `security-review` (vulnerability classes), `threat-modeling` (scope), `code-review` (the review it feeds)

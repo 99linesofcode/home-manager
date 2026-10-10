@@ -14,6 +14,12 @@ interrogated about what they already know. This encodes *how the user wants to
 learn*: plain language, one concept at a time, concrete examples, and no
 grilling.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `communication-standards` (how lessons are written),
+  `wiki` (wiki-first grounding).
+
 ## When to use
 
 - "teach me X", "teach mode", "I want to learn X"
@@ -115,8 +121,3 @@ knowledge only when the wiki lacks coverage — and say so explicitly.
 - **Wiki lacks coverage** — teach from general knowledge, say so, and offer to
   capture the material as a wiki concept page afterwards.
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `communication-standards` (how lessons are written),
-  `wiki` (wiki-first grounding).

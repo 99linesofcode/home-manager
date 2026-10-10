@@ -9,6 +9,11 @@ The user's Kubernetes contract. The Docker Compose dev environment is the
 `docker` skill; this skill covers everything from the production image onward —
 charts, GitOps, secrets, TLS, and the local cluster.
 
+## Related
+
+- **References:** `docker` (the dev environment and the production image),
+  `git-workflow` (fleet commits), `new-project` (new chart repos).
+
 ## The repos
 
 | Repo | Role |
@@ -154,7 +159,3 @@ day-to-day `kubectl apply`. Tasks stay thin, idempotent wrappers with no logic.
 - k3s ships Traefik; the chart installs its own in Gateway API mode — disable
   the bundled one.
 
-## Related
-
-- **References:** `docker` (the dev environment and the production image),
-  `git-workflow` (fleet commits), `new-project` (new chart repos).

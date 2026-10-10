@@ -12,6 +12,14 @@ the work, not a follow-up task.
 Language- and framework-agnostic. Git mechanics (committing, squashing,
 history hygiene) live in the `git-workflow` skill.
 
+## Related
+
+- **Loads:** (none — this is the gate; it routes via the matrix above)
+- **References:** `software-architecture`, `software-testing`,
+  `git-workflow`, `self-documenting-code`, `new-project`,
+  `code-review`, `skill-authoring` (the routing-matrix convention)
+  (the cluster the matrix routes to).
+
 ## The skill gate (always, before any meaningful work)
 
 Before starting any meaningful software development work — planning,
@@ -34,10 +42,11 @@ they are contracts, not suggestions.**
   | Filament UI work | `filament` (+ `laravel`) |
   | Rails specifics (actions, DTOs, engines, Hotwire) | `rails` |
   | Avo admin UI work | `avo` (+ `rails`) |
+  | TypeScript / Node specifics (interfaces, imports, barrels, DI) | `typescript` (+ `software-architecture`) |
   | Docker / Docker Compose dev environment | `docker` |
   | Kubernetes / Helm / Flux / cluster deploy | `kubernetes` |
-  | Review a change end-to-end | `code-review` (+ that change's governing skills) |
-  | Security review / red-team | `code-review` (Loads `security-review`, `threat-modeling`, `edge-case-analysis`) |
+  | Review a change end-to-end | `code-review` (+ that change's governing skills — resolved from context) |
+  | Security review / red-team | `code-review` (+ `security-review`, `threat-modeling`, `edge-case-analysis`) |
   | Start a new project / seed the foundation | `project-seed` |
   | Discover what we're building (vague brief, raw material) | `discovery-interview` |
   | Write or update a feature spec | `feature-spec` |
@@ -57,6 +66,15 @@ they are contracts, not suggestions.**
   layer — a task that routed wrong means a description and/or row defect);
   cross-references stay in each skill's `## Related` (Loads = required
   companions, References = on-demand — navigation, not routing).
+
+  Row grammar: a `(+ companion, …)` group means the primary skill `Loads`
+  each companion (the linter enforces it); a companion that is only known
+  once the task is concrete is marked **resolved from context** instead
+  (`code-review`'s "that change's governing skills"). Skills joined by a bare
+  ` + ` are co-equal primaries. The linter parses this table: every named
+  skill must exist, every `+` companion must be in the primary's `Loads` or
+  marked context-resolved, and every skill is either here or in the
+  non-matrix allowlist.
 
   Activation rules:
 
@@ -158,9 +176,3 @@ A change is done when all of these hold:
 - [ ] It's committed with a clear Conventional Commit message; history is
       squashed by feature before push when it spanned multiple commits.
 
-## Related
-
-- **Loads:** (none — this is the gate; it routes via the matrix above)
-- **References:** `software-architecture`, `software-testing`,
-  `git-workflow`, `self-documenting-code`, `new-project`,
-  `code-review` (the cluster the matrix routes to).

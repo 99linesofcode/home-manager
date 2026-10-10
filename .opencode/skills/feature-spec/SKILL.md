@@ -8,6 +8,20 @@ description: Write one feature spec with stable IDs, testable WHAT-not-HOW rules
 Phase 3. One small spec per feature, written before the code it governs. The
 spec is the source; the tests are its executable expression.
 
+## Related
+
+- **Loads:** `agent-delegation`.
+- **References:** `software-testing` (scenario shape), `spec-change`.
+
+## Files
+
+Before acting, read every `required` file below.
+
+| File | Load | Read when |
+|---|---|---|
+| `assets/spec.template.md` | required | before writing the spec |
+| `assets/spec-review.template.md` | on-demand | when dispatching the spec adversary (its review output format) |
+
 ## When to use
 
 - Writing a new feature spec.
@@ -63,7 +77,3 @@ attacked and its findings dispositioned.
 - Resolve an open question.
 - Accept a spec that hasn't been attacked.
 
-## Related
-
-- **Loads:** `agent-delegation`.
-- **References:** `software-testing` (scenario shape), `spec-change`.

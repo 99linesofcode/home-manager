@@ -10,6 +10,17 @@ now** (human-in-the-loop), but this contract is written so a separate worker can
 run it automated later. Everything needed to make a review frictionless should
 be in place.
 
+## Related
+
+- **Loads:** `threat-modeling`, `security-review`, `edge-case-analysis` (the
+  mandatory red-team step).
+- **Governing skills:** the change under review's own governing skills are
+  **resolved from context** (the task's matrix row), not from `Loads`.
+- **References:** `software-development` (atomicity, cleanup, done),
+  `self-documenting-code` (the style contract), `software-testing` (the test
+  contract), `software-architecture` (the layering), `git-workflow` (commit
+  hygiene), `project-seed` (the ARCHITECTURE.md contract).
+
 ## When to use
 
 - Reviewing a pull request or change.
@@ -121,11 +132,3 @@ suggestions the author may take or leave.
 > time and can't be swapped in tests.
 > **Fix:** add `VaultPort $vault` to the constructor and use `$this->vault`.
 
-## Related
-
-- **Loads:** `threat-modeling`, `security-review`, `edge-case-analysis` (the
-  mandatory red-team step)
-- **References:** `software-development` (atomicity, cleanup, done),
-  `self-documenting-code` (the style contract), `software-testing` (the test
-  contract), `software-architecture` (the layering), `git-workflow` (commit
-  hygiene).

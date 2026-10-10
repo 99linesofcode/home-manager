@@ -14,6 +14,20 @@ The concrete reference implementation is **Pest** (PHP/Laravel), which the
 user's modules use with the Given/When/Then syntax. The contract is
 language-agnostic; Pest is the expression.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `software-development` (the discipline: tests ship with the
+  change), `laravel` (Pest + Testbench mechanics), `software-architecture`
+  (what the layers are), `feature-spec` (the spec the tests express).
+- Wiki concepts: `action-objects.md` (what actions are tested).
+
+## Files
+
+| File | Load | Read when |
+|---|---|---|
+| `references/filament-page-tests.md` | on-demand | when writing Filament page tests (livewire flows) |
+
 ## When to use
 
 - Writing, extending, or reviewing tests.
@@ -161,10 +175,3 @@ implementing first, stop and write the test for the behavior you just built.
   infrastructure over real external services.
 - **One behavior per test.** A failing test should point at one thing.
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `software-development` (the discipline: tests ship with the
-  change), `laravel` (Pest + Testbench mechanics), `software-architecture`
-  (what the layers are).
-- Wiki concepts: `action-objects.md` (what actions are tested).

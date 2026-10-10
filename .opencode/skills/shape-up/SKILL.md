@@ -14,6 +14,14 @@ This is the methodology. The GitHub mechanics (labels, project template) are
 codified in `new-project` and the `.github` repo; this skill is the way of
 working.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `new-project` (the labels + project template mechanics),
+  `github` (the platform interface), `discovery-interview` (the method's
+  framing), `feature-spec`, `architecture-and-skeleton` (shaping into the
+  skeleton).
+
 ## When to use
 
 - Shaping a piece of work before committing to it.
@@ -86,9 +94,3 @@ The GitHub mechanics that support this:
 - **Project fields** — Stage, Work type, Appetite, Hill, Start, End (the Shape
   Up project template, #9 `.github`).
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `new-project` (the labels + project template mechanics),
-  `github` (the platform interface), `discovery-interview` (the method's
-  framing), `feature-spec`.

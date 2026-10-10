@@ -15,6 +15,15 @@ the Laravel mechanics (module structure, actions/DTOs, composer) live in the
 `laravel` skill. Load those for the reasoning; this skill is the Filament
 mechanics.
 
+**Reference repos:** `~/Development/laravel-module-news`, `laravel-module-user`.
+
+## Related
+
+- **Loads:** `laravel` (the Laravel mechanics).
+- **References:** `software-architecture` (the general contract),
+  `software-testing` (the testing contract).
+- Wiki concepts: `action-objects.md`, `hexagonal-architecture.md`.
+
 ## When to use
 
 - Building or extending a Filament resource, form, table, plugin, or page.
@@ -194,10 +203,3 @@ class ListPosts extends ListRecords
   `Set`/`Get` (react to change). These are general Filament mechanisms; the
   specific field layout is a per-module decision.
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `laravel` (the Laravel mechanics), `software-architecture`
-  (the general contract), `software-testing` (the testing contract).
-- Wiki concepts: `action-objects.md`, `hexagonal-architecture.md`.
-- Reference repos: `~/Development/laravel-module-news`, `laravel-module-user`.

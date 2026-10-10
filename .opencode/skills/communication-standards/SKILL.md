@@ -11,6 +11,16 @@ The user's contract for how the orchestrator writes when talking to them: clear,
 natural prose that reads like it was written by someone who thought about what
 they were saying, not assembled from a template.
 
+## Related
+
+- **Loads:** (none — cross-cutting; applies to all user-facing output)
+- **References:** `teach-mode` (lessons follow this contract),
+  `skill-design-principles` (the writing-standards worked example the stop-slop
+  filter generalizes from).
+- The orchestrator agent definition carries the compact always-on version.
+- hardikpandya/stop-slop (github.com/hardikpandya/stop-slop) — the source of
+  the phrase-level filter.
+
 ## The core rule
 
 Write like a competent human who knows what they're talking about. If a phrase
@@ -148,12 +158,3 @@ Below 35/50, revise.
   stop-slop-only contract's absolute em-dash ban and blanket adverb ban are
   dropped; the phrase-level cut list stays.
 
-## Related
-
-- **Loads:** (none — cross-cutting; applies to all user-facing output)
-- **References:** `teach-mode` (lessons follow this contract),
-  `skill-design-principles` (the writing-standards worked example the stop-slop
-  filter generalizes from).
-- The orchestrator agent definition carries the compact always-on version.
-- hardikpandya/stop-slop (github.com/hardikpandya/stop-slop) — the source of
-  the phrase-level filter.

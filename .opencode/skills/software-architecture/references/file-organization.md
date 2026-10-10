@@ -97,11 +97,24 @@ responsibility. Both are banned.
   carries its suffix — it is what makes a class findable by role and makes
   collisions impossible at scale (`CreatePost` alone could be a controller,
   command, job, or request).
-- **Pure functions live in a file named after them** — no class wrapper, no
-  suffix: `hash.rb`, `board_status.rb`, `folder_chain_for_path.rb` (Ruby). A
-  module or a bare method, whichever the language favours. Class-internal
-  helpers (step-down private methods serving one class) stay in that class's
-  file.
+
+**Interfaces carry their role suffix, never a construct marker.** No `I` prefix
+(`IPostRepository`) and no `Interface` suffix (`PostRepositoryInterface`) —
+both name the language construct, which is not a role, and structural typing
+erases it at runtime. A port is `XPort`; a boundary shape is named for its role
+(`CodeHostResponse`). Graça's explicit-architecture uses the `Interface`
+suffix; we do not. The TypeScript expression lives in the `typescript` skill.
+
+- **Pure functions are grouped into a cohesive unit, not one file each.** A
+  file per trivial helper clutters the tree and costs a read for no meaning.
+  Group related pure functions by subject, and pick the form by the DDD test:
+  a **value object** where the behaviour belongs to a concept and enforces an
+  invariant (`ProjectName`, `VaultPath`, `Connection`); a **domain service**
+  only where the operation spans several objects and belongs to none
+  (`MergeService`); a plain **module file** where the transforms own nothing
+  (`note.rb`, `support.rb`). The default is the model object — a service is the
+  exception, never a home for cohesion. Class-internal helpers (step-down
+  private methods serving one class) stay in that class's file.
 
 ### Folders: module-first, fractal
 
@@ -210,6 +223,12 @@ across them.
 In a module that wraps several bounded contexts, the `core/application/` and
 `core/domain/` rows nest one level deeper, under `core/<component>/`.
 
+**The leaf axis is subject or role.** The rows above name the *roles*; at the
+leaf you may group by **subject** (the entity or aggregate) instead. Graça's
+demo groups `Domain/` by subject (`Post`, `Comment`, `Tag`) and `Application/`
+by role in the same component — either axis is allowed, chosen per component
+and grown as the flat folder starts to hurt.
+
 A **port is rarely just an interface**: it may carry the value objects,
 DTOs, builders, and query objects the core needs to use the tool — all of
 that lives with the port.
@@ -256,6 +275,91 @@ code is dumped with no conceptual meaning; that is the first step toward a
 proper role folder (domain-specific), `Support/` (generic and cohesive),
 the shared kernel (already extracted, shared across modules), or it doesn't
 exist yet.
+
+### The tree in full — each level groups by its own axis
+
+The organising axis changes as you descend; that is what decides what belongs
+where. From the top:
+
+- `ui/` — by **UI type** (api, cli, web), then the specific UI, then the component.
+- `core/` — by **component** (bounded context). `port/` and the shared kernel
+  sit *beside* the components, never inside one.
+- `core/<component>/` — the two layers: `application/`, `domain/`.
+- `core/<component>/application/` and `/domain/` — by **subject or role**, your
+  choice at the leaf. Start flat and group as it hurts (a folder for one class
+  is overzealous); the choice is cheap to change because it is the leaf.
+- `core/port/` — by the **tool type** the core uses (auth, messaging, …).
+- `infrastructure/` — by **tool type**, then by vendor adapter.
+
+Canonical shape (Graça, `explicit-architecture-php`) — note that he groups
+`Application/` by role and `Domain/` by subject in the same demo, which is the
+"either axis at the leaf" rule in practice:
+
+```
+src/
+├── UserInterface/
+│   ├── API/
+│   │   ├── GraphQL/<component>/
+│   │   └── Rest/<component>/
+│   ├── Console/<component>/
+│   └── Website/
+│       ├── Admin/<component>/
+│       └── Consumer/<component>/
+├── Core/
+│   ├── Component/
+│   │   └── Blog/
+│   │       ├── Application/          # use cases + supporting code
+│   │       │   ├── Listener/         # grouped by role here …
+│   │       │   ├── Notification/
+│   │       │   ├── Query/
+│   │       │   ├── Repository/
+│   │       │   └── Service/
+│   │       └── Domain/               # invariants: entities, enums, value objects
+│   │           ├── Post/             # … and by subject (the entity) here
+│   │           ├── Comment/
+│   │           └── Tag/
+│   ├── Port/                         # abstractions shared by the components;
+│   │   ├── Auth/                     # a connection to a 3rd-party tool
+│   │   └── EventDispatcher/
+│   └── SharedKernel/                 # shared so components can communicate
+│       ├── Component/                # (IDs, Events); extractable to its own repo
+│       └── Port/
+└── Infrastructure/
+    ├── CommandBus/<vendor-adapter>/
+    ├── EventBus/<vendor-adapter>/
+    ├── Notifications/<vendor-adapter>/
+    ├── Search/<vendor-adapter>/
+    └── Persistence/<vendor-adapter>/
+lib/
+└── lang-extension/{src,tests}/       # userland language extensions
+```
+
+Our module-first adaptation — same axes, inverted nesting, no wrapper for a
+single context:
+
+```
+<module root>/                        # the repo IS the module
+├── ui/
+│   └── <ui-type>/<component>/
+├── core/
+│   ├── <component>/                  # omitted for a single-context module
+│   │   ├── application/              # actions, data, queries, services, listeners
+│   │   └── domain/                   # models, enums, events, errors, services
+│   └── port/                         # beside the components, never inside one
+└── infrastructure/
+    └── <tool>/<vendor>/
+```
+
+Where the two differ — and this skill wins:
+
+- **The nesting is inverted.** Graça puts the layers outermost and the component
+  inside `Core`; we put the module (the repo) outermost and the layers inside.
+  Same dependency rule, opposite nesting.
+- **No component wrapper for a single-context module.** Graça always has
+  `Core/Component/<X>/`; a module that is one bounded context puts
+  `application/` and `domain/` directly under `core/` (ADR 004).
+- **Names carry the role.** Graça's folders are plain; ours carry role suffixes
+  (see the role table) and are enforced by a gate.
 
 ### Boundary rules
 

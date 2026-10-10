@@ -10,6 +10,15 @@ need comments to explain what the code does or why it is the way it is, the
 code is not clear enough — or the intent belongs in the spec, not the
 source.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `software-development` (the discipline), `code-review` (this
+  contract is a review criterion), `feature-spec` (intent lives in the spec,
+  not source comments), `wiki` (the concept page this skill generalizes).
+- Wiki concept: `software-architecture-principles.md` (the "Self-documenting
+  code" section this skill generalizes).
+
 ## When to use
 
 - Writing, reviewing, or refactoring code.
@@ -117,10 +126,3 @@ without it?** If yes, cut it. If no, the explanation belongs in the spec —
 give the code a better name and put the intent where the project keeps its
 contract.
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `software-development` (the discipline), `code-review` (this
-  contract is a review criterion).
-- Wiki concept: `software-architecture-principles.md` (the "Self-documenting
-  code" section this skill generalizes).

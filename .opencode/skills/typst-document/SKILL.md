@@ -8,6 +8,11 @@ description: Generate a formatted PDF (offerte, contract, or document) from a ma
 Convert a markdown file to a formatted PDF using pandoc + the typst template
 in `~/Development/99linesofcode-typst-template/`.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `vault-notes` (the offerte/contract notes it renders).
+
 ## When to use
 
 - User wants to generate a PDF from a markdown document (offerte, contract,
@@ -85,7 +90,3 @@ Result: `~/Documents/offerte.pdf` (user moves it to Google Drive).
 - The template imports `@preview/oxifmt:1.0.0` (network fetch on first
   compile; cached afterwards)
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `vault-notes` (the offerte/contract notes it renders).

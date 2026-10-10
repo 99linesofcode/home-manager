@@ -8,6 +8,19 @@ description: Interview-first discovery for a project or feature — ask, don't a
 Phase 2. The output is a brief, a decision log, and a register of open
 questions — not a design, not code.
 
+## Related
+
+- **Loads:** `agent-delegation`.
+- **References:** `shape-up` (framing), `software-architecture` (domain
+  concepts), `vault-notes`.
+
+## Files
+
+| File | Load | Read when |
+|---|---|---|
+| `references/event-storming.md` | on-demand | when the domain is complex — many events, rules, or actors |
+| `references/client-discovery.md` | on-demand | when the answers live with a non-technical stakeholder |
+
 ## When to use
 
 - A vague brief, raw material, or "figure out what we're building".
@@ -73,8 +86,3 @@ them yourself.
 - Design the solution, choose a stack, or write code.
 - Resolve an unknown by guessing.
 
-## Related
-
-- **Loads:** `agent-delegation`.
-- **References:** `shape-up` (framing), `software-architecture` (domain
-  concepts), `vault-notes`.

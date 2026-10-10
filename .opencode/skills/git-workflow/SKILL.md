@@ -9,6 +9,21 @@ The user's Git + GitHub operating procedure. Encodes the workflow decision
 (which methodology a repo uses), the mechanics (local git + GitHub via MCP/gh),
 the commit style, the autonomy level, and the safety rules.
 
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `software-development` (the change chain and definition of
+  done that govern commits), `new-project` (the scaffolding procedure this
+  skill's mechanics serve), `github` (the platform layer for issues/PRs),
+  `agent-delegation` (the worktree-per-worker rule), `memory` (the vault is not
+  isolated by a worktree), `discovery-interview` (issues seed discovery).
+
+## Files
+
+| File | Load | Read when |
+|---|---|---|
+| `references/skeleton-ecosystem.md` | on-demand | when scaffolding a new repo from the skeleton ecosystem |
+
 ## When to use
 
 - Any git operation: init, clone, branch, commit, merge, rebase, push, pull,
@@ -379,11 +394,3 @@ delivery mechanics.
   unrelated files.
 - **`gh` not authenticated:** check `gh auth status`; the GitHub MCP is the
   fallback.
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `software-development` (the change chain and definition of
-  done that govern commits), `new-project` (the scaffolding procedure this
-  skill's mechanics serve), `github` (the platform layer for issues/PRs).
-- **Reference files:** `references/skeleton-ecosystem.md` (the skeleton
-  ecosystem catalogue and per-type scaffolding).

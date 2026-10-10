@@ -8,6 +8,25 @@ description: Stand up a new project's foundation before any product work — the
 Phase 1 of spec-driven delivery. No product work happens until this exists: the
 repo, the scratchpad, the rules, the gates.
 
+## Related
+
+- **Loads:** `new-project` (scaffolding).
+- **References:** `git-workflow`, `software-development`, `vault-notes`,
+  `software-architecture` (ARCHITECTURE.md), `agent-delegation`,
+  `slice-delivery` (the close-out), `skill-authoring` (repo-scoped skills).
+
+## Files
+
+Before acting, read every `required` file below.
+
+| File | Load | Read when |
+|---|---|---|
+| `assets/AGENTS.template.md` | required | before writing the repo's AGENTS.md |
+| `assets/ARCHITECTURE.template.md` | required | before stubbing ARCHITECTURE.md |
+| `assets/scratchpad/brief.md` | required | before creating the scratchpad brief |
+| `assets/scratchpad/decisions.md` | required | before creating the scratchpad decisions log |
+| `assets/scratchpad/open-questions.md` | required | before creating the scratchpad open-questions register |
+
 ## When to use
 
 - Starting a new project from scratch.
@@ -72,8 +91,3 @@ repo, the scratchpad, the rules, the gates.
 - Choose the architecture (that is Phase 4).
 - Invent requirements — unknowns go to `open-questions.md`.
 
-## Related
-
-- **Loads:** `new-project` (scaffolding).
-- **References:** `git-workflow`, `software-development`, `vault-notes`,
-  `software-architecture` (ARCHITECTURE.md), `agent-delegation`.

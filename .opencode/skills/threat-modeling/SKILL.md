@@ -7,6 +7,11 @@ description: Model a system, feature, or change to enumerate security threats be
 
 The analysis step of a red-team review: understand what you're defending, where the trust boundaries are, and what could go wrong, before you hunt for vulnerabilities. Threat modeling is a design-phase activity — it catches architectural mistakes (a missing trust boundary, an over-trusted service, an authorization gap) that code review alone misses.
 
+## Related
+
+- **Loads:** (none)
+- **References:** `security-review`, `edge-case-analysis` (the review steps this scopes)
+
 ## When to use
 
 - Reviewing a system, feature, or change for security (design or architecture review).
@@ -44,7 +49,3 @@ A threat model with these sections:
 - Trust-boundary crossings are enumerated, not hand-waved.
 - The output ends with a prioritized attack surface that the review will actually use.
 
-## Related
-
-- **Loads:** (none)
-- **References:** `security-review`, `edge-case-analysis` (the review steps this scopes)

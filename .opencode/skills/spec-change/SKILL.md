@@ -8,6 +8,11 @@ description: Handle changed intent or newly discovered ambiguity mid-build — p
 Phase 7. The order is always spec → tests → code, even for a change you're sure
 about.
 
+## Related
+
+- **Loads:** `agent-delegation`.
+- **References:** `feature-spec`, `slice-delivery`.
+
 ## When to use
 
 - The user changes their mind about behavior.
@@ -48,7 +53,3 @@ about.
 - Change code before the delta is approved.
 - Resolve a newly discovered ambiguity by choosing.
 
-## Related
-
-- **Loads:** `agent-delegation`.
-- **References:** `feature-spec`, `slice-delivery`.

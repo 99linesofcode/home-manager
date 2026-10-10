@@ -20,6 +20,15 @@ The general architecture contract lives in the `software-architecture` skill;
 the Rails mechanics (engines, actions/DTOs, Hotwire, Packwerk) live in the
 `rails` skill. Load those for the reasoning; this skill is the Avo mechanics.
 
+**Reference repos (target):** `~/Development/rails-module-*`.
+
+## Related
+
+- **Loads:** `rails` (the Rails mechanics).
+- **References:** `software-architecture` (the general contract),
+  `software-testing` (the testing contract).
+- Wiki concepts: `action-objects.md`, `hexagonal-architecture.md`.
+
 ## When to use
 
 - Building or extending an Avo resource, field, action, dashboard, or card.
@@ -171,10 +180,3 @@ missing policy denies (with `explicit_authorization` on).
   search, scopes, dynamic filters, kanban, and audit logging are paid add-ons
   per app. Confirm which tier a feature needs before relying on it.
 
-## Related
-
-- **Loads:** (none — loaded on demand)
-- **References:** `rails` (the Rails mechanics), `software-architecture` (the
-  general contract), `software-testing` (the testing contract).
-- Wiki concepts: `action-objects.md`, `hexagonal-architecture.md`.
-- Reference repos (target): `~/Development/rails-module-*`.
