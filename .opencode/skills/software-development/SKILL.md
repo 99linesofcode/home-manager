@@ -32,6 +32,8 @@ they are contracts, not suggestions.**
   | Code style: naming, comments, whitespace, formatting rhythm | `self-documenting-code` |
   | Laravel specifics (actions, DTOs, modules) | `laravel` |
   | Filament UI work | `filament` (+ `laravel`) |
+  | Docker / Docker Compose dev environment | `docker` |
+  | Kubernetes / Helm / Flux / cluster deploy | `kubernetes` |
   | Review a change end-to-end | `code-review` (+ that change's governing skills) |
   | Security review / red-team | `code-review` (Loads `security-review`, `threat-modeling`, `edge-case-analysis`) |
   | Start a new project / seed the foundation | `project-seed` |
