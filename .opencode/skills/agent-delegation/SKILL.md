@@ -46,6 +46,12 @@ the package carries — so the package is the whole game.
    the same files — in particular the acceptance-test author and the
    implementer: the tests are written, reviewed, and **locked** before the
    implementer starts. Parallelism is for genuinely independent work.
+9. **Isolate every worker in a worktree.** Each worker runs in its own git
+   worktree, cut from the remote default branch (`git worktree add <path> -b
+   <branch> origin/main` — see `git-workflow`), so no two writers share a HEAD.
+   This is the structural guarantee behind rule 7's disjoint scopes: even
+   parallel workers cannot collide on the working tree. It isolates *code* only
+   — the vault (memory) is shared and is not protected by this (see `memory`).
 
 ## Governing skills (every package)
 
@@ -97,7 +103,9 @@ proves nothing. Carry this block, filled in for the task:
   binary — a gate run outside it proves nothing about the environment the change
   ships in.
 - **Gates.** <the exact commands: typecheck, lint, boundaries, test, build>.
-- **One session per working directory.** Do not fight another session over HEAD.
+- **One worktree per worker.** Each worker gets its own worktree cut from the
+  remote default branch; never two workers in one checkout. Do not fight another
+  session over HEAD.
 
 The role briefs carry the same block as the worker's reminder; the package is the
 binding copy, and it names the concrete repository and gates.

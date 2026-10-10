@@ -135,8 +135,15 @@ Every artefact name carries two meanings, and both must be evident:
 `InvoiceRepository`: `Invoice` is the domain, `Repository` is the role. The
 role suffix exists to make name collisions impossible at scale
 (`CreateInvoice` alone could be a controller, command, job, or request) and
-to make classes findable by role. Long names are fine; clarity wins; the
-IDE handles typing.
+to make classes findable by role.
+
+**Long names are the convention, not a compromise.** A name's job is to
+communicate intent and behavior; brevity is not a goal. Spell the whole thing
+out — `CreateInvoiceDataTransferObject`, `SyncTasksFromProviderAction`,
+`GithubTaskMapper`. Never abbreviate a role or a concept to save characters
+(`DTO`, `Repo`, `Mgr`, `Svc`), and never drop the role suffix for length. The
+IDE autocompletes; the reader pays for a cryptic name every time. Clarity wins
+over brevity, always.
 
 **The carve-out:** not every artefact gets a suffix. Domain-model classes
 are the model itself — `Post`, never `PostEntity`: inside the domain layer
@@ -162,58 +169,121 @@ responsibility. Both are banned.
 
 ### One class per file
 
-- **One class/interface per file.** The file name matches the symbol exactly:
-  `CreateTaskNoteAction.ts` exports `CreateTaskNoteAction`, nothing else. An
-  action's private input interface may share its file; anything consumed
-  elsewhere gets its own.
-- **The role is the suffix** — in the filename and the symbol name:
+- **One class/interface per file.** The file name matches the symbol, per the
+  language's convention — `create_task_note_action.rb` holds
+  `CreateTaskNoteAction` in Ruby. An action's private input may share its file;
+  anything consumed elsewhere gets its own.
+- **The role is the suffix** — in the filename and the symbol name. The table
+  is closed: every role has exactly one suffix; a name that carries none is
+  either a carve-out (below) or wrong.
 
-  | Role                      | Suffix   | Example               |
-  |---------------------------|----------|-----------------------|
-  | Use case                  | `Action` | `PromoteCardAction`   |
-  | Core-designed interface   | `Port`   | `VaultPort`           |
-  | Tool wrapper              | `Adapter`| `GitHubAdapter`       |
-  | Boundary payload          | `Data`   | `TaskData`            |
-  | Error                     | `Error`  | `DomainError`         |
+  | Role                    | Suffix         | Lives in |
+  |-------------------------|----------------|----------|
+  | Use case                | `Action`       | `application/actions/` |
+  | Core-designed interface | `Port`         | `core/port/` |
+  | Tool wrapper            | `Adapter`      | `infrastructure/<tool>/` |
+  | Boundary payload (DTO)  | `DataTransferObject` | `application/` (port DTOs live with their port) |
+  | Service (domain/app)    | `Service`      | `domain/` or `application/` |
+  | Query                   | `Query`        | `application/queries/` |
+  | Domain event            | `Event`        | `domain/` or the shared kernel |
+  | Event listener          | `Listener`     | `application/listeners/` |
+  | Mapper                  | `Mapper`       | beside its consumer |
+  | Parser                  | `Parser`       | beside its consumer |
+  | Rule                    | `Rule`         | `domain/rules/` |
+  | State                   | `State`        | `domain/states/` |
+  | Query builder           | `QueryBuilder` | `domain/` |
+  | Collection              | `Collection`   | `domain/` |
+  | Factory                 | `Factory`      | `domain/` |
+  | Error                   | `Error`        | `domain/errors/` |
+  | Controller              | `Controller`   | `ui/` |
+  | Command                 | `Command`      | `ui/` |
+  | Request                 | `Request`      | `ui/` |
+  | Resource                | `Resource`     | `ui/` |
+  | View model              | `ViewModel`    | `ui/` |
+  | Scheduler               | `Scheduler`    | `ui/` |
 
-  Supporting classes take a descriptive role word instead (Mapper, Parser,
-  Resolver, Scheduler, Registry, Decoder): `TaskNoteMapper`, `SyncScheduler`,
-  `ChunkedDecoder`.
-- **Pure functions are lowercase function-files** named after the function:
-  `hash.ts`, `boardStatus.ts`, `folderChainForPath.ts`. No suffix, no class
-  wrapper. Class-internal helpers (step-down private functions serving one
-  class) stay in that class's file.
+  **Carve-outs** (no suffix, by design): domain **models** (`Post`, never
+  `PostEntity`) — inside the domain layer the model is the default, so a suffix
+  locates nothing; **enums** are descriptive (`PostStatus`, not
+  `PostStatusEnum`); and **value objects** follow the enforcement rule (see
+  "Value objects: extract on enforcement, not on shape"). Everything else
+  carries its suffix — it is what makes a class findable by role and makes
+  collisions impossible at scale (`CreatePost` alone could be a controller,
+  command, job, or request).
+- **Pure functions live in a file named after them** — no class wrapper, no
+  suffix: `hash.rb`, `board_status.rb`, `folder_chain_for_path.rb` (Ruby). A
+  module or a bare method, whichever the language favours. Class-internal
+  helpers (step-down private methods serving one class) stay in that class's
+  file.
 
-### Folders: concept → architecture → role
+### Folders: module-first, fractal
 
-Directory structure runs along three axes, in this order — **package by
-component** (Simon Brown), with the layers as the fine-grained axis inside
-each component:
+The top-level unit is the **module** — a hexagon, and **a repository is a
+module** (in a monorepo, one package per module). Above it is composition;
+inside it is its interior. This is our synthesis: Graça's dependency rule and
+naming principle, with his axes inverted — the module outermost, the layers
+inside. (Graça puts the layers outermost and the component inside; we put the
+module outermost and the layers inside. Same rule, opposite nesting.) The
+leading reference is Graça's `explicit-architecture-php` and
+`explicit-architecture-reactjs`, paired with this module-first inversion.
 
-1. **Concept** (top): modules/packages are the components — bounded
-   contexts. One module per business concept; the top level **screams the
-   domain**, not the framework. The shared kernel is itself a module
-   (`laravel-module-support` in the Laravel expression).
-2. **Architecture** (middle): inside a module, the layers — `App/`
-   (driving), `Domain/` (core), `Infrastructure/` (driven; empty until a
-   real adapter exists).
-3. **Role** (leaf): inside a layer, folders per role — the menu below.
+```
+<module root>/                   # the module IS the repo (or one package in a monorepo)
+├── ui/                          # driving adapters (delivery)
+│   └── <ui-type>/               # web / api / cli
+├── core/                        # the module's core
+│   ├── <component>/             # a component = a bounded context
+│   │   ├── application/         # use cases (actions), queries, services, listeners
+│   │   └── domain/              # entities, value objects, domain services, events
+│   └── port/                    # ports shared across the module's components
+└── infrastructure/              # driven adapters
+    └── <tool>/<vendor>/
+```
 
-**Scope — this is a component's interior.** The concept → architecture → role
-order describes how one *component/module* is laid out: in the Laravel
-expression, the inside of a single package. It is deliberately silent on how
-several components are assembled at a repository root. That outer layer is a
-separate decision — Graça's `Core` / `Infrastructure` / `Presentation`, a
-monorepo of packages, a service boundary — and `Core` there names the
-*container* of the components, not the domain layer inside one.
+The entry point sits at the module root (`src/main.ts`), not inside a layer.
+The shared kernel and language extensions are modules of their own (below), not
+folders inside this one.
 
-**When the application is a single bounded context**, there is exactly one
-component and the repository *is* it — so this interior shape sits at the root:
-`src/{App,Domain,Infrastructure}` beside the entry point (`main.ts`), with no
-component wrapper. The concept-first rule above ("the top level screams the
-domain") applies when there is *more than one* component; with exactly one, the
-layers are the top level, and a component folder for a single context is
-ceremony, not structure.
+**The fractal — the shape repeats at every scale.** A module that wraps other
+modules is a monorepo: each package is its own module (its own hexagon with the
+same interior), composed through the **dependency graph** — Composer packages,
+workspace packages — never nested folders. A hexagon is *never* placed inside
+another hexagon's `core`: that would put UI code inside a core and break the
+layer rule. Keep modules side by side and compose them through the graph.
+
+**The base case — a component is `{application, domain}`.** A module is the
+deployable (the repo); its `core` holds one or more **components** — the bounded
+contexts. A module that is a single bounded context has exactly one component;
+name it anyway (the component names the context, the repo names the module). A
+component has no `ui` and no `infrastructure`: those exist only where something
+is delivered or adapted, and a component is neither. The shape bottoms out
+here. Never add empty `ui`/`infra` folders "for symmetry" — they imply a
+delivery surface that isn't there.
+
+**Promotion, not nesting.** When a component grows enough to be independently
+deliverable, it *becomes* a module — promoted to a sibling hexagon (Rule of
+Three). It does not grow `ui`/`infra` folders in place.
+
+**Two other module kinds:**
+
+- **Shared kernel** — a module with a degenerate interior: shared types only
+  (events, IDs, value objects, enums, specs); no `ui`, no `infrastructure`, no
+  use cases. The one module every other module may depend on.
+- **Language extensions** — a module too, outside `src` in its own package:
+  the language primitives we own (Graça's userland extensions).
+
+**Dependency direction — two axes, not one:**
+
+- **Lateral (peers).** Two peer bounded contexts must not know each other. The
+  sanctioned channels are the shared kernel and events.
+- **Vertical (composition).** A module may depend on the lower-level modules it
+  wraps — how a library or language-extension module is used; the wrapping
+  module is the composition point.
+
+Dependencies form an acyclic graph pointing *downward* toward more fundamental
+modules. What is forbidden is *lateral* coupling between peers. Inside a
+module: `ui → core ← infrastructure`; nothing depends on `ui` or
+`infrastructure`.
 
 **The growth rule (when additional folders are warranted):** start flat and
 group as the need arises — *"it is overzealous to create a folder to put
@@ -222,9 +292,8 @@ of that role** exists; the taxonomy is a menu, not an upfront scaffold.
 
 **Language conventions win for naming and folder shape.** Folder structure
 and file naming follow whatever is conventional for the language — PSR-4 in
-PHP, lowercase module folders with PascalCase class files and camelCase
-function files in TypeScript — as long as the module boundaries stay
-expressible; when this skill's structure and the language's convention
+PHP, snake_case files with PascalCase classes in Ruby — as long as the module
+boundaries stay expressible; when this skill's structure and the language's convention
 conflict, the language's convention wins. The discipline that transfers
 across languages: the path locates the module, the name locates the role,
 the entry point sits at the conventional root, and the module dependency
@@ -240,15 +309,48 @@ across them.
 
 **The role menu** (closed; extend only by decision, never per repo):
 
-| Layer          | Roles |
-|----------------|-------|
-| Domain (core)  | `Actions/` (`Action`), `Ports/` (`Port`), `DataTransferObjects/` (`Data`), `Enums/` (descriptive: `PostStatus`), `Models/` (bare), `Errors/` (`Error`), `Queries/` (`Query`), `Collections/` (`Collection`), `Events/` (`Event`), `Exceptions/` (descriptive), `Rules/` (`Rule`), `States/` (`State`), domain services (`Service`) |
-| App (driving)  | `Commands/`, `Controllers/`, `Requests/`, `Resources/`, `Middleware/`, `Filters/`, `ViewModels/`, `Scheduling/` |
-| Infrastructure | `Infrastructure/<Tool>/` (`Adapter`) — one subfolder per tool; a second vendor adapter earns a per-vendor subfolder |
+| Area                            | Roles |
+|---------------------------------|-------|
+| `core/<component>/application/` | `actions/` (`Action`), `data/` (`DataTransferObject`), `queries/` (`Query`), `services/` (`Service`), `listeners/` (`Listener`), repository interfaces |
+| `core/<component>/domain/`      | `models/` (bare), `enums/` (descriptive: `PostStatus`), `events/` (`Event`), `errors/` (`Error`), `rules/` (`Rule`), domain services (`Service`) |
+| `core/port/`                    | `Port` interfaces, plus the value objects, DTOs, builders and query objects they need |
+| `ui/`                           | `controllers/`, `commands/`, `requests/`, `resources/`, `view-models/`, `scheduling/` |
+| `infrastructure/<tool>/`        | `Adapter` — one subfolder per tool; a second vendor adapter earns a per-vendor subfolder |
 
 A **port is rarely just an interface**: it may carry the value objects,
 DTOs, builders, and query objects the core needs to use the tool — all of
 that lives with the port.
+
+**Co-location: role folders for shared, consumer folders for exclusive.** A
+role folder (`actions/`, `queries/`) tells you what *kinds* exist; it never
+tells you what wraps what. Flow legibility comes from **consumer-scoped
+placement** (Graça): every consumer — a controller, a use case, a CLI command —
+owns a folder, and everything used *exclusively by it* lives inside that
+folder. An action with exclusive collaborators (nested actions, a private
+query, a private payload) becomes a folder named after it; a leaf action stays
+a single file. Shared collaborators stay at the role level, because several
+consumers use them.
+
+```
+core/<component>/application/
+├── actions/
+│   ├── publish_post_action.rb          # leaf — no exclusive collaborators
+│   └── sync_tasks/                     # consumer folder
+│       ├── sync_tasks_action.rb        # the entry point of the flow
+│       ├── merge_task_action.rb        # nested, exclusive to this flow
+│       └── task_conflict_data_transfer_object.rb  # exclusive payload
+└── queries/
+    └── list_projects_query.rb          # shared — several consumers use it
+```
+
+Co-location applies **within each layer**: an action's exclusive collaborators
+live in its folder under `application/`; a domain concept's exclusive types
+live in its folder under `domain/`.
+
+The test is *actual usage*, not topic: exclusive → inside the consumer's
+folder; shared → at the role level. Moving a class between the two is a
+placement change, never a behavior change. This is what makes the tree answer
+"what wraps what" without opening imports — the nesting *is* the composition.
 
 **Support, not Utils.** A `Support/` folder is legitimate for **generic,
 universal concepts** — code that could have been part of the framework or
@@ -285,6 +387,59 @@ exist yet.
   tool, no business logic) does not get the three-folder shape — that would
   be ceremony. Flat structure, classes + role suffixes, pure function-files.
 
+## Domain building blocks (when each exists)
+
+The model is a vocabulary with a bar per block, not a uniform checklist. Where
+the textbook default diverges from ours, we say so.
+
+- **Entity** — identity plus lifecycle; the default citizen of `domain/`. Bare
+  name (`Post`, never `PostEntity`).
+- **Value object** — enforces an invariant or carries behaviour, or prevents a
+  real bug class; otherwise the primitive. Bare name. Bar below.
+- **Aggregate / aggregate root** — the consistency boundary: exactly what one
+  transaction must keep consistent. As small as the invariants allow; one action,
+  one transaction; other aggregates referenced by identity, never by object
+  graph. Bare name (it is an entity).
+- **Repository** — only when storage must be swappable or the domain tested
+  without a DB (lean guardrail); never one per use case. Suffix `Repository`; in
+  the Laravel expression, none over Eloquent.
+- **Domain service** — pure logic spanning entities, owned by none, no I/O;
+  *consulted by* a use case, never the reverse. Suffix `Service`, home `domain/`.
+- **Application service** — orchestration shared across use cases; rare, because
+  actions are the orchestration seam. Suffix `Service`, home `application/`.
+- **Domain event** — something that happened in the domain; `Event`, `domain/`.
+  One that crosses a component boundary is an integration event and lives in the
+  shared kernel, so components share its shape without sharing the domain.
+- **Read model / projection** — a query-shaped view; not until CQRS earns its
+  keep. Reads go through queries and query builders.
+- **Invariant / guard** — a rule that must always hold, owned by the entity,
+  value object, or aggregate that has it and enforced at construction; the action
+  wraps it and translates the error. Never a bare guard scattered through a use
+  case.
+
+**Value objects: extract on enforcement, not on shape.** A value object earns
+its own class when it **enforces an invariant or carries behaviour** — a `Money`
+that can't go negative, an `Email` that validates on construction, a `Slug` that
+can't be empty — or when it **prevents a real bug class** (wrapping IDs so a
+`UserId` can't be passed where a `PostId` is expected). It does **not** earn its
+keep when it only re-types a primitive: noise — more files, no new guarantee.
+Graça defaults to value objects over primitives; we temper that with the lean
+guardrail: **enforce or prevent, otherwise keep the primitive.**
+
+**Data shapes: DTO, value, or private record — earn it, or it isn't a DTO.**
+Before extracting a shape, it is exactly one of three: a **value object**
+(domain, bare name); a **DataTransferObject** (application) — a *boundary
+payload* that **crosses a module or port boundary**, is **named for the concept,
+not the operation**, and is **reused or canonical**, home `application/data/`; or
+a **private record** — the working memory of one algorithm, which is **not** a
+DTO: no suffix, co-located with its consumer, never in `data/`. The default is
+the fewest, most general shapes; near-duplicates collapse; a `*Data` that clears
+none of these bars is the smell.
+
+**We don't reach for** Specification, Unit of Work, Gateway, Decorator, or
+Mediator classes by default; add one only when a concrete need can't be met by an
+entity, a value object, a domain service, or an action.
+
 ## Hexagonal architecture (ports & adapters)
 
 The core connects to the outside world only through **ports** (interfaces,
@@ -301,7 +456,7 @@ designed for the core's needs — never mimicking a tool's API) implemented by
 **DTOs belong to the core, not the provider.** A port's DTOs are designed
 for the core's needs exactly as the port itself is — never mimicking a
 tool's API. "The core never sees provider shapes" includes shapes wearing
-a DTO costume: a `TaskData` whose fields mirror the GitHub issue is a
+a DTO costume: a `TaskDataTransferObject` whose fields mirror the GitHub issue is a
 provider shape. **One canonical DTO per domain concept:** when a second
 adapter serves the same concept (a second provider, a second storage, a
 second UI), both map onto the SAME domain DTO — parallel per-provider DTO
@@ -315,21 +470,20 @@ model is missing. Accumulating symptoms: per-pair diff/verdict machinery,
 duplicated hash/translation helpers, provider-shaped snapshot fragments.
 Worked example (OPM, 2026-09-25): GitHub and Todoist each got their own
 task DTO vocabulary — five snapshot-hash copies, two verdict systems,
-and a done/open coercion bug followed; the canonical `TaskData` with one
+and a done/open coercion bug followed; the canonical `TaskDataTransferObject` with one
 mapper per side dissolved all of them.
 
 Dependencies point **inward** — the **dependency rule**: the domain layer
 knows nothing about the application layer; the core knows nothing about
 adapters.
 
-Folder shape inside a module (architecturally evident coding; the module
-itself is the component — see "Modular monolith"):
+Folder shape — module-first (see "Folders: module-first, fractal"):
 
 ```
-src/
-├── App/               # driving side (controllers, commands, schedulers, UI)
-├── Domain/            # core: actions, DTOs, enums, models, domain services
-└── Infrastructure/    # driven adapters (empty until there's a real need)
+<module root>/
+├── ui/                 # driving adapters (controllers, commands, schedulers)
+├── core/               # components ({application, domain}) + port/
+└── infrastructure/     # driven adapters (empty until there's a real need)
 ```
 
 Enforce with a dependency-graph tool (e.g. Deptrac in PHP) in CI: allowed
@@ -370,20 +524,25 @@ the gate is what would have caught it on day one.
 
 Each meaningful business operation is its own class — a **transaction
 script** (Fowler) in command-pattern shape: single responsibility,
-immutable, one public method (`invoke()` / `execute()` — language-idiomatic),
-input as a payload/DTO, dependencies via constructor injection (never
-resolved inside the body). An action composes zero or more nested actions,
-each with its own single responsibility.
+immutable, one public method (`call()` in Ruby, `__invoke()` in PHP —
+language-idiomatic), input as a payload/DTO, dependencies via constructor
+injection (never resolved inside the body). An action composes zero or more
+nested actions, each with its own single responsibility.
 
-```text
-final class CreatePostAction
-    constructor(RecordPostCreatedAction auditTrail)
+```ruby
+class CreatePostAction
+  def initialize(audit_trail:)
+    @audit_trail = audit_trail
+  end
 
-    invoke(PostData data) -> Post
-        transaction:
-            post = Post.create(author_id: data.authorId, title: data.title, ...)
-            auditTrail(post)
-            return post
+  def call(data)
+    Post.transaction do
+      post = Post.create(author_id: data.author_id, title: data.title)
+      @audit_trail.call(post)
+      post
+    end
+  end
+end
 ```
 
 Sizing and composition rules (Stitcher, Laravel Beyond CRUD):
@@ -402,31 +561,41 @@ Sizing and composition rules (Stitcher, Laravel Beyond CRUD):
 
 Rich enums guard their own transitions:
 
-```text
-enum PostStatus
-    Draft, Published, Scheduled
+```ruby
+class PostStatus
+  DRAFT     = new
+  PUBLISHED = new
+  SCHEDULED = new
 
-    canTransitionTo(next) -> bool
-    transitionTo(next) -> PostStatus   # throws DomainException on invalid move
+  def can_transition_to?(next_status)
+    # ...
+  end
+
+  def transition_to(next_status)
+    # ... raises DomainError on an invalid move
+  end
+end
 ```
 
-The action wraps `transitionTo()` in a try/catch, translating the
-`DomainException` into a domain-specific exception — never imperative
-`throw_unless` helpers.
+The action wraps `transition_to` in a rescue, translating the
+`DomainError` into a domain-specific exception — never imperative
+`raise unless` helpers.
 
 ## Modular monolith
 
 One deployable, internally divided into **modules with explicit boundaries**.
-The module **is** Graça's component: a bounded context made visible as a
-package. In the Laravel expression, modules are Composer packages and the
-shared kernel is itself a module (`laravel-module-support`).
+A module is a hexagon (see "Folders: module-first, fractal"); its `core` holds
+one or more components (bounded contexts). In the Laravel expression, modules
+are Composer packages and the shared kernel is itself a module
+(`laravel-module-support`).
 
-- **Module** — a self-contained unit with a clear boundary (a bounded
-  context); exposes a defined API, internals private.
+- **Module** — a self-contained unit with a clear boundary; exposes a defined
+  API, internals private. Its `core` holds the components (bounded contexts).
 - **Owned data** — each module owns its data/schema and is its **single
   source of truth**; others don't reach in. A module may query data it
   doesn't own (read-only) but only changes data it owns.
-- **Communication** — via contracts (events, actions), not direct coupling.
+- **Communication** — via contracts (events, actions), not direct coupling;
+  peers never import each other, composition goes through the dependency graph.
 - **Extractable** — the boundary makes a later service split possible.
 
 ## Architectural patterns (when they earn their keep)
@@ -472,9 +641,14 @@ without the document update as blocking.
 ## Related
 
 - **Loads:** (none — this is a leaf contract)
-- **References:** `laravel` (the Laravel expression), `filament` (the Filament
-  expression), `software-testing` (how the layers are tested).
-- Wiki concepts: `architecturally-evident-structure.md` (the folder taxonomy
-  this section distills), `ddd.md`, `hexagonal-architecture.md`,
+- **References:** `laravel` (the Laravel mechanics), `filament` (the Filament
+  UI mechanics), `software-testing` (how the layers are tested).
+- **Leading reference:** Graça's reference implementations —
+  `hgraca/explicit-architecture-php` and `hgraca/explicit-architecture-reactjs`
+  — paired with our module-first convention. Where this skill and the reference
+  apps differ, this skill wins (we invert Graça's axes); where this skill is
+  silent, mirror the reference apps.
+- Wiki concepts: `architecturally-evident-structure.md` (Graça's taxonomy, which
+  this skill distills and inverts), `ddd.md`, `hexagonal-architecture.md`,
   `action-objects.md`, `modular-monolith.md`,
   `software-architecture-principles.md`.

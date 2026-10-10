@@ -76,9 +76,9 @@ declare(strict_types=1);
 
 uses(\Lines\News\Tests\TestCase::class);   // only when the test needs the DB
 
-use Lines\News\Domain\Actions\CreatePostAction;
-use Lines\News\Domain\DataTransferObjects\PostData;
-use Lines\News\Domain\Models\Post;
+use Lines\News\Core\Post\Application\Actions\CreatePostAction;
+use Lines\News\Core\Post\Domain\DataTransferObjects\PostDataTransferObject;
+use Lines\News\Core\Post\Domain\Models\Post;
 
 use function Pest\Laravel\assertDatabaseHas;
 
@@ -88,7 +88,7 @@ describe('CreatePostAction', function () {
         $post = Post::factory()->make()->except('id');
 
         // When — perform the action
-        (new CreatePostAction)(PostData::fromArray($post));
+        (new CreatePostAction)(PostDataTransferObject::fromArray($post));
 
         // Then — assert the outcome
         assertDatabaseHas(Post::class, $post);
@@ -109,8 +109,8 @@ The test tree mirrors the source tree, so a test is easy to find:
 
 ```
 tests/
-├── Unit/Domain/...    # mirrors src/Domain
-├── Feature/App/...    # mirrors src/App
+├── Unit/Core/...      # mirrors src/core
+├── Feature/Ui/...     # mirrors src/ui
 └── Browser/
 ```
 

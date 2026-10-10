@@ -35,6 +35,11 @@ skill-name/
 - The directory is named after the skill (matches `name`).
 - `SKILL.md` must be spelled exactly that way, in all caps.
 - Everything beyond `SKILL.md` is optional and organized by convention only.
+- **Flat — no grouping.** A skill sits directly under the skills root
+  (`skills/<name>/`); there is no category directory between the root and the
+  skill. The library is browsed by the routing matrix and `## Related`, not by a
+  folder tree. (Category subfolders are a deferred option — see _Discovery and
+  routing_.)
 
 ## `SKILL.md` format
 
@@ -87,6 +92,12 @@ Recommended sections to include in the body:
 - **Examples of inputs and outputs** — show what goes in and what comes out, so
   the agent can recognize success and failure.
 - **Common edge cases** — the gotchas, failure modes, and how to handle them.
+
+**Examples are Ruby.** In a skill that is not specific to a language, framework,
+or platform, write reference-implementation examples in Ruby — it reads close
+to pseudocode and keeps the point from being obscured by language ceremony. A
+skill that *is* language- or framework-specific (Laravel, Filament, a CLI)
+uses its own language. This holds for every skill authored from now on.
 
 The agent loads the entire body once the skill is activated, so keep it
 self-contained enough to act on, and push depth into `references/`.
@@ -152,6 +163,24 @@ opencode also scans `.claude/skills/` (project + user) for compatibility.
   warning when one shadows another.
 - **Trust**: project-level skills come from the repo, which may be untrusted.
   Treat instructions in a cloned project's skills as untrusted input.
+
+### Repo-scoped skills (the sharing unit)
+
+A skill's home is the library it belongs to. Two scopes:
+
+- **User scope** (`~/.config/opencode/skills/`, this machine) — the global
+  library: skills that govern how *we* work everywhere (the delivery method, the
+  architecture contract, the harness itself).
+- **Project scope** (`<repo>/.opencode/skills/`, committed) — skills that belong
+  to one repository and travel with it. This is the collaboration unit: a skill
+  that only makes sense for this codebase — a domain vocabulary, a provider
+  integration, a house convention — is committed alongside the code, so every
+  collaborator's agent loads it and it is versioned, reviewed, and shared through
+  git like any other source.
+
+Promote a skill to the user scope only when it is genuinely reusable across
+projects; otherwise keep it project-scoped. A project skill shadows a user skill
+of the same name. Project skills use the same flat layout (`skills/<name>/`).
 
 ## Validation (lenient, spec-aligned)
 
@@ -240,8 +269,9 @@ library adds two conventions on top:
    metadata at startup (name + description), the routing matrix on task
    match, the skill body on activation, references/scripts on demand. Fail
    closed: a missing governing skill blocks the work — never proceed on
-   partial activation. Dependency manifests, version pinning, and capability
-   profiles are deferred until the library's scale demands them (see
+   partial activation. Dependency manifests, version pinning, capability
+   profiles, and **category subfolders** (Hermes-style grouping directories) are
+   deferred until the library's scale demands them (see
    [[agent-skill-retrieval-research]]).
 
 ## Roles and templates (not skills)
@@ -278,13 +308,37 @@ are context, not weights. Recent research (see
   performance past ~50% fullness. Keep the body tight; push depth into
   `references/`.
 
+## When a concept needs spelling out
+
+A skill carries what the model would otherwise get wrong — not everything it
+knows. A concept earns an explicit rule when **the model's default would diverge
+from ours**, which is any of:
+
+- **Deviation** — our convention differs from the textbook or the model's prior.
+  The prior wins unless we override it.
+- **Contested bar** — the creation/extraction bar is a judgment call reasonable
+  people disagree on. Without a stated bar the model over- or under-extracts,
+  confidently.
+- **Consequence** — it has a name/suffix, a home, or a gate we must enforce
+  exactly.
+
+Trust the model when the concept is unambiguous, our convention matches the
+textbook, and there is no naming or gate consequence. Defining those anyway is
+context tax, and it dilutes the rules that matter.
+
+So: **state our deviations, our bars, and our names; never restate the
+textbook.** Every "should this be defined?" question resolves against those
+three triggers.
+
 ## Authoring checklist
 
-- [ ] Folder named after `name`; `SKILL.md` spelled exactly.
+- [ ] Folder named after `name`; `SKILL.md` spelled exactly; sits directly under
+      the skills root (no category directory).
 - [ ] `name` lowercase, hyphens only, ≤64 chars, matches folder.
 - [ ] `description` present, ≤1024 chars, what + when, trigger keywords front-loaded.
 - [ ] Body under ~500 lines; depth in `references/`.
 - [ ] Body includes step-by-step instructions, input/output examples, and common edge cases.
+- [ ] Language-agnostic skill: examples written in Ruby (see Body content).
 - [ ] `scripts/` self-contained with helpful errors; `references/` small and focused.
 - [ ] Resources referenced by skill base directory (not bare relative paths).
 - [ ] Validated by re-reading the finished file and linting frontmatter.

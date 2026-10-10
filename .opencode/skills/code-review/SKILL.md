@@ -115,7 +115,7 @@ suggestions the author may take or leave.
 
 **Example finding** (the shape every finding takes):
 
-> **BLOCKING** — `src/Domain/Actions/CreatePostAction.php:41`
+> **BLOCKING** — `src/Core/Post/Application/Actions/CreatePostAction.php:41`
 > The action calls `app(VaultPort::class)` inside the body instead of
 > receiving it via constructor injection, so the port is resolved at call
 > time and can't be swapped in tests.

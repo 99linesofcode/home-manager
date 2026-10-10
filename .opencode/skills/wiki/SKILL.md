@@ -120,7 +120,9 @@ source material: process + discard original, never edit in place.
 - `Inbox/` is the capture point; contents are raw dumps (not OKF-compliant),
   treated as immutable source material — process + discard original, never
   edit in place. Processing = ingest + **discard the original** (never archive it).
-- `index.md` on every ingest; `log.md` append-only.
+- `index.md` on every ingest; `log.md` append-only. Both are written through the
+  Obsidian MCP with `prevHash` (a content-hash CAS) — on `hash_conflict`,
+  re-read and merge (see `memory` → Concurrency).
 - Contradictions flagged, never silently resolved.
 - Every page carries non-empty `type` + `generated` (OKF v0.2).
 ## Related

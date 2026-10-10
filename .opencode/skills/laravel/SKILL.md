@@ -1,21 +1,21 @@
 ---
 name: laravel
-description: The user's Laravel mechanics — modular monolith as Composer packages, hexagonal-flavored App/Domain/Infrastructure layering, action objects + DTOs, ServiceProvider bootstrap, composer wiring, and Pest + Testbench testing. The concrete Laravel expression of the software-architecture contract. Use when building, extending, or reviewing a Laravel module or application in the user's style, or when the user references their modules, action objects, DTOs, ServiceProvider, or composer wiring.
+description: The user's Laravel mechanics — the PHP/Laravel-specific conventions for the user's repos: composer wiring, the ServiceProvider composition root, Eloquent model mechanics, Pest + Testbench testing, and the Laravel-specific naming roles. Architecture itself lives in the software-architecture skill. Use when building, extending, or reviewing Laravel code in the user's style, or when the user references their modules, ServiceProvider, composer wiring, or Eloquent mechanics.
 ---
 
 # laravel
 
-The user's Laravel mechanics: a **modular monolith** of Composer packages, each
-with **hexagonal-flavored layering** (App/Domain/Infrastructure), using
-**action objects + DTOs** for use cases, and **Pest + Testbench** for testing.
-This is the _how we do it here_ in Laravel, grounded in the user's repos
-(`laravel-skeleton`, `laravel-package-skeleton`, `laravel-module-support`,
-`laravel-module-news`, `laravel-module-user`).
+The user's Laravel mechanics — the PHP/Laravel-specific conventions for the
+user's repos (`laravel-skeleton`, `laravel-package-skeleton`,
+`laravel-module-support`, `laravel-module-news`, `laravel-module-user`):
+composer wiring, the ServiceProvider composition root, Eloquent model
+mechanics, and Pest + Testbench testing.
 
-The general architecture contract (language-agnostic) lives in the
-`software-architecture` skill; the Filament admin UI mechanics live in the
-`filament` skill. Load those for the reasoning; this skill is the Laravel
-mechanics.
+The architecture — the module-first directory structure, the layers, the role
+suffixes, where logic lives — is **single-sourced in the `software-architecture`
+skill** and applies to every language. This skill adds only what is specific to
+Laravel/PHP, and never restates the architecture. The Filament admin UI
+mechanics live in the `filament` skill.
 
 ## When to use
 
@@ -25,43 +25,28 @@ mechanics.
 - The user references their modules, action objects, DTOs, ServiceProvider, or
   composer wiring.
 
-## How a Laravel app with this architecture looks
+## How a Laravel app is wired
 
-A host Laravel app is built on the `laravel-package-skeleton` folder structure
-and pulls in modules as Composer packages. Each module is a bounded context with
-its own hexagonal-flavored layering (`App/`/`Domain/`/`Infrastructure/`); the UI
-reaches the domain only through actions + DTOs. The modules are Composer
-dependencies resolved into `vendor/` — they are not nested in the project tree.
-The project's `src/` holds only app-specific code; each module brings its own
-`src/` (with its own layers) inside its package.
+A host Laravel app is built on the `laravel-package-skeleton` and pulls in
+modules as Composer packages. The modules are dependencies resolved into
+`vendor/` — they are not nested in the project tree; each brings its own `src/`
+inside its package. The project's `src/` holds only app-specific code.
 
-The flow for a write operation: **UI page → `PostData::fromArray(...)` →
-`app(CreatePostAction::class)` → Eloquent model**. The page never touches
-Eloquent directly; the action is the single seam.
+The Laravel expression of a write flow: **UI page →
+`PostDataTransferObject::fromArray(...)` → `app(CreatePostAction::class)` →
+Eloquent model**. The page never touches Eloquent directly; the action is the
+single seam. The structure and the naming are in `software-architecture`.
 
-## Module structure (the skeleton)
+## Package layout (the skeleton)
 
-A module is a Composer package, PSR-4 root `Lines\<Module>\` → `src/`:
+A module is a Composer package, PSR-4 root `Lines\<Module>\` → `src/`. The
+`src/` interior follows `software-architecture` (module-first); this is only
+the Laravel-specific scaffolding around it:
 
 ```
 laravel-module-<name>/
-├── src/
-│   ├── <Module>ServiceProvider.php   # Package bootstrap (Spatie PackageServiceProvider)
-│   ├── App/                          # UI layer (Filament + Livewire)
-│   │   ├── Console/Commands/         # artisan commands
-│   │   ├── Filament/                 # see the filament skill
-│   │   ├── Livewire/                 # public-facing components
-│   │   └── Providers/
-│   ├── Domain/                       # Domain layer
-│   │   ├── Actions/                  # *Action (invokable use cases)
-│   │   ├── DataTransferObjects/      # *Data (readonly DTOs)
-│   │   ├── Enums/                    # *Status (string enums, state machines)
-│   │   ├── Models/                   # Eloquent models (no suffix)
-│   │   └── <role>/                   # growth folders from the role menu —
-│   │                                 #   QueryBuilders/, Collections/, Events/,
-│   │                                 #   Exceptions/, Rules/, States/ — created
-│   │                                 #   when a second class of the role exists
-│   └── Infrastructure/               # adapters (empty until needed)
+├── src/                              # interior per software-architecture
+│   └── <Module>ServiceProvider.php   # composition root (Spatie PackageServiceProvider)
 ├── database/
 │   ├── factories/                    # *Factory (fluent states)
 │   ├── migrations/                   # create_*_table
@@ -69,39 +54,23 @@ laravel-module-<name>/
 ├── resources/views/                  # Blade views (<module>:: namespace)
 ├── routes/web.php                    # <module>.* named routes
 ├── stubs/                            # publishable stubs
-├── tests/                            # Pest + Testbench
+├── tests/                            # Pest + Testbench (mirrors src/; see software-testing)
 │   ├── Pest.php, TestCase.php
-│   ├── Unit/Domain/...               # mirror src/Domain
-│   ├── Feature/App/...               # mirror src/App
-│   └── Browser/
 └── workbench/                        # Testbench host app (panel, models, migrations)
 ```
 
-## Naming conventions
+## Naming conventions (Laravel-specific roles)
 
-| Kind              | Suffix                    | Example               |
-| ----------------- | ------------------------- | --------------------- |
-| Action            | `*Action`                 | `CreatePostAction`    |
-| DTO               | `*Data`                   | `PostData`            |
-| Enum              | `*Status`                 | `PostStatus`          |
-| Model             | (none)                    | `Post`                |
-| QueryBuilder      | `*QueryBuilder`           | `PostQueryBuilder`    |
-| Collection        | `*Collection`             | `PostLineCollection`  |
-| Event             | `*Event`                  | `PostPublishedEvent`  |
-| Rule              | `*Rule`                   | `ValidPublishDateRule`|
-| Factory           | `*Factory`                | `PostFactory`         |
-| ServiceProvider   | `*ServiceProvider`        | `NewsServiceProvider` |
+The canonical role → suffix table — `Action`, `DataTransferObject`, `Enum`,
+`Model`, `Event`, `Rule`, and the rest — lives in `software-architecture`.
+Laravel adds only the framework-specific roles:
 
-Models stay bare (`Post`, never `PostEntity`): inside the domain layer
-"entity" is the default, so the suffix locates nothing (Graça's carve-out).
-The suffixes exist to make name collisions impossible at scale —
-`CreatePost` alone could be a controller, command, job, or request.
-
-**Domain folders grow as needed** (the growth rule in `software-architecture`):
-`Actions/`, `DataTransferObjects/`, `Enums/`, `Models/` are the default
-scaffold; `QueryBuilders/`, `Collections/`, `Events/`, `Exceptions/`,
-`Rules/`, `States/` appear when a second class of that role exists — never
-a folder for one class.
+| Kind            | Suffix             | Example               |
+| --------------- | ------------------ | --------------------- |
+| QueryBuilder    | `*QueryBuilder`    | `PostQueryBuilder`    |
+| Collection      | `*Collection`      | `PostLineCollection`  |
+| Factory         | `*Factory`         | `PostFactory`         |
+| ServiceProvider | `*ServiceProvider` | `NewsServiceProvider` |
 
 **Module repo names are singular** (`laravel-module-todo`, `laravel-module-news`,
 `laravel-module-user`), matching the PSR-4 root `Lines\<Module>\`.
@@ -116,14 +85,14 @@ model out. An action may compose **zero or more nested actions** (each with its
 own single responsibility), following SOLID single-responsibility:
 
 ```php
-// src/Domain/Actions/CreatePostAction.php
+// CreatePostAction.php
 final readonly class CreatePostAction
 {
     public function __construct(
         private RecordPostCreatedAction $recordAuditTrail,
     ) {}
 
-    public function __invoke(PostData $data): Post
+    public function __invoke(PostDataTransferObject $data): Post
     {
         return DB::transaction(function () use ($data) {
             $post = Post::create([
@@ -153,8 +122,8 @@ final readonly class CreatePostAction
 coercion:
 
 ```php
-// src/Domain/DataTransferObjects/PostData.php
-final readonly class PostData extends DataTransferObject
+// PostDataTransferObject.php
+final readonly class PostDataTransferObject extends DataTransferObject
 {
     protected static function casts(): array
     {
@@ -189,7 +158,7 @@ final readonly class PostData extends DataTransferObject
 }
 ```
 
-- Extends `Lines\Support\Domain\DataTransferObjects\DataTransferObject`
+- Extends the shared `DataTransferObject` base from `laravel-module-support`
   (reflection-based `fromArray()` + `casts()` contract).
 - **`casts()`** is `protected static`, returning a map of field → cast
   function; each cast receives `($value, $data)`.
@@ -199,9 +168,8 @@ final readonly class PostData extends DataTransferObject
 
 `src/<Module>ServiceProvider.php` extends
 `Spatie\LaravelPackageTools\PackageServiceProvider` and declares the whole
-surface: config, views, translations, assets, routes, migrations, commands,
-Livewire namespace, Filament assets. Registered via composer
-`extra.laravel.providers`. It is the module's **composition root**: the one
+surface: config, views, translations, assets, routes, migrations, commands.
+Registered via composer `extra.laravel.providers`. It is the module's **composition root**: the one
 place where wiring and interface bindings happen — never `app()`/`resolve()`
 inside class bodies.
 
@@ -291,13 +259,10 @@ registers its `*ServiceProvider` via `extra.laravel.providers`.
 
 - **Pest** with `tests/Pest.php` binding a `TestCase` (extends
   `Orchestra\Testbench\TestCase`, uses `RefreshDatabase` + `WithWorkbench`).
-- **Layout mirrors source**: `tests/Unit/Domain/...` and
-  `tests/Feature/App/...` mirror `src/`.
+- **Layout mirrors source** — the mirroring contract is in `software-testing`.
 - **What's tested**: action behavior (DB assertions via
   `assertDatabaseHas`/`assertDatabaseCount`), DTO casting/computed fields, enum
-  state transitions, Filament form validation rules, table columns/sorting,
-  page render + create/edit flows via `livewire(...)` and
-  `Filament::setCurrentPanel`.
+  state transitions. (Filament/UI testing lives in the `filament` skill.)
 - **Fixtures**: factories with fluent states (`draft()`, `scheduled()`,
   `published()`, `existing()`).
 - **Naming**: `describe('CreatePostAction', ...)` / `it('creates a post', ...)`;
@@ -308,8 +273,8 @@ registers its `*ServiceProvider` via `extra.laravel.providers`.
 
 Models use **UUID primary keys** (`HasUuids` + `uuid('id')->primary()` +
 `foreignUuid`), which drives the DTO `id` type (`?string`). The workbench is
-the Testbench host that runs the module's Filament panel (registers the plugin,
-needs a `UserFactory`, and `filament:assets` before serving). Full detail:
+the Testbench host that serves the module (panel registration and assets are
+Filament concerns — see the `filament` skill). Full detail:
 `references/models-and-migrations.md` and `references/workbench.md`.
 
 ### Model mechanics (lean models)
@@ -330,7 +295,7 @@ the dumping ground for it.
   `newEloquentBuilder()`:
 
   ```php
-  // src/Domain/Posts/QueryBuilders/PostQueryBuilder.php
+  // PostQueryBuilder.php
   final class PostQueryBuilder extends Builder
   {
       public function wherePublished(): self
@@ -339,7 +304,7 @@ the dumping ground for it.
       }
   }
 
-  // src/Domain/Posts/Models/Post.php
+  // Post.php
   public function newEloquentBuilder($query): PostQueryBuilder
   {
       return new PostQueryBuilder($query);
@@ -355,25 +320,20 @@ the dumping ground for it.
 
 ## Gotchas
 
-- **UI never calls Eloquent directly** — always through an action + DTO.
-- **Domain has no UI imports** — `src/Domain/` must not import Filament/Livewire.
-- **`Infrastructure/` stays empty until there's a real adapter need** — don't
-  add ports/adapters speculatively (lean guardrail).
+- **UI never calls Eloquent directly** — always through an action + DTO (the
+  UI→core seam; the rule is in `software-architecture`).
 - **Models carry framework traits** (`HasUuids`, `SoftDeletes`, `#[UseFactory]`)
   — Eloquent is persistence + domain model combined; that's accepted.
-- **Cross-module deps** via `Lines\*` namespaces (e.g. `Post::author()` belongs
-  to `Lines\Auth\Domain\Models\User`); shared support comes from
-  `laravel-module-support`.
+- **Cross-module deps** go through `Lines\*` namespaces; shared support comes
+  from `laravel-module-support`.
 - **New modules** start from `laravel-skeleton` / `laravel-package-skeleton`
   (consumed via git remote + rebase).
 
 ## Related
 
 - **Loads:** (none — loaded on demand)
-- **References:** `software-architecture` (the general contract), `filament`
-  (the Filament UI mechanics), `software-testing` (the testing contract).
-- Wiki concepts (under `~/Documents/Obsidian/AI/wiki/concepts/`): `ddd.md`,
-  `hexagonal-architecture.md`, `action-objects.md`, `modular-monolith.md`,
-  `software-architecture-principles.md`.
+- **References:** `software-architecture` (the single source of truth for the
+  architecture), `filament` (the Filament UI mechanics), `software-testing`
+  (the testing contract).
 - Reference repos: `~/Development/laravel-skeleton`, `laravel-package-skeleton`,
   `laravel-module-support`, `laravel-module-news`, `laravel-module-user`.

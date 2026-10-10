@@ -174,7 +174,7 @@ with lib;
             question = "allow";
             read = "allow";
             skill = "allow";
-            todowrite = "deny"; # NOTE: todos are managed by wayfinder skill
+            todowrite = "deny";
             webfetch = "allow";
             websearch = "allow";
             write = "allow";

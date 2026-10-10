@@ -268,6 +268,39 @@ Match the repo's existing style if it differs (Step 0).
 - Never: `filter-branch`, `filter-repo`, `push --force`, `branch -D`,
   `push --delete`
 
+## Git worktrees (parallel working)
+
+A worktree is a second working directory attached to the same repository —
+shared object store and refs, but its own HEAD, index, and checked-out files.
+It is how several branches — or several agents — work at once without fighting
+over one working tree.
+
+- **One branch per worktree.** A branch can be checked out in only one worktree
+  at a time; that isolation is the point. Cut it from the **remote** default
+  branch, not a possibly-stale local `main`:
+
+  ```bash
+  git fetch origin
+  git worktree add ../<repo>-<slug> -b <type>/<slug> origin/main
+  ```
+
+- **List / remove / prune:** `git worktree list`; `git worktree remove <path>`
+  (refuses a dirty worktree — commit or discard first); `git worktree prune`
+  clears metadata for directories deleted by hand.
+- **Shared refs — mind the blast radius.** Objects and refs are shared, so a
+  `git reset --hard`, a rebase, or a force-with-lease in one worktree moves what
+  the others see. Never check out the same branch in two worktrees, and never
+  rewrite a ref another worktree is sitting on.
+- **When to use it:** running several branches in parallel; giving each
+  dispatched worker its own checkout (see `agent-delegation`). Each worker
+  commits in its own worktree, so no two writers share a HEAD — the structural
+  fix for "concurrent sessions fight over HEAD" (decisions.md, 2026-09-24).
+
+**A worktree isolates code, not the vault.** Memory (`HOT.md`, the wiki, the
+episodic stream) lives in `~/Documents/Obsidian/AI/`, outside any repo and any
+worktree, so worktrees do nothing for two sessions clobbering shared memory —
+that needs its own write protocol (see the `memory` skill).
+
 ## GitHub operations (MCP + gh)
 
 Prefer the GitHub MCP for structured operations; use `gh` for anything the
@@ -330,7 +363,7 @@ skeleton and wire it up following the user's conventions.
 | `.github-js` | Node/pnpm workflow wrapper: thin workflow wrappers, `devshell-node` submodule |
 | `devshell-php` / `devshell-rust` / `devshell-node` | Nix dev environments (`flake.nix`) |
 | `laravel-skeleton` | Laravel application starter (composer.json, `src/`, database/, tests/, workbench/) |
-| `laravel-package-skeleton` | Laravel module seed: composer.json, `src/` (App/Domain/Infra), database/, tests/, workbench/, `devshell-php` submodule |
+| `laravel-package-skeleton` | Laravel module seed: composer.json, `src/` (UI/core/infrastructure), database/, tests/, workbench/, `devshell-php` submodule |
 | `node-skeleton` | Node package starter (private) |
 | `rails-skeleton` | Rails starter (private) |
 | `kubernetes-base` / `kubernetes-php` | Kubernetes manifests / Helm charts |

@@ -42,6 +42,11 @@ repo, the scratchpad, the rules, the gates.
    anchor; see `vault-notes` for where project notes live), with its GitHub
    connection pointing at the new repo, so work has somewhere to land.
    Milestones are a manual step until OPM supports them.
+7. **(Only if this repo will carry skills) Create `.opencode/skills/`.** A skill
+   that belongs to this codebase — a domain vocabulary, a provider integration,
+   a house convention — is committed under `.opencode/skills/<name>/` and travels
+   with the repo to collaborators. Same flat layout as the global library; see
+   `skill-authoring` (repo-scoped skills). Most repos need none.
 
 ## Delegating
 
