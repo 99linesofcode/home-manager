@@ -1,3 +1,12 @@
+# [0.24.0](https://github.com/99linesofcode/home-manager/compare/v0.23.0...v0.24.0) (2026-10-10)
+
+
+### Features
+
+* **opencode:** more convention over configuration, rails, concurrent memory ([00ef999](https://github.com/99linesofcode/home-manager/commit/00ef9991ad4ee088390ea3a6a56f4b16b2bcb51a))
+
+
+
 # [0.23.0](https://github.com/99linesofcode/home-manager/compare/v0.22.1...v0.23.0) (2026-10-10)
 
 
@@ -75,15 +84,6 @@
 * **rclone:** define files that can optionally be ignored ([d5881f7](https://github.com/99linesofcode/home-manager/commit/d5881f7a57f016b277770cf4ab92188f9df927f6))
 * **syncthing:** add fairphone device ID ([410ca48](https://github.com/99linesofcode/home-manager/commit/410ca4813798f858d13776456c88fe2a2a2ece8d))
 * **typst:** convert .md files to PDFs using Pandoc and Typst ([44e9c71](https://github.com/99linesofcode/home-manager/commit/44e9c71384646f48f7b40640cb60550bce3a118d))
-
-
-
-## [0.20.2](https://github.com/99linesofcode/home-manager/compare/v0.20.1...v0.20.2) (2026-06-25)
-
-
-### Bug Fixes
-
-* **zsh:** uwsm is not kicked off through the hyprland-uwsm.desktop file and PAM ([0b3cee7](https://github.com/99linesofcode/home-manager/commit/0b3cee769fd87773359409905379101b2665cb4a))
 
 
 
