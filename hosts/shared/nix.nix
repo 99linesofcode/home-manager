@@ -6,6 +6,12 @@
 with lib;
 {
   nix = {
+    gc = {
+      automatic = true;
+      dates = mkDefault "weekly";
+      persistent = mkDefault true;
+      options = "--delete-older-than 14d";
+    };
     package = pkgs.nix;
     settings = {
       auto-optimise-store = mkDefault true;

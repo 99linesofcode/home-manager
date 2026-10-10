@@ -50,7 +50,8 @@ is any of, whichever comes first:
 
 1. A unit of work reaches "done" (a triage class-2/3 task completes).
 2. An open loop is closed or a decision is recorded.
-3. A Wayfinder phase transition occurs (interview → map → resolve → spec → promote).
+3. A spec-driven delivery phase transition occurs (seed → discovery → spec →
+   architecture → slice).
 4. Fallback: 5+ episodic events written since the last milestone, or ~30 min of
    active work.
 
@@ -183,6 +184,40 @@ Process:
 6. **Prune codified decisions** — remove from `decisions.md` anything now
    codified in a skill, AGENTS.md, or config (see Codification rule).
 
+## Concurrency (multiple sessions)
+
+Two sessions — or a session and a dispatched worker — can run at once. The
+**episodic stream is already safe**: append-only, one file per event, distinct
+paths, so no two writers collide. The single-file documents are not — `HOT.md`,
+`wiki/index.md`, `wiki/log.md`, and `semantic/*.md` are rewritten in place, so a
+blind overwrite loses the other session's change (observed 2026-10-10: a second
+session's HOT rewrite dropped the first session's applied-changes status). A git
+worktree isolates *code*, not the vault, so it does nothing here.
+
+### The write protocol — read-merge-write with a content-hash CAS
+
+The mechanism is a compare-and-swap the tool enforces, not the model's memory of
+one:
+
+1. **Write single-file memory through the Obsidian MCP, never the raw
+   filesystem tools.** The `write` tool has no guard and blind-overwrites. The
+   Obsidian tools (`create_note`, `append_note`, `patch_note`,
+   `patch_frontmatter`, `replace_in_note`) take a `prevHash` and refuse with
+   `hash_conflict` when the file changed since the read — a real CAS.
+2. **Read → merge → write.** `obsidian_read_note` returns the `contentHash`;
+   compose the new content by *merging into what is on disk* (never from a stale
+   in-context copy), then write with `prevHash=<hash>`.
+3. **On `hash_conflict`, re-read and merge again.** The other writer's change
+   must be folded in — never blind-retry.
+4. **Prefer append over rewrite.** `log.md` is append-only; use
+   `obsidian_append_note` (also `prevHash`-guarded). The episodic stream needs no
+   guard at all — one file per event, distinct paths.
+5. **Bump the stamp.** Every `HOT.md` rewrite updates `generated.at`, so
+   staleness is visible; the hard guard is `prevHash`, the stamp is for humans.
+
+This supersedes the interim read-merge-write rule: the CAS (the tool's guard)
+enforces the conflict, and the protocol says what to do when it fires.
+
 ## Governance (this is what makes files *memory*, not a dump)
 
 - `Inbox/` is the capture point; contents are immutable source material —
@@ -196,6 +231,9 @@ Process:
   does not duplicate codified artifacts.
 - `HOT.md` rewritten on session end, milestones, and pre-compaction; pruned
   below cap. A milestone (see above) also triggers a reflection pass.
+- **Single-file writes are CAS-guarded** — `HOT.md`, `wiki/index.md`,
+  `wiki/log.md`, and `semantic/*.md` are written through the Obsidian MCP with
+  `prevHash`; on `hash_conflict`, re-read and merge (see Concurrency).
 ## Related
 
 - **Loads:** (none — loaded on demand)

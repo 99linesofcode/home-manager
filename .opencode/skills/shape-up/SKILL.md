@@ -39,6 +39,12 @@ it's done.
 - **Rabbit holes** — the traps to avoid; shaping names them so the builder
   doesn't fall in.
 
+Shaping is the front of the spec-driven delivery method: `discovery-interview`
+shapes the idea's domain (event storming when it needs structuring), and
+`feature-spec` + `architecture-and-skeleton` turn the shaped bet into specs and
+a skeleton. Shape Up frames the bet (problem, appetite, rabbit holes); the
+method gives it domain shape and criteria.
+
 ### Betting
 
 A **bet** is a commitment to spend a fixed appetite on a shaped pitch. Unlike a
@@ -84,4 +90,5 @@ The GitHub mechanics that support this:
 
 - **Loads:** (none — loaded on demand)
 - **References:** `new-project` (the labels + project template mechanics),
-  `github` (the platform interface), `wayfinder` (planning complex work).
+  `github` (the platform interface), `discovery-interview` (the method's
+  framing), `feature-spec`.

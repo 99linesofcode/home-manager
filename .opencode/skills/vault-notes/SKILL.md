@@ -10,9 +10,15 @@ Create and maintain notes in the user's Obsidian vault. The vault runs on a
 PARA). This skill is the source of truth for the vault's structure; the wiki
 concept page `wiki/concepts/para-note-organization.md` may lag behind it.
 
-Vault root: `~/Documents/Obsidian/`. The vault is **Dutch**: folder names,
-filenames, and note content are Dutch. Property names are **English**; the
-`AI/` folder is fully English.
+Vault root: `~/Documents/Obsidian/`. **Every note path is relative to that
+root** — the vault's own top level, not the `AI/` subfolder. The vault is
+**Dutch**: folder names, filenames, and note content are Dutch. Property names
+are **English**.
+
+`AI/` is the agent's own subsystem (wiki, memory, planning, specs, logs) — it
+is **not** a filing location for vault notes. The capture inbox is the
+**vault-root** `Inbox/` (`~/Documents/Obsidian/Inbox/`); agent-written notes
+for the human go there, never to `AI/Inbox/`.
 
 ## The model in one line
 
@@ -27,7 +33,8 @@ property and no `title` property.
 
 Top-level folders:
 
-- `Inbox` — capture, raw dump (immutable source material)
+- `Inbox` — the vault-root capture inbox (`~/Documents/Obsidian/Inbox/`), raw
+  dump, immutable source material
 - `Projecten` — active projects, one folder per project
 - `Verantwoordelijkheden` — responsibilities: `Opdrachtgevers/` (organizations),
   `Personen/` (contacts)
@@ -250,6 +257,10 @@ tags: []
 
 ## Creating a note — procedure
 
+Paths are relative to the vault root (`~/Documents/Obsidian/`). Never write a
+vault note under `AI/` — that folder is the agent's own subsystem, not a note
+destination.
+
 1. Determine the category (kind) and the folder it belongs in.
 2. Pick the path per the naming conventions.
 3. Write the file using the matching template in `Templates/` (or the pattern
@@ -407,5 +418,6 @@ tags:
 
 ## Related
 
-- **Loads:** (none — loaded on demand)
+- **Loads:** always — loaded in full at session startup, not on demand. It is
+  the filing contract for every vault write.
 - **References:** `wiki` (the agent-owned knowledge layer inside the vault).

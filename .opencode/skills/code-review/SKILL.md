@@ -44,6 +44,14 @@ A review checks the change against the user's standards. Work through each:
 - Any unused functions, imports, parameters, or branches left behind?
 - Any dangling references to renamed/removed symbols?
 - Do docs/README match the new behavior?
+- **Did a flow change ship without its diagram?** A new action, a reordered
+  chain, a new decision point, or a new invariant requires the `ARCHITECTURE.md`
+  flow diagram (mermaid) updated in the same change — a flow that ships
+  undocumented is unfinished (blocking).
+- **Did an architecture change ship without the ARCHITECTURE.md update?**
+  Every repository carries one (the codebase map + conventions, from the
+  `project-seed` template); the same change that alters the architecture
+  updates it (blocking).
 
 ### 5. Tests
 
@@ -57,6 +65,10 @@ A review checks the change against the user's standards. Work through each:
 - Does the UI reach the domain only through actions + DTOs?
 - Any layering violations (domain importing UI, UI calling Eloquent directly)?
 - Does it follow the lean guardrail (no speculative abstraction)?
+- **Run the provider-neutrality boundary gate** (the project's
+  `lint:boundaries` script, or grep for provider names outside their
+  modules): provider vocabulary leaking into shared/core code is a blocking
+  concretion leak, even when the dependency direction is clean.
 
 ### 7. Red team / adversarial review (mandatory)
 
@@ -103,7 +115,7 @@ suggestions the author may take or leave.
 
 **Example finding** (the shape every finding takes):
 
-> **BLOCKING** — `src/Domain/Actions/CreatePostAction.php:41`
+> **BLOCKING** — `src/Core/Post/Application/Actions/CreatePostAction.php:41`
 > The action calls `app(VaultPort::class)` inside the body instead of
 > receiving it via constructor injection, so the port is resolved at call
 > time and can't be swapped in tests.

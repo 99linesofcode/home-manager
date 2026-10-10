@@ -93,14 +93,52 @@ Before any git work in a repo, determine the methodology:
 
 3. Reference any related issue (`Fixes #N` to auto-close).
 4. Request review if the repo expects it; run CI.
-5. Merge when green + approved (or per repo rules).
-6. Delete the branch locally + remotely.
+5. **Before merging: collapse the branch's commits by feature** (the end
+   result, not the journey — see Collapsing commits), reword to
+   final-state messages, and update the PR description to match the merged
+   reality, verified against the code.
+6. Merge when green + approved (or per repo rules).
+7. Delete the branch locally + remotely. Note: deleting a base branch
+   auto-closes PRs targeting it — merge stacked PRs in order and retarget
+   before deleting.
+
+## Issue lifecycle (close what you open)
+
+Every issue created for work — ticket, slice tracker, dogfood/test issue —
+must reach a terminal state. An open issue is an open promise; delivered work
+with an open issue is a process failure (2026-09-26: the OPM sync-restructure
+tickets #52–#59 and slice trackers #40–#42 shipped while staying open).
+
+1. **The PR that lands the work closes its issues.** Put `Closes #N` (or
+   `Fixes #N`) in the PR body for every issue the PR fully delivers — GitHub
+   auto-closes them at merge. `Refs #N` does NOT close anything; use it only
+   for partial work and say what remains.
+2. **Trackers close manually at the merge that ships them.** A slice/epic
+   issue spans multiple PRs, so no single PR closes it: at the merge (or
+   release) that completes it, close it with a one-line comment pointing at
+   the PR or tag.
+3. **Dogfood/test issues close when verified.** Note the evidence in the
+   closing comment, then close — the issue has served its purpose.
+4. **The merge sweep.** After every merge, list the repo's open issues
+   (`gh issue list --state open`) and verify none of them is delivered work.
+   This is the cleanup step that catches what rules 1–3 missed; it takes one
+   minute and it is part of merging, not an optional extra.
+5. **Blocked/deferred issues stay open only with a reason.** If work is
+   deferred, say so on the issue (comment + label) so an open issue always
+   means "someone intends to do this".
 
 ## Collapsing commits (fixup + squash)
 
 The user works with many small commits — including `fixup!` commits during
 development — and collapses them into a clean history before push. History is
-rewritten **only before push** (never after).
+rewritten **only before push** (never after) — with one owner-sanctioned
+exception: **the collapse also happens before MERGE** (2026-10-06, the OPM
+identity-model merge). The commits a merge lands tell the end result, not
+the design journey — so at merge time the branch's history is collapsed by
+feature, reworded to final-state messages, and the PR description is
+updated to match the merged reality (verified against the code). On a
+pushed feature branch this is a `--force-with-lease` after the collapse,
+with the owner's explicit merge-time authorization.
 
 ### The workflow
 
@@ -230,14 +268,47 @@ Match the repo's existing style if it differs (Step 0).
 - Never: `filter-branch`, `filter-repo`, `push --force`, `branch -D`,
   `push --delete`
 
+## Git worktrees (parallel working)
+
+A worktree is a second working directory attached to the same repository —
+shared object store and refs, but its own HEAD, index, and checked-out files.
+It is how several branches — or several agents — work at once without fighting
+over one working tree.
+
+- **One branch per worktree.** A branch can be checked out in only one worktree
+  at a time; that isolation is the point. Cut it from the **remote** default
+  branch, not a possibly-stale local `main`:
+
+  ```bash
+  git fetch origin
+  git worktree add ../<repo>-<slug> -b <type>/<slug> origin/main
+  ```
+
+- **List / remove / prune:** `git worktree list`; `git worktree remove <path>`
+  (refuses a dirty worktree — commit or discard first); `git worktree prune`
+  clears metadata for directories deleted by hand.
+- **Shared refs — mind the blast radius.** Objects and refs are shared, so a
+  `git reset --hard`, a rebase, or a force-with-lease in one worktree moves what
+  the others see. Never check out the same branch in two worktrees, and never
+  rewrite a ref another worktree is sitting on.
+- **When to use it:** running several branches in parallel; giving each
+  dispatched worker its own checkout (see `agent-delegation`). Each worker
+  commits in its own worktree, so no two writers share a HEAD — the structural
+  fix for "concurrent sessions fight over HEAD" (decisions.md, 2026-09-24).
+
+**A worktree isolates code, not the vault.** Memory (`HOT.md`, the wiki, the
+episodic stream) lives in `~/Documents/Obsidian/AI/`, outside any repo and any
+worktree, so worktrees do nothing for two sessions clobbering shared memory —
+that needs its own write protocol (see the `memory` skill).
+
 ## GitHub operations (MCP + gh)
 
 Prefer the GitHub MCP for structured operations; use `gh` for anything the
 MCP doesn't cover or where a CLI is more natural.
 
 - **Issues:** read scoped (one issue + its bounded comments), create/update
-  with clear titles + bodies, triage with labels. Issues may seed Wayfinder
-  planning sessions.
+  with clear titles + bodies, triage with labels. Issues may seed discovery
+  (`discovery-interview`).
 - **PRs:** create, review (approve/request changes/comment), merge, update
   branch. Inspect status, diff, files, commits, check runs before acting.
 - **Releases:** list, create, get by tag. Tag + release notes from
@@ -292,7 +363,7 @@ skeleton and wire it up following the user's conventions.
 | `.github-js` | Node/pnpm workflow wrapper: thin workflow wrappers, `devshell-node` submodule |
 | `devshell-php` / `devshell-rust` / `devshell-node` | Nix dev environments (`flake.nix`) |
 | `laravel-skeleton` | Laravel application starter (composer.json, `src/`, database/, tests/, workbench/) |
-| `laravel-package-skeleton` | Laravel module seed: composer.json, `src/` (App/Domain/Infra), database/, tests/, workbench/, `devshell-php` submodule |
+| `laravel-package-skeleton` | Laravel module seed: composer.json, `src/` (UI/core/infrastructure), database/, tests/, workbench/, `devshell-php` submodule |
 | `node-skeleton` | Node package starter (private) |
 | `rails-skeleton` | Rails starter (private) |
 | `kubernetes-base` / `kubernetes-php` | Kubernetes manifests / Helm charts |
@@ -385,7 +456,15 @@ git rebase skeleton/main
 git submodule add git@github.com:99linesofcode/devshell-php.git devshell
 ```
 
-Standalone, pinned. Update with `git submodule update --remote`.
+Standalone, pinned. `git submodule add` clones the submodule, so a fresh
+scaffold is initialized; a repo **adopted or cloned without
+`--recurse-submodules`** is not — run `git submodule update --init` and confirm
+`git submodule status` shows no leading `-` (a `-` means declared-but-empty;
+`.github` and `.github-php` were found that way on 2026-10-09). Update a pinned
+submodule with `git submodule update --remote`.
+
+Every devshell ships `actionlint` and `shellcheck`, so workflow YAML and the
+shell inside `run:` blocks lint locally.
 
 ### Wiring shared config files (remote + rebase)
 
@@ -448,15 +527,17 @@ one-time, not a recurring sync.
 4. Rename the namespace: `Lines\Skeleton\` → `Lines\<Module>\` in
    `composer.json` (see the `laravel` skill).
 
-## Wayfinder integration
+## Planning integration
 
-Wayfinder is the planning model; this skill is the delivery mechanics.
+The spec-driven delivery method is the planning model; this skill is the
+delivery mechanics.
 
-- Wayfinder's map lives in `planning/<slug>/map.md`; GitHub is a destination.
-- When Wayfinder resolves a ticket into an Issue/PR, use this skill's
-  procedures to execute the delivery.
-- Mid-flight decision tickets never mirror into GitHub — only resolved
-  deliverables do.
+- The scratchpad lives in `planning/<slug>/` in the vault; GitHub is a
+  destination.
+- When a slice materializes as an Issue/PR, use this skill's procedures to
+  execute the delivery.
+- Mid-flight thinking never mirrors into GitHub — only materialized slices and
+  resolved deliverables do.
 
 ## Edge cases & gotchas
 

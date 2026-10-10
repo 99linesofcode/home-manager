@@ -6,7 +6,7 @@ description: The user's Filament admin UI mechanics — Resources, Forms, Tables
 # filament
 
 The user's Filament admin UI mechanics. Filament is the admin UI layer of the
-user's Laravel modules. It sits in `src/App/Filament/` and is the **UI → Domain
+user's Laravel modules. It sits in `src/Ui/Filament/` and is the **UI → core
 seam**: a Filament page builds a DTO and calls an action; it never touches
 Eloquent directly.
 
@@ -23,16 +23,16 @@ mechanics.
 
 ## The Filament → action seam
 
-The flow for a write operation: **Filament page → `PostData::fromArray(...)` →
+The flow for a write operation: **Filament page → `PostDataTransferObject::fromArray(...)` →
 `app(CreatePostAction::class)` → Eloquent model**. The page never touches
 Eloquent directly; the action is the single seam.
 
 ## Module structure (Filament part)
 
-Within a module's `src/App/Filament/`:
+Within a module's `src/Ui/Filament/`:
 
 ```
-src/App/Filament/
+src/Ui/Filament/
 ├── Pages/                # Create*, Edit*, List* (record pages)
 ├── Plugins/              # *Plugin (registers resource on a Panel)
 ├── Resources/            # *Resource (Filament resource)
@@ -57,7 +57,7 @@ soft-delete route binding. **Filament v5 note:** the form container is
 `Filament\Schemas\Schema`, not `Filament\Forms\Form`:
 
 ```php
-// src/App/Filament/Resources/PostResource.php
+// src/Ui/Filament/Resources/PostResource.php
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
@@ -93,7 +93,7 @@ In v5 the form schema is `Filament\Schemas\Schema` and components are added via
 `components()` (not `$form->schema()`):
 
 ```php
-// src/App/Filament/Schemas/PostForm.php
+// src/Ui/Filament/Schemas/PostForm.php
 class PostForm
 {
     public static function configure(Schema $schema): Schema
@@ -126,7 +126,7 @@ class PostForm
 A **Plugin** registers the resource on a panel:
 
 ```php
-// src/App/Filament/Plugins/PostPlugin.php
+// src/Ui/Filament/Plugins/PostPlugin.php
 class PostPlugin extends Plugin
 {
     public function getResources(): array
@@ -141,11 +141,11 @@ The host panel registers it: `->plugin(PostPlugin::make())`.
 ## Pages (the UI → Domain seam)
 
 **Pages** are the seam: `handleRecordCreation` builds
-`PostData::fromArray([...$data, 'author_id' => auth()->user()->id])` and calls
+`PostDataTransferObject::fromArray([...$data, 'author_id' => auth()->user()->id])` and calls
 `app(CreatePostAction::class)`:
 
 ```php
-// src/App/Filament/Pages/CreatePost.php
+// src/Ui/Filament/Pages/CreatePost.php
 class CreatePost extends CreateRecord
 {
     protected static string $resource = PostResource::class;
@@ -153,7 +153,7 @@ class CreatePost extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         return app(CreatePostAction::class)(
-            PostData::fromArray([...$data, 'author_id' => auth()->user()->id])
+            PostDataTransferObject::fromArray([...$data, 'author_id' => auth()->user()->id])
         );
     }
 }
@@ -165,7 +165,7 @@ The List page does **not** auto-add a "New" button in Filament v5 — add it
 explicitly via `getHeaderActions()`:
 
 ```php
-// src/App/Filament/Pages/ListPosts.php
+// src/Ui/Filament/Pages/ListPosts.php
 class ListPosts extends ListRecords
 {
     protected static string $resource = PostResource::class;
@@ -182,7 +182,7 @@ class ListPosts extends ListRecords
 ## Gotchas
 
 - **Pages never call Eloquent directly** — always through an action + DTO.
-- **`src/Domain/` must not import Filament/Livewire** — the UI layer is one-way.
+- **`src/Core/` must not import Filament/Livewire** — the UI layer is one-way.
 - Form/Table schemas are static `configure()` + private per-field builders, not
   inline closures in the resource.
 - The action is the single seam; Filament is a delivery mechanism, not a domain

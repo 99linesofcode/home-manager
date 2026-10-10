@@ -56,6 +56,11 @@ with lib;
           default_agent = "orchestrator";
           model = "openrouter/z-ai/glm-5.3-flash-20260826";
           small_model = "openrouter/deepseek/deepseek-v4-flash-0731";
+          provider.openrouter.options = {
+            timeout = 300000;
+            headerTimeout = 60000;
+            chunkTimeout = 90000;
+          };
           agent = {
             build.disable = true;
             plan.disable = true;
@@ -169,7 +174,7 @@ with lib;
             question = "allow";
             read = "allow";
             skill = "allow";
-            todowrite = "deny"; # NOTE: todos are managed by wayfinder skill
+            todowrite = "deny";
             webfetch = "allow";
             websearch = "allow";
             write = "allow";
@@ -238,6 +243,7 @@ with lib;
         enable = true;
         enableMcpIntegration = true;
         agents = ../.opencode/agents;
+        context = ../.opencode/AGENTS.md;
         settings = cfg.settings;
         skills = ../.opencode/skills;
       };
