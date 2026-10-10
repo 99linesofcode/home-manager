@@ -1,6 +1,6 @@
 ---
 name: kubernetes
-description: The user's Kubernetes contract — k3s for local and production, Helm umbrella charts, Flux GitOps, the one-chart-two-overlays local/production parity rule, GHCR for charts and images, SOPS+age secrets, cert-manager TLS, the Gateway API + Traefik ingress, and Task's constrained bootstrap role. Use when deploying to Kubernetes, writing or changing a Helm chart, wiring Flux, handling cluster secrets, or when the user references k3s, Helm, Flux, cert-manager, GHCR, or the kubernetes-base / kubernetes-php / kubernetes-fleet repos.
+description: The user's Kubernetes contract — k3s for local and production, Helm umbrella charts, Flux GitOps, the one-chart-two-overlays local/production parity rule, GHCR for charts and images, SOPS+age secrets, cert-manager TLS, the Gateway API + Traefik ingress, and Task's constrained bootstrap role. Use when deploying to Kubernetes, writing or changing a Helm chart, wiring Flux, handling cluster secrets, or when the user references k3s, Helm, Flux, cert-manager, GHCR, chart submodules, or the kubernetes-base / kubernetes-php / kubernetes-fleet repos.
 ---
 
 # kubernetes
@@ -19,6 +19,30 @@ charts, GitOps, secrets, TLS, and the local cluster.
 
 A chart in `kubernetes-base` never names an application; application
 composition lives in the language repo (`kubernetes-php`).
+
+## The tiers and GitOps
+
+Three tiers, composed by Flux:
+
+| Tier | Artefact | Lives in |
+|---|---|---|
+| Base | generic building-block charts | `kubernetes-base` |
+| Wrapper | the app chart (`laravel-stack`) | `kubernetes-php`, published to OCI |
+| Project | a HelmRelease per app + environment | `kubernetes-fleet` |
+
+The fleet is the source of truth for cluster state: a root Kustomization
+includes the HelmRepositories (`ghcr-charts` OCI + bitnami) and one HelmRelease
+per app/environment. A project's deployment **is** its HelmRelease — the chart
+is consumed by OCI version through the HelmRepository, **never** pulled into
+the project as a git submodule. Flux reconciles; after bootstrap nothing is
+applied by hand.
+
+Keep it lean. The umbrella stays self-contained — it vendors its external
+dependencies as tarballs for reproducible builds, which is a build detail, not
+the consumption mechanism. Extract a chart into `kubernetes-base` only when a
+second stack actually duplicates it: a normal chart at two stacks, a `common`
+library chart when several charts share template logic. Do not build the
+base/wrapper split ahead of need.
 
 ## The environments — and the parity rule
 
