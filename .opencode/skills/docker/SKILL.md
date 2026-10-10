@@ -65,6 +65,16 @@ docker build --target production -t ghcr.io/99linesofcode/<image>:<tag> -f <wrap
 
 Push to GHCR; the `kubernetes` skill deploys it.
 
+## Monitoring
+
+Monitoring is opt-in locally, not always-on. Applications expose metrics on a
+`/metrics` endpoint in every environment — the same instrumentation runs
+locally and in production, only the scrape config differs. The base ships a
+commented `observability` block in the `.dist` (cAdvisor + node-exporter +
+Prometheus + Grafana) so a project can enable container and host metrics
+without paying the cost by default; Netdata is the documented one-container
+fallback. The stack is being finalized (see the `kubernetes-monitoring` plan).
+
 ## Procedure
 
 **Add a service to the base** — define it once in

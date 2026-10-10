@@ -93,6 +93,18 @@ Charts and images both live on GHCR. Charts are OCI artifacts
 are `ghcr.io/99linesofcode/<image>`. Publishing a chart is `helm package` +
 `helm push ... oci://ghcr.io/99linesofcode/charts` in CI on a version tag.
 
+## Monitoring
+
+Monitoring is part of the stack, not an afterthought, and it follows the parity
+rule: the same stack locally and in production, differing only in values
+(retention, persistence, alerting). The direction is a Prometheus-compatible
+stack — `kube-prometheus-stack` (Prometheus Operator, Prometheus, Alertmanager,
+Grafana, node-exporter, kube-state-metrics) — composed as a generic `monitoring`
+chart in `kubernetes-base` and released by Flux in a `monitoring` namespace.
+Applications expose `/metrics`; a `ServiceMonitor` scrapes them. A lighter
+alternative (VictoriaMetrics) is under consideration. The concrete choice is
+tracked in the `kubernetes-monitoring` plan.
+
 ## Task — constrained
 
 Task (go-task) covers only what GitOps cannot:
