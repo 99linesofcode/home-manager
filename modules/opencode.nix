@@ -166,7 +166,13 @@ with lib;
               "git push * --delete *" = "deny";
               "git push * :*" = "deny";
             };
-            edit = "allow";
+            edit = {
+              "*" = "allow";
+              "~/Documents/Obsidian/AI/memory/HOT.md" = "deny";
+              "~/Documents/Obsidian/AI/memory/semantic/*" = "deny";
+              "~/Documents/Obsidian/AI/wiki/index.md" = "deny";
+              "~/Documents/Obsidian/AI/wiki/log.md" = "deny";
+            };
             external_directory = "allow";
             glob = "allow";
             grep = "allow";
@@ -177,7 +183,6 @@ with lib;
             todowrite = "deny";
             webfetch = "allow";
             websearch = "allow";
-            write = "allow";
           };
           watcher = {
             ignore = [

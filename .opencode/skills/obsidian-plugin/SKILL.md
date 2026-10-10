@@ -49,3 +49,9 @@ it populated and maintained by the release workflow, not by hand.
 - `isDesktopOnly` reflects whether the plugin uses Node/Electron APIs.
 - The plugin id is stable; renaming it breaks installs.
 - Keep the vault as the system of record; treat external applications as mirrors.
+
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `git-workflow` (the tag-driven release), `new-project` (the
+  plugin repo scaffold).

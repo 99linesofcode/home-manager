@@ -112,19 +112,20 @@ Producer extensions (keys OKF doesn't define) are permitted and preserved. Our
 
 **The vault `Inbox/` is explicitly excluded from OKF.** It is a raw dump area:
 anything pasted there may lack frontmatter, tags, or structure — it is not
-OKF-compliant and is not expected to be. Treat Inbox contents as immutable
-source material: process + discard original, never edit in place.
+OKF-compliant and is not expected to be. Its handling (immutable; process +
+discard the original) is owned by `vault-notes`.
 
 ## Governance (inherited from AGENTS.md)
 
-- `Inbox/` is the capture point; contents are raw dumps (not OKF-compliant),
-  treated as immutable source material — process + discard original, never
-  edit in place. Processing = ingest + **discard the original** (never archive it).
+- `Inbox/` is the capture point; contents are raw dumps (not OKF-compliant).
+  Its handling — immutable, process + discard the original, never archive it —
+  is owned by `vault-notes`.
 - `index.md` on every ingest; `log.md` append-only. Both are written through the
   Obsidian MCP with `prevHash` (a content-hash CAS) — on `hash_conflict`,
   re-read and merge (see `memory` → Concurrency).
 - Contradictions flagged, never silently resolved.
 - Every page carries non-empty `type` + `generated` (OKF v0.2).
+
 ## Related
 
 - **Loads:** (none — loaded on demand)

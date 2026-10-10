@@ -148,11 +148,12 @@ Below 35/50, revise.
   stop-slop-only contract's absolute em-dash ban and blanket adverb ban are
   dropped; the phrase-level cut list stays.
 
-## References
+## Related
 
-- `skill-design-principles/references/examples.md` — the writing standards
-  worked example the stop-slop filter generalizes from.
-- `teach-mode` — teaching sessions follow this contract too.
+- **Loads:** (none — cross-cutting; applies to all user-facing output)
+- **References:** `teach-mode` (lessons follow this contract),
+  `skill-design-principles` (the writing-standards worked example the stop-slop
+  filter generalizes from).
 - The orchestrator agent definition carries the compact always-on version.
 - hardikpandya/stop-slop (github.com/hardikpandya/stop-slop) — the source of
   the phrase-level filter.

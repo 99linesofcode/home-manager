@@ -76,3 +76,9 @@ When the schedule changes:
 3. Notify the user:
    `notify-send -u normal "research sweep" "Schedule changed to <cadence> (<N> verified findings). Run home-manager switch to apply."`
    and record the change (old → new, with the counts) in the note.
+
+## Related
+
+- **Loads:** (none — runs as a scheduled standalone job)
+- **References:** `skill-authoring` (the skill wording it studies), `wiki` (the
+  pages it grounds in), `memory` (the episodic event it may append).

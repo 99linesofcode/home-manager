@@ -172,6 +172,12 @@ decision recorded; (3) a spec-driven delivery phase transition; (4) fallback —
 events since the last milestone or ~30 min of active work. Each milestone also
 triggers a reflection-threshold check.
 
+**Single-file memory is CAS-guarded.** `HOT.md`, `wiki/index.md`, `wiki/log.md`,
+and `semantic/*.md` are rewritten in place, so a blind overwrite loses a
+concurrent session's change. Write them through the Obsidian MCP with
+`prevHash`; on `hash_conflict`, re-read and merge. Never the raw `edit`/`write`
+tool. Full protocol in the `memory` skill.
+
 **Episodic stream** — one concept per event in `memory/episodic/stream/`,
 typed frontmatter, append-only. An **event** is a durable state change worth
 remembering next session (a decision, outcome, observation, task, or user-note);

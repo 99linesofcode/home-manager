@@ -32,6 +32,8 @@ they are contracts, not suggestions.**
   | Code style: naming, comments, whitespace, formatting rhythm | `self-documenting-code` |
   | Laravel specifics (actions, DTOs, modules) | `laravel` |
   | Filament UI work | `filament` (+ `laravel`) |
+  | Rails specifics (actions, DTOs, engines, Hotwire) | `rails` |
+  | Avo admin UI work | `avo` (+ `rails`) |
   | Docker / Docker Compose dev environment | `docker` |
   | Kubernetes / Helm / Flux / cluster deploy | `kubernetes` |
   | Review a change end-to-end | `code-review` (+ that change's governing skills) |
@@ -43,6 +45,12 @@ they are contracts, not suggestions.**
   | Deliver a slice | `slice-delivery` |
   | Handle changed intent or new ambiguity mid-build | `spec-change` |
   | Dispatch a worker | `agent-delegation` |
+  | Author or edit a skill (SKILL.md) | `skill-authoring` (+ `skill-design-principles`) |
+  | Configure opencode itself (agents, MCP, permissions) | `customize-opencode` |
+  | Build or release an Obsidian plugin | `obsidian-plugin` |
+  | Schedule a recurring agent job | `systemd-scheduler` |
+  | Shape work before betting on it (appetite, hill, slice sizing) | `shape-up` |
+  | File or triage issues, open PRs on GitHub | `github` (+ `git-workflow`) |
 
   Routing rules: the matrix routes the task; each skill's `description`
   carries the trigger keywords for every task it governs (the discovery

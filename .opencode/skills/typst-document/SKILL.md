@@ -84,3 +84,8 @@ Result: `~/Documents/offerte.pdf` (user moves it to Google Drive).
 - Output defaults to `~/Documents/`
 - The template imports `@preview/oxifmt:1.0.0` (network fetch on first
   compile; cached afterwards)
+
+## Related
+
+- **Loads:** (none — loaded on demand)
+- **References:** `vault-notes` (the offerte/contract notes it renders).

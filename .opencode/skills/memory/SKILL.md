@@ -9,9 +9,8 @@ license: MIT
 Two-tier, file-native memory. Working memory is always injected; the episodic
 stream is appended and retrieved; semantic memory is consolidated on reflection.
 
-Every persistent memory document is an **OKF v0.2 concept**: YAML frontmatter
-with a non-empty `type`, plus the `generated` / `verified` / `status` /
-`stale_after` families where applicable. `importance` and `evidence` are our
+Every persistent memory document is an **OKF v0.2 concept** — the format is
+defined in the `wiki` skill. Memory adds the `importance` and `evidence`
 producer extensions (OKF preserves unknown keys).
 
 This is file-native by design. For a single-user knowledge base up to roughly
@@ -220,8 +219,8 @@ enforces the conflict, and the protocol says what to do when it fires.
 
 ## Governance (this is what makes files *memory*, not a dump)
 
-- `Inbox/` is the capture point; contents are immutable source material —
-  process + discard original, never edit in place.
+- `Inbox/` is the capture point; contents are immutable source material (the
+  rule is owned by `vault-notes`).
 - `log.md` append-only; never rewrite history (OKF §9).
 - `index.md` updated on every ingest/consolidation (OKF §8).
 - Every episodic/semantic concept carries non-empty `type` (OKF §4.1).
