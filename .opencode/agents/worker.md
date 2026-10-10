@@ -52,3 +52,6 @@ leakage. Do not try to be more than this.
    as an OKF concept (`type: Session Log`, `generated: { by, at }`) with:
    what was done, files changed, PR link (if any), anything intentionally left
    incomplete, and blockers.
+8. **End your report with exactly one terminal marker** — `[FINISHED]`,
+   `[BLOCKED]`, `[NEEDS_INPUT]`, or `[PARTIAL]` — followed by the evidence for
+   it. A report with no terminal marker is incomplete.

@@ -61,6 +61,15 @@ architectural constraints; the PR restates them in its **Behavior** section.
    scratchpad (`planning/<slug>/`, incl. its `specs/`) is **transient**:
    consolidate durable insights into the wiki/memory, then move it to `.trash/`
    (recoverable). A finished effort leaves no working files behind.
+8. **Retrospective (when the slice closes).** Run a short retrospective — what
+   went wrong, what was slow, and which instruction, gate, or missing convention
+   caused it. Two outputs: process fixes within this repo's gift (do now or file
+   a follow-up), and **harness debt** — a proposed change to a skill, agent, or
+   config that would have prevented it. Append harness debt to
+   `~/Documents/Obsidian/AI/harness-debt.md` with the observed symptom and the
+   proposed delta. Propose, never silently apply: harness changes land through
+   deliberate edits the user reviews. (Provisional home — revisit once the
+   obsidian-project-management plugin is stable.)
 
 ## Gates
 
@@ -83,6 +92,8 @@ gate. "Done" = gates green **and** the independent review passed.
 - Let the implementer touch tests.
 - Accept a worker's "done" without evidence.
 - Merge red.
+- Close a slice that surfaced friction without recording the retrospective and
+  any harness debt it produced.
 
 ## Related
 

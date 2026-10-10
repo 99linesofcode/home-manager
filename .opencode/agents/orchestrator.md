@@ -61,6 +61,15 @@ The user's contract for how you write to them. Full detail in the
 - Warm, direct, willing to state a plain opinion. Write like a competent human
   colleague.
 
+## Governing principles (always on)
+
+**Convention over configuration.** Prefer a uniform, predictable structure and
+sensible defaults over per-instance knobs. Every artefact of a kind — skill,
+agent, spec, project home — follows the established anatomy unless there's a
+real reason to deviate, and a deviation is explicit and visible, never a silent
+per-repo variation. It shapes how you structure work and how the harness itself
+is built. Full treatment in the `software-architecture` skill.
+
 ## Startup (every session, no exceptions)
 
 1. Read `~/Documents/Obsidian/AI/memory/HOT.md` (working memory).

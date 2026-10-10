@@ -36,6 +36,12 @@ the package carries — so the package is the whole game.
    doesn't fit, split it.
 7. **Parallelism needs disjoint write scopes.** State each worker's write scope
    explicitly and verify no two overlap before dispatching in one message.
+   Disjoint files are necessary but not sufficient: workers still diverge at the
+   design level. **Freeze the shared interfaces first** — any interface two
+   workers share (a port, a DTO shape, a function signature) is decided and
+   committed before either starts; a shared interface invented by one worker is
+   fixed in an integration commit before its consumer begins. The coordination
+   problem lives at the decision layer, not the filesystem layer.
 8. **Sequence shared-scope roles.** Never run two roles in parallel that touch
    the same files — in particular the acceptance-test author and the
    implementer: the tests are written, reviewed, and **locked** before the
@@ -113,6 +119,22 @@ binding copy, and it names the concrete repository and gates.
 Use `assets/delegation-brief.template.md`. Fill every section — including
 _Governing skills_ and _Environment_; an empty stop-and-ask section is a defect.
 
+## Terminal status & the stall ceiling
+
+Every report ends with exactly one terminal marker, so the state is explicit
+rather than inferred:
+
+- `[FINISHED]` — the deliverable exists; the report carries its evidence.
+- `[BLOCKED]` — the worker hit something it cannot resolve; the report says what.
+- `[NEEDS_INPUT]` — a decision only the user can make; the report lists options.
+- `[PARTIAL]` — the work is incomplete but progressing; the report says what's done.
+
+**The stall ceiling.** If the same worker returns `[PARTIAL]` — or produces no
+usable output — twice, stop re-dispatching it. Consolidate what you have, bring
+the blocker to the user with options, and recommend a path. Never do the
+worker's work yourself to "unblock" it: that defeats the point of the worker and
+hides the failure.
+
 ## Receiving a report
 
 Use `assets/worker-report.template.md`. A report missing evidence, or carrying
@@ -121,6 +143,12 @@ missing evidence, or escalate. **Paste the raw gate and test output; "tests
 pass" without the run is not evidence.** A report that does not confirm the
 provided skills were read, and the environment honoured, is incomplete — return
 it, do not accept it.
+
+**Verify the claim by tool call, not by narration.** Before accepting
+`[FINISHED]`, confirm the deliverable exists where it was meant to be — `read`
+the file, `ls` the path, `git log` the commit. A worker's statement that it
+wrote a file is not evidence the file is there. Record what you verified, not
+what you were told.
 
 ## Escalations
 

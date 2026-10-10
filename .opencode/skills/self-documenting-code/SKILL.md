@@ -1,6 +1,6 @@
 ---
 name: self-documenting-code
-description: The user's code-style contract — code should be self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps. Comments are a smell; intent lives in the project spec and acceptance criteria, never in source comments. Use when writing, reviewing, or refactoring code, when deciding whether a comment earns its place, or for any question of code style, formatting rhythm, or blank lines.
+description: The user's code-style contract — code should be self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps. Comments are a smell; intent lives in the project spec and acceptance criteria, never in source comments. Use when writing, reviewing, or refactoring code, when deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording.
 ---
 
 # self-documenting-code
@@ -34,6 +34,11 @@ source.
 
 A function's name states its intent; the body shows how. If a name needs a
 comment to be understood, rename it.
+
+Names matter more, not less, when agents read the code: identifiers are a
+primary semantic channel for a model — it reasons from names, not only from
+structure — so a descriptive name is compressed documentation the agent reads
+directly.
 
 - Name the behavior, not the mechanism: `calculateTotal()` not `loopAndSum()`.
 - A boolean reads as a question: `isPublished()`, `hasExpired()`.
@@ -74,7 +79,7 @@ the change site, and every survivor is a review flag.
 
 ## Documentation surfaces (where documentation lives, and when it updates)
 
-Documentation has three surfaces. Each has a distinct job and an update
+Documentation has four surfaces. Each has a distinct job and an update
 trigger — documentation that isn't tied to a trigger erodes:
 
 1. **`ARCHITECTURE.md`** (repo root) — the codebase map: modules, boundaries,
@@ -92,7 +97,13 @@ trigger — documentation that isn't tied to a trigger erodes:
    the project as a whole: the decision log (why it is the way it is), the
    session logs (what was done when), and the wiki (durable concepts that
    outlive the project). **Trigger: decisions log in the same session;
-   durable insights consolidate at session end.**
+   durable insights    consolidate at session end.**
+4. **Error messages** (in the code) — the diagnostic surface an agent reads at
+   failure time. Carry the context a reader needs to act — the failing input,
+   the constraint, the reason (`Payment failed for order #4521: insufficient
+   funds`) — never a coded or terse string (`|E|PS|pf|o=4521`). A terse message
+   forces the agent to reconstruct what the code could have said. This is the
+   one place a descriptive string belongs in the source.
 
 The boundary: the repo documents the code for someone **reading the code**;
 the vault documents the project for someone **owning the project**. A flow

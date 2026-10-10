@@ -29,8 +29,10 @@ mechanics).
 1. **Lean first (YAGNI).** Only build what's needed; only abstract after
    duplication (Rule of Three). Concepts inform judgment, they don't dictate
    it.
-2. **Convention over invention.** Follow the language's standards and the
-   ecosystem's established tools; minimize custom rules.
+2. **Convention over configuration.** Prefer a uniform, predictable structure
+   and sensible defaults over per-instance knobs; follow the language's
+   standards and the ecosystem's established tools, and minimize custom rules.
+   A convention everyone follows beats a configuration everyone must set.
 3. **Hexagonal layering.** Core domain logic isolated from the outside world;
    dependencies point inward.
 4. **Actions carry the logic.** Every user story is an action (invokable use
@@ -45,6 +47,30 @@ mechanics).
    dependencies, invocation). No metaphor names (Engine, Manager, Helper,
    Handler, Util). One class per file; lean files.
 
+## Convention over configuration (the default stance)
+
+Prefer a convention everyone follows over a configuration everyone sets. This
+is the operating default for the whole setup, not just code:
+
+- **Uniform anatomy.** Every artefact of a kind looks the same — skills,
+  agents, specs, project homes, module skeletons. Predictable structure is
+  cheaper than flexible structure: a reader (human or agent) finds what they
+  expect without being told.
+- **Sensible defaults first.** Ship a working default — agent, model,
+  permissions, project layout, devshell — and let a project override it only
+  where it genuinely differs. A per-project override is the exception, not the
+  setup step.
+- **Convention beats a knob.** A knob is a decision deferred to every caller;
+  if a convention can absorb the case, don't expose the knob. Add one only when
+  a real, recurring need can't be met by the convention — the same test as the
+  lean guardrail below.
+- **The escape hatch is explicit.** Where a project must differ, the override
+  is a deliberate, visible act (a project `AGENTS.md` / config file), not a
+  silent per-repo variation that erodes the convention.
+
+Push back when a convention would genuinely hurt a given context (see "The
+working agreement") — a convention is a strong default, not a straitjacket.
+
 ## The lean guardrail (the decision heuristic)
 
 Before adding any architectural element (a repository, a port, a value object,
@@ -54,8 +80,12 @@ a service, a module), ask:
    worth isolating?
 2. **Has duplication occurred?** Abstract after the 2nd–3rd repetition, not
    before.
-3. **Does it reduce complexity, or add ceremony?** If it adds a layer without
-   adding clarity, skip it.
+3. **Does it make verification cheaper, or add ceremony?** A layer earns its
+   keep by making the behavior easier to verify — a seam to inject a fake, a
+   boundary to test against — not by mirroring a diagram. For an agent, every
+   layer between the caller and the behavior is another file to read: a tool
+   call and a context tax. A layer that buys neither verifiability nor real
+   isolation is ceremony — skip it.
 4. **Does the framework already provide this?** If the ecosystem's conventions
    already carry it, don't rebuild it.
 
@@ -168,6 +198,22 @@ each component:
    (driving), `Domain/` (core), `Infrastructure/` (driven; empty until a
    real adapter exists).
 3. **Role** (leaf): inside a layer, folders per role — the menu below.
+
+**Scope — this is a component's interior.** The concept → architecture → role
+order describes how one *component/module* is laid out: in the Laravel
+expression, the inside of a single package. It is deliberately silent on how
+several components are assembled at a repository root. That outer layer is a
+separate decision — Graça's `Core` / `Infrastructure` / `Presentation`, a
+monorepo of packages, a service boundary — and `Core` there names the
+*container* of the components, not the domain layer inside one.
+
+**When the application is a single bounded context**, there is exactly one
+component and the repository *is* it — so this interior shape sits at the root:
+`src/{App,Domain,Infrastructure}` beside the entry point (`main.ts`), with no
+component wrapper. The concept-first rule above ("the top level screams the
+domain") applies when there is *more than one* component; with exactly one, the
+layers are the top level, and a component folder for a single context is
+ceremony, not structure.
 
 **The growth rule (when additional folders are warranted):** start flat and
 group as the need arises — *"it is overzealous to create a folder to put
