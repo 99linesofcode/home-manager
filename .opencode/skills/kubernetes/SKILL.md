@@ -125,9 +125,11 @@ rule: the same stack locally and in production, differing only in values
 stack — `kube-prometheus-stack` (Prometheus Operator, Prometheus, Alertmanager,
 Grafana, node-exporter, kube-state-metrics) — composed as a generic `monitoring`
 chart in `kubernetes-base` and released by Flux in a `monitoring` namespace.
-Applications expose `/metrics`; a `ServiceMonitor` scrapes them. A lighter
-alternative (VictoriaMetrics) is under consideration. The concrete choice is
-tracked in the `kubernetes-monitoring` plan.
+Applications expose `/metrics`; a `ServiceMonitor` scrapes them. Uptime and
+heartbeat checks (synthetic probes, status pages, dead-man's-switch) are part of
+the same concern. A lighter alternative (VictoriaMetrics) is under
+consideration. The concrete choices are tracked in the `kubernetes-monitoring`
+plan.
 
 ## Task — constrained
 
