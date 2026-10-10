@@ -1,3 +1,17 @@
+# [0.25.0](https://github.com/99linesofcode/home-manager/compare/v0.24.0...v0.25.0) (2026-10-10)
+
+
+### Bug Fixes
+
+* **opencode:** extracting to references caused loss of knowledge and adherence ([2a2fc9d](https://github.com/99linesofcode/home-manager/commit/2a2fc9d8ae0a7d87f27ce83989cbfbb3224eb22d))
+
+
+### Features
+
+* **opencode:** scripts for testing adherence to agentskills spec ([9c33e35](https://github.com/99linesofcode/home-manager/commit/9c33e35c93576a2b8a9c07bcb860afbcc9a25adf))
+
+
+
 # [0.24.0](https://github.com/99linesofcode/home-manager/compare/v0.23.0...v0.24.0) (2026-10-10)
 
 
@@ -61,29 +75,6 @@
 * **voxtype:** max recording duration is now set to 5 minutes ([82168ab](https://github.com/99linesofcode/home-manager/commit/82168ab4dae3e655da59a92667795ef1a628ac52))
 * **voxtype:** Voice-to-text with push-to-talk for Wayland compositors ([5801737](https://github.com/99linesofcode/home-manager/commit/580173705e4c3e8e1a326ea73df738cef1c16587))
 * **zed:** scaffold module for Zed, the GPU accelerated text editor ([0014fb0](https://github.com/99linesofcode/home-manager/commit/0014fb02b1df2e925e9675b497cf96a958fd7beb))
-
-
-
-# [0.21.0](https://github.com/99linesofcode/home-manager/compare/v0.20.2...v0.21.0) (2026-07-06)
-
-
-### Bug Fixes
-
-* **hyprpaper:** hyprctl hyprpaper was called incorrectly ([d2dca52](https://github.com/99linesofcode/home-manager/commit/d2dca52f8a73053967e43dcf32b466eada3092b4))
-* **obs:** write input-overlay presets in .config/obs-studio ([088f807](https://github.com/99linesofcode/home-manager/commit/088f80750b7f78a0f4905a22b9f1d8e17a53d676))
-* **sops:** defaultSopsFile should point to a secrets file, not the .sops config ([49430a6](https://github.com/99linesofcode/home-manager/commit/49430a6602f1321d04a26b7a4904874cfee921a7))
-* **sops:** master key decrypts everything and hosts don't need access to hm secrets ([9b26fa7](https://github.com/99linesofcode/home-manager/commit/9b26fa753143c1c79530b420a65a1eef551fb064))
-* **sops:** use ${username}.txt age key and generate it if it doesn't exist ([4595b46](https://github.com/99linesofcode/home-manager/commit/4595b460954763649da7f7cb7ef0136e6f4fbc3e))
-* use dedicated release versions for other flakes as well ([03d522d](https://github.com/99linesofcode/home-manager/commit/03d522d9ac1231c0d1ce6393b5d26198a2d8dad1))
-
-
-### Features
-
-* **bitwarden:** replace desktop with CLI ([c67695a](https://github.com/99linesofcode/home-manager/commit/c67695af3b2c9253e9a7c6a6d1eda7b4a468deaa))
-* **obsidian:** run bisync --resync on initial run ([60aac98](https://github.com/99linesofcode/home-manager/commit/60aac9810e19a3083c6c9fb84ceaba83fa1abd7f))
-* **rclone:** define files that can optionally be ignored ([d5881f7](https://github.com/99linesofcode/home-manager/commit/d5881f7a57f016b277770cf4ab92188f9df927f6))
-* **syncthing:** add fairphone device ID ([410ca48](https://github.com/99linesofcode/home-manager/commit/410ca4813798f858d13776456c88fe2a2a2ece8d))
-* **typst:** convert .md files to PDFs using Pandoc and Typst ([44e9c71](https://github.com/99linesofcode/home-manager/commit/44e9c71384646f48f7b40640cb60550bce3a118d))
 
 
 
