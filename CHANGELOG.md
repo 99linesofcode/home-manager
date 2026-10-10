@@ -1,3 +1,15 @@
+# [0.23.0](https://github.com/99linesofcode/home-manager/compare/v0.22.1...v0.23.0) (2026-10-10)
+
+
+### Features
+
+* add docker and kubernetes skills ([af0b83c](https://github.com/99linesofcode/home-manager/commit/af0b83caa8dab394988b543356839633a7097587))
+* **gc:** run garbage collection on user profiles ([2a3f0cf](https://github.com/99linesofcode/home-manager/commit/2a3f0cf8de37e319ccc14178ed63ecbe6af46ca2))
+* **obsidian:** add oneshot service to allow for forced resynchronization without safety checks ([bf7d4c2](https://github.com/99linesofcode/home-manager/commit/bf7d4c2df87848c4ba69f4e973e0633314a6ca2b))
+* **opencode:** dramatic improvement in spec-driven development adherence ([15882d0](https://github.com/99linesofcode/home-manager/commit/15882d08110a0eb32839de46dcd7c8666415b04b))
+
+
+
 ## [0.22.1](https://github.com/99linesofcode/home-manager/compare/v0.22.0...v0.22.1) (2026-10-09)
 
 
@@ -72,15 +84,6 @@
 ### Bug Fixes
 
 * **zsh:** uwsm is not kicked off through the hyprland-uwsm.desktop file and PAM ([0b3cee7](https://github.com/99linesofcode/home-manager/commit/0b3cee769fd87773359409905379101b2665cb4a))
-
-
-
-## [0.20.1](https://github.com/99linesofcode/home-manager/compare/v0.20.0...v0.20.1) (2026-06-09)
-
-
-### Bug Fixes
-
-* **firefox:** scaling issue in extensions ([580a6f5](https://github.com/99linesofcode/home-manager/commit/580a6f52fe4a5fc5109244de73c4a51c2a48d951))
 
 
 
