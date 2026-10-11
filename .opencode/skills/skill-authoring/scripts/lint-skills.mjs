@@ -20,6 +20,7 @@
  *   --base GIT_REF    diff-aware check against a git ref (anti-extraction tripwire)
  *   --resolve TARGET  resolve a skill or matrix row to its required set
  *   --stats           print the library metrics
+ *   --fix             regenerate the catalog and derived views, then check
  *   --errors-only     print errors only (no warnings, no summary)
  *   --quiet           print errors and warnings, no summary
  */
@@ -69,6 +70,13 @@ const NON_MATRIX_ALLOWLIST = {
     'beeper-bridge': 'harness operation (chat bridge); not a dev task',
     'typst-document': 'document rendering; a vault/ops task',
     'research-prompt-skills': 'scheduled standalone job; not a routed dev task',
+};
+
+// Skills deliberately not referenced by any other skill: they are entry points
+// loaded on demand, not library skills, so the zero-inbound warning is skipped.
+const INBOUND_EXEMPT = {
+    'customize-opencode': 'entry point invoked when configuring opencode',
+    'systemd-scheduler': 'entry point invoked from systemd; it schedules workers itself',
 };
 
 // "Read when" cells that are not concrete triggers.
@@ -923,7 +931,7 @@ function checkInbound(skills, rep) {
         }
     }
     for (const name of [...skills.keys()].sort()) {
-        if (inbound.get(name) === 0 && !NON_MATRIX_ALLOWLIST[name]) {
+        if (inbound.get(name) === 0 && !NON_MATRIX_ALLOWLIST[name] && !INBOUND_EXEMPT[name]) {
             rep.warn(`${name}: zero inbound references`);
         }
     }
@@ -1009,6 +1017,28 @@ function checkCatalogStale(root, rep) {
     if (!fs.existsSync(script)) return;
     const res = spawnSync(process.execPath, [script, '--check'], { encoding: 'utf8' });
     if (res.status !== 0) rep.error('catalog is stale — run build-catalog.mjs');
+}
+
+/**
+ * `--fix`: regenerate the catalog and its derived views by running
+ * `build-catalog.mjs` in write mode, at the same root-aware path the staleness
+ * check uses. Returns false (after emitting the generator's error) when the
+ * generator fails, so the caller can fail closed rather than swallow it.
+ */
+function runFix(root) {
+    const script = path.join(root, '.opencode', 'skills', 'skill-authoring', 'scripts', 'build-catalog.mjs');
+    if (!fs.existsSync(script)) {
+        console.error('lint-skills --fix: build-catalog.mjs not found');
+        return false;
+    }
+    const res = spawnSync(process.execPath, [script], { encoding: 'utf8' });
+    if (res.status !== 0) {
+        const detail = (res.stderr || '').trim();
+        console.error(`lint-skills --fix: build-catalog.mjs failed (exit ${res.status})${detail ? `\n${detail}` : ''}`);
+        return false;
+    }
+    console.log('fixed: regenerated the catalog and derived views');
+    return true;
 }
 
 /** The `permission.skill` allow-list keys in the orchestrator agent file. */
@@ -1352,7 +1382,7 @@ function printStats(skills) {
 }
 
 function parseArgs(argv) {
-    const args = { root: null, base: null, resolve: null, quiet: false, errorsOnly: false, stats: false };
+    const args = { root: null, base: null, resolve: null, quiet: false, errorsOnly: false, stats: false, fix: false };
     for (let i = 0; i < argv.length; i++) {
         const a = argv[i];
         if (a === '--root') args.root = argv[++i];
@@ -1361,6 +1391,7 @@ function parseArgs(argv) {
         else if (a === '--quiet') args.quiet = true;
         else if (a === '--errors-only') args.errorsOnly = true;
         else if (a === '--stats') args.stats = true;
+        else if (a === '--fix') args.fix = true;
     }
     return args;
 }
@@ -1372,6 +1403,7 @@ function main(argv) {
         console.error('lint-skills: could not locate .opencode/skills; pass --root <repo>');
         return 2;
     }
+    if (args.fix && !runFix(root)) return 1;
     const skills = discover(root);
 
     if (args.resolve) return resolveTarget(skills, args.resolve);

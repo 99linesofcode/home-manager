@@ -332,6 +332,25 @@ function main() {
         console.log(clean.out);
     }
 
+    // --fix: a stale catalog is regenerated, so the linter then exits 0.
+    const fixRoot = tmpRoot();
+    try {
+        copySkills(fixRoot);
+        const p = path.join(fixRoot, '.opencode', 'skills', 'catalog.json');
+        const catalog = JSON.parse(fs.readFileSync(p, 'utf8'));
+        delete catalog.skills.wiki;
+        fs.writeFileSync(p, JSON.stringify(catalog, null, 2) + '\n');
+        const { code, out } = run(fixRoot, '--fix');
+        const ok = code === 0 && out.includes('fixed: regenerated the catalog and derived views');
+        console.log(`${ok ? 'PASS' : 'FAIL'}: --fix regenerates a stale catalog`);
+        if (!ok) {
+            failures++;
+            console.log(out);
+        }
+    } finally {
+        fs.rmSync(fixRoot, { recursive: true, force: true });
+    }
+
     const root = tmpRoot();
     try {
         fs.mkdirSync(path.join(root, '.opencode/skills/demo'), { recursive: true });
@@ -371,7 +390,7 @@ function main() {
         fs.rmSync(root2, { recursive: true, force: true });
     }
 
-    console.log(`\n${CASES.length + 3} checks; ${failures} failure(s)`);
+    console.log(`\n${CASES.length + 4} checks; ${failures} failure(s)`);
     return failures ? 1 : 0;
 }
 
