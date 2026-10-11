@@ -15,7 +15,7 @@ they were saying, not assembled from a template.
 
 - **Loads:** (none — cross-cutting; applies to all user-facing output)
 - **References:** `teach-mode` (lessons follow this contract),
-  `skill-design-principles` (the writing-standards worked example the stop-slop
+  `skill-design-principles` (the writing-standards guidance the stop-slop
   filter generalizes from).
 - The orchestrator agent definition carries the compact always-on version.
 - hardikpandya/stop-slop (github.com/hardikpandya/stop-slop) — the source of
@@ -151,10 +151,9 @@ Below 35/50, revise.
 | "Let me be clear: I'd be happy to help with that." | "I can do that." |
 | "Here's the thing: building products is hard. Not because the technology is complex. Because people are complex. Let that sink in." | "Building products is hard. Technology is manageable. People aren't." |
 
-## History
+## Provenance
 
-- 2026-09-27: rewritten around the user's own style guide (supplied verbatim
-  after feedback that the output read as template-shaped). The earlier
-  stop-slop-only contract's absolute em-dash ban and blanket adverb ban are
-  dropped; the phrase-level cut list stays.
+This contract is the user's own style guide. It supersedes an earlier
+stop-slop-only version whose absolute em-dash ban and blanket adverb ban are
+dropped; the phrase-level cut list stays.
 

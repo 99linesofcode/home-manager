@@ -1,6 +1,6 @@
 ---
 name: agent-delegation
-description: Compose and dispatch worker packages, resolve each package's governing skills from the role → skills routing matrix, verify the evidence, and consolidate escalations. Defines the reusable role briefs (material analyst, spec writer, spec adversary, options analyst, spike engineer, characterization test author, acceptance test author, implementer, reviewer, spec reconciler) and the delegation-brief and worker-report templates. Use whenever the orchestrator dispatches a worker, in any phase of spec-driven delivery.
+description: Compose and dispatch worker packages, route each task to a role and each role to its governing skills, verify the evidence, and consolidate escalations. Defines the reusable role briefs (material analyst, spec writer, spec adversary, options analyst, spike engineer, characterization test author, acceptance test author, implementer, reviewer, premise auditor, spec reconciler, advisor) and the delegation-brief and worker-report templates. Use whenever the orchestrator dispatches a worker, decides which role a task warrants, or works in any phase of spec-driven delivery.
 ---
 
 # agent-delegation
@@ -14,7 +14,9 @@ the package carries — so the package is the whole game.
 - **Loads:** (none — loaded on demand by every phase skill)
 - **References:** `software-development` (the task-level routing matrix),
   `git-workflow` (delivery), `memory` (the shared-vault caveat), the role briefs
-  in `references/roles/`.
+  in `references/roles/`, `premise-demolition` + `systems-thinking` (the
+  premise-auditor role's governing skills), `jev-gates` (the pre-screen gate the
+  body refers to).
 
 ## Files
 
@@ -34,6 +36,8 @@ Before acting, read every `required` file below.
 | `references/roles/acceptance-test-author.md` | on-demand | when dispatching the acceptance-test-author role |
 | `references/roles/implementer.md` | on-demand | when dispatching the implementer role |
 | `references/roles/reviewer.md` | on-demand | when dispatching the reviewer role |
+| `references/roles/premise-auditor.md` | on-demand | when dispatching the premise-auditor role |
+| `references/roles/advisor.md` | on-demand | when dispatching the advisor role |
 
 ## When to use
 
@@ -79,6 +83,33 @@ Before acting, read every `required` file below.
    parallel workers cannot collide on the working tree. It isolates *code* only
    — the vault (memory) is shared and is not protected by this (see `memory`).
 
+## Which role for which task
+
+The task matrix in `software-development` routes a task to **skills**; this
+routes a task to a **role** — what the worker does. Classify the work before you
+dispatch:
+
+| The work | Role |
+|---|---|
+| Implement a bounded change against locked tests | implementer |
+| Review a change end-to-end | reviewer |
+| Re-derive and scrutinise an existing system's design | premise auditor |
+| Compare architecture or technology options | options analyst |
+| Prove a risky unknown with a throwaway prototype | spike engineer |
+| Extract facts and questions from raw material | material analyst |
+| Write or attack a spec | spec writer / spec adversary |
+| Author characterization or acceptance tests | characterization test author / acceptance test author |
+| Reconcile the spec to what was built | spec reconciler |
+| Advise on a hard-to-reverse decision or a system-scale premise audit | advisor |
+
+**Delegation is for independent work, not only implementation.** Independence
+comes from fresh context, and a cold worker is the freshest reader available. A
+change to review, a design to challenge, an existing system to scrutinise — all
+are *independent analysis*, and all are delegated, because the orchestrator is
+the most anchored reader in the room. What the orchestrator keeps is
+**decisions**: the plan, the reconciliation, the choice, and the user
+conversation.
+
 ## Governing skills (every package)
 
 A worker cannot self-select skills (`skill: deny`). The package must name the
@@ -100,6 +131,8 @@ Resolve the role against this matrix and put every listed path in the package:
 | acceptance test author       | `software-testing`                                                                       |
 | implementer                  | `software-architecture`, `software-development`, `self-documenting-code`, `git-workflow` |
 | reviewer                     | `code-review`, plus the change's own governing skills                                    |
+| premise auditor              | `premise-demolition`, `systems-thinking`, `software-architecture`                        |
+| advisor                      | `premise-demolition`, `systems-thinking`, `software-architecture`                        |
 
 This matrix routes **roles** — what a worker does. The task-level matrix as in
 the `software-development` routes **tasks**. Both are authoritative for their
@@ -109,6 +142,17 @@ Name each skill as `~/.config/opencode/skills/<name>/SKILL.md`. If a named skill
 refers to a file under its own `references/`, `assets/` or `scripts/`, give that
 file's absolute path too — a raw `read` carries no base directory, so a bare
 relative reference will not resolve.
+
+**Resolve, don't recall.** Run `resolve-skills.mjs` for the task's matrix row and
+fill the package from its four lists: *governing skills* (the `Loads` closure,
+absolute `SKILL.md` paths), *required files*, *required External pointers*, and
+*on-demand* (add the ones whose trigger matches the task). A package composed
+from memory — or from a paraphrase of a skill — is a defect; it drops steps.
+
+**Required External pointers are handed explicitly.** A `required` row in a
+skill's `## External` table is a path the worker must be given. Pointers the
+worker cannot reach are inlined as an excerpt instead — see _Can a worker read
+the pointers?_ below.
 
 ## Environment (every package)
 
@@ -136,6 +180,24 @@ proves nothing. Carry this block, filled in for the task:
 The role briefs carry the same block as the worker's reminder; the package is the
 binding copy, and it names the concrete repository and gates.
 
+## Can a worker read the pointers?
+
+Workers have no `external_directory` or `read` override of their own, so they
+inherit the global opencode permissions. **Verified by reading
+`modules/opencode.nix` (the source of truth): `external_directory = "allow"` and
+`read = "allow"`** — so a worker *can* open a path under `~/Development` or
+`~/Documents` that a skill's `## External` table names, and the orchestrator
+hands the path rather than inlining it. Not tested at runtime; re-check if the
+permission config changes.
+
+Where a machine denies `external_directory` or `read`, a worker cannot reach an
+external pointer — then the orchestrator **inlines an excerpt** of it into the
+package's _Inline digest_, and says so. Never hand a path the worker cannot open
+and hope.
+
+`skill: deny` on the worker is deliberate: it cannot load skills, so the package
+carries every governing skill by path plus the rules it must not look up.
+
 ## Dispatching
 
 - Spawn via the `task` tool (`subagent_type: worker`). Multiple calls in one
@@ -150,8 +212,11 @@ binding copy, and it names the concrete repository and gates.
 
 ## Composing a package
 
-Use `assets/delegation-brief.template.md`. Fill every section — including
-_Governing skills_ and _Environment_; an empty stop-and-ask section is a defect.
+Use `assets/delegation-brief.template.md`. Fill every section — _Governing
+skills_ and _Load-bearing pointers_ from the resolver's four lists,
+_Environment_, and the _Inline digest_ (the always-on card plus any rule whose
+source is outside the worker's reach, copied verbatim); an empty stop-and-ask
+section is a defect. Add the on-demand pointers whose trigger matches the task.
 
 ## Terminal status & the stall ceiling
 
@@ -174,15 +239,20 @@ hides the failure.
 Use `assets/worker-report.template.md`. A report missing evidence, or carrying
 assumptions where there should be none, is not accepted — return it for the
 missing evidence, or escalate. **Paste the raw gate and test output; "tests
-pass" without the run is not evidence.** A report that does not confirm the
-provided skills were read, and the environment honoured, is incomplete — return
-it, do not accept it.
+pass" without the run is not evidence.** A report that does not list **every
+path it read** and **confirm each `required` pointer** (with one line of
+conformance evidence per governing skill) is incomplete — return it, do not
+accept it.
 
 **Verify the claim by tool call, not by narration.** Before accepting
 `[FINISHED]`, confirm the deliverable exists where it was meant to be — `read`
 the file, `ls` the path, `git log` the commit. A worker's statement that it
 wrote a file is not evidence the file is there. Record what you verified, not
 what you were told.
+
+The Jev `worker_prescreen` gate (see `jev-gates`) filters the diff before the
+reviewer but never replaces it — a confident pass may skip the reviewer only
+after shadow-mode agreement is demonstrated, and uncertain diffs escalate.
 
 ## Escalations
 

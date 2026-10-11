@@ -25,6 +25,7 @@
  */
 
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -32,25 +33,28 @@ import { fileURLToPath } from 'node:url';
 const DEFAULT_MAX_LINES = 500;
 const DEFAULT_MAX_BYTES = 20 * 1024; // ~5,000 tokens (bytes / 4)
 const HARD_MAX_BYTES = 32 * 1024; // ~8,000 tokens
+const MIN_REFERENCE_BYTES = 2 * 1024; // inline-by-default floor for knowledge references
+const MAX_REQUIRED_BYTES = 8 * 1024; // a required file over this is a skill
+const CARD_START = '<!-- card:start -->';
+const CARD_END = '<!-- card:end -->';
 const NAME_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const DESC_MAX = 1024;
 const DESC_WARN = 400;
 const MAX_CLOSURE = 4; // transitive Loads closure, excluding self
 const MATRIX_SKILL = 'software-development';
 const FILES_DIRS = ['references', 'assets', 'scripts'];
+// Files exempt from the 2 KB floor and the 8 KB ceiling: role briefs and
+// assets are passed by path or filled in; scripts are run, not read.
+const SIZE_EXEMPT = [/^references\/roles\//, /^assets\//, /^scripts\//];
 const NORMATIVE_WORDS = /\b(MUST|NEVER|REQUIRED|ALWAYS)\b/g;
 const NORMATIVE_WORD_THRESHOLD = 12;
 
 // Deliberate size-budget exceptions: a skill over the default budget must be
 // listed here with a numeric max_kb (<= 32) and a one-line reason.
 const BUDGET_EXCEPTIONS = {
-    'software-architecture': {
-        max_kb: 24,
-        reason: 'contract skill: all rules are normative and must be in context together',
-    },
     'skill-authoring': {
-        max_kb: 30,
-        reason: 'contract skill: the size/reference policy and splitting patterns are normative and must be in context together',
+        max_kb: 32,
+        reason: 'contract skill: the size/reference policy, load policy and splitting patterns are normative and must be in context together',
     },
 };
 
@@ -245,6 +249,30 @@ function parseFilesTable(skill) {
     }
 }
 
+function parseExternalTable(skill) {
+    if (skill.externalIndex === null) return;
+    const lines = skill.lines;
+    const mask = fenceMask(lines);
+    const end = sectionEnd(lines, mask, skill.externalIndex);
+    for (let i = skill.externalIndex + 1; i < end; i++) {
+        if (mask[i]) continue;
+        const line = lines[i].trim();
+        if (!line.startsWith('|')) continue;
+        const cells = line.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
+        if (cells.length < 1) continue;
+        const first = cells[0].replace(/`/g, '').trim();
+        if (['path', ''].includes(first.toLowerCase()) || [...first].every((c) => '-: '.includes(c))) {
+            continue;
+        }
+        skill.externalRows.push({
+            path: first,
+            load: (cells[1] || '').replace(/`/g, '').trim().toLowerCase(),
+            trigger: (cells[2] || '').trim(),
+            cells: cells.length,
+        });
+    }
+}
+
 function walkFiles(dir) {
     const out = [];
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -267,10 +295,12 @@ function newSkill(name, dir) {
         loads: [],
         references: [],
         filesRows: [],
+        externalRows: [],
         physicalFiles: [],
         relatedIndex: null,
         firstSectionIndex: null,
         filesIndex: null,
+        externalIndex: null,
         bytes: 0,
         nlines: 0,
         parseError: null,
@@ -279,6 +309,10 @@ function newSkill(name, dir) {
 
 function requiredFiles(skill) {
     return skill.filesRows.filter((r) => r.load === 'required').map((r) => r.path);
+}
+
+function isSizeExempt(rel) {
+    return SIZE_EXEMPT.some((re) => re.test(rel));
 }
 
 function reportBytes(skill) {
@@ -311,6 +345,7 @@ function loadSkill(dir) {
     const mask = fenceMask(skill.lines);
     skill.relatedIndex = findHeading(skill.lines, mask, 'Related');
     skill.filesIndex = findHeading(skill.lines, mask, 'Files');
+    skill.externalIndex = findHeading(skill.lines, mask, 'External');
     const headings = [];
     for (let i = 0; i < skill.lines.length; i++) {
         if (!mask[i] && skill.lines[i].startsWith('## ')) headings.push(i);
@@ -318,6 +353,7 @@ function loadSkill(dir) {
     skill.firstSectionIndex = headings.length ? headings[0] : null;
     parseRelated(skill);
     parseFilesTable(skill);
+    parseExternalTable(skill);
     for (const p of walkFiles(skill.dir).sort()) {
         const rel = path.relative(skill.dir, p).split(path.sep).join('/');
         if (FILES_DIRS.includes(rel.split('/')[0])) skill.physicalFiles.push(rel);
@@ -441,6 +477,16 @@ function checkFilesTable(skills, rep) {
                     rep.error(`${name}: on-demand '${rel}' needs a concrete 'Read when' trigger`);
                 }
             }
+            const full = path.join(skill.dir, rel);
+            if (fs.existsSync(full) && fs.statSync(full).isFile() && !isSizeExempt(rel)) {
+                const size = fs.statSync(full).size;
+                if (row.load === 'on-demand' && size < MIN_REFERENCE_BYTES) {
+                    rep.error(`${name}: on-demand '${rel}' is ${size} B (< ${MIN_REFERENCE_BYTES} B) — inline it into SKILL.md`);
+                }
+                if (row.load === 'required' && size > MAX_REQUIRED_BYTES) {
+                    rep.error(`${name}: required '${rel}' is ${size} B (> ${MAX_REQUIRED_BYTES} B) — promote it to a skill`);
+                }
+            }
         }
         if (requiredFiles(skill).length && !REQUIRED_INSTRUCTION_RE.test(skill.text)) {
             rep.error(
@@ -457,11 +503,71 @@ function checkFilesTable(skills, rep) {
             while ((m = re.exec(skill.lines[i])) !== null) {
                 const tok = m[1];
                 if ([...tok].some((c) => '<>*'.includes(c))) continue;
+                if (tok.endsWith('/')) continue; // a directory reference, not a file
                 const rel = tok.split(/\s+/)[0];
                 if (!fs.existsSync(path.join(skill.dir, rel))) {
                     rep.error(`${name}: referenced path '${tok}' does not exist`);
                 }
             }
+        }
+    }
+}
+
+function checkExternalTable(skills, rep) {
+    for (const [name, skill] of skills) {
+        if (skill.parseError || skill.externalIndex === null) continue;
+        if (skill.externalRows.length === 0) {
+            rep.error(`${name}: '## External' section has no rows`);
+            continue;
+        }
+        for (const row of skill.externalRows) {
+            if (row.cells < 3) {
+                rep.error(`${name}: External row '${row.path}' is malformed (need Path | Load | Read when)`);
+                continue;
+            }
+            if (!row.path) {
+                rep.error(`${name}: External row has an empty Path`);
+            }
+            if (!['required', 'on-demand'].includes(row.load)) {
+                rep.error(`${name}: External '${row.path}' has load '${row.load}' (must be required|on-demand)`);
+            }
+            if (row.load === 'on-demand') {
+                const trig = row.trigger.trim().toLowerCase().replace(/\.$/, '');
+                if (TRIVIAL_TRIGGERS.has(trig) || trig.length < 8) {
+                    rep.error(`${name}: External on-demand '${row.path}' needs a concrete 'Read when' trigger`);
+                }
+            }
+        }
+    }
+}
+
+function checkCardSync(skills, root, rep) {
+    const owners = [];
+    for (const [name, skill] of skills) {
+        if (skill.parseError) continue;
+        const start = skill.text.indexOf(CARD_START);
+        const end = skill.text.indexOf(CARD_END);
+        if (start === -1 && end === -1) continue;
+        if (start === -1 || end === -1 || end < start) {
+            rep.error(`${name}: card markers unbalanced (${CARD_START} / ${CARD_END})`);
+            continue;
+        }
+        owners.push([name, skill.text.slice(start + CARD_START.length, end).trim()]);
+    }
+    if (owners.length > 1) {
+        rep.error(`card markers in more than one skill: ${owners.map(([n]) => n).join(', ')}`);
+    }
+    if (owners.length === 0) return;
+    const [owner, card] = owners[0];
+    for (const rel of ['.opencode/agents/orchestrator.md', '.opencode/skills/agent-delegation/assets/delegation-brief.template.md']) {
+        const p = path.join(root, rel);
+        if (!fs.existsSync(p)) {
+            rep.error(`card sync: '${rel}' not found (owner '${owner}')`);
+            continue;
+        }
+        const text = readText(p);
+        if (!text.includes(card)) {
+            rep.error(`card sync: '${rel}' does not contain the card from '${owner}' — re-copy it`);
         }
     }
 }
@@ -529,8 +635,23 @@ function checkSizes(skills, rep) {
             }
         }
         const total = reportBytes(skill);
+        const totalEntry = BUDGET_EXCEPTIONS[name];
+        const totalAllowed = totalEntry ? Math.min(totalEntry.max_kb * 1024, HARD_MAX_BYTES) : DEFAULT_MAX_BYTES;
         if (total > HARD_MAX_BYTES) {
-            rep.warn(`${name}: total load (SKILL.md + required files) is ${total} B (> ${HARD_MAX_BYTES} B hard cap)`);
+            rep.error(`${name}: total load (SKILL.md + required files) is ${total} B (> ${HARD_MAX_BYTES} B hard cap)`);
+        } else if (total > totalAllowed) {
+            rep.error(`${name}: total load (SKILL.md + required files) is ${total} B (> ${totalAllowed} B)`);
+        }
+    }
+    for (const [name, entry] of Object.entries(BUDGET_EXCEPTIONS)) {
+        const skill = skills.get(name);
+        if (!skill) {
+            rep.error(`BUDGET_EXCEPTIONS: '${name}' is not a skill`);
+            continue;
+        }
+        if (skill.parseError) continue;
+        if (skill.nlines <= DEFAULT_MAX_LINES && skill.bytes <= DEFAULT_MAX_BYTES) {
+            rep.error(`BUDGET_EXCEPTIONS: '${name}' is within the default budget — remove the exception`);
         }
     }
 }
@@ -783,6 +904,17 @@ function checkDiff(skills, root, base, rep) {
     }
 }
 
+function expandHome(p) {
+    return p.startsWith('~/') ? path.join(os.homedir(), p.slice(2)) : p;
+}
+
+// The longest real path prefix of a possibly-globbed pointer, for existence.
+function probePath(p) {
+    const star = p.indexOf('*');
+    const base = star === -1 ? p : p.slice(0, p.lastIndexOf('/', star) + 1);
+    return expandHome(base);
+}
+
 function resolveTarget(skills, target) {
     const matrixSkill = skills.get(MATRIX_SKILL);
     let targets = [];
@@ -812,18 +944,50 @@ function resolveTarget(skills, target) {
     };
     for (const t of targets) walk(t);
 
-    console.log('Required set (load in order):');
-    const onDemand = [];
+    console.log('\n## Governing skills (Loads closure, in order)');
+    for (const name of order) console.log(`  ${skills.get(name).path}`);
+
+    console.log('\n## Required files');
+    let anyFile = false;
     for (const name of order) {
         const skill = skills.get(name);
-        console.log(`  ${skill.path}`);
-        for (const rel of requiredFiles(skill)) console.log(`  ${path.join(skill.dir, rel)}`);
-        for (const row of skill.filesRows) {
-            if (row.load === 'on-demand') onDemand.push([path.join(skill.dir, row.path), row.trigger]);
+        for (const rel of requiredFiles(skill)) {
+            console.log(`  ${path.join(skill.dir, rel)}`);
+            anyFile = true;
         }
     }
-    console.log('\nAvailable, with triggers (load only when the trigger fires):');
-    for (const [p, trigger] of onDemand) console.log(`  ${p} — ${trigger}`);
+    if (!anyFile) console.log('  (none)');
+
+    console.log('\n## Required External pointers (hand these to the worker)');
+    let anyExt = false;
+    for (const name of order) {
+        const skill = skills.get(name);
+        for (const row of skill.externalRows) {
+            if (row.load !== 'required') continue;
+            const abs = probePath(row.path);
+            const note = fs.existsSync(abs) ? '' : '  [MISSING on this machine]';
+            console.log(`  ${abs}${note} — ${row.trigger}`);
+            anyExt = true;
+        }
+    }
+    if (!anyExt) console.log('  (none)');
+
+    console.log('\n## On-demand (load only when the trigger fires)');
+    let anyOn = false;
+    for (const name of order) {
+        const skill = skills.get(name);
+        for (const row of skill.filesRows) {
+            if (row.load !== 'on-demand') continue;
+            console.log(`  ${path.join(skill.dir, row.path)} — ${row.trigger}`);
+            anyOn = true;
+        }
+        for (const row of skill.externalRows) {
+            if (row.load !== 'on-demand') continue;
+            console.log(`  ${expandHome(row.path)} — ${row.trigger}`);
+            anyOn = true;
+        }
+    }
+    if (!anyOn) console.log('  (none)');
     return 0;
 }
 
@@ -894,8 +1058,10 @@ function main(argv) {
     checkRelatedTargets(skills, rep);
     checkRelatedPosition(skills, rep);
     checkFilesTable(skills, rep);
+    checkExternalTable(skills, rep);
     computeClosures(skills, rep);
     checkSizes(skills, rep);
+    checkCardSync(skills, root, rep);
     checkMatrix(skills, rep);
     checkParts(skills, rep);
     checkProseDependencies(skills, rep);

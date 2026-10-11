@@ -26,6 +26,12 @@ for the human go there, never to `AI/Inbox/`.
   the filing contract for every vault write.
 - **References:** `wiki` (the agent-owned knowledge layer inside the vault).
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Documents/Obsidian/` | required | always — the vault this skill files into; note paths are relative to it |
+
 ## The model in one line
 
 **Categories are the kind of thing a note is** (Books, Recipes, Poems,

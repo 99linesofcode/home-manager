@@ -16,6 +16,13 @@ autonomously; do not ask questions.
 - **References:** `skill-authoring` (the skill wording it studies), `wiki` (the
   pages it grounds in), `memory` (the episodic event it may append).
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Development/home-manager/modules/opencode.nix` | on-demand | when stretching or tightening the schedule |
+| `~/Documents/Obsidian/Inbox/` | on-demand | when writing the findings note |
+
 ## Procedure
 
 1. Ground yourself in what we already know. Read these wiki pages (paths

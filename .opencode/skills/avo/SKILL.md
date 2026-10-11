@@ -29,6 +29,12 @@ the Rails mechanics (engines, actions/DTOs, Hotwire, Packwerk) live in the
   `software-testing` (the testing contract).
 - Wiki concepts: `action-objects.md`, `hexagonal-architecture.md`.
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Development/rails-module-*` | on-demand | when the Avo expression is unclear (mirror them) |
+
 ## When to use
 
 - Building or extending an Avo resource, field, action, dashboard, or card.

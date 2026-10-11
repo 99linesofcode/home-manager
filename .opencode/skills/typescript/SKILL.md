@@ -68,11 +68,10 @@ Do not add `index.ts` re-export barrels. Import from the module's own path.
 
 A barrel looks tidy and behaves badly here: re-exporting a folder's modules
 lets two folders that reference each other form a cycle *through the barrels*.
-Measured on OPM (2026-10-10): barrelling the three core folders took the
-codebase from 1 circular dependency to 27; the bundle was byte-identical and
-the import-statement count did not move (rewriting a path does not merge
-import statements). It also collides with the role-folder naming gate, which
-rejects a bare `index.ts` in a role folder.
+Barrelling the three core folders took the codebase from 1 circular dependency
+to 27; the bundle was byte-identical and the import-statement count did not move
+(rewriting a path does not merge import statements). It also collides with the
+role-folder naming gate, which rejects a bare `index.ts` in a role folder.
 
 The benefit a barrel promises — a folder's public surface — is better bought
 with cohesion: if a folder needs a front door, it has too many cross-folder

@@ -12,14 +12,13 @@ questions — not a design, not code.
 
 - **Loads:** `agent-delegation`.
 - **References:** `shape-up` (framing), `software-architecture` (domain
-  concepts), `vault-notes`.
+  concepts), `vault-notes`, `systems-thinking` (framing the whole).
 
 ## Files
 
 | File | Load | Read when |
 |---|---|---|
 | `references/event-storming.md` | on-demand | when the domain is complex — many events, rules, or actors |
-| `references/client-discovery.md` | on-demand | when the answers live with a non-technical stakeholder |
 
 ## When to use
 
@@ -56,9 +55,28 @@ Run it with the user, not for them.
 ## Client mode
 
 When the answers live with someone else — a client, a colleague, a relative —
-the questions must be phrased for a non-technical stakeholder. See
-`references/client-discovery.md`. When the user is their own client, answer
-in-conversation and skip the client framing.
+the questions must be phrased for a non-technical stakeholder. When the user is
+their own client, answer in-conversation and skip the client framing.
+
+A hotspot ("does a returning customer need a new Account or reuse the old
+one") means nothing to a client stated that way; phrased as a scenario ("if
+someone orders again a year later with a different email, is that the same
+customer for loyalty purposes?"), they answer in seconds. The translation is
+the work:
+
+1. **Work one hotspot at a time.** Name the internal decision it blocks in plain
+   terms, then draft the client-facing version — concrete, scenario-based, free
+   of model/implementation vocabulary. The test: could someone who never saw the
+   model answer it?
+2. **Anchor in a specific example**, not an abstract rule.
+3. **Check the phrasing with the user** before sending.
+4. **Never quietly answer a hotspot yourself** — if the user wants a fallback,
+   label it a proposed default, not a resolved decision.
+
+Group the questions by theme, each paired with the internal decision it
+unblocks (`*Unblocks:* whether Customer is matched by email or needs an
+explicit merge`). Answers flow back into the brief, the decision log, and the
+open-questions register.
 
 ## Wrap-up
 

@@ -13,6 +13,13 @@ in `~/Development/99linesofcode-typst-template/`.
 - **Loads:** (none — loaded on demand)
 - **References:** `vault-notes` (the offerte/contract notes it renders).
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Development/99linesofcode-typst-template/` | required | always — the template and fonts; cwd for the pandoc command |
+| `~/Documents/` | on-demand | the default output directory for generated PDFs |
+
 ## When to use
 
 - User wants to generate a PDF from a markdown document (offerte, contract,

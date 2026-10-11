@@ -14,15 +14,19 @@ the commit style, the autonomy level, and the safety rules.
 - **Loads:** (none — loaded on demand)
 - **References:** `software-development` (the change chain and definition of
   done that govern commits), `new-project` (the scaffolding procedure this
-  skill's mechanics serve), `github` (the platform layer for issues/PRs),
+  skill's mechanics serve), `skeleton-ecosystem` (the scaffolding catalogue),
+  `github` (the platform layer for issues/PRs),
   `agent-delegation` (the worktree-per-worker rule), `memory` (the vault is not
   isolated by a worktree), `discovery-interview` (issues seed discovery).
 
-## Files
+## External
 
-| File | Load | Read when |
+| Path | Load | Read when |
 |---|---|---|
-| `references/skeleton-ecosystem.md` | on-demand | when scaffolding a new repo from the skeleton ecosystem |
+| `~/Development/git-skeleton` | on-demand | when scaffolding a generic repo |
+| `~/Development/.github-php` | on-demand | when wiring the PHP workflow wrappers |
+| `~/Development/.github-js` | on-demand | when wiring the Node workflow wrappers |
+| `~/Documents/Obsidian/AI/` | on-demand | the planning scratchpad (`planning/<slug>/`) this skill delivers into |
 
 ## When to use
 
@@ -121,8 +125,7 @@ Before any git work in a repo, determine the methodology:
 
 Every issue created for work — ticket, slice tracker, dogfood/test issue —
 must reach a terminal state. An open issue is an open promise; delivered work
-with an open issue is a process failure (2026-09-26: the OPM sync-restructure
-tickets #52–#59 and slice trackers #40–#42 shipped while staying open).
+with an open issue is a process failure.
 
 1. **The PR that lands the work closes its issues.** Put `Closes #N` (or
    `Fixes #N`) in the PR body for every issue the PR fully delivers — GitHub
@@ -147,8 +150,8 @@ tickets #52–#59 and slice trackers #40–#42 shipped while staying open).
 The user works with many small commits — including `fixup!` commits during
 development — and collapses them into a clean history before push. History is
 rewritten **only before push** (never after) — with one owner-sanctioned
-exception: **the collapse also happens before MERGE** (2026-10-06, the OPM
-identity-model merge). The commits a merge lands tell the end result, not
+exception: **the collapse also happens before MERGE**. The commits a merge lands
+tell the end result, not
 the design journey — so at merge time the branch's history is collapsed by
 feature, reworded to final-state messages, and the PR description is
 updated to match the merged reality (verified against the code). On a
@@ -309,7 +312,8 @@ over one working tree.
 - **When to use it:** running several branches in parallel; giving each
   dispatched worker its own checkout (see `agent-delegation`). Each worker
   commits in its own worktree, so no two writers share a HEAD — the structural
-  fix for "concurrent sessions fight over HEAD" (decisions.md, 2026-09-24).
+  fix for "concurrent sessions fight over HEAD" (one session per repo, the
+  worktree per worker).
 
 **A worktree isolates code, not the vault.** Memory (`HOT.md`, the wiki, the
 episodic stream) lives in `~/Documents/Obsidian/AI/`, outside any repo and any
@@ -358,17 +362,17 @@ do NOT get their own file unless their flow genuinely diverges.
 - **Step 0 resolution order:** the repo's own `CONTRIBUTING.md` → the
   `.github` fallback → the default (GitHub Flow).
 - If the shared file is missing or stale, **fix it there** — one edit
-  teaches every repository at once (2026-09-18: it was missing entirely,
-  which is how a scaffold bypassed the branch+PR flow unnoticed).
+  teaches every repository at once (a missing shared file is how a scaffold
+  bypasses the branch+PR flow unnoticed).
 - Author a per-repo `CONTRIBUTING.md` only for a genuine override (e.g. a
   different merge style), and say why at the top.
 
 ## Scaffolding a new repo
 
 Start from the right skeleton in the user's **seed → sapling** ecosystem and
-wire it up following the user's conventions. The full catalogue — skeletons,
-the three sync mechanisms, the GitHub caveat, per-type wiring — lives in
-[`references/skeleton-ecosystem.md`](references/skeleton-ecosystem.md).
+wire it up following the user's conventions. The catalogue — skeletons, the
+three sync mechanisms, the GitHub caveat, per-type wiring — is the
+`skeleton-ecosystem` skill (Loaded by `new-project`).
 
 ## Planning integration
 

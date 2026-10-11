@@ -1,11 +1,38 @@
-# The skeleton ecosystem
+---
+name: skeleton-ecosystem
+description: The user's seed→sapling skeleton ecosystem — which skeleton to start from, the three sync mechanisms (remote + rebase, submodule, subtree), the GitHub submodule caveat, devshell wiring, shared config and thin-wrapper workflows, and per-project-type scaffolding. Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows or shared config.
+---
 
-## Scaffolding a new repo (the user's skeleton ecosystem)
+# skeleton-ecosystem
 
 The user has a **seed → sapling** skeleton ecosystem. Start from the right
-skeleton and wire it up following the user's conventions.
+skeleton and wire it up following the user's conventions. `new-project` Loads
+this skill; `git-workflow` References it for the git mechanics it builds on.
 
-### The skeleton ecosystem
+## Related
+
+- **Loads:** (none).
+- **References:** `new-project` (the seeding procedure this skill serves),
+  `git-workflow` (the git mechanics), `laravel`, `rails` (the language-specific
+  rename/namespace steps).
+
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Development/git-skeleton` | on-demand | when scaffolding or adopting a generic repo |
+| `~/Development/.github-php` | on-demand | when wiring the PHP workflow wrappers |
+| `~/Development/.github-js` | on-demand | when wiring the Node workflow wrappers |
+| `~/Development/laravel-package-skeleton` | on-demand | when scaffolding a Laravel module |
+| `~/Development/rails-package-skeleton` | on-demand | when scaffolding a Rails module |
+
+## When to use
+
+- Scaffolding a new repo from the user's skeleton ecosystem.
+- Adopting an existing repo into the remote + rebase model.
+- Choosing which skeleton a project type starts from.
+
+## The skeleton ecosystem
 
 | Repo | Role |
 |---|---|
@@ -24,7 +51,7 @@ skeleton and wire it up following the user's conventions.
 **Not skeletons:** `kubernetes-fleet` (a fleet config) is NOT a skeleton
 repository — it doesn't seed new projects.
 
-### Choosing the right skeleton
+## Choosing the right skeleton
 
 | Project type | Start from | Wire in |
 |---|---|---|
@@ -37,7 +64,7 @@ repository — it doesn't seed new projects.
 | Rails app | `rails-skeleton` | — |
 | Rails module | `rails-package-skeleton` | `.github` workflows + devshell |
 
-### The three mechanisms (pull + override)
+## The three mechanisms (pull + override)
 
 | Mechanism | Use for |
 |---|---|
@@ -49,18 +76,18 @@ repository — it doesn't seed new projects.
 base → remote + rebase.
 
 **Config files (`.editorconfig`, `.prettierrc`, `.gitignore`) are remote +
-rebase, NOT subtree.** Verified 2026-09-06: `git subtree add --prefix=.` fails
-with `fatal: prefix '.' already exists` — git refuses the repo root as a
-subtree prefix. Root-level config can't be subtreed. The user's skeleton
-ecosystem uses remote + rebase for config: `git-skeleton` is the base remote,
-each repo pulls it and overrides freely.
+rebase, NOT subtree.** `git subtree add --prefix=.` fails with `fatal: prefix
+'.' already exists` — git refuses the repo root as a subtree prefix. Root-level
+config can't be subtreed. The user's skeleton ecosystem uses remote + rebase for
+config: `git-skeleton` is the base remote, each repo pulls it and overrides
+freely.
 
 **README/LICENSE are never synced.** GitHub natively renders the `.github`
 repo's README/LICENSE in any repo lacking its own — the fallback is
 server-side, no git mechanism involved. Repos keep their own README/LICENSE
 and diverge.
 
-### ⚠️ GitHub caveat (submodule → subtree)
+## GitHub caveat (submodule → subtree)
 
 **GitHub does not traverse submodules.** If shared files must be *available to
 GitHub* (workflows, community files), a submodule won't work — the files won't
@@ -84,7 +111,7 @@ GitHub resolves the latest generic logic at runtime. This is deliberate:
 delegation always runs the latest, while a subtree would inline stale content
 until `subtree pull`.
 
-### Scaffolding a generic repo (remote + rebase)
+## Scaffolding a generic repo (remote + rebase)
 
 ```bash
 git init
@@ -104,7 +131,7 @@ git rebase skeleton/main
   want the new upstream change AND your override. This is intended.
 - Pull updates later: `git fetch skeleton && git rebase skeleton/main`.
 
-### Wiring the devshell (submodule)
+## Wiring the devshell (submodule)
 
 ```bash
 git submodule add git@github.com:99linesofcode/devshell-php.git devshell
@@ -113,14 +140,13 @@ git submodule add git@github.com:99linesofcode/devshell-php.git devshell
 Standalone, pinned. `git submodule add` clones the submodule, so a fresh
 scaffold is initialized; a repo **adopted or cloned without
 `--recurse-submodules`** is not — run `git submodule update --init` and confirm
-`git submodule status` shows no leading `-` (a `-` means declared-but-empty;
-`.github` and `.github-php` were found that way on 2026-10-09). Update a pinned
-submodule with `git submodule update --remote`.
+`git submodule status` shows no leading `-` (a `-` means declared-but-empty).
+Update a pinned submodule with `git submodule update --remote`.
 
 Every devshell ships `actionlint` and `shellcheck`, so workflow YAML and the
 shell inside `run:` blocks lint locally.
 
-### Wiring shared config files (remote + rebase)
+## Wiring shared config files (remote + rebase)
 
 Config flows from `git-skeleton` via remote + rebase (NOT subtree — root-level
 config can't be subtreed, see above):
@@ -147,7 +173,7 @@ From then on, updates flow via `git fetch skeleton && git rebase
 skeleton/main` (or `git merge skeleton/main` for repos that prefer
 merge history).
 
-### Wiring the GitHub workflows (thin-wrapper delegation)
+## Wiring the GitHub workflows (thin-wrapper delegation)
 
 The framework skeletons (`laravel-skeleton`, `laravel-package-skeleton`) ship
 the thin-wrapper workflows in their own `.github/workflows/`, so they come
@@ -173,7 +199,7 @@ subdirectories — subtree-ing `.github-php` would drag in `.editorconfig`,
 consuming project. The wrappers are tiny and stable, so the copy is effectively
 one-time, not a recurring sync.
 
-### Scaffolding a Laravel module
+## Scaffolding a Laravel module
 
 1. Start from `laravel-package-skeleton` (remote + rebase, as above).
 2. Wire the `devshell-php` submodule (already in the skeleton's `.gitmodules`).

@@ -19,6 +19,12 @@ source.
 - Wiki concept: `software-architecture-principles.md` (the "Self-documenting
   code" section this skill generalizes).
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Documents/Obsidian/AI/wiki/concepts/software-architecture-principles.md` | on-demand | for the rationale behind the lean/self-documenting rules |
+
 ## When to use
 
 - Writing, reviewing, or refactoring code.
@@ -78,13 +84,14 @@ Enforced by writing and review, not by auto-format.
 A file that needs section comments to navigate is too long. Split it (single
 responsibility applied to files).
 
-### Comments are nearly absent
+### Source comments are removed
 
 Intent — decisions, rationale, non-obvious context — lives in the project's
 spec and acceptance criteria, never in source comments. If a change needs
-explaining, the spec gains a line and the code gains a better name. A
-comment survives only in the rare case where nothing else can carry it at
-the change site, and every survivor is a review flag.
+explaining, the spec gains a line and the code gains a better name. **Source
+comments are removed.** Intent lives in the spec and the tests; the code
+carries it through names and prose-like structure. The one descriptive string
+that belongs in source is a descriptive error message.
 
 ## Documentation surfaces (where documentation lives, and when it updates)
 
@@ -122,7 +129,7 @@ change updates both — `ARCHITECTURE.md` (how it works now) and the vault log
 ## The test
 
 Before adding a comment, ask: **would a competent reader understand this
-without it?** If yes, cut it. If no, the explanation belongs in the spec —
-give the code a better name and put the intent where the project keeps its
-contract.
+without it?** If yes, cut it. If no, move the intent to the spec or rename the
+code — the explanation belongs where the project keeps its contract, not in
+the source. There is no third outcome: a comment is never the answer.
 

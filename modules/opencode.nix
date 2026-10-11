@@ -57,9 +57,9 @@ with lib;
           model = "openrouter/z-ai/glm-5.3-flash-20260826";
           small_model = "openrouter/deepseek/deepseek-v4-flash-0731";
           provider.openrouter.options = {
-            timeout = 300000;
-            headerTimeout = 60000;
-            chunkTimeout = 90000;
+            timeout = false;
+            headerTimeout = 300000;
+            chunkTimeout = 3000000;
           };
           agent = {
             build.disable = true;

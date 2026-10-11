@@ -21,22 +21,20 @@ conventions do — as long as the module boundary stays expressible.
 
 ## Related
 
-- **Loads:** (none — loaded on demand)
-- **References:** `software-architecture` (the single source of truth for the
-  architecture), `software-testing` (the testing contract), `avo` (the admin UI
-  mechanics), `laravel` (the PHP sibling this mirrors), `new-project` (the
-  Rails scaffold branch once the repos exist).
+- **Loads:** `software-architecture` (the architecture contract this skill
+  expresses), `software-testing` (the testing contract).
+- **References:** `avo` (the admin UI mechanics), `laravel` (the PHP sibling
+  this mirrors), `new-project` (the Rails scaffold branch once the repos exist).
 - Wiki concepts: `modular-monolith.md`, `hexagonal-architecture.md`,
   `action-objects.md`, `architecturally-evident-structure.md`.
 
-## Files
+## External
 
-Before acting, read every `required` file below.
-
-| File | Load | Read when |
+| Path | Load | Read when |
 |---|---|---|
-| `references/activerecord.md` | on-demand | when wiring ActiveRecord models (UUID keys, lean models) |
-| `references/dummy-app.md` | on-demand | when setting up the engine's `spec/dummy` host app |
+| `~/Development/rails-skeleton` | on-demand | when the app skeleton layout is unclear |
+| `~/Development/rails-package-skeleton` | on-demand | when the module/engine skeleton layout is unclear |
+| `~/Development/rails-module-*` | on-demand | when the Rails expression is unclear (mirror them) |
 
 ## When to use
 
@@ -255,6 +253,23 @@ Models are data + identity: attributes, associations, scopes, minimal callbacks
 — nothing else. Behavior lives in actions, query objects, value objects, and
 domain services; the model stops being the dumping ground.
 
+Models use **UUID primary keys** (not auto-increment ints), matching the
+modules. This drives the DTO `id` type (`String`, not `Integer`):
+
+```ruby
+# Model
+class Post < ApplicationRecord
+  has_many :comments, dependent: :destroy
+end
+
+# Migration
+create_table :posts, id: :uuid do |t|
+  t.uuid :author_id, null: false
+  t.string :title, null: false
+  t.timestamps
+end
+```
+
 - **No calculations in the model.** A computed value is calculated by an action
   and stored; reading it is plain data.
 - **Scopes → query objects.** Repeated query logic moves to a `*Query` class
@@ -291,6 +306,10 @@ a JS SPA and without a client build. Keep the browser dumb.
   contract is in `software-testing`.
 - **Engine tests run against the engine's dummy app** — the analog of Laravel's
   Testbench workbench. Each engine is testable without the host app.
+- **The dummy app** is `spec/dummy`, the engine's own host app. It mounts the
+  engine, so its routes, helpers, and migrations load in isolation; its tables
+  are the engine's (prefixed by `isolate_namespace`); the engine's specs run
+  against it, so the module is testable without the real host.
 - **What's tested**: action behavior (DB assertions), DTO mapping, enum and
   state transitions, and the boundary (Packwerk). UI/Hotwire testing is a
   per-project choice.

@@ -57,10 +57,10 @@ Before acting, read every `required` file below.
 5. **Define the gates** — choose typecheck / lint / format:check / tests /
    build / boundary gate for this stack and record the commands in `AGENTS.md`.
    Phase 4's walking skeleton wires them into CI.
-6. **Materialize the project** — create the OPM project in the vault (the
-   anchor; see `vault-notes` for where project notes live), with its GitHub
-   connection pointing at the new repo, so work has somewhere to land.
-   Milestones are a manual step until OPM supports them.
+6. **Materialize the project** — create the vault project (the anchor; see
+   `vault-notes` for where project notes live), with its GitHub connection
+   pointing at the new repo, so work has somewhere to land. Milestones are a
+   manual step until the vault's project-management plugin supports them.
 7. **(Only if this repo will carry skills) Create `.opencode/skills/`.** A skill
    that belongs to this codebase — a domain vocabulary, a provider integration,
    a house convention — is committed under `.opencode/skills/<name>/` and travels
@@ -83,7 +83,7 @@ Before acting, read every `required` file below.
 
 - The repo pushes, the devshell loads, the gates run (even trivially).
 - `AGENTS.md` carries the seven standing rules.
-- The scratchpad exists and the OPM project points at the repo.
+- The scratchpad exists and the vault project points at the repo.
 
 ## Must not
 

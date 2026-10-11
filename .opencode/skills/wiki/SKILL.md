@@ -17,6 +17,13 @@ the *how-to*; `AGENTS.md` is the *contract*.
 - **References:** `vault-notes` (the vault structure the wiki lives in),
   `memory` (the memory tiers the log feeds).
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Documents/Obsidian/AI/wiki/` | required | always — the wiki this skill maintains |
+| `~/Documents/Obsidian/Inbox/` | on-demand | when ingesting new source material |
+
 ## When loaded
 
 The orchestrator loads you when a task is a wiki operation: ingest, query-
@@ -75,7 +82,7 @@ User drops `Inbox/agentskills-spec.md` and says "ingest this":
    "Inbox/agentskills-spec.md"`, `generated: { by, at }`).
 4. Add a one-line entry to `wiki/index.md` under Sources.
 5. Update any `entities/`/`concepts/` pages the source touches.
-6. Append `## [2026-09-04] ingest | agentskills spec` to `wiki/log.md`.
+6. Append `## [YYYY-MM-DD] ingest | agentskills spec` to `wiki/log.md`.
 7. Discard `Inbox/agentskills-spec.md`.
 
 ## Edge cases

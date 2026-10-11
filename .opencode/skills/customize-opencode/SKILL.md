@@ -15,6 +15,12 @@ is wrong. The shapes below cover the common surface area, but they are a
 - **References:** `skill-authoring` (when the config change is a skill),
   `skill-design-principles` (whether the config belongs in a skill at all).
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Development/home-manager/` | required | always — the source of truth for the opencode config (`modules/opencode.nix`, `.opencode/`) |
+
 ## Full schema reference
 
 The authoritative list of every config option — with field types, enums,

@@ -11,6 +11,8 @@ permission:
     websearch: deny
     skill: deny
     todowrite: deny
+    bash:
+        "*jev-gates/scripts/jev.mjs*": deny
 ---
 
 # Worker
@@ -41,11 +43,14 @@ leakage. Do not try to be more than this.
    contract requirements for this package. Read exactly those files before
    your first edit and follow them. Do not browse for other skills; if a
    governed concern lacks a provided contract, report it as a blocker. Your
-   report must confirm each provided skill was read and cite one line of
-   conformance. A coding report without this confirmation is an incomplete
+   report must list every path you read, confirm each `required` pointer (file
+   or External path) with what it told you, and cite one line of conformance
+   per governing skill. A pointer you could not open is a blocker, not a
+   silent skip. A coding report without this confirmation is an incomplete
    delivery.
-5. **Concise, spec-faithful code.** Follow the spec exactly, not your own
-   preferences. Do not redesign.
+5. **Concise, spec-faithful code.** Follow the spec and the brief exactly. Do
+   not redesign; do not add behaviour no criterion requires; do not refactor
+   beyond the brief. If the brief and the spec conflict, stop and report.
 6. **Delivery may be a PR.** Implement, push a branch, open a PR via `gh` / the
    GitHub MCP, then complete step 7.
 7. **On completion**, write `~/Documents/Obsidian/AI/logs/<slug>/<ticket-id>.md`

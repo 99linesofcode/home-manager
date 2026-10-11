@@ -19,7 +19,8 @@ be in place.
 - **References:** `software-development` (atomicity, cleanup, done),
   `self-documenting-code` (the style contract), `software-testing` (the test
   contract), `software-architecture` (the layering), `git-workflow` (commit
-  hygiene), `project-seed` (the ARCHITECTURE.md contract).
+  hygiene), `project-seed` (the ARCHITECTURE.md contract), `premise-demolition`
+  (design-scoped scrutiny beyond the diff).
 
 ## When to use
 
@@ -46,7 +47,6 @@ A review checks the change against the user's standards. Work through each:
 ### 3. Self-documenting code
 
 - Are names clear? Does the code read without comments?
-- Do comments explain WHY, not WHAT? (see `self-documenting-code`)
 - Is the code step-down ordered and reasonably sized?
 
 ### 4. No dangling code (cleanup-as-you-go)
@@ -117,16 +117,18 @@ with a concrete fix. Secrets/keys/`.env` in the diff are always blocking.
 A review reports, for each finding:
 
 - **Severity** — blocking or non-blocking.
+- **Tag** — `intent`, `correctness`, or `convention-only`.
 - **Location** — file + line.
 - **What's wrong** — the specific issue.
 - **The fix** — the concrete change.
 
 Blocking findings must be resolved before merge. Non-blocking findings are
-suggestions the author may take or leave.
+suggestions the author may take or leave. `convention-only` findings are
+non-blocking unless the fix pays for itself — small, local, clearly better.
 
 **Example finding** (the shape every finding takes):
 
-> **BLOCKING** — `src/Core/Post/Application/Actions/CreatePostAction.php:41`
+> **BLOCKING** (`correctness`) — `src/Core/Post/Application/Actions/CreatePostAction.php:41`
 > The action calls `app(VaultPort::class)` inside the body instead of
 > receiving it via constructor injection, so the port is resolved at call
 > time and can't be swapped in tests.

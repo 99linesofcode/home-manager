@@ -1,0 +1,82 @@
+---
+name: refactoring
+description: Scale-aware refactoring contract — snippet, unit (file/module), and system scale, each with its own machinery; legibility is the bar and the judge. Triggers on "refactor", "refactoring", "clean up this code", "this is hard to read", "behaviour-preserving", "legibility", "duplication", "extract", "inline". Use when a change's main job is to restructure code without changing behaviour, at any scale.
+---
+
+# refactoring
+
+Restructuring code without changing behaviour, at any scale. The scale decides
+the machinery; legibility is the bar and the judge. A refactor that reaches for
+the wrong scale's machinery is a defect, however clean the result looks.
+
+## Related
+
+- **Loads:** (none — loaded on demand).
+- **References:** `premise-demolition` (the system-scale path), `systems-thinking`
+  (the whole-system lens), `software-testing` (characterization tests),
+  `code-review` (the findings format and the finding tags),
+  `software-architecture` (where logic lives).
+
+## When to use
+
+- A change whose main job is to restructure code without changing behaviour.
+- "Clean this up", "this is hard to read", "make this legible",
+  "behaviour-preserving".
+- Deciding how much machinery a refactor deserves.
+
+## Scale decides the machinery
+
+Identify the scale before touching code. The scale — not the effort — names the
+process. When torn between two scales, take the larger.
+
+| Scale | Scope | Machinery |
+|---|---|---|
+| **Snippet** | A few lines, one expression, a rename. | One worker, a light brief. No characterization tests — the change is local and reviewable by eye. |
+| **Unit** | One file or one module. | Characterization tests first (pin the current behaviour at the unit's boundary), then behaviour-preserving steps, each landing green. |
+| **System** | A whole system, or a module's architecture where the shape itself is in question. | A premise audit by a fresh-context role (`premise-demolition`, `systems-thinking`) — never done in the anchored context. |
+
+## The legibility lens (the concrete tests)
+
+Legibility is the bar and the judge. Four tests, each a question a cold reader
+answers:
+
+1. Can a cold reader state what this does in one sentence?
+2. Is the next change local (one place to go), or does it reach across the code?
+3. Do the names carry intent, or do they carry mechanism?
+4. Would removing an abstraction make it clearer? If yes, remove it.
+
+A refactor that fails a test is not done.
+
+## Duplication policy
+
+- **Duplication with different reasons to change is kept.** Two similar blocks
+  that will change for different reasons are not a DRY violation.
+- **An abstraction with one caller is allowed when it names a step of intent.**
+  A named step reads better than the inline block.
+- **Inline an abstraction whose name adds nothing.** A name that restates the
+  mechanism is noise.
+
+## Tag every finding
+
+Every finding a refactor produces is tagged by what it protects:
+
+- **intent** — the change makes intent clearer or preserves it.
+- **correctness** — the change affects behaviour or risk.
+- **convention-only** — the change only matches a house convention.
+
+Convention-only findings are **non-blocking unless the fix pays for itself** (the
+change is small, local, and clearly better). Never block a refactor on a
+convention-only finding. `code-review` owns the findings format.
+
+## Behaviour preservation
+
+At unit and system scale, characterization tests come first; every step lands
+green; the refactor changes structure, not behaviour. See `software-testing`.
+
+## Must not
+
+- Redesign at snippet scale.
+- Skip characterization tests at unit scale.
+- Perform a system-scale audit in the anchored context.
+- Block on convention-only findings.
+- Change behaviour under the name of a refactor.
