@@ -27,7 +27,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const DEFAULT_MAX_LINES = 500;
@@ -107,6 +107,13 @@ function readText(p) {
     return fs.readFileSync(p, 'utf8');
 }
 
+function unquoteScalar(value) {
+    if (value.length >= 2 && value[0] === value[value.length - 1] && `"'\``.includes(value[0])) {
+        return value.slice(1, -1);
+    }
+    return value;
+}
+
 function splitFrontmatter(text) {
     if (!text.startsWith('---')) {
         return { fm: {}, error: "missing YAML frontmatter (must start with '---')" };
@@ -145,10 +152,32 @@ function splitFrontmatter(text) {
             fm[key] = block.filter((x) => x).join(' ');
             continue;
         }
-        if (value.length >= 2 && value[0] === value[value.length - 1] && `"'\``.includes(value[0])) {
-            value = value.slice(1, -1);
+        if (value === '') {
+            // Descend one level: an empty value followed by an indented block is
+            // a nested map (e.g. `metadata:` with 2-space children). Files with
+            // no nesting keep their flat parse exactly.
+            const nested = {};
+            let j = i + 1;
+            let sawIndented = false;
+            while (j < end) {
+                const l = lines[j];
+                if (l === '') { j++; continue; }
+                if (!/^\s{2,}/.test(l)) break;
+                sawIndented = true;
+                const nm = l.match(/^\s+([A-Za-z0-9_./-]+):\s*(.*)$/);
+                if (nm) nested[nm[1]] = unquoteScalar(nm[2].trim());
+                j++;
+            }
+            if (sawIndented) {
+                fm[key] = nested;
+                i = j;
+                continue;
+            }
+            fm[key] = '';
+            i++;
+            continue;
         }
-        fm[key] = value;
+        fm[key] = unquoteScalar(value);
         i++;
     }
     return { fm, error: null };
@@ -871,6 +900,174 @@ function checkInbound(skills, rep) {
     }
 }
 
+// --- Catalog migration checks (step 2: warn-only; they must not fail the build) ---
+
+const CATALOG_CATEGORIES = new Set([
+    'architecture', 'delivery', 'language', 'review', 'analysis', 'tooling', 'vault',
+]);
+
+function checkCatalogSchema(skills, rep) {
+    let badCategory = 0;
+    let missingRouteWhen = 0;
+    for (const [, skill] of skills) {
+        if (skill.parseError) continue;
+        const meta = skill.frontmatter.metadata;
+        const isMap = meta && typeof meta === 'object';
+        const category = isMap ? meta.category : undefined;
+        if (!CATALOG_CATEGORIES.has(category)) badCategory++;
+        const routeWhen = isMap ? meta['route-when'] : undefined;
+        if (!routeWhen || !String(routeWhen).trim()) missingRouteWhen++;
+    }
+    if (badCategory || missingRouteWhen) {
+        rep.warn(`catalog schema: ${badCategory} skills missing/invalid category, ${missingRouteWhen} missing route-when`);
+    }
+}
+
+/** Role-brief frontmatter: `governing` as an inline array or a block list. */
+function parseRoleBriefGoverning(text) {
+    if (!text.startsWith('---')) return { hasFrontmatter: false, governing: [] };
+    const lines = text.split('\n');
+    let end = null;
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim() === '---') {
+            end = i;
+            break;
+        }
+    }
+    if (end === null) return { hasFrontmatter: false, governing: [] };
+    const governing = [];
+    let current = null;
+    for (let i = 1; i < end; i++) {
+        const dash = lines[i].match(/^\s*-\s+(.+?)\s*$/);
+        if (dash && current === 'governing') {
+            governing.push(unquoteScalar(dash[1]));
+            continue;
+        }
+        const m = lines[i].match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
+        if (!m) continue;
+        current = m[1];
+        if (m[1] !== 'governing') continue;
+        const value = m[2].trim();
+        if (value.startsWith('[') && value.endsWith(']')) {
+            for (const s of value.slice(1, -1).split(',')) {
+                const id = unquoteScalar(s.trim());
+                if (id) governing.push(id);
+            }
+        } else if (value) {
+            governing.push(unquoteScalar(value));
+        }
+    }
+    return { hasFrontmatter: true, governing };
+}
+
+function checkRoleBriefs(skills, root, rep) {
+    const dir = path.join(root, '.opencode', 'skills', 'agent-delegation', 'references', 'roles');
+    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) return;
+    const entries = fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
+    for (const e of entries) {
+        if (!e.isFile() || !e.name.endsWith('.md')) continue;
+        const parsed = parseRoleBriefGoverning(readText(path.join(dir, e.name)));
+        if (!parsed.hasFrontmatter) continue;
+        for (const id of parsed.governing) {
+            if (!skills.has(id)) rep.warn(`role brief '${e.name}': unknown governing skill '${id}'`);
+        }
+    }
+}
+
+function checkCatalogStale(rep) {
+    const script = path.join(HERE, 'build-catalog.mjs');
+    if (!fs.existsSync(script)) return;
+    const res = spawnSync(process.execPath, [script, '--check'], { encoding: 'utf8' });
+    if (res.status !== 0) rep.warn('catalog is stale — run build-catalog.mjs');
+}
+
+/** The `permission.skill` allow-list keys in the orchestrator agent file. */
+function orchestratorSkillAllowList(text) {
+    if (!text.startsWith('---')) return [];
+    const lines = text.split('\n');
+    let end = null;
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim() === '---') {
+            end = i;
+            break;
+        }
+    }
+    if (end === null) return [];
+    const keys = [];
+    let inPermission = false;
+    let inSkill = false;
+    for (let i = 1; i < end; i++) {
+        const m = lines[i].match(/^(\s*)([A-Za-z0-9_./-]+):\s*(.*)$/);
+        if (!m) continue;
+        const indent = m[1].length;
+        const key = m[2];
+        if (indent === 0) {
+            inPermission = key === 'permission';
+            inSkill = false;
+        } else if (inPermission && indent === 4) {
+            inSkill = key === 'skill';
+        } else if (inPermission && inSkill && indent >= 8) {
+            keys.push(key);
+        }
+    }
+    return keys;
+}
+
+function readCatalog(root) {
+    const p = path.join(root, '.opencode', 'skills', 'catalog.json');
+    if (!fs.existsSync(p)) return null;
+    try {
+        return JSON.parse(readText(p));
+    } catch {
+        return null;
+    }
+}
+
+function checkAllowList(skills, root, rep) {
+    const agentPath = path.join(root, '.opencode', 'agents', 'orchestrator.md');
+    const catalog = readCatalog(root);
+    if (!fs.existsSync(agentPath) || !catalog || !catalog.skills) return;
+    const allow = orchestratorSkillAllowList(readText(agentPath));
+    if (!allow.length) return;
+    const allowSet = new Set(allow);
+    const catalogSkills = Object.keys(catalog.skills).sort();
+    const catalogSet = new Set(catalogSkills);
+    const allowNotInCatalog = allow.filter((id) => !catalogSet.has(id));
+    const catalogNotInAllow = catalogSkills.filter((id) => !allowSet.has(id));
+    if (!allowNotInCatalog.length && !catalogNotInAllow.length) return;
+    const parts = [];
+    if (allowNotInCatalog.length) parts.push(`allow-listed but not in catalog: ${allowNotInCatalog.join(', ')}`);
+    if (catalogNotInAllow.length) parts.push(`in catalog but not allow-listed: ${catalogNotInAllow.join(', ')}`);
+    rep.warn(`skill allow-list drift — ${parts.join('; ')}`);
+}
+
+function checkGateDrift(root, rep) {
+    const gatesPath = path.join(root, '.opencode', 'skills', 'jev-gates', 'assets', 'gates.json');
+    const catalog = readCatalog(root);
+    if (!fs.existsSync(gatesPath) || !catalog) return;
+    let gates;
+    try {
+        gates = JSON.parse(readText(gatesPath));
+    } catch {
+        return;
+    }
+    const rr = gates.gates && gates.gates.role_routing;
+    const criteriaKeys = rr && rr.criteria ? Object.keys(rr.criteria).sort() : [];
+    const roleKeys = catalog.roles ? Object.keys(catalog.roles).sort() : [];
+    const criteriaSet = new Set(criteriaKeys);
+    const roleSet = new Set(roleKeys);
+    const onlyCriteria = criteriaKeys.filter((k) => !roleSet.has(k));
+    const onlyRoles = roleKeys.filter((k) => !criteriaSet.has(k));
+    if (onlyCriteria.length || onlyRoles.length) {
+        const parts = [];
+        if (onlyCriteria.length) parts.push(`only in role_routing criteria: ${onlyCriteria.join(', ')}`);
+        if (onlyRoles.length) parts.push(`only in catalog roles: ${onlyRoles.join(', ')}`);
+        rep.warn(`gate drift — role_routing criteria keys != catalog roles keys (${parts.join('; ')})`);
+    }
+    // step 4: the matrix_row half — compare `gates.gates.matrix_row.criteria` keys
+    // with `catalog.matrixRows` keys once `matrixRows` exists.
+}
+
 function checkDiff(skills, root, base, rep) {
     for (const [name, skill] of skills) {
         if (skill.parseError) continue;
@@ -1067,6 +1264,11 @@ function main(argv) {
     checkProseDependencies(skills, rep);
     checkNormativeReferences(skills, rep);
     checkInbound(skills, rep);
+    checkCatalogSchema(skills, rep);
+    checkRoleBriefs(skills, root, rep);
+    checkCatalogStale(rep);
+    checkAllowList(skills, root, rep);
+    checkGateDrift(root, rep);
     if (args.base) checkDiff(skills, root, args.base, rep);
 
     for (const w of rep.warnings) {
