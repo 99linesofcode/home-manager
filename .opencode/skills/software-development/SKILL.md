@@ -49,7 +49,7 @@ they are contracts, not suggestions.**
 | Use when building, extending, or reviewing Filament resources, forms, tables, plugins, or pages in the user's Laravel modules or applications. | `filament` (+ `laravel`) |
 | Use when the user asks to commit, branch, merge, rebase, stash, push, pull, open or review a pull request, file or triage an issue, create a release, author a CONTRIBUTING.md, or when starting work in a repo and the workflow needs to be determined. | `git-workflow` |
 | Use when reading or triaging GitHub issues, joining or posting in discussions, sending updates, or creating pull requests that reference issues. | `github` (+ `git-workflow`) |
-| Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, pre-screening a worker diff, or deciding whether to escalate to the advisor. | `jev-gates` |
+| Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, or deciding whether to escalate to the advisor. | `jev-gates` |
 | Use when deploying to Kubernetes, writing or changing a Helm chart, wiring Flux, handling cluster secrets, or working with k3s, cert-manager, GHCR, or the kubernetes-* repos. | `kubernetes` |
 | Use when building, extending, or reviewing Laravel or PHP code in the user's style, or when the task references their modules, ServiceProvider, composer wiring, or Eloquent mechanics. | `laravel` (+ `software-architecture`, `software-testing`) |
 | Use when starting a new project from scratch, scaffolding a new repo, creating a new Laravel app or module, or setting up a fresh development environment. | `new-project` (+ `git-workflow`, `skeleton-ecosystem`) |

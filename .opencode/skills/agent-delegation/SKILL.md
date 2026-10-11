@@ -18,8 +18,8 @@ the package carries — so the package is the whole game.
 - **References:** `software-development` (the task-level routing matrix),
   `git-workflow` (delivery), `memory` (the shared-vault caveat), the role briefs
   in `references/roles/`, `premise-demolition` + `systems-thinking` (the
-  premise-auditor role's governing skills), `jev-gates` (the pre-screen gate the
-  body refers to).
+  premise-auditor role's governing skills), `jev-gates` (the orchestrator's
+  classification gates).
 
 ## Files
 
@@ -258,11 +258,6 @@ accept it.
 the file, `ls` the path, `git log` the commit. A worker's statement that it
 wrote a file is not evidence the file is there. Record what you verified, not
 what you were told.
-
-The Jev `worker_prescreen` gate (see `jev-gates`) filters the diff before the
-reviewer but never replaces it — it skips the reviewer only when the gate
-returns `proceed` and both answers are false; any other result runs the reviewer
-as normal, and an uncertain or escalated result always runs it.
 
 ## Escalations
 

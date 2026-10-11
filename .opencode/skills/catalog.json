@@ -106,7 +106,7 @@
       "governing": [
         "jev-gates"
       ],
-      "task": "Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, pre-screening a worker diff, or deciding whether to escalate to the advisor."
+      "task": "Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, or deciding whether to escalate to the advisor."
     },
     {
       "companions": [],
@@ -862,7 +862,7 @@
     },
     "jev-gates": {
       "category": "tooling",
-      "description": "Ask a System One model to make one classification call — triage, routing, or a diff pre-screen — and act on its typed answer. Use when the orchestrator must not decide a classification by judgment.",
+      "description": "Ask a System One model to make one classification call — triage, routing, or escalation — and act on its typed answer. Use when the orchestrator must not decide a classification by judgment.",
       "externals": [],
       "files": [
         {
@@ -891,8 +891,8 @@
       ],
       "roles": [],
       "routeNotWhen": "Use `agent-delegation` for composing and dispatching the worker package around that call.",
-      "routeWhen": "Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, pre-screening a worker diff, or deciding whether to escalate to the advisor.",
-      "summary": "Ask a System One model to make one classification call — triage, routing, or a diff pre-screen — and act on its typed answer."
+      "routeWhen": "Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, or deciding whether to escalate to the advisor.",
+      "summary": "Ask a System One model to make one classification call — triage, routing, or escalation — and act on its typed answer."
     },
     "kubernetes": {
       "category": "tooling",

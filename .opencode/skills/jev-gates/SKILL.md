@@ -1,19 +1,19 @@
 ---
 name: jev-gates
-description: Ask a System One model to make one classification call — triage, routing, or a diff pre-screen — and act on its typed answer. Use when the orchestrator must not decide a classification by judgment.
+description: Ask a System One model to make one classification call — triage, routing, or escalation — and act on its typed answer. Use when the orchestrator must not decide a classification by judgment.
 metadata:
   category: tooling
-  route-when: "Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, pre-screening a worker diff, or deciding whether to escalate to the advisor."
+  route-when: "Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, or deciding whether to escalate to the advisor."
   route-not-when: "Use `agent-delegation` for composing and dispatching the worker package around that call."
 ---
 
 # jev-gates
 
 Jev is a decision gate. The orchestrator hands it one gate name and a small
-piece of state, and it returns a decision, a confidence, and an action. The six
+piece of state, and it returns a decision, a confidence, and an action. The five
 gates resolve the classification calls the orchestrator would otherwise make
-from memory: triage, intake sufficiency, routing, role, worker pre-screen, and
-escalation. This skill owns the runner (`scripts/jev.mjs`), the gate definitions
+from memory: triage, intake sufficiency, routing, role, and escalation. This
+skill owns the runner (`scripts/jev.mjs`), the gate definitions
 (`assets/gates.json`), and the rules for writing Jev questions.
 
 Jev makes no strategic decision — it classifies. The orchestrator still decides
@@ -23,8 +23,8 @@ what to do with the classification.
 
 - **Loads:** (none — the orchestrator calls a gate; it is not a workflow companion).
 - **References:** `software-development` (the routing matrix the `matrix_row`
-  gate resolves), `agent-delegation` (the roles and the worker pre-screen),
-  `premise-demolition` (the escalation trigger).
+  gate resolves), `agent-delegation` (the roles), `premise-demolition` (the
+  escalation trigger).
 
 ## Files
 
@@ -39,14 +39,14 @@ Before acting, read (or run) every `required` file below.
 ## When to use
 
 The **orchestrator** calls a gate for a classification decision — before
-triaging a request, before routing a task, before choosing a worker role,
-before accepting a worker diff, or when deciding whether to escalate. A
-**worker never** calls a gate: a worker stops and reports instead.
+triaging a request, before routing a task, before choosing a worker role, or
+when deciding whether to escalate. A **worker never** calls a gate: a worker
+stops and reports instead.
 
 ## The interface
 
 ```
-node scripts/jev.mjs --list                 # print the six gate names
+node scripts/jev.mjs --list                 # print the five gate names
 node scripts/jev.mjs <gate> [state.json|-]  # run a gate; state from a file or stdin
 ```
 
@@ -62,7 +62,7 @@ The caller acts on `action` — `proceed` carries on, `ask` puts the question to
 the user, `escalate` sends it to the escalation advisor. Never re-derive the
 action from `confidence`; the mapping lives in the script.
 
-## The six gates
+## The five gates
 
 - **`triage_scale`** — the request's triage class (0 wiki operation · 1
   conversational · 2 everyday task · 3 large or under-specified · 4 change an
@@ -73,8 +73,6 @@ action from `confidence`; the mapping lives in the script.
   task belongs to, or `none`.
 - **`role_routing`** — which of the eleven worker roles the task warrants, plus
   a lint: does the brief assign exactly one role.
-- **`worker_prescreen`** — per spec criterion and its diff hunk: does the diff
-  contain behaviour no criterion requires, and does it mix concerns.
 - **`escalation`** — should this go to the escalation advisor: a system-scale
   premise audit, a hard-to-reverse choice, a worker blocked on a design
   question, the same slice failing review twice, or a high-risk diff touching
@@ -137,7 +135,7 @@ with `{ts, gate, model_served, state_hash, answer, confidence, action}`.
 **the raw state and the API key are never logged**.
 
 The state sent to the model leaves the machine, and so does any vault content
-or diff inside it. Send the smallest sufficient state:
+inside it. Send the smallest sufficient state:
 
 | Gate | State fields sent |
 |---|---|
@@ -145,7 +143,6 @@ or diff inside it. Send the smallest sufficient state:
 | `intake_sufficiency` | `request` |
 | `matrix_row` | `task` |
 | `role_routing` | `task`, `brief_role` |
-| `worker_prescreen` | `criterion`, `diff_hunk` |
 | `escalation` | `signals` |
 
 The request sets `provider.zdr = true`; OpenRouter stores no prompt or response

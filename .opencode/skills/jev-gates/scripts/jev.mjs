@@ -3,8 +3,8 @@
  * jev.mjs — a dependency-free runner for the Jev decision gates.
  *
  * A gate is one classification decision the orchestrator must make (triage
- * class, intake sufficiency, routing matrix row, worker role, worker
- * pre-screen, escalation). The gate definitions — model, questions, criteria,
+ * class, intake sufficiency, routing matrix row, worker role,
+ * escalation). The gate definitions — model, questions, criteria,
  * thresholds, actions — live in ../assets/gates.json; this script builds the
  * request, calls the OpenRouter Decisions API, maps the answer to a decision
  * and a confidence, and maps the confidence to an action.

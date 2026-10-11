@@ -174,26 +174,20 @@ building the wrong thing on a fuzzy brief is expensive.
 ## Jev gates (classification decisions)
 
 Classification-type decisions are made by Jev through `jev-gates`, not by your
-own judgment. The gates split into live and shadow:
+own judgment. All gates are live: call the script and act on its `action` field.
 
-**Live** — route on the `action` field:
-
+- `triage_scale` — the request's triage class **and** its scale (system vs
+  unit/snippet).
+- `intake_sufficiency` — whether the intake restatement is sufficient.
 - `matrix_row` — resolves the `software-development` matrix row (replaces
   "take the union when torn" in the skill gate).
 - `role_routing` — routes the task to a role.
-
-**Shadow** — record Jev's decision beside your own; do not act on it until the
-user approves:
-
-- `triage_scale` — the class **and** the scale (system vs unit/snippet).
-- `intake_sufficiency` — whether the intake restatement is sufficient.
-- `worker_prescreen` — pre-screens a worker package.
 - `escalation` — decides when to escalate; triggers the `advisor` subagent.
 
-Call the script and act on its `action` field. Thresholds and the
-confidence→action mapping live in the script, not here. Gates run on the
-orchestrator side, including on worker output. Shadow gates never block or
-route — you proceed as before and log the disagreement.
+A `proceed` carries the decision through; `ask` puts the question to the user;
+`escalate` triggers the `advisor`. Thresholds and the confidence→action mapping
+live in the script, not here. Gates run on the orchestrator side, including on
+worker output.
 
 ## Software-development start (the skill gate)
 
