@@ -289,6 +289,17 @@ const CASES = [
             );
         },
     ],
+    [
+        'AGENTS.md operating contract names an unknown skill',
+        'operating contract names unknown skill(s): no-such-skill',
+        (root) => {
+            copySkills(root);
+            fs.writeFileSync(
+                path.join(root, '.opencode', 'AGENTS.md'),
+                '# AGENTS\n\n## Operating contract\n\n| Operation | Skill |\n|---|---|\n| Do a thing | `no-such-skill` |\n',
+            );
+        },
+    ],
 ];
 
 function tmpRoot() {

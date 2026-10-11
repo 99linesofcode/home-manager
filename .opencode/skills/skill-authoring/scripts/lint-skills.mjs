@@ -1136,6 +1136,58 @@ function checkTree(root, rep) {
     if (diffs.length) rep.error(`tree.json: ${diffs.join('; ')}`);
 }
 
+/**
+ * The human-owned `AGENTS.md` operating contract names skills by id in its
+ * `| Operation | Skill |` table. Every id it names must be a real skill, or the
+ * contract routes work to something that does not exist. The file is
+ * human-owned (agents propose, never edit), so a missing file or table is a
+ * warning, not an error — only a dangling id fails.
+ */
+function checkAgentsContract(skills, root, rep) {
+    const p = path.join(root, '.opencode', 'AGENTS.md');
+    if (!fs.existsSync(p) || !fs.statSync(p).isFile()) {
+        rep.warn('AGENTS.md: operating-contract check skipped — .opencode/AGENTS.md not found');
+        return;
+    }
+    const lines = readText(p).split('\n');
+    const mask = fenceMask(lines);
+    const idx = findHeading(lines, mask, 'Operating contract');
+    if (idx === null) {
+        rep.warn('AGENTS.md: operating-contract check skipped — no ## Operating contract section');
+        return;
+    }
+    const end = sectionEnd(lines, mask, idx);
+    let start = null;
+    for (let i = idx + 1; i < end; i++) {
+        if (mask[i]) continue;
+        const line = lines[i].trim();
+        if (!line.startsWith('|')) continue;
+        const cells = line.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
+        if (cells.length >= 2 && cells[0].toLowerCase() === 'operation' && cells[1].toLowerCase() === 'skill') {
+            start = i;
+            break;
+        }
+    }
+    if (start === null) {
+        rep.warn('AGENTS.md: operating-contract check skipped — no | Operation | Skill | table');
+        return;
+    }
+    const unknown = [];
+    for (let i = start + 2; i < end; i++) {
+        if (mask[i]) continue;
+        const line = lines[i].trim();
+        if (!line.startsWith('|')) break;
+        const cells = line.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
+        if (cells.length < 2) continue;
+        for (const n of extractNames(cells[1])) {
+            if (!skills.has(n) && !unknown.includes(n)) unknown.push(n);
+        }
+    }
+    if (unknown.length) {
+        rep.error(`AGENTS.md: operating contract names unknown skill(s): ${unknown.join(', ')}`);
+    }
+}
+
 // Skills whose SKILL.md must carry a generated block (and its markers).
 const GENERATED_BLOCK_SKILLS = ['software-development', 'agent-delegation'];
 
@@ -1353,6 +1405,7 @@ function main(argv) {
     checkGeneratedBlocks(skills, rep);
     checkGateDrift(root, rep);
     checkTree(root, rep);
+    checkAgentsContract(skills, root, rep);
     if (args.base) checkDiff(skills, root, args.base, rep);
 
     for (const w of rep.warnings) {
