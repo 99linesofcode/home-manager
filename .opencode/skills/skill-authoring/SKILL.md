@@ -40,6 +40,7 @@ Before acting, read (or run) every `required` file below.
 | `scripts/resolve-skills.mjs` | on-demand | when composing a worker package (flattens the `Loads` set to absolute paths) |
 | `scripts/test-lint.mjs` | on-demand | when changing the linter itself |
 | `scripts/test-audit.mjs` | on-demand | when changing the audit script |
+| `scripts/build-catalog.mjs` | on-demand | when regenerating or checking the skill catalog |
 
 ## Directory layout
 
@@ -80,16 +81,26 @@ description: A description of what this skill does and when to use it.
 
 ### Frontmatter fields
 
-| Field           | Required | Constraints                                                                                                      |
-| --------------- | -------- | ---------------------------------------------------------------------------------------------------------------- |
-| `name`          | Yes      | Max 64 chars. Lowercase letters, numbers, and hyphens only. Must not start or end with a hyphen. Must match the parent directory name. |
-| `description`   | Yes      | Max 1024 chars, non-empty. Describes what the skill does AND when to use it.                                     |
-| `license`       | No       | License name or reference to a bundled license file.                                                             |
-| `compatibility` | No       | Max 500 chars. Environment requirements (intended product, system packages, network access, etc.).               |
-| `metadata`      | No       | Arbitrary string-to-string map of additional metadata.                                                           |
-| `allowed-tools` | No       | Space-separated string of pre-approved tools the skill may use. **Experimental** — support varies by client.     |
+| Field | Required | Constraints |
+| --- | --- | --- |
+| `name` | Yes | Max 64 chars. Lowercase letters, numbers, and hyphens only. Must not start or end with a hyphen. Must match the parent directory name. |
+| `description` | Yes | Max 1024 chars, non-empty. Describes what the skill does AND when to use it. |
+| `license` | No | License name or reference to a bundled license file. |
+| `compatibility` | No | Max 500 chars. Environment requirements (intended product, system packages, network access, etc.). |
+| `metadata` | No | Arbitrary string-to-string map; see *Catalog metadata* below for the reserved keys. |
+| `allowed-tools` | No | Space-separated string of pre-approved tools the skill may use. **Experimental** — support varies by client. |
 
 `name` regex equivalent: `^[a-z0-9]+(-[a-z0-9]+)*$`
+
+### Catalog metadata
+
+`metadata` reserves three keys: `category` (one of `architecture`, `delivery`,
+`language`, `review`, `analysis`, `tooling`, `vault`), `route-when` (one
+literal sentence on when the skill applies, for Jev — no negations, boundary
+cases explicit), and `route-not-when` (optional; only for confusable
+neighbours). `name` and `description` keep their meaning and must not be
+shortened. Role briefs under `references/roles/` MAY carry `role`, `governing`
+(skill ids), and `context-resolved: true`.
 
 ### The `description` is the trigger
 
@@ -332,10 +343,10 @@ nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/test-lint.
 Skills are discovered in two scopes, each with a native location and a
 cross-client `.agents/skills/` convention:
 
-| Scope   | Native path                              | Cross-client path              |
-| ------- | ---------------------------------------- | ------------------------------ |
-| Project | `<project>/.opencode/skills/`            | `<project>/.agents/skills/`    |
-| User    | `~/.config/opencode/skills/`             | `~/.agents/skills/`            |
+| Scope | Native path | Cross-client path |
+| --- | --- | --- |
+| Project | `<project>/.opencode/skills/` | `<project>/.agents/skills/` |
+| User | `~/.config/opencode/skills/` | `~/.agents/skills/` |
 
 opencode also scans `.claude/skills/` (project + user) for compatibility.
 

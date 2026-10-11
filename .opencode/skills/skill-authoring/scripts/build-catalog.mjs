@@ -1,0 +1,455 @@
+#!/usr/bin/env node
+/**
+ * Build the skill catalog at `.opencode/skills/catalog.json`.
+ *
+ * The catalog file is a GENERATED artifact — do not hand-edit it; run this
+ * script instead.
+ *
+ * It parses, per skill directory under `.opencode/skills/<id>/SKILL.md`: the
+ * frontmatter `name`, the nested `metadata` keys (`category`, `route-when`,
+ * `route-not-when`), the `description` and its first-sentence `summary`, the
+ * `## Related` graph (`loads` / `references`), the `## Files` table
+ * (`tier`: required | on-demand), and the `## External` table. It also parses
+ * each role brief under `agent-delegation/references/roles/*.md` for
+ * `role` / `governing` / `context-resolved`.
+ *
+ * Determinism is mandatory: all keys and arrays are sorted and no timestamps
+ * or absolute paths are emitted, so two runs on the same tree are
+ * byte-identical.
+ *
+ * Usage:
+ *   node build-catalog.mjs [--write]   write .opencode/skills/catalog.json
+ *   node build-catalog.mjs --check     exit non-zero if the committed file differs
+ *
+ * Node standard library only. The library root is found by walking up from this
+ * file for `.opencode/skills`. Run it from the repository root (no node on PATH
+ * needed on NixOS):
+ *   nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/build-catalog.mjs
+ */
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const SCHEMA = 1;
+const SUMMARY_MAX = 160;
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+
+function findRoot(start) {
+    let d = start;
+    for (let i = 0; i < 8; i++) {
+        const parent = path.dirname(d);
+        if (parent === d) break;
+        d = parent;
+        if (fs.existsSync(path.join(d, '.opencode', 'skills'))) return d;
+    }
+    return null;
+}
+
+function readText(p) {
+    return fs.readFileSync(p, 'utf8');
+}
+
+function unquote(value) {
+    if (value.length >= 2 && value[0] === value[value.length - 1] && `"'\``.includes(value[0])) {
+        return value.slice(1, -1);
+    }
+    return value;
+}
+
+/**
+ * Split YAML frontmatter, mirroring `lint-skills.mjs` so both parse the same
+ * shapes. Returns the top-level key map plus the raw frontmatter lines (for the
+ * nested `metadata:` block, which the flat parser deliberately skips).
+ */
+function splitFrontmatter(text) {
+    if (!text.startsWith('---')) return { fm: {}, fmLines: [], error: 'missing frontmatter' };
+    const lines = text.split('\n');
+    let end = null;
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim() === '---') {
+            end = i;
+            break;
+        }
+    }
+    if (end === null) return { fm: {}, fmLines: [], error: 'unterminated frontmatter' };
+    const fmLines = lines.slice(1, end);
+    const fm = {};
+    let i = 0;
+    while (i < fmLines.length) {
+        const line = fmLines[i];
+        if (!line.trim() || line.trimStart().startsWith('#')) {
+            i++;
+            continue;
+        }
+        const m = line.match(/^([A-Za-z0-9_./-]+):\s*(.*)$/);
+        if (!m) {
+            i++;
+            continue;
+        }
+        const key = m[1];
+        let value = m[2].trim();
+        if (['|', '>', '|-', '>-'].includes(value)) {
+            const block = [];
+            i++;
+            while (i < fmLines.length && (fmLines[i].startsWith(' ') || fmLines[i] === '')) {
+                block.push(fmLines[i].trim());
+                i++;
+            }
+            fm[key] = block.filter((x) => x).join(' ');
+            continue;
+        }
+        fm[key] = unquote(value);
+        i++;
+    }
+    return { fm, fmLines, error: null };
+}
+
+/** Parse the 2-space-indented `key: value` lines under a top-level `metadata:`. */
+function parseMetadata(fmLines) {
+    const meta = {};
+    let inMeta = false;
+    for (const line of fmLines) {
+        const m = line.match(/^(\s*)([A-Za-z0-9_./-]+):\s*(.*)$/);
+        if (!m) continue;
+        const indent = m[1].length;
+        if (indent === 0) {
+            inMeta = m[2] === 'metadata';
+            continue;
+        }
+        if (inMeta && indent >= 2) meta[m[2]] = unquote(m[3].trim());
+    }
+    return meta;
+}
+
+function fenceMask(lines) {
+    const mask = [];
+    let inFence = false;
+    const fenceRe = /^\s*(```|~~~)/;
+    for (const line of lines) {
+        if (fenceRe.test(line)) {
+            mask.push(true);
+            inFence = !inFence;
+        } else {
+            mask.push(inFence);
+        }
+    }
+    return mask;
+}
+
+function findHeading(lines, mask, title) {
+    const re = new RegExp('^##\\s+' + title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*$');
+    for (let i = 0; i < lines.length; i++) {
+        if (!mask[i] && re.test(lines[i])) return i;
+    }
+    return null;
+}
+
+function sectionEnd(lines, mask, start) {
+    for (let i = start + 1; i < lines.length; i++) {
+        if (!mask[i] && lines[i].startsWith('## ')) return i;
+    }
+    return lines.length;
+}
+
+const NAME_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+function extractNames(text) {
+    const out = [];
+    const re = /`([^`]+)`/g;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+        if (NAME_RE.test(m[1])) out.push(m[1]);
+    }
+    return out;
+}
+
+function addUnique(target, names) {
+    for (const n of names) if (!target.includes(n)) target.push(n);
+}
+
+/** The `## Related` grammar, identical to the linter's `parseRelated`. */
+function parseRelated(ctx) {
+    if (ctx.relatedIndex === null) return;
+    const mask = fenceMask(ctx.lines);
+    const end = sectionEnd(ctx.lines, mask, ctx.relatedIndex);
+    let current = null;
+    for (let i = ctx.relatedIndex + 1; i < end; i++) {
+        const line = ctx.lines[i];
+        const m = line.match(/\s*-\s*\*\*(Loads|References):\*\*(.*)/);
+        if (m) {
+            current = m[1].toLowerCase();
+            const value = m[2];
+            const names = value.trim().replace(/^\(/, '').toLowerCase().startsWith('none')
+                ? []
+                : extractNames(value);
+            addUnique(current === 'loads' ? ctx.loads : ctx.references, names);
+            continue;
+        }
+        if (line.trimStart().startsWith('- ')) {
+            current = null;
+            continue;
+        }
+        if (current && line.trim()) {
+            addUnique(current === 'loads' ? ctx.loads : ctx.references, extractNames(line));
+        }
+    }
+}
+
+function tableRows(ctx, index) {
+    const rows = [];
+    if (index === null) return rows;
+    const mask = fenceMask(ctx.lines);
+    const end = sectionEnd(ctx.lines, mask, index);
+    for (let i = index + 1; i < end; i++) {
+        if (mask[i]) continue;
+        const line = ctx.lines[i].trim();
+        if (!line.startsWith('|')) continue;
+        const cells = line.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
+        if (cells.length < 3) continue;
+        const first = cells[0].replace(/`/g, '').trim();
+        if (['file', 'path', ''].includes(first.toLowerCase()) || [...first].every((c) => '-: '.includes(c))) {
+            continue;
+        }
+        rows.push(cells);
+    }
+    return rows;
+}
+
+/** The `## Files` table: `{ path, tier: required|on-demand, trigger }`. */
+function parseFiles(ctx) {
+    for (const cells of tableRows(ctx, ctx.filesIndex)) {
+        ctx.files.push({
+            path: cells[0].replace(/`/g, '').trim(),
+            tier: cells[1].replace(/`/g, '').trim().toLowerCase(),
+            trigger: cells[2].trim(),
+        });
+    }
+}
+
+/** The `## External` table: `{ path, load, trigger }`. */
+function parseExternals(ctx) {
+    for (const cells of tableRows(ctx, ctx.externalIndex)) {
+        ctx.externals.push({
+            path: cells[0].replace(/`/g, '').trim(),
+            load: cells[1].replace(/`/g, '').trim().toLowerCase(),
+            trigger: (cells[2] || '').trim(),
+        });
+    }
+}
+
+/** First sentence of a description, capped at SUMMARY_MAX (ellipsis when cut). */
+function summarize(description) {
+    if (!description) return '';
+    const m = description.match(/^.*?[.!?](?=\s|$)/);
+    let s = (m ? m[0] : description).trim();
+    if (s.length > SUMMARY_MAX) s = s.slice(0, SUMMARY_MAX - 1).trimEnd() + '…';
+    return s;
+}
+
+function byKey(key) {
+    return (a, b) => (a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0);
+}
+
+function dedupeBy(rows, key) {
+    const seen = new Set();
+    const out = [];
+    for (const row of rows) {
+        if (seen.has(row[key])) continue;
+        seen.add(row[key]);
+        out.push(row);
+    }
+    return out;
+}
+
+function loadSkill(dir) {
+    const id = path.basename(dir);
+    const file = path.join(dir, 'SKILL.md');
+    const text = fs.existsSync(file) ? readText(file) : '';
+    const { fm, fmLines } = splitFrontmatter(text);
+    const meta = parseMetadata(fmLines);
+    const lines = text.split('\n');
+    const mask = fenceMask(lines);
+    const ctx = {
+        lines,
+        relatedIndex: findHeading(lines, mask, 'Related'),
+        filesIndex: findHeading(lines, mask, 'Files'),
+        externalIndex: findHeading(lines, mask, 'External'),
+        loads: [],
+        references: [],
+        files: [],
+        externals: [],
+    };
+    parseRelated(ctx);
+    parseFiles(ctx);
+    parseExternals(ctx);
+    const description = fm.description || '';
+    return {
+        id,
+        name: fm.name || id,
+        category: meta.category || null,
+        summary: summarize(description),
+        description,
+        routeWhen: meta['route-when'] || null,
+        routeNotWhen: meta['route-not-when'] || null,
+        loads: [...new Set(ctx.loads)].sort(),
+        references: [...new Set(ctx.references)].sort(),
+        files: dedupeBy(ctx.files, 'path').sort(byKey('path')),
+        externals: dedupeBy(ctx.externals, 'path').sort(byKey('path')),
+        roles: [],
+    };
+}
+
+function discoverSkills(root) {
+    const skillsDir = path.join(root, '.opencode', 'skills');
+    const out = [];
+    for (const e of fs.readdirSync(skillsDir, { withFileTypes: true })) {
+        if (e.isDirectory()) out.push(loadSkill(path.join(skillsDir, e.name)));
+    }
+    return out.sort(byKey('id'));
+}
+
+/** Parse a role brief's optional frontmatter; today's briefs have none. */
+function parseRoleFrontmatter(text) {
+    const res = { hasFrontmatter: false, role: null, governing: [], contextResolved: false };
+    if (!text.startsWith('---')) return res;
+    const lines = text.split('\n');
+    let end = null;
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim() === '---') {
+            end = i;
+            break;
+        }
+    }
+    if (end === null) return res;
+    res.hasFrontmatter = true;
+    let current = null;
+    for (let i = 1; i < end; i++) {
+        const dash = lines[i].match(/^\s*-\s+(.+?)\s*$/);
+        if (dash && current === 'governing') {
+            res.governing.push(unquote(dash[1]));
+            continue;
+        }
+        const m = lines[i].match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
+        if (!m) continue;
+        const key = m[1];
+        const value = m[2].trim();
+        current = key;
+        if (key === 'role') res.role = unquote(value) || null;
+        else if (key === 'context-resolved') res.contextResolved = value === 'true';
+        else if (key === 'governing') {
+            if (value.startsWith('[') && value.endsWith(']')) {
+                res.governing = value.slice(1, -1).split(',').map((s) => unquote(s.trim())).filter(Boolean);
+            } else if (value) {
+                res.governing = [unquote(value)];
+            }
+        }
+    }
+    return res;
+}
+
+function discoverRoles(root) {
+    const dir = path.join(root, '.opencode', 'skills', 'agent-delegation', 'references', 'roles');
+    const out = [];
+    if (!fs.existsSync(dir) || !fs.statSync(dir).isDirectory()) return out;
+    for (const e of fs.readdirSync(dir, { withFileTypes: true }).sort(byKey('name'))) {
+        if (!e.isFile() || !e.name.endsWith('.md')) continue;
+        const slug = e.name.slice(0, -3);
+        const parsed = parseRoleFrontmatter(readText(path.join(dir, e.name)));
+        out.push({
+            slug,
+            role: parsed.role || slug,
+            governing: parsed.governing.slice().sort(),
+            contextResolved: parsed.contextResolved,
+            hasFrontmatter: parsed.hasFrontmatter,
+        });
+    }
+    return out;
+}
+
+/** Return a copy of an object with its keys sorted (byte-stable JSON). */
+function sortKeys(obj) {
+    const out = {};
+    for (const k of Object.keys(obj).sort()) out[k] = obj[k];
+    return out;
+}
+
+function build(root) {
+    const skills = discoverSkills(root);
+    const roles = discoverRoles(root);
+
+    for (const role of roles) {
+        for (const id of role.governing) {
+            const skill = skills.find((s) => s.id === id);
+            if (skill && !skill.roles.includes(role.slug)) skill.roles.push(role.slug);
+        }
+    }
+    for (const skill of skills) skill.roles.sort();
+
+    const skillMap = {};
+    for (const skill of skills) {
+        skillMap[skill.id] = sortKeys({
+            id: skill.id,
+            name: skill.name,
+            category: skill.category,
+            summary: skill.summary,
+            description: skill.description,
+            routeWhen: skill.routeWhen,
+            routeNotWhen: skill.routeNotWhen,
+            loads: skill.loads,
+            references: skill.references,
+            files: skill.files.map((f) => sortKeys({ path: f.path, tier: f.tier, trigger: f.trigger })),
+            externals: skill.externals.map((x) => sortKeys({ path: x.path, load: x.load, trigger: x.trigger })),
+            roles: skill.roles,
+        });
+    }
+
+    const roleMap = {};
+    for (const role of roles) {
+        roleMap[role.slug] = sortKeys({
+            role: role.role,
+            governing: role.governing,
+            contextResolved: role.contextResolved,
+            hasFrontmatter: role.hasFrontmatter,
+        });
+    }
+
+    return sortKeys({
+        schema: SCHEMA,
+        skills: sortKeys(skillMap),
+        roles: sortKeys(roleMap),
+        count: skills.length,
+    });
+}
+
+function main(argv) {
+    const check = argv.includes('--check');
+    const root = findRoot(HERE);
+    if (!root) {
+        console.error('build-catalog: could not locate .opencode/skills');
+        return 2;
+    }
+    const text = JSON.stringify(build(root), null, 2) + '\n';
+    const outPath = path.join(root, '.opencode', 'skills', 'catalog.json');
+    const rel = path.relative(root, outPath);
+
+    if (check) {
+        const existing = fs.existsSync(outPath) ? readText(outPath) : null;
+        if (existing === null) {
+            console.error(`build-catalog: ${rel} is missing — run without --check to write it`);
+            return 1;
+        }
+        if (existing !== text) {
+            console.error(`build-catalog: ${rel} is stale — run without --check to regenerate it`);
+            return 1;
+        }
+        console.log(`build-catalog: ${rel} is up to date`);
+        return 0;
+    }
+
+    fs.writeFileSync(outPath, text);
+    console.log(`build-catalog: wrote ${rel}`);
+    return 0;
+}
+
+process.exit(main(process.argv.slice(2)));
