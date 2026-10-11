@@ -1,3 +1,8 @@
+---
+role: spec-writer
+governing: [feature-spec]
+route-when: "Use when drafting one feature spec with stable IDs, testable rules, and scenarios."
+---
 # Role: spec writer
 
 **Mandate.** Draft one feature spec with stable IDs, testable rules, and

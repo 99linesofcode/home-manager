@@ -1,6 +1,10 @@
 ---
 name: project-seed
 description: Stand up a new project's foundation before any product work — the git repo and devshell (via new-project), the vault scratchpad (brief, decisions, open questions, specs), the repo's AGENTS.md standing rules, a stub ARCHITECTURE.md, and the gates. Use when starting a new project, "set up the foundation", or seeding a repo for spec-driven delivery.
+metadata:
+  category: delivery
+  route-when: "Use when starting a new project, setting up the foundation, or seeding a repo for spec-driven delivery."
+  route-not-when: "Do not use to scaffold the repository itself — that is `new-project`."
 ---
 
 # project-seed

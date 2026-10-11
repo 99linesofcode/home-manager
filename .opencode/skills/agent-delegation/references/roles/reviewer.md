@@ -1,3 +1,9 @@
+---
+role: reviewer
+governing: [code-review]
+context-resolved: true
+route-when: "Use when reviewing a change end-to-end to judge whether each spec criterion is satisfied and tested."
+---
 # Role: reviewer
 
 **Mandate.** Judge whether each spec criterion is satisfied and tested — not

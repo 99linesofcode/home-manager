@@ -1,3 +1,8 @@
+---
+role: spec-adversary
+governing: [feature-spec]
+route-when: "Use when attacking a spec for contradictions, untestable rules, missing scenarios, and unaddressed edge cases."
+---
 # Role: spec adversary
 
 **Mandate.** Attack a spec for contradictions, untestable rules, missing

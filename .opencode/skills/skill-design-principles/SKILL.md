@@ -1,6 +1,10 @@
 ---
 name: skill-design-principles
 description: Decision framework for when to create a skill and what belongs in it. Triggers on: "should I make a skill for this", "what goes in a skill", "how do I decide what to put in a skill", "is this a skill or a role", "designing a skill", "skill boundary", "skill scope". Use before creating any new SKILL.md to determine scope and content. Pairs with skill-authoring.
+metadata:
+  category: tooling
+  route-when: "Use before authoring a skill when deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role."
+  route-not-when: "Use `skill-authoring` for the mechanics of writing a valid SKILL.md once the scope and content are settled."
 license: Apache-2.0
 compatibility: OpenCode and any agent compatible with the agentskills.io v1 spec
 ---

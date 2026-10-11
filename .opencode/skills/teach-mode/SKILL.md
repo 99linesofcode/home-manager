@@ -1,6 +1,9 @@
 ---
 name: teach-mode
 description: The user's teaching contract — how to explain a subject when the user wants to learn. Triggers on "teach me X", "teach mode", "I want to learn X", "walk me through X", "give me a lesson on X", "explain X to me" when the intent is learning. Explains in plain, non-esoteric language, one concept at a time, with concrete examples tied to the user's world. Light assessment and verification — never a grilling. Wiki-first grounding, summary note to the vault Inbox.
+metadata:
+  category: tooling
+  route-when: "Use when the user wants to learn a subject — 'teach me X', 'walk me through X', 'give me a lesson on X', or 'explain X to me' with a learning intent."
 license: Apache-2.0
 compatibility: OpenCode and any agent compatible with the agentskills.io v1 spec
 ---

@@ -1,6 +1,10 @@
 ---
 name: docker
 description: The user's Docker and Docker Compose environment contract — the three-tier docker-base ← docker-<language> ← project layout, the submodule paths (base / docker), .yaml naming, the docker-compose.yaml.dist template, Compose extends over duplication, image pinning, per-project namespacing, the devcontainer split, and the production image. Use when creating or changing a Docker or Docker Compose dev environment, adding a service to docker-base, adding or extending a language wrapper (docker-php, docker-ruby), wiring a project's compose, or defining the production image.
+metadata:
+  category: tooling
+  route-when: "Use when creating or changing a Docker or Docker Compose dev environment — adding a service to docker-base, extending a language wrapper, wiring a project's compose, or defining the production image."
+  route-not-when: "Use `kubernetes` for deploying that image to a cluster — charts, GitOps, secrets, TLS, and the local k3s cluster."
 ---
 
 # docker

@@ -1,3 +1,8 @@
+---
+role: characterization-test-author
+governing: [software-testing]
+route-when: "Use when pinning the current behavior of code that is about to change."
+---
 # Role: characterization test author
 
 **Mandate.** Pin the current behavior of code about to change.

@@ -1,6 +1,9 @@
 ---
 name: architecture-and-skeleton
 description: Propose 2-3 architecture/stack options with trade-offs and a recommendation, record the decision as an ADR, run time-boxed spikes for the risky unknowns, then build the walking skeleton — one thin end-to-end path with CI and mechanical boundary enforcement. Use when choosing a stack or architecture, when "how should we structure this" comes up, or before any real feature is built.
+metadata:
+  category: delivery
+  route-when: "Use when choosing a stack or architecture, when how to structure this comes up, or before any real feature is built."
 ---
 
 # architecture-and-skeleton

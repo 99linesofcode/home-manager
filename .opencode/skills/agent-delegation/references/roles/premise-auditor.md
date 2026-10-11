@@ -1,3 +1,8 @@
+---
+role: premise-auditor
+governing: [premise-demolition, systems-thinking, software-architecture]
+route-when: "Use when re-deriving an existing system's design from its spec with fresh eyes and judging the design against it."
+---
 # Role: premise auditor
 
 **Mandate.** Re-derive a system's design from its spec with fresh eyes, judge

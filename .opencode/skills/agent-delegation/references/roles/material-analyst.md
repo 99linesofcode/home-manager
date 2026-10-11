@@ -1,3 +1,8 @@
+---
+role: material-analyst
+governing: [discovery-interview]
+route-when: "Use when extracting facts, inferences, and unknowns from raw material and proposing interview questions."
+---
 # Role: material analyst
 
 **Mandate.** Extract facts, inferences, and unknowns from raw input; propose

@@ -1,6 +1,10 @@
 ---
 name: feature-spec
 description: Write one feature spec with stable IDs, testable WHAT-not-HOW rules, and Given/When/Then scenarios citing those IDs; mark proposed edge cases PROPOSED; then have a fresh spec adversary attack it before it is accepted. Use when writing or updating a feature spec, or when a slice needs its acceptance criteria pinned.
+metadata:
+  category: delivery
+  route-when: "Use when writing or updating a feature spec, or when a slice needs its acceptance criteria pinned."
+  route-not-when: "Do not use to interview for a vague brief or to build an approved slice — those are `discovery-interview` and `slice-delivery`."
 ---
 
 # feature-spec

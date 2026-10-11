@@ -1,6 +1,10 @@
 ---
 name: software-architecture-structure
 description: Name, place or restructure files and classes — two-axis naming, the single closed role-suffix table and role menu, the one folder tree (module-first, fractal), co-location, Support, boundary rules, carve-outs, and the always-on card. Use when creating or moving a class or file, choosing a folder, picking a role suffix, adding a module, or reviewing structure. The contract itself is `software-architecture`.
+metadata:
+  category: architecture
+  route-when: "Use when creating, moving, naming, or placing a class or file, choosing a folder, picking a role suffix, adding a module, or reviewing a repository's structure."
+  route-not-when: "Use `software-architecture` for the principles, where logic lives, the hexagonal rules, DTOs, or provider neutrality."
 ---
 
 # software-architecture-structure

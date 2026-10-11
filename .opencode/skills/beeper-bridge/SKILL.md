@@ -1,6 +1,9 @@
 ---
 name: beeper-bridge
 description: Operate the Beeper↔opencode bridge — attach a Beeper chat to the current opencode session, detach it, or check status. Use when the user says "establish a bridge connection to Beeper", "I'm going AFK", "delegate this to Beeper", or asks to attach/detach/check the Beeper bridge or opencode-beeper-bridge. Covers chat resolution via the Beeper MCP, sops token discovery, and systemd instance management.
+metadata:
+  category: tooling
+  route-when: "Use when the user attaches, detaches, or checks the Beeper↔opencode bridge — including 'establish a bridge connection to Beeper', 'I'm going AFK', or 'delegate this to Beeper'."
 ---
 
 # Beeper bridge

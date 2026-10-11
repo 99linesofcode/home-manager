@@ -1,6 +1,10 @@
 ---
 name: systems-thinking
 description: The lens for seeing a system as a whole before judging or changing any part of it — state the system in one breath, separate essential from accidental complexity, right-size the design to the real system, and derive the picture of what good looks like from the spec alone. Use when modelling a system, when asked whether a design is right, when a design feels too complex, or as the first move of a re-architecture (with premise-demolition).
+metadata:
+  category: analysis
+  route-when: "Use when modelling a system or feature for the first time, when asked whether a design is right, or as the first move of a re-architecture."
+  route-not-when: "Use `premise-demolition` for the demolition-first refactor itself, once the picture of what good looks like is formed."
 ---
 
 # systems-thinking

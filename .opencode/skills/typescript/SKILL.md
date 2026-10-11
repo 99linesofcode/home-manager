@@ -1,6 +1,9 @@
 ---
 name: typescript
 description: The user's TypeScript and Node conventions — the TypeScript expression of the software-architecture contract. Covers interface naming (a role suffix; never an `I` prefix or `Interface` suffix), ESM/NodeNext import rules (explicit `.js` specifiers onto `.ts` sources, `import type`), no barrel files (no `index.ts` re-exports), constructor injection with a single composition root and no DI container, and the strict tsconfig baseline. Use when writing, extending, or reviewing TypeScript or Node code, when naming an interface or type, when deciding a module's export shape (barrel vs explicit path), when wiring dependencies, or when configuring tsconfig.
+metadata:
+  category: language
+  route-when: "Use when writing, extending, or reviewing TypeScript or Node code, naming an interface or type, deciding a module's export shape, wiring dependencies, or configuring tsconfig."
 ---
 
 # typescript

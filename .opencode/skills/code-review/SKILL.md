@@ -1,6 +1,10 @@
 ---
 name: code-review
 description: The user's code review contract — what a review must check, structured so a worker can run it automated. Covers atomicity, correctness, self-documenting code, no dangling code, tests, architecture adherence, and security. Manual for now; designed to be run by a separate worker. Use when reviewing a pull request or change, or when preparing a change for review.
+metadata:
+  category: review
+  route-when: "Use when reviewing a pull request or change, or when preparing a change for review."
+  route-not-when: "Not for the adversarial security pass (use `security-review`), the robustness pass (use `edge-case-analysis`), or threat scoping (use `threat-modeling`)."
 ---
 
 # code-review

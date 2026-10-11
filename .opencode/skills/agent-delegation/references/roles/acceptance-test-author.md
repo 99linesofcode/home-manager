@@ -1,3 +1,8 @@
+---
+role: acceptance-test-author
+governing: [software-testing]
+route-when: "Use when turning spec criteria into failing automated tests tagged by ID."
+---
 # Role: acceptance test author
 
 **Mandate.** Turn spec criteria into failing automated tests tagged by ID.

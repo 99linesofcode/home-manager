@@ -1,6 +1,9 @@
 ---
 name: typst-document
 description: Generate a formatted PDF (offerte, contract, or document) from a markdown file using the 99linesofcode typst template in ~/Development/99linesofcode-typst-template. Use when the user wants to convert a markdown document to PDF, create an offerte, or render a document with the typst template.
+metadata:
+  category: tooling
+  route-when: "Use when converting a markdown document to a PDF, creating an offerte or contract, or rendering a document with the 99linesofcode typst template."
 ---
 
 # typst-document

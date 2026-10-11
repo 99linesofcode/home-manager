@@ -1,6 +1,9 @@
 ---
 name: shape-up
 description: The user's Shape Up working method — shaping work before betting on it, appetites, hills, and slice sizing. Used for project management and client work that requires estimates and advanced shaping ahead of time. Use when shaping a piece of work, setting an appetite, betting on a cycle, tracking a hill, or sizing a slice.
+metadata:
+  category: delivery
+  route-when: "Use when shaping a piece of work, setting an appetite, betting on a cycle, tracking a hill, or sizing a slice."
 ---
 
 # shape-up

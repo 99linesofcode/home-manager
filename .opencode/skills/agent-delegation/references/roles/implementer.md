@@ -1,3 +1,8 @@
+---
+role: implementer
+governing: [software-architecture, software-development, self-documenting-code, git-workflow]
+route-when: "Use when implementing a bounded change against locked tests, following the spec and brief exactly."
+---
 # Role: implementer
 
 **Mandate.** Follow the spec and the brief exactly: make the locked tests pass

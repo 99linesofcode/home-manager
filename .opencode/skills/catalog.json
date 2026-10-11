@@ -3,81 +3,114 @@
   "roles": {
     "acceptance-test-author": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "software-testing"
+      ],
+      "hasFrontmatter": true,
       "role": "acceptance-test-author"
     },
     "advisor": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "premise-demolition",
+        "software-architecture",
+        "systems-thinking"
+      ],
+      "hasFrontmatter": true,
       "role": "advisor"
     },
     "characterization-test-author": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "software-testing"
+      ],
+      "hasFrontmatter": true,
       "role": "characterization-test-author"
     },
     "implementer": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "git-workflow",
+        "self-documenting-code",
+        "software-architecture",
+        "software-development"
+      ],
+      "hasFrontmatter": true,
       "role": "implementer"
     },
     "material-analyst": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "discovery-interview"
+      ],
+      "hasFrontmatter": true,
       "role": "material-analyst"
     },
     "options-analyst": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "architecture-and-skeleton",
+        "software-architecture"
+      ],
+      "hasFrontmatter": true,
       "role": "options-analyst"
     },
     "premise-auditor": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "premise-demolition",
+        "software-architecture",
+        "systems-thinking"
+      ],
+      "hasFrontmatter": true,
       "role": "premise-auditor"
     },
     "reviewer": {
-      "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "contextResolved": true,
+      "governing": [
+        "code-review"
+      ],
+      "hasFrontmatter": true,
       "role": "reviewer"
     },
     "spec-adversary": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "feature-spec"
+      ],
+      "hasFrontmatter": true,
       "role": "spec-adversary"
     },
     "spec-reconciler": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "feature-spec",
+        "spec-change"
+      ],
+      "hasFrontmatter": true,
       "role": "spec-reconciler"
     },
     "spec-writer": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "feature-spec"
+      ],
+      "hasFrontmatter": true,
       "role": "spec-writer"
     },
     "spike-engineer": {
       "contextResolved": false,
-      "governing": [],
-      "hasFrontmatter": false,
+      "governing": [
+        "architecture-and-skeleton"
+      ],
+      "hasFrontmatter": true,
       "role": "spike-engineer"
     }
   },
   "schema": 1,
   "skills": {
     "agent-delegation": {
-      "category": null,
+      "category": "tooling",
       "description": "Compose and dispatch worker packages, route each task to a role and each role to its governing skills, verify the evidence, and consolidate escalations. Defines the reusable role briefs (material analyst, spec writer, spec adversary, options analyst, spike engineer, characterization test author, acceptance test author, implementer, reviewer, premise auditor, spec reconciler, advisor) and the delegation-brief and worker-report templates. Use whenever the orchestrator dispatches a worker, decides which role a task warrants, or works in any phase of spec-driven delivery.",
       "externals": [],
       "files": [
@@ -165,11 +198,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when the orchestrator composes or dispatches a worker package, picks a role, verifies evidence, or consolidates escalations.",
       "summary": "Compose and dispatch worker packages, route each task to a role and each role to its governing skills, verify the evidence, and consolidate escalations."
     },
     "architecture-and-skeleton": {
-      "category": null,
+      "category": "delivery",
       "description": "Propose 2-3 architecture/stack options with trade-offs and a recommendation, record the decision as an ADR, run time-boxed spikes for the risky unknowns, then build the walking skeleton — one thin end-to-end path with CI and mechanical boundary enforcement. Use when choosing a stack or architecture, when \"how should we structure this\" comes up, or before any real feature is built.",
       "externals": [],
       "files": [
@@ -190,13 +223,16 @@
         "software-development",
         "systems-thinking"
       ],
-      "roles": [],
+      "roles": [
+        "options-analyst",
+        "spike-engineer"
+      ],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when choosing a stack or architecture, when how to structure this comes up, or before any real feature is built.",
       "summary": "Propose 2-3 architecture/stack options with trade-offs and a recommendation, record the decision as an ADR, run time-boxed spikes for the risky unknowns, then…"
     },
     "avo": {
-      "category": null,
+      "category": "language",
       "description": "The user's Avo admin UI mechanics — Resources, Fields, Actions, Dashboards, Cards, and the Avo-to-action seam. The concrete Avo expression of the software-architecture contract, layered on the rails skill. Use when building, extending, or reviewing Avo resources, fields, actions, dashboards, cards, or authorization in the user's Rails modules or applications.",
       "externals": [
         {
@@ -216,12 +252,12 @@
         "software-testing"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Not for the underlying Rails mechanics (use `rails`) or the general architecture contract (use `software-architecture`).",
+      "routeWhen": "Use when building, extending, or reviewing Avo resources, fields, actions, dashboards, cards, or authorization in the user's Rails modules or applications.",
       "summary": "The user's Avo admin UI mechanics — Resources, Fields, Actions, Dashboards, Cards, and the Avo-to-action seam."
     },
     "beeper-bridge": {
-      "category": null,
+      "category": "tooling",
       "description": "Operate the Beeper↔opencode bridge — attach a Beeper chat to the current opencode session, detach it, or check status. Use when the user says \"establish a bridge connection to Beeper\", \"I'm going AFK\", \"delegate this to Beeper\", or asks to attach/detach/check the Beeper bridge or opencode-beeper-bridge. Covers chat resolution via the Beeper MCP, sops token discovery, and systemd instance management.",
       "externals": [
         {
@@ -242,11 +278,11 @@
       "references": [],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when the user attaches, detaches, or checks the Beeper↔opencode bridge — including 'establish a bridge connection to Beeper', 'I'm going AFK', or 'delegate this to Beeper'.",
       "summary": "Operate the Beeper↔opencode bridge — attach a Beeper chat to the current opencode session, detach it, or check status."
     },
     "code-review": {
-      "category": null,
+      "category": "review",
       "description": "The user's code review contract — what a review must check, structured so a worker can run it automated. Covers atomicity, correctness, self-documenting code, no dangling code, tests, architecture adherence, and security. Manual for now; designed to be run by a separate worker. Use when reviewing a pull request or change, or when preparing a change for review.",
       "externals": [],
       "files": [],
@@ -266,13 +302,15 @@
         "software-development",
         "software-testing"
       ],
-      "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "roles": [
+        "reviewer"
+      ],
+      "routeNotWhen": "Not for the adversarial security pass (use `security-review`), the robustness pass (use `edge-case-analysis`), or threat scoping (use `threat-modeling`).",
+      "routeWhen": "Use when reviewing a pull request or change, or when preparing a change for review.",
       "summary": "The user's code review contract — what a review must check, structured so a worker can run it automated."
     },
     "communication-standards": {
-      "category": null,
+      "category": "tooling",
       "description": "The user's communication contract — how the orchestrator writes when talking to the user. Applies to ALL user-facing output: conversation, summaries, plans, reviews, teaching. Triggers on \"less AI\", \"more human\", \"stop the slop\", \"AI slop\", \"filler\", \"writing style\", \"tone\", \"communication\", \"prose\", \"style guide\".",
       "externals": [],
       "files": [],
@@ -285,11 +323,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use for all user-facing writing — conversation, summaries, plans, reviews, and teaching — or when the user asks for less AI slop, a different tone, or a style guide.",
       "summary": "The user's communication contract — how the orchestrator writes when talking to the user."
     },
     "customize-opencode": {
-      "category": null,
+      "category": "tooling",
       "description": "Use ONLY when the user is editing or creating opencode's own configuration: opencode.json, opencode.jsonc, files under .opencode/, or files under ~/.config/opencode/. Also use when creating or fixing opencode agents, subagents, skills, plugins, MCP servers, or permission rules. Do not use for the user's own application code, or for any project that is not configuring opencode itself.",
       "externals": [
         {
@@ -308,11 +346,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when the user is editing or creating opencode's own configuration — opencode.json, .opencode/, or ~/.config/opencode/ — including agents, subagents, skills, plugins, MCP servers, and permission rules.",
       "summary": "Use ONLY when the user is editing or creating opencode's own configuration: opencode.json, opencode.jsonc, files under .opencode/, or files under ~/.config/ope…"
     },
     "discovery-interview": {
-      "category": null,
+      "category": "delivery",
       "description": "Interview-first discovery for a project or feature — ask, don't assume; resolve what we know, track what we don't. Offers concrete options with a recommended default, records decisions, and routes unknowns to the open-questions register. Folds in event storming as a structuring technique for complex domains. Use when a brief is vague, when starting discovery, or when the user hands over raw material and says \"figure out what we're building\".",
       "externals": [],
       "files": [
@@ -333,13 +371,15 @@
         "systems-thinking",
         "vault-notes"
       ],
-      "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "roles": [
+        "material-analyst"
+      ],
+      "routeNotWhen": "Do not use once a feature spec is being written — that is `feature-spec`.",
+      "routeWhen": "Use when a brief is vague, when starting discovery, or when the user hands over raw material and asks to figure out what we're building.",
       "summary": "Interview-first discovery for a project or feature — ask, don't assume; resolve what we know, track what we don't."
     },
     "docker": {
-      "category": null,
+      "category": "tooling",
       "description": "The user's Docker and Docker Compose environment contract — the three-tier docker-base ← docker-<language> ← project layout, the submodule paths (base / docker), .yaml naming, the docker-compose.yaml.dist template, Compose extends over duplication, image pinning, per-project namespacing, the devcontainer split, and the production image. Use when creating or changing a Docker or Docker Compose dev environment, adding a service to docker-base, adding or extending a language wrapper (docker-php, docker-ruby), wiring a project's compose, or defining the production image.",
       "externals": [],
       "files": [],
@@ -352,12 +392,12 @@
         "new-project"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `kubernetes` for deploying that image to a cluster — charts, GitOps, secrets, TLS, and the local k3s cluster.",
+      "routeWhen": "Use when creating or changing a Docker or Docker Compose dev environment — adding a service to docker-base, extending a language wrapper, wiring a project's compose, or defining the production image.",
       "summary": "The user's Docker and Docker Compose environment contract — the three-tier docker-base ← docker-<language> ← project layout, the submodule paths (base / docker…"
     },
     "edge-case-analysis": {
-      "category": null,
+      "category": "review",
       "description": "Adversarial analysis of unhandled code paths and robustness — boundary values, null/empty/undefined, type coercion, race conditions, resource exhaustion, state-machine violations, and error handling. Use when reviewing code for edge cases, crashes, hangs, and denial-of-service, or as the robustness step of a red-team review.",
       "externals": [],
       "files": [],
@@ -370,12 +410,12 @@
         "threat-modeling"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Not for vulnerability classes (use `security-review`) or threat scoping (use `threat-modeling`).",
+      "routeWhen": "Use when reviewing code for edge cases, crashes, hangs, and denial-of-service, or as the robustness step of a red-team review.",
       "summary": "Adversarial analysis of unhandled code paths and robustness — boundary values, null/empty/undefined, type coercion, race conditions, resource exhaustion, state…"
     },
     "feature-spec": {
-      "category": null,
+      "category": "delivery",
       "description": "Write one feature spec with stable IDs, testable WHAT-not-HOW rules, and Given/When/Then scenarios citing those IDs; mark proposed edge cases PROPOSED; then have a fresh spec adversary attack it before it is accepted. Use when writing or updating a feature spec, or when a slice needs its acceptance criteria pinned.",
       "externals": [],
       "files": [
@@ -399,13 +439,17 @@
         "software-testing",
         "spec-change"
       ],
-      "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "roles": [
+        "spec-adversary",
+        "spec-reconciler",
+        "spec-writer"
+      ],
+      "routeNotWhen": "Do not use to interview for a vague brief or to build an approved slice — those are `discovery-interview` and `slice-delivery`.",
+      "routeWhen": "Use when writing or updating a feature spec, or when a slice needs its acceptance criteria pinned.",
       "summary": "Write one feature spec with stable IDs, testable WHAT-not-HOW rules, and Given/When/Then scenarios citing those IDs; mark proposed edge cases PROPOSED; then ha…"
     },
     "filament": {
-      "category": null,
+      "category": "language",
       "description": "The user's Filament admin UI mechanics — Resources, Forms, Tables, Plugins, and Pages, and the Filament-to-action seam. The concrete Filament expression of the software-architecture contract, layered on the laravel skill. Use when building, extending, or reviewing Filament resources, forms, tables, plugins, or pages in the user's Laravel modules or applications.",
       "externals": [
         {
@@ -430,12 +474,12 @@
         "software-testing"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Not for the underlying Laravel mechanics (use `laravel`) or the general architecture contract (use `software-architecture`).",
+      "routeWhen": "Use when building, extending, or reviewing Filament resources, forms, tables, plugins, or pages in the user's Laravel modules or applications.",
       "summary": "The user's Filament admin UI mechanics — Resources, Forms, Tables, Plugins, and Pages, and the Filament-to-action seam."
     },
     "git-workflow": {
-      "category": null,
+      "category": "delivery",
       "description": "Git and GitHub workflow for this user's projects. GitHub Flow by default, always checking CONTRIBUTING.md first; Conventional Commits (including commit message wording); ask before commit/push/PR; safe git operations (no force-push, no history rewriting). Includes collapsing commits (fixup + squash by feature before push), rebasing, and stashing. The broader development discipline (incremental atomic changes, cleanup-as-you-go) lives in the software-development skill. Use when the user asks to commit, branch, merge, rebase, stash, push, pull, open or review a pull request, file or triage a GitHub issue, create a release, author a CONTRIBUTING.md, or when starting work in a repo and the workflow needs to be determined.",
       "externals": [
         {
@@ -472,13 +516,15 @@
         "skeleton-ecosystem",
         "software-development"
       ],
-      "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "roles": [
+        "implementer"
+      ],
+      "routeNotWhen": "Do not use for GitHub discussions or milestone notes — that is `github`.",
+      "routeWhen": "Use when the user asks to commit, branch, merge, rebase, stash, push, pull, open or review a pull request, file or triage an issue, create a release, author a CONTRIBUTING.md, or when starting work in a repo and the workflow needs to be determined.",
       "summary": "Git and GitHub workflow for this user's projects."
     },
     "github": {
-      "category": null,
+      "category": "tooling",
       "description": "The user's GitHub platform interface — reading issues, joining discussions, sending updates, creating pull requests linked to issues, and the milestone note. The GitHub API/platform layer, distinct from git-workflow (local git mechanics). Optional: used by the orchestrator or a worker when work needs to flow through GitHub. Use when reading or triaging issues, participating in discussions, posting updates, or creating PRs that reference issues.",
       "externals": [],
       "files": [],
@@ -494,12 +540,12 @@
         "software-development"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `git-workflow` for local git mechanics — branching, commits, squash, and push safety.",
+      "routeWhen": "Use when reading or triaging GitHub issues, joining or posting in discussions, sending updates, or creating pull requests that reference issues.",
       "summary": "The user's GitHub platform interface — reading issues, joining discussions, sending updates, creating pull requests linked to issues, and the milestone note."
     },
     "jev-gates": {
-      "category": null,
+      "category": "tooling",
       "description": "Run the Jev decision gates — a dependency-free Node runner and gate definitions that turn a classification call into a decision, a confidence, and an action (proceed, ask, or escalate). Use when the orchestrator needs a triage decision, to classify a request, route a task to a skill or a routing-matrix row or a worker role, pre-screen a worker diff before accepting it, or decide whether to escalate to the advisor. Triggers on \"triage decision\", \"classify\", \"route\", \"gate\", \"Jev\", \"which skill/role/row\", \"pre-screen a worker diff\", \"escalate to the advisor\".",
       "externals": [],
       "files": [
@@ -523,12 +569,12 @@
         "software-development"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `agent-delegation` for composing and dispatching the worker package around that call.",
+      "routeWhen": "Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, pre-screening a worker diff, or deciding whether to escalate to the advisor.",
       "summary": "Run the Jev decision gates — a dependency-free Node runner and gate definitions that turn a classification call into a decision, a confidence, and an action (p…"
     },
     "kubernetes": {
-      "category": null,
+      "category": "tooling",
       "description": "The user's Kubernetes contract — k3s for local and production, Helm umbrella charts, Flux GitOps, the one-chart-two-overlays local/production parity rule, GHCR for charts and images, SOPS+age secrets, cert-manager TLS, the Gateway API + Traefik ingress, and Task's constrained bootstrap role. Use when deploying to Kubernetes, writing or changing a Helm chart, wiring Flux, handling cluster secrets, or when the user references k3s, Helm, Flux, cert-manager, GHCR, chart submodules, or the kubernetes-base / kubernetes-php / kubernetes-fleet repos.",
       "externals": [],
       "files": [],
@@ -541,12 +587,12 @@
         "new-project"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `docker` for the Docker Compose development environment and the production image built before deployment.",
+      "routeWhen": "Use when deploying to Kubernetes, writing or changing a Helm chart, wiring Flux, handling cluster secrets, or working with k3s, cert-manager, GHCR, or the kubernetes-* repos.",
       "summary": "The user's Kubernetes contract — k3s for local and production, Helm umbrella charts, Flux GitOps, the one-chart-two-overlays local/production parity rule, GHCR…"
     },
     "laravel": {
-      "category": null,
+      "category": "language",
       "description": "The user's Laravel mechanics — the PHP/Laravel-specific conventions for the user's repos: composer wiring, the ServiceProvider composition root, Eloquent model mechanics, Pest + Testbench testing, and the Laravel-specific naming roles. Architecture itself lives in the software-architecture skill. Use when building, extending, or reviewing Laravel code in the user's style, or when the user references their modules, ServiceProvider, composer wiring, or Eloquent mechanics.",
       "externals": [
         {
@@ -588,12 +634,12 @@
         "rails"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Not for Filament admin UI mechanics (use `filament`) or the language-agnostic architecture contract (use `software-architecture`).",
+      "routeWhen": "Use when building, extending, or reviewing Laravel or PHP code in the user's style, or when the task references their modules, ServiceProvider, composer wiring, or Eloquent mechanics.",
       "summary": "The user's Laravel mechanics — the PHP/Laravel-specific conventions for the user's repos: composer wiring, the ServiceProvider composition root, Eloquent model…"
     },
     "memory": {
-      "category": null,
+      "category": "vault",
       "description": "Two-tier file-native memory system (working memory HOT.md + episodic stream + semantic facts, with milestone-triggered reflection and codification pruning), grounded in Generative Agents and Files-as-Memory research. Emits OKF v0.2-conformant concepts. Use when reading or writing HOT.md, recording episodic events, updating semantic memory, running reflection, or when the user says \"consolidate memory\".",
       "externals": [],
       "files": [],
@@ -605,12 +651,12 @@
         "wiki"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `wiki` for ingesting a source from the Inbox, querying the wiki, or linting wiki health.",
+      "routeWhen": "Use when reading or writing HOT.md, recording episodic events, updating semantic memory, running reflection, or when the user says consolidate memory.",
       "summary": "Two-tier file-native memory system (working memory HOT.md + episodic stream + semantic facts, with milestone-triggered reflection and codification pruning), gr…"
     },
     "new-project": {
-      "category": null,
+      "category": "delivery",
       "description": "Set up a new software development project from scratch — a new git repository, a Laravel application or module, and the supporting packages. Use when the user wants to start a new project, scaffold a new repo, create a new Laravel app or module, or set up a fresh development environment. Orchestrates git-workflow (git mechanics) and laravel (Laravel specifics).",
       "externals": [],
       "files": [
@@ -639,12 +685,12 @@
         "software-architecture"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Do not use for the spec-driven foundation around the scaffold — that is `project-seed`.",
+      "routeWhen": "Use when starting a new project from scratch, scaffolding a new repo, creating a new Laravel app or module, or setting up a fresh development environment.",
       "summary": "Set up a new software development project from scratch — a new git repository, a Laravel application or module, and the supporting packages."
     },
     "obsidian-plugin": {
-      "category": null,
+      "category": "tooling",
       "description": "Obsidian community-plugin development contract — manifest.json and versions.json upkeep, minAppVersion matching the newest Obsidian API used, the tag-driven release, and the community-plugin conventions. Use when building, extending, or releasing an Obsidian plugin, in any repository.",
       "externals": [],
       "files": [],
@@ -657,11 +703,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when building, extending, or releasing an Obsidian community plugin in any repository.",
       "summary": "Obsidian community-plugin development contract — manifest.json and versions.json upkeep, minAppVersion matching the newest Obsidian API used, the tag-driven re…"
     },
     "premise-demolition": {
-      "category": null,
+      "category": "analysis",
       "description": "Scrutinise an existing system against its spec with fresh eyes and produce a demolition-first refactor — the spec is the only input, the implementation is a claim, and every element must earn its place against a user story or acceptance criterion. Use when asked to reflect on or refactor an existing system, when a design feels over-engineered, when someone says \"this is too complex\" or \"is this even right?\", or before any re-architecture.",
       "externals": [],
       "files": [],
@@ -679,13 +725,16 @@
         "slice-delivery",
         "software-architecture"
       ],
-      "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "roles": [
+        "advisor",
+        "premise-auditor"
+      ],
+      "routeNotWhen": "Use `systems-thinking` to form the picture of what good looks like before the demolition, or `refactoring` for a snippet or unit-scale restructure.",
+      "routeWhen": "Use when scrutinising an existing system or a module's architecture against its spec with fresh eyes, when a design feels over-engineered, or before any re-architecture, at system scale.",
       "summary": "Scrutinise an existing system against its spec with fresh eyes and produce a demolition-first refactor — the spec is the only input, the implementation is a cl…"
     },
     "project-seed": {
-      "category": null,
+      "category": "delivery",
       "description": "Stand up a new project's foundation before any product work — the git repo and devshell (via new-project), the vault scratchpad (brief, decisions, open questions, specs), the repo's AGENTS.md standing rules, a stub ARCHITECTURE.md, and the gates. Use when starting a new project, \"set up the foundation\", or seeding a repo for spec-driven delivery.",
       "externals": [],
       "files": [
@@ -730,12 +779,12 @@
         "vault-notes"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Do not use to scaffold the repository itself — that is `new-project`.",
+      "routeWhen": "Use when starting a new project, setting up the foundation, or seeding a repo for spec-driven delivery.",
       "summary": "Stand up a new project's foundation before any product work — the git repo and devshell (via new-project), the vault scratchpad (brief, decisions, open questio…"
     },
     "rails": {
-      "category": null,
+      "category": "language",
       "description": "The user's Ruby on Rails mechanics — the Rails-engine-as-module layout, the engine composition root, ActiveRecord mechanics, Action objects + DTOs, Hotwire (Turbo + Stimulus) UI, Packwerk boundary enforcement, and RSpec testing. The Ruby/Rails expression of the software-architecture contract and the sibling of the laravel skill. Use when building, extending, or reviewing Ruby on Rails code, engines, modules, action objects, DTOs, ActiveRecord models, Hotwire views, or Packwerk boundaries in the user's repos.",
       "externals": [
         {
@@ -767,12 +816,12 @@
         "new-project"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Not for Avo admin UI mechanics (use `avo`) or the language-agnostic architecture contract (use `software-architecture`).",
+      "routeWhen": "Use when building, extending, or reviewing Ruby on Rails code, engines, modules, action objects, DTOs, ActiveRecord models, Hotwire views, or Packwerk boundaries in the user's repos.",
       "summary": "The user's Ruby on Rails mechanics — the Rails-engine-as-module layout, the engine composition root, ActiveRecord mechanics, Action objects + DTOs, Hotwire (Tu…"
     },
     "refactoring": {
-      "category": null,
+      "category": "architecture",
       "description": "Scale-aware refactoring contract — snippet, unit (file/module), and system scale, each with its own machinery; legibility is the bar and the judge. Triggers on \"refactor\", \"refactoring\", \"clean up this code\", \"this is hard to read\", \"behaviour-preserving\", \"legibility\", \"duplication\", \"extract\", \"inline\". Use when a change's main job is to restructure code without changing behaviour, at any scale.",
       "externals": [],
       "files": [],
@@ -787,12 +836,12 @@
         "systems-thinking"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `premise-demolition` when the whole system or a module's architecture is in question and the shape itself is being judged.",
+      "routeWhen": "Use when a change's main job is a behaviour-preserving restructure of code, at any scale, including when deciding how much machinery the refactor deserves.",
       "summary": "Scale-aware refactoring contract — snippet, unit (file/module), and system scale, each with its own machinery; legibility is the bar and the judge."
     },
     "research-prompt-skills": {
-      "category": null,
+      "category": "analysis",
       "description": "Self-adjusting research sweep on prompt engineering, agent memory, context optimization, and skill authoring. Built for scheduled standalone opencode sessions (systemd timer): grounds in the skill-research wiki pages, dedups against prior sweeps, applies a strict evidence bar, writes a dated findings note to the vault Inbox, and stretches or tightens its own schedule based on verified-finding volume. Use when running the research-prompt-skills scheduled job or when asked to do a prompt/skill research sweep.",
       "externals": [
         {
@@ -817,11 +866,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when running the research-prompt-skills scheduled job or when asked to do a prompt, memory, context, or skill research sweep.",
       "summary": "Self-adjusting research sweep on prompt engineering, agent memory, context optimization, and skill authoring."
     },
     "security-review": {
-      "category": null,
+      "category": "review",
       "description": "Adversarial security review of source code — hunt for vulnerabilities (access control, injection, crypto, auth, supply chain), validate exploitability, and report evidence-grounded findings. Use when reviewing a diff or codebase for security issues, or as the core red-team step of a code review.",
       "externals": [],
       "files": [],
@@ -834,12 +883,12 @@
         "threat-modeling"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Not for threat scoping (use `threat-modeling`) or unhandled-path robustness (use `edge-case-analysis`).",
+      "routeWhen": "Use when reviewing a diff or codebase for security issues, or as the core red-team step of a code review.",
       "summary": "Adversarial security review of source code — hunt for vulnerabilities (access control, injection, crypto, auth, supply chain), validate exploitability, and rep…"
     },
     "self-documenting-code": {
-      "category": null,
+      "category": "review",
       "description": "The user's code-style contract — code should be self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps. Comments are a smell; intent lives in the project spec and acceptance criteria, never in source comments. Use when writing, reviewing, or refactoring code, when deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording.",
       "externals": [
         {
@@ -858,13 +907,15 @@
         "software-development",
         "wiki"
       ],
-      "roles": [],
+      "roles": [
+        "implementer"
+      ],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when writing, reviewing, or refactoring code, when deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording.",
       "summary": "The user's code-style contract — code should be self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps."
     },
     "shape-up": {
-      "category": null,
+      "category": "delivery",
       "description": "The user's Shape Up working method — shaping work before betting on it, appetites, hills, and slice sizing. Used for project management and client work that requires estimates and advanced shaping ahead of time. Use when shaping a piece of work, setting an appetite, betting on a cycle, tracking a hill, or sizing a slice.",
       "externals": [],
       "files": [],
@@ -880,11 +931,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when shaping a piece of work, setting an appetite, betting on a cycle, tracking a hill, or sizing a slice.",
       "summary": "The user's Shape Up working method — shaping work before betting on it, appetites, hills, and slice sizing."
     },
     "skeleton-ecosystem": {
-      "category": null,
+      "category": "delivery",
       "description": "The user's seed→sapling skeleton ecosystem — which skeleton to start from, the three sync mechanisms (remote + rebase, submodule, subtree), the GitHub submodule caveat, devshell wiring, shared config and thin-wrapper workflows, and per-project-type scaffolding. Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows or shared config.",
       "externals": [
         {
@@ -925,11 +976,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows or shared config.",
       "summary": "The user's seed→sapling skeleton ecosystem — which skeleton to start from, the three sync mechanisms (remote + rebase, submodule, subtree), the GitHub submodul…"
     },
     "skill-authoring": {
-      "category": null,
+      "category": "tooling",
       "description": "Author, structure, and validate SKILL.md files per the Agent Skills specification (agentskills.io). Use when creating a new skill, editing or extending an existing skill, or when the user asks to define, package, or formalize a workflow as a reusable agent skill.",
       "externals": [],
       "files": [
@@ -980,12 +1031,12 @@
         "software-development"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `skill-design-principles` first when deciding whether a skill is needed or what belongs in it.",
+      "routeWhen": "Use when creating a new SKILL.md, editing or extending an existing skill, or formalizing a workflow as a reusable agent skill per the Agent Skills specification.",
       "summary": "Author, structure, and validate SKILL.md files per the Agent Skills specification (agentskills.io)."
     },
     "skill-design-principles": {
-      "category": null,
+      "category": "tooling",
       "description": "Decision framework for when to create a skill and what belongs in it. Triggers on: \"should I make a skill for this\", \"what goes in a skill\", \"how do I decide what to put in a skill\", \"is this a skill or a role\", \"designing a skill\", \"skill boundary\", \"skill scope\". Use before creating any new SKILL.md to determine scope and content. Pairs with skill-authoring.",
       "externals": [],
       "files": [
@@ -1002,12 +1053,12 @@
         "skill-authoring"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `skill-authoring` for the mechanics of writing a valid SKILL.md once the scope and content are settled.",
+      "routeWhen": "Use before authoring a skill when deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role.",
       "summary": "Decision framework for when to create a skill and what belongs in it."
     },
     "slice-delivery": {
-      "category": null,
+      "category": "delivery",
       "description": "Run one slice end to end — shape it into a task with criterion IDs and architectural constraints, run the spec-delta check, characterization tests, acceptance tests written first and shown to fail for the right reason, lock the tests, implement, run an independent spec review, then reconcile the spec and decisions. Use when starting or delivering a slice, or when the user says \"let's build the next slice\".",
       "externals": [
         {
@@ -1052,12 +1103,12 @@
         "spec-change"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Do not use to write or revise a spec — use `feature-spec` or `spec-change` for that.",
+      "routeWhen": "Use when starting or delivering a slice, or when the user asks to build the next slice.",
       "summary": "Run one slice end to end — shape it into a task with criterion IDs and architectural constraints, run the spec-delta check, characterization tests, acceptance…"
     },
     "software-architecture": {
-      "category": null,
+      "category": "architecture",
       "description": "Architecture contract for any OO codebase — where logic lives (actions, domain services, pure calculations), hexagonal ports & adapters, canonical DTOs (the core owns its shapes; one per concept), provider neutrality, the lean guardrail, the modular monolith, ARCHITECTURE.md. Use when designing, building or reviewing architecture, placing logic, or defining a port, DTO or use case. Load `software-architecture-structure` for folders, naming and role suffixes.",
       "externals": [
         {
@@ -1100,13 +1151,18 @@
         "systems-thinking",
         "typescript"
       ],
-      "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "roles": [
+        "advisor",
+        "implementer",
+        "options-analyst",
+        "premise-auditor"
+      ],
+      "routeNotWhen": "Use `software-architecture-structure` for naming or placing a file or class, choosing a folder, or picking a role suffix.",
+      "routeWhen": "Use when designing, building, extending, or reviewing the architecture of any OO codebase, or when deciding where logic lives, how a use case is shaped, or how a port or DTO is defined.",
       "summary": "Architecture contract for any OO codebase — where logic lives (actions, domain services, pure calculations), hexagonal ports & adapters, canonical DTOs (the co…"
     },
     "software-architecture-structure": {
-      "category": null,
+      "category": "architecture",
       "description": "Name, place or restructure files and classes — two-axis naming, the single closed role-suffix table and role menu, the one folder tree (module-first, fractal), co-location, Support, boundary rules, carve-outs, and the always-on card. Use when creating or moving a class or file, choosing a folder, picking a role suffix, adding a module, or reviewing structure. The contract itself is `software-architecture`.",
       "externals": [
         {
@@ -1138,12 +1194,12 @@
         "typescript"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `software-architecture` for the principles, where logic lives, the hexagonal rules, DTOs, or provider neutrality.",
+      "routeWhen": "Use when creating, moving, naming, or placing a class or file, choosing a folder, picking a role suffix, adding a module, or reviewing a repository's structure.",
       "summary": "Name, place or restructure files and classes — two-axis naming, the single closed role-suffix table and role menu, the one folder tree (module-first, fractal),…"
     },
     "software-development": {
-      "category": null,
+      "category": "delivery",
       "description": "The user's software development discipline — the skill gate (governing skills loaded and followed before any meaningful work, worker or otherwise), the change chain (task → use cases → separate changes → individual atomic commits), TDD, verify-as-you-go, cleanup-as-you-go (no dangling code), and a definition of done. Applies to every software development context (any language, framework, or repo). Use when building, extending, refactoring, or reviewing code, or when deciding how to structure a change.",
       "externals": [],
       "files": [],
@@ -1159,13 +1215,15 @@
         "software-architecture",
         "software-testing"
       ],
-      "roles": [],
+      "roles": [
+        "implementer"
+      ],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when building, extending, refactoring, or reviewing code in any language or repository, or when deciding how to structure a change.",
       "summary": "The user's software development discipline — the skill gate (governing skills loaded and followed before any meaningful work, worker or otherwise), the change…"
     },
     "software-testing": {
-      "category": null,
+      "category": "delivery",
       "description": "The user's testing contract — BDD (or at least TDD), Given/When/Then scenarios, and what must be tested and when. Language-agnostic with Pest as the reference implementation. Use when writing, extending, or reviewing tests, or when deciding what to test and how to structure a test suite.",
       "externals": [],
       "files": [],
@@ -1178,13 +1236,16 @@
         "software-architecture",
         "software-development"
       ],
-      "roles": [],
+      "roles": [
+        "acceptance-test-author",
+        "characterization-test-author"
+      ],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when writing, extending, or reviewing tests, or when deciding what to test and how to structure a test suite.",
       "summary": "The user's testing contract — BDD (or at least TDD), Given/When/Then scenarios, and what must be tested and when."
     },
     "spec-change": {
-      "category": null,
+      "category": "delivery",
       "description": "Handle changed intent or newly discovered ambiguity mid-build — produce an approved spec delta (affected rules and scenarios, invalidated tests, affected merged slices, proposed re-slicing) before touching any code. Use when the user changes their mind, when a requirement shifts, or when implementation surfaces an ambiguity the spec does not cover.",
       "externals": [],
       "files": [],
@@ -1197,13 +1258,15 @@
         "feature-spec",
         "slice-delivery"
       ],
-      "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "roles": [
+        "spec-reconciler"
+      ],
+      "routeNotWhen": "Do not use to author a new spec from scratch — that is `feature-spec`.",
+      "routeWhen": "Use when the user changes their mind mid-build, when a requirement shifts, or when implementation surfaces an ambiguity the spec does not cover.",
       "summary": "Handle changed intent or newly discovered ambiguity mid-build — produce an approved spec delta (affected rules and scenarios, invalidated tests, affected merge…"
     },
     "systemd-scheduler": {
-      "category": null,
+      "category": "tooling",
       "description": "Scheduled opencode jobs are declarative home-manager config — the home.opencode.scheduledJobs option renders systemd user service+timer pairs via mkScheduledJob. Use when asked to schedule a recurring agent job, add/remove/change a scheduled job, or inspect why a scheduled run behaved a certain way.",
       "externals": [
         {
@@ -1219,11 +1282,11 @@
       "references": [],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when scheduling a recurring agent job, adding, removing, or changing a scheduled job, or inspecting why a scheduled run behaved a certain way.",
       "summary": "Scheduled opencode jobs are declarative home-manager config — the home.opencode.scheduledJobs option renders systemd user service+timer pairs via mkScheduledJo…"
     },
     "systems-thinking": {
-      "category": null,
+      "category": "analysis",
       "description": "The lens for seeing a system as a whole before judging or changing any part of it — state the system in one breath, separate essential from accidental complexity, right-size the design to the real system, and derive the picture of what good looks like from the spec alone. Use when modelling a system, when asked whether a design is right, when a design feels too complex, or as the first move of a re-architecture (with premise-demolition).",
       "externals": [],
       "files": [],
@@ -1236,13 +1299,16 @@
         "premise-demolition",
         "software-architecture"
       ],
-      "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "roles": [
+        "advisor",
+        "premise-auditor"
+      ],
+      "routeNotWhen": "Use `premise-demolition` for the demolition-first refactor itself, once the picture of what good looks like is formed.",
+      "routeWhen": "Use when modelling a system or feature for the first time, when asked whether a design is right, or as the first move of a re-architecture.",
       "summary": "The lens for seeing a system as a whole before judging or changing any part of it — state the system in one breath, separate essential from accidental complexi…"
     },
     "teach-mode": {
-      "category": null,
+      "category": "tooling",
       "description": "The user's teaching contract — how to explain a subject when the user wants to learn. Triggers on \"teach me X\", \"teach mode\", \"I want to learn X\", \"walk me through X\", \"give me a lesson on X\", \"explain X to me\" when the intent is learning. Explains in plain, non-esoteric language, one concept at a time, with concrete examples tied to the user's world. Light assessment and verification — never a grilling. Wiki-first grounding, summary note to the vault Inbox.",
       "externals": [
         {
@@ -1261,11 +1327,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when the user wants to learn a subject — 'teach me X', 'walk me through X', 'give me a lesson on X', or 'explain X to me' with a learning intent.",
       "summary": "The user's teaching contract — how to explain a subject when the user wants to learn."
     },
     "threat-modeling": {
-      "category": null,
+      "category": "review",
       "description": "Model a system, feature, or change to enumerate security threats before or during a review. Use when reviewing architecture or design for security, scoping a security review, or as the first step of a red-team/adversarial review. Produces a STRIDE threat model that scopes what to attack.",
       "externals": [],
       "files": [],
@@ -1277,12 +1343,12 @@
         "security-review"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Not for hunting vulnerabilities in code (use `security-review`).",
+      "routeWhen": "Use when reviewing architecture or design for security, scoping a security review, or as the first step of a red-team or adversarial review.",
       "summary": "Model a system, feature, or change to enumerate security threats before or during a review."
     },
     "typescript": {
-      "category": null,
+      "category": "language",
       "description": "The user's TypeScript and Node conventions — the TypeScript expression of the software-architecture contract. Covers interface naming (a role suffix; never an `I` prefix or `Interface` suffix), ESM/NodeNext import rules (explicit `.js` specifiers onto `.ts` sources, `import type`), no barrel files (no `index.ts` re-exports), constructor injection with a single composition root and no DI container, and the strict tsconfig baseline. Use when writing, extending, or reviewing TypeScript or Node code, when naming an interface or type, when deciding a module's export shape (barrel vs explicit path), when wiring dependencies, or when configuring tsconfig.",
       "externals": [],
       "files": [],
@@ -1297,11 +1363,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when writing, extending, or reviewing TypeScript or Node code, naming an interface or type, deciding a module's export shape, wiring dependencies, or configuring tsconfig.",
       "summary": "The user's TypeScript and Node conventions — the TypeScript expression of the software-architecture contract."
     },
     "typst-document": {
-      "category": null,
+      "category": "tooling",
       "description": "Generate a formatted PDF (offerte, contract, or document) from a markdown file using the 99linesofcode typst template in ~/Development/99linesofcode-typst-template. Use when the user wants to convert a markdown document to PDF, create an offerte, or render a document with the typst template.",
       "externals": [
         {
@@ -1324,11 +1390,11 @@
       ],
       "roles": [],
       "routeNotWhen": null,
-      "routeWhen": null,
+      "routeWhen": "Use when converting a markdown document to a PDF, creating an offerte or contract, or rendering a document with the 99linesofcode typst template.",
       "summary": "Generate a formatted PDF (offerte, contract, or document) from a markdown file using the 99linesofcode typst template in ~/Development/99linesofcode-typst-temp…"
     },
     "vault-notes": {
-      "category": null,
+      "category": "vault",
       "description": "Create and maintain notes in the user's Obsidian vault following the categories-only + affiliation model (Steph Ango's system married to PARA). Categories = kinds (Books, Recipes, Poems, Bookmarks, Notes, Contacts, Organizations, Projects, Meetings, Documents, Quotes) driving bases; affiliation groups notes by organization/person; entity notes and project homes are the MOCs. Use when the user asks to create a note, person, organization, project, meeting, or to reorganize/clean the vault.",
       "externals": [
         {
@@ -1345,12 +1411,12 @@
         "wiki"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `wiki` for ingesting a source from the Inbox, querying the knowledge layer, or linting wiki health.",
+      "routeWhen": "Use when creating or maintaining a note, person, organization, project, or meeting in the Obsidian vault, or when reorganizing or cleaning the vault.",
       "summary": "Create and maintain notes in the user's Obsidian vault following the categories-only + affiliation model (Steph Ango's system married to PARA)."
     },
     "wiki": {
-      "category": null,
+      "category": "vault",
       "description": "The LLM-wiki maintenance procedure (Karpathy). Ingest sources from the vault Inbox, write and cross-link wiki pages, maintain index.md and log.md, answer with citations, and lint for health. Loaded on demand by the orchestrator.",
       "externals": [
         {
@@ -1373,8 +1439,8 @@
         "vault-notes"
       ],
       "roles": [],
-      "routeNotWhen": null,
-      "routeWhen": null,
+      "routeNotWhen": "Use `vault-notes` for creating or maintaining a PARA note, person, organization, project, or meeting, and `memory` for reading or writing HOT.md, recording episodic events, updating semantic memory, or running reflection.",
+      "routeWhen": "Use when ingesting a source from the vault Inbox, querying the wiki, or linting wiki health.",
       "summary": "The LLM-wiki maintenance procedure (Karpathy)."
     }
   }

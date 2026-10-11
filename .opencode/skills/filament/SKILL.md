@@ -1,6 +1,10 @@
 ---
 name: filament
 description: The user's Filament admin UI mechanics — Resources, Forms, Tables, Plugins, and Pages, and the Filament-to-action seam. The concrete Filament expression of the software-architecture contract, layered on the laravel skill. Use when building, extending, or reviewing Filament resources, forms, tables, plugins, or pages in the user's Laravel modules or applications.
+metadata:
+  category: language
+  route-when: "Use when building, extending, or reviewing Filament resources, forms, tables, plugins, or pages in the user's Laravel modules or applications."
+  route-not-when: "Not for the underlying Laravel mechanics (use `laravel`) or the general architecture contract (use `software-architecture`)."
 ---
 
 # filament

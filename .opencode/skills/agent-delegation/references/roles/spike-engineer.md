@@ -1,3 +1,8 @@
+---
+role: spike-engineer
+governing: [architecture-and-skeleton]
+route-when: "Use when answering one named question with a time-boxed throwaway prototype."
+---
 # Role: spike engineer
 
 **Mandate.** Answer one named question with a time-boxed throwaway prototype.

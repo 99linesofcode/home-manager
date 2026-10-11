@@ -1,6 +1,10 @@
 ---
 name: vault-notes
 description: Create and maintain notes in the user's Obsidian vault following the categories-only + affiliation model (Steph Ango's system married to PARA). Categories = kinds (Books, Recipes, Poems, Bookmarks, Notes, Contacts, Organizations, Projects, Meetings, Documents, Quotes) driving bases; affiliation groups notes by organization/person; entity notes and project homes are the MOCs. Use when the user asks to create a note, person, organization, project, meeting, or to reorganize/clean the vault.
+metadata:
+  category: vault
+  route-when: "Use when creating or maintaining a note, person, organization, project, or meeting in the Obsidian vault, or when reorganizing or cleaning the vault."
+  route-not-when: "Use `wiki` for ingesting a source from the Inbox, querying the knowledge layer, or linting wiki health."
 ---
 
 # vault-notes

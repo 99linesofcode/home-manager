@@ -1,6 +1,9 @@
 ---
 name: systemd-scheduler
 description: Scheduled opencode jobs are declarative home-manager config — the home.opencode.scheduledJobs option renders systemd user service+timer pairs via mkScheduledJob. Use when asked to schedule a recurring agent job, add/remove/change a scheduled job, or inspect why a scheduled run behaved a certain way.
+metadata:
+  category: tooling
+  route-when: "Use when scheduling a recurring agent job, adding, removing, or changing a scheduled job, or inspecting why a scheduled run behaved a certain way."
 license: MIT
 compatibility: opencode
 ---

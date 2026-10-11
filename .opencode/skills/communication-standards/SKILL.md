@@ -1,6 +1,9 @@
 ---
 name: communication-standards
 description: The user's communication contract — how the orchestrator writes when talking to the user. Applies to ALL user-facing output: conversation, summaries, plans, reviews, teaching. Triggers on "less AI", "more human", "stop the slop", "AI slop", "filler", "writing style", "tone", "communication", "prose", "style guide".
+metadata:
+  category: tooling
+  route-when: "Use for all user-facing writing — conversation, summaries, plans, reviews, and teaching — or when the user asks for less AI slop, a different tone, or a style guide."
 license: Apache-2.0
 compatibility: OpenCode and any agent compatible with the agentskills.io v1 spec
 ---

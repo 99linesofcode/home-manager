@@ -1,3 +1,8 @@
+---
+role: spec-reconciler
+governing: [feature-spec, spec-change]
+route-when: "Use when updating specs and the decision log to match what was actually built."
+---
 # Role: spec reconciler
 
 **Mandate.** Update specs and the decision log to match what was actually built.

@@ -344,8 +344,35 @@ function isSizeExempt(rel) {
     return SIZE_EXEMPT.some((re) => re.test(rel));
 }
 
+// The catalog `metadata` map is metadata, not body, so it is excluded from the
+// size budget; `name`/`description` are still counted (the description has its
+// own cap). Returns the byte length of the frontmatter `metadata:` line plus
+// its indented continuation lines, including trailing newlines; 0 when absent.
+function metadataBytes(skill) {
+    const lines = skill.lines;
+    let end = null;
+    for (let i = 1; i < lines.length; i++) {
+        if (lines[i].trim() === '---') {
+            end = i;
+            break;
+        }
+    }
+    if (end === null) return 0;
+    for (let i = 1; i < end; i++) {
+        if (!/^metadata:/.test(lines[i])) continue;
+        let bytes = Buffer.byteLength(lines[i], 'utf8') + 1;
+        let j = i + 1;
+        while (j < end && /^\s/.test(lines[j])) {
+            bytes += Buffer.byteLength(lines[j], 'utf8') + 1;
+            j++;
+        }
+        return bytes;
+    }
+    return 0;
+}
+
 function reportBytes(skill) {
-    let total = skill.bytes;
+    let total = skill.bytes - metadataBytes(skill);
     for (const rel of requiredFiles(skill)) {
         if (rel.startsWith('scripts/')) continue; // run, not loaded into context
         const p = path.join(skill.dir, rel);
@@ -639,16 +666,17 @@ function computeClosures(skills, rep) {
 function checkSizes(skills, rep) {
     for (const [name, skill] of skills) {
         if (skill.parseError) continue;
-        const overDefault = skill.nlines > DEFAULT_MAX_LINES || skill.bytes > DEFAULT_MAX_BYTES;
-        if (skill.bytes > HARD_MAX_BYTES) {
-            rep.error(`${name}: SKILL.md is ${skill.bytes} B (> hard cap ${HARD_MAX_BYTES} B)`);
+        const budgetBytes = skill.bytes - metadataBytes(skill);
+        const overDefault = skill.nlines > DEFAULT_MAX_LINES || budgetBytes > DEFAULT_MAX_BYTES;
+        if (budgetBytes > HARD_MAX_BYTES) {
+            rep.error(`${name}: SKILL.md is ${budgetBytes} B (> hard cap ${HARD_MAX_BYTES} B)`);
             continue;
         }
         if (overDefault) {
             const entry = BUDGET_EXCEPTIONS[name];
             if (!entry) {
                 rep.error(
-                    `${name}: SKILL.md over the default budget (${skill.nlines} lines, ${skill.bytes} B) and not a recorded exception`,
+                    `${name}: SKILL.md over the default budget (${skill.nlines} lines, ${budgetBytes} B) and not a recorded exception`,
                 );
                 continue;
             }
@@ -657,10 +685,10 @@ function checkSizes(skills, rep) {
                 rep.error(`${name}: budget exception needs a numeric max_kb (<= 32) and a reason`);
                 continue;
             }
-            if (skill.bytes > maxKb * 1024) {
-                rep.error(`${name}: SKILL.md is ${skill.bytes} B (> max_kb ${maxKb} KB)`);
+            if (budgetBytes > maxKb * 1024) {
+                rep.error(`${name}: SKILL.md is ${budgetBytes} B (> max_kb ${maxKb} KB)`);
             } else {
-                rep.warn(`${name}: SKILL.md over default budget (${skill.nlines} lines, ${skill.bytes} B) — recorded exception (${maxKb} KB)`);
+                rep.warn(`${name}: SKILL.md over default budget (${skill.nlines} lines, ${budgetBytes} B) — recorded exception (${maxKb} KB)`);
             }
         }
         const total = reportBytes(skill);
@@ -679,7 +707,8 @@ function checkSizes(skills, rep) {
             continue;
         }
         if (skill.parseError) continue;
-        if (skill.nlines <= DEFAULT_MAX_LINES && skill.bytes <= DEFAULT_MAX_BYTES) {
+        const budgetBytes = skill.bytes - metadataBytes(skill);
+        if (skill.nlines <= DEFAULT_MAX_LINES && budgetBytes <= DEFAULT_MAX_BYTES) {
             rep.error(`BUDGET_EXCEPTIONS: '${name}' is within the default budget — remove the exception`);
         }
     }

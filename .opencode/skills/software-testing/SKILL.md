@@ -1,6 +1,9 @@
 ---
 name: software-testing
 description: The user's testing contract — BDD (or at least TDD), Given/When/Then scenarios, and what must be tested and when. Language-agnostic with Pest as the reference implementation. Use when writing, extending, or reviewing tests, or when deciding what to test and how to structure a test suite.
+metadata:
+  category: delivery
+  route-when: "Use when writing, extending, or reviewing tests, or when deciding what to test and how to structure a test suite."
 ---
 
 # software-testing

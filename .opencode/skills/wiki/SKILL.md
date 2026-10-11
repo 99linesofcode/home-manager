@@ -1,6 +1,10 @@
 ---
 name: wiki
 description: The LLM-wiki maintenance procedure (Karpathy). Ingest sources from the vault Inbox, write and cross-link wiki pages, maintain index.md and log.md, answer with citations, and lint for health. Loaded on demand by the orchestrator.
+metadata:
+  category: vault
+  route-when: "Use when ingesting a source from the vault Inbox, querying the wiki, or linting wiki health."
+  route-not-when: "Use `vault-notes` for creating or maintaining a PARA note, person, organization, project, or meeting, and `memory` for reading or writing HOT.md, recording episodic events, updating semantic memory, or running reflection."
 license: MIT
 ---
 

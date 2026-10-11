@@ -1,6 +1,10 @@
 ---
 name: new-project
 description: Set up a new software development project from scratch — a new git repository, a Laravel application or module, and the supporting packages. Use when the user wants to start a new project, scaffold a new repo, create a new Laravel app or module, or set up a fresh development environment. Orchestrates git-workflow (git mechanics) and laravel (Laravel specifics).
+metadata:
+  category: delivery
+  route-when: "Use when starting a new project from scratch, scaffolding a new repo, creating a new Laravel app or module, or setting up a fresh development environment."
+  route-not-when: "Do not use for the spec-driven foundation around the scaffold — that is `project-seed`."
 ---
 
 # new-project

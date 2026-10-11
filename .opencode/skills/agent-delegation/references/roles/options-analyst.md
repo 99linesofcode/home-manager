@@ -1,3 +1,8 @@
+---
+role: options-analyst
+governing: [architecture-and-skeleton, software-architecture]
+route-when: "Use when comparing architecture or technology options against the user's principles."
+---
 # Role: options analyst
 
 **Mandate.** Compare architecture or technology options against the user's

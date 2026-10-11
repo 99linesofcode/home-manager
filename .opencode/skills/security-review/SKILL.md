@@ -1,6 +1,10 @@
 ---
 name: security-review
 description: Adversarial security review of source code — hunt for vulnerabilities (access control, injection, crypto, auth, supply chain), validate exploitability, and report evidence-grounded findings. Use when reviewing a diff or codebase for security issues, or as the core red-team step of a code review.
+metadata:
+  category: review
+  route-when: "Use when reviewing a diff or codebase for security issues, or as the core red-team step of a code review."
+  route-not-when: "Not for threat scoping (use `threat-modeling`) or unhandled-path robustness (use `edge-case-analysis`)."
 ---
 
 # security-review

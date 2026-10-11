@@ -1,6 +1,10 @@
 ---
 name: threat-modeling
 description: Model a system, feature, or change to enumerate security threats before or during a review. Use when reviewing architecture or design for security, scoping a security review, or as the first step of a red-team/adversarial review. Produces a STRIDE threat model that scopes what to attack.
+metadata:
+  category: review
+  route-when: "Use when reviewing architecture or design for security, scoping a security review, or as the first step of a red-team or adversarial review."
+  route-not-when: "Not for hunting vulnerabilities in code (use `security-review`)."
 ---
 
 # threat-modeling

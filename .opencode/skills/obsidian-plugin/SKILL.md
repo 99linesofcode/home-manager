@@ -1,6 +1,9 @@
 ---
 name: obsidian-plugin
 description: Obsidian community-plugin development contract — manifest.json and versions.json upkeep, minAppVersion matching the newest Obsidian API used, the tag-driven release, and the community-plugin conventions. Use when building, extending, or releasing an Obsidian plugin, in any repository.
+metadata:
+  category: tooling
+  route-when: "Use when building, extending, or releasing an Obsidian community plugin in any repository."
 ---
 
 # Skill: obsidian-plugin
