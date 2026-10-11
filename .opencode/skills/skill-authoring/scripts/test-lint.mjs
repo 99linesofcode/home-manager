@@ -50,6 +50,19 @@ function run(root, ...extra) {
 function copySkills(root) {
     fs.mkdirSync(path.join(root, '.opencode'), { recursive: true });
     fs.cpSync(SKILLS, path.join(root, '.opencode', 'skills'), { recursive: true });
+    const agents = path.join(REPO, '.opencode', 'agents');
+    if (fs.existsSync(agents)) fs.cpSync(agents, path.join(root, '.opencode', 'agents'), { recursive: true });
+}
+
+function skillText(name, body, files, external) {
+    let s = FRONT.replace('{name}', name).replace('{desc}', 'D.');
+    if (files) {
+        s = s.replace('## Body', '## Files\n\n| File | Load | Read when |\n|---|---|---|\n' + files.map(([p, l, w]) => `| \`${p}\` | ${l} | ${w} |`).join('\n') + '\n\n## Body');
+    }
+    if (external) {
+        s = s.replace('## Body', '## External\n\n| Path | Load | Read when |\n|---|---|---|\n' + external.map(([p, l, w]) => `| \`${p}\` | ${l} | ${w} |`).join('\n') + '\n\n## Body');
+    }
+    return s.replace('Text.\n', body + '\n');
 }
 
 function write(root, rel, text) {
@@ -110,7 +123,7 @@ const CASES = [
         "needs a concrete 'Read when' trigger",
         (root) => {
             copySkills(root);
-            edit(root, 'rails/SKILL.md', 'when wiring ActiveRecord models (UUID keys, lean models)', 'for more detail');
+            edit(root, 'discovery-interview/SKILL.md', 'when the domain is complex — many events, rules, or actors', 'for more detail');
         },
     ],
     [
@@ -131,6 +144,59 @@ const CASES = [
             parent = parent.replace('- **Loads:** (none)', '- **Loads:** `demo-alpha`');
             write(root, 'demo/SKILL.md', parent);
             write(root, 'demo-alpha/SKILL.md', FRONT.replace('{name}', 'demo-alpha').replace('{desc}', 'Alpha part.'));
+        },
+    ],
+    [
+        'on-demand reference under 2 KB',
+        'inline it into SKILL.md',
+        (root) => {
+            copySkills(root);
+            write(root, 'demo/references/small.md', '# small\n\n' + 'x'.repeat(60));
+            write(root, 'demo/SKILL.md', skillText('demo', 'Body.', [['references/small.md', 'on-demand', 'when the small table is needed']]));
+        },
+    ],
+    [
+        'required reference over 8 KB',
+        'promote it to a skill',
+        (root) => {
+            copySkills(root);
+            write(root, 'demo/references/huge.md', '# huge\n\n' + ('A rule MUST hold.\n'.repeat(700)));
+            write(root, 'demo/SKILL.md', skillText('demo', 'Body.', [['references/huge.md', 'required', 'always']]));
+        },
+    ],
+    [
+        'malformed External row',
+        'is malformed',
+        (root) => {
+            copySkills(root);
+            let s = FRONT.replace('{name}', 'demo').replace('{desc}', 'D.');
+            s = s.replace('## Body', '## External\n\n| Path | Load | Read when |\n|---|---|---|\n| `~/Development/thing` | on-demand |\n\n## Body');
+            write(root, 'demo/SKILL.md', s);
+        },
+    ],
+    [
+        'total load over the cap',
+        'total load (SKILL.md + required files)',
+        (root) => {
+            copySkills(root);
+            write(root, 'demo/references/ref.md', '# ref\n\n' + 'x'.repeat(3000));
+            write(root, 'demo/SKILL.md', skillText('demo', ('x'.repeat(1800) + '\n').repeat(10), [['references/ref.md', 'required', 'always']]));
+        },
+    ],
+    [
+        'stale budget exception',
+        'remove the exception',
+        (root) => {
+            copySkills(root);
+            write(root, 'skill-authoring/SKILL.md', skillText('skill-authoring', 'Body.', null));
+        },
+    ],
+    [
+        'card out of sync',
+        'does not contain the card',
+        (root) => {
+            copySkills(root);
+            write(root, 'demo/SKILL.md', skillText('demo', '<!-- card:start -->\nCARD BODY\n<!-- card:end -->\n', null));
         },
     ],
 ];

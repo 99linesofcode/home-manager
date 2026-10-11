@@ -24,6 +24,13 @@ mechanics.
   `software-testing` (the testing contract).
 - Wiki concepts: `action-objects.md`, `hexagonal-architecture.md`.
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Development/laravel-module-news` | on-demand | when the Filament expression is unclear (mirror it) |
+| `~/Development/laravel-module-user` | on-demand | when the Filament expression is unclear (mirror it) |
+
 ## When to use
 
 - Building or extending a Filament resource, form, table, plugin, or page.

@@ -20,6 +20,12 @@ grilling.
 - **References:** `communication-standards` (how lessons are written),
   `wiki` (wiki-first grounding).
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Documents/Obsidian/AI/wiki/` | required | always — ground the lesson in existing wiki pages before teaching |
+
 ## When to use
 
 - "teach me X", "teach mode", "I want to learn X"

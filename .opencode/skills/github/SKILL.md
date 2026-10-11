@@ -63,10 +63,10 @@ and with `slice-delivery` for how a slice becomes an issue and a PR.
 
 ## Milestones (the roadmap)
 
-A roadmap takes shape as a **GitHub milestone**; a slice is an issue in it. OPM
-does not sync milestones yet, so creating and updating milestones is a **manual
-step** until it does. The vault scratchpad and the slice tasks remain the source
-of truth; the milestone mirrors them.
+A roadmap takes shape as a **GitHub milestone**; a slice is an issue in it. The
+vault's project-management plugin does not sync milestones yet, so creating and
+updating milestones is a **manual step** until it does. The vault scratchpad and
+the slice tasks remain the source of truth; the milestone mirrors them.
 
 ## Workflow
 

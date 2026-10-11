@@ -25,7 +25,8 @@ and content.
 - **References:** `software-development` (the routing matrix this convention
   feeds), `git-workflow` (repo-scoped skills commit and travel like source),
   `software-architecture` (convention over configuration), `new-project`
-  (repo-scoped skill scaffolding), `laravel`, `filament` (worked examples),
+  (repo-scoped skill scaffolding), `agent-delegation` (worker delivery),
+  `laravel`, `filament` (worked examples),
   `self-documenting-code` (the whitespace/formatting trigger example).
 
 ## Files
@@ -35,8 +36,10 @@ Before acting, read (or run) every `required` file below.
 | File | Load | Read when |
 |---|---|---|
 | `scripts/lint-skills.mjs` | required | run on every change to the skill library, before committing |
+| `scripts/audit-skills.mjs` | on-demand | before and after any skill refactor (pointers, generic smells, rule inventory, rule diff) |
 | `scripts/resolve-skills.mjs` | on-demand | when composing a worker package (flattens the `Loads` set to absolute paths) |
 | `scripts/test-lint.mjs` | on-demand | when changing the linter itself |
+| `scripts/test-audit.mjs` | on-demand | when changing the audit script |
 
 ## Directory layout
 
@@ -161,18 +164,11 @@ examples), and data files (lookup tables, schemas).
 
 ## Progressive disclosure
 
-Skills are loaded in three tiers. Author to take advantage of this:
-
-1. **Metadata** (~100 tokens): `name` + `description`, loaded at session start for all skills.
-2. **Instructions** (<5000 tokens recommended): the full `SKILL.md` body, loaded only when the skill is activated.
-3. **Resources**: files in `scripts/`, `references/`, `assets/` — but only when
-   the agent actually reads them. They are **not** auto-loaded. A `required`
-   file is read in practice (the skill instructs it), so it belongs with tier 2
-   for budgeting.
-
-So the `description` carries the whole discovery burden, and the body should be
-self-contained enough to act on once loaded, with *lookup* depth pushed into
-`references/`.
+Three tiers: **metadata** (`name` + `description`, read at session start),
+**instructions** (the `SKILL.md` body, read on activation), and
+**resources** (`references/`, `assets/`, `scripts/`, read only when chosen).
+The `description` carries the discovery burden; the body must be
+self-contained; only *lookup* depth goes to `references/`.
 
 ## Size and reference policy (the owning document)
 
@@ -255,49 +251,81 @@ Before acting, read (or run) every `required` file below.
   be a concrete trigger, not "for more detail".
 
 Orphan files (present but undeclared) and declared-but-missing files are
-defects. `scripts/lint-skills.mjs` enforces all of this.
+defects. `scripts/lint-skills.mjs` enforces all of this and the size policy: an
+on-demand knowledge reference **under 2 KB** (inline it) or a `required` file
+**over 8 KB** (promote it to a skill) is an error; a **stale
+`BUDGET_EXCEPTIONS`** entry is an error; **total load over the cap is an
+error** (default 20 KB; a recorded exception up to 32 KB). `## External` rows
+need `Path | Load | Read when` and a concrete trigger; the always-on card must
+match its copies (`orchestrator.md`, the delegation-brief template).
+
+## Library scope and load policy (the owning document)
+
+Five rules; `scripts/audit-skills.mjs` detects each. Every other skill defers
+to them.
+
+**Generic, not project-specific.** These skills describe the user's conventions
+across all their projects. The test: *would this still be true and useful in a
+repo unrelated to the project it names?* If not, it belongs in that project's
+own `.opencode/skills/` (see *Placement and discovery*). Stay: the reusable repo
+families — the skeletons (`git-skeleton`, `laravel-skeleton`,
+`laravel-package-skeleton`, `node-skeleton`, `rails-skeleton`,
+`rails-package-skeleton`), the module repos (`laravel-module-*`,
+`rails-module-*`), the `Lines\` namespace, the workbench. Go: incident
+anecdotes, dated worked examples, one project's domain names (a class named
+after one provider's API shape), a client's vocabulary — keep the rule,
+neutralise the illustration. Examples are neutral (`Post`, `Invoice`); a
+project that needs an extra role adds it in its own skill.
+
+**Inline by default.** A `references/` file is allowed only when all four hold:
+it is lookup, not normative; it is **≥ ~2 KB** (a smaller file is inlined — the
+pointer costs more than the content); it has a precise trigger; and it is not
+the sole home of a rule the body defers to. Normative content that must stay in
+a file is `required`; a `required` file **over 8 KB** is a skill in disguise —
+promote it to a skill loaded via `Loads`. Exempt from the 2 KB floor:
+`references/roles/*.md` (worker briefs, passed by path) and `assets/`
+(templates).
+
+**Deferred rules.** If the body defers a rule to another skill ("see `x` for the
+contract", "`x` owns this"), that skill belongs in **`Loads`** — or inline the
+rule. `References` is optional reading only; a prose deferral to a skill not in
+`Loads` is a defect.
+
+**External pointers.** A rule that depends on something outside the skill (a
+repo path, a wiki page, a reference app) is declared in an `## External` table
+after `## Files` — `| Path | Load | Read when |`, e.g. a repo path under
+`~/Development` (on-demand, when the skill's expression is unclear). `required`
+means the orchestrator hands the worker that path (or an excerpt). Wiki pages
+hold rationale only, never a rule's sole home. Point at repos; never copy
+their content.
+
+**Worker delivery.** Workers cannot load skills; everything required — the
+`Loads` closure, every `required` file, every `required` External pointer, and
+rules whose source is outside the worker's reach — ships in the package.
+`scripts/resolve-skills.mjs` emits that set; see `agent-delegation`.
 
 ## Tools (`scripts/`)
 
-The mechanical checks are JavaScript, bundled in this skill's `scripts/`
-directory. Run them from the repository root with `nix run` — no `node` on PATH
-is required.
+The mechanical checks are JavaScript in this skill's `scripts/`; run them from
+the repository root with `nix run` (no `node` on PATH needed). They find the
+library by walking up for `.opencode/skills`, so they work from any repo root.
 
-**Run the linter on every skill change.** `scripts/lint-skills.mjs` is a
-`required` step of this skill: run it before committing any change under
-`.opencode/skills/`.
+**Run the linter on every skill change** — `scripts/lint-skills.mjs` is a
+`required` step: run it before committing anything under `.opencode/skills/`.
 
-- **Lint the library** — validates frontmatter, the `Loads`/`References` graph
-  (targets exist, no overlap, no cycles, closure ≤ 4), every `## Files` table
-  (declared, classified, concrete triggers), the size budget, and the routing
-  matrix. Exit 1 on any error. Run it before committing any skill change:
+| Script | What it does |
+|---|---|
+| `lint-skills.mjs` | the gate: frontmatter, `Loads`/`References` graph, `## Files`/`## External` tables, size budget, card sync, routing matrix. Exit 1 on error. `--base <ref>`, `--stats`, `--errors-only`, `--root <repo>`. |
+| `resolve-skills.mjs <skill\|row>` | the four lists a worker package needs: governing skills, required files, required External pointers, on-demand with triggers. |
+| `audit-skills.mjs` | the diagnostic: `--pointers`, `--generic`, `--rules <dir>`, `--diff-rules <old> <new>`. Run **before and after any refactor**. |
+| `test-lint.mjs` / `test-audit.mjs` | self-tests; run after editing the corresponding script. |
 
-  ```bash
-  nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/lint-skills.mjs
-  ```
-
-  `--base <git-ref>` adds the anti-extraction tripwire (a `SKILL.md` that shrank
-  >20% without a `## Files` change), `--stats` prints the metrics, `--errors-only`
-  silences warnings, `--root <repo>` points it at another library.
-
-- **Resolve a skill or matrix row** — flattens the `Loads` closure in order and
-  prints absolute paths (each skill's `SKILL.md`, then its `required` files),
-  plus the `on-demand` files with their triggers. Paste the required set into a
-  worker package (a worker cannot load skills). Run it when dispatching:
-
-  ```bash
-  nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/resolve-skills.mjs slice-delivery
-  ```
-
-- **Self-test the linter** — proves it fails closed on each error type. Run it
-  after editing `lint-skills.mjs`:
-
-  ```bash
-  nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/test-lint.mjs
-  ```
-
-The scripts find the skill library by walking up from their own location for
-`.opencode/skills`, so they work from any repository root.
+```bash
+nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/lint-skills.mjs
+nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/resolve-skills.mjs slice-delivery
+nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/audit-skills.mjs --pointers
+nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/test-lint.mjs
+```
 
 ## Placement and discovery
 
@@ -568,9 +596,8 @@ are context, not weights. Recent research (see
 - **Repetition accumulates evidence, but respect the ceiling.** Restating a
   core rule in different forms helps; past the sigmoid's plateau, more
   repetition adds nothing.
-- **Lean + progressive disclosure is validated.** Context overload degrades
-  performance past ~50% fullness. Keep the body tight; push depth into
-  `references/`.
+- **Lean + progressive disclosure is validated:** context overload degrades
+  performance past ~50% fullness.
 
 ## When a concept needs spelling out
 
@@ -603,7 +630,13 @@ three triggers.
 - [ ] Body within budget (≤500 lines and ≈20 KB unless a recorded exception);
       normative content stays in `SKILL.md`.
 - [ ] `## Related` directly after the intro; `## Files` directly after
-      `## Related`; every extra file declared and classified.
+      `## Related`; every extra file declared and classified; `## External`
+      after `## Files` for any outside path the rules depend on.
+- [ ] Generic, not project-specific: no incident narrative, no dated worked
+      example, no real project's domain names; examples neutral.
+- [ ] `references/` holds lookup only, ≥2 KB (role briefs and `assets/` exempt);
+      no normative rule lives behind a pointer; every deferred skill is in
+      `Loads`.
 - [ ] Body includes step-by-step instructions, input/output examples, and common edge cases.
 - [ ] Language-agnostic skill: examples written in Ruby (see Body content).
 - [ ] `scripts/` self-contained with helpful errors; `references/` holds lookup content only.

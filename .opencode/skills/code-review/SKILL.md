@@ -19,7 +19,8 @@ be in place.
 - **References:** `software-development` (atomicity, cleanup, done),
   `self-documenting-code` (the style contract), `software-testing` (the test
   contract), `software-architecture` (the layering), `git-workflow` (commit
-  hygiene), `project-seed` (the ARCHITECTURE.md contract).
+  hygiene), `project-seed` (the ARCHITECTURE.md contract), `premise-demolition`
+  (design-scoped scrutiny beyond the diff).
 
 ## When to use
 

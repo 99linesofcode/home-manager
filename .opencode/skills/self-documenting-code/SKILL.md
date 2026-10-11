@@ -19,6 +19,12 @@ source.
 - Wiki concept: `software-architecture-principles.md` (the "Self-documenting
   code" section this skill generalizes).
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Documents/Obsidian/AI/wiki/concepts/software-architecture-principles.md` | on-demand | for the rationale behind the lean/self-documenting rules |
+
 ## When to use
 
 - Writing, reviewing, or refactoring code.

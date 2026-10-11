@@ -22,17 +22,20 @@ mechanics live in the `filament` skill.
 
 ## Related
 
-- **Loads:** (none — loaded on demand)
-- **References:** `software-architecture` (the single source of truth for the
-  architecture), `filament` (the Filament UI mechanics), `software-testing`
-  (the testing contract).
+- **Loads:** `software-architecture` (the architecture contract this skill
+  expresses), `software-testing` (the testing contract).
+- **References:** `filament` (the Filament UI mechanics), `new-project` (the
+  scaffold), `rails` (the Ruby sibling).
 
-## Files
+## External
 
-| File | Load | Read when |
+| Path | Load | Read when |
 |---|---|---|
-| `references/models-and-migrations.md` | on-demand | when wiring models, UUID keys, or migrations |
-| `references/workbench.md` | on-demand | when setting up the Testbench workbench host app |
+| `~/Development/laravel-skeleton` | on-demand | when the app skeleton layout is unclear |
+| `~/Development/laravel-package-skeleton` | on-demand | when the module skeleton layout is unclear |
+| `~/Development/laravel-module-support` | on-demand | when the shared kernel's base classes are unclear |
+| `~/Development/laravel-module-news` | on-demand | when the Laravel expression is unclear (mirror it) |
+| `~/Development/laravel-module-user` | on-demand | when the Laravel expression is unclear (mirror it) |
 
 ## When to use
 
@@ -288,11 +291,35 @@ registers its `*ServiceProvider` via `extra.laravel.providers`.
 
 ## Models, migrations & workbench
 
-Models use **UUID primary keys** (`HasUuids` + `uuid('id')->primary()` +
-`foreignUuid`), which drives the DTO `id` type (`?string`). The workbench is
-the Testbench host that serves the module (panel registration and assets are
-Filament concerns — see the `filament` skill). Full detail:
-`references/models-and-migrations.md` and `references/workbench.md`.
+Models use **UUID primary keys** (not auto-increment ints), matching the other
+modules. This drives the DTO `id` type (`?string`, not `?int`):
+
+```php
+// Model
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+class Todo extends Model
+{
+    use HasFactory, HasUuids;
+}
+
+// Migration
+Schema::create('todos', function (Blueprint $table) {
+    $table->uuid('id')->primary();
+    $table->foreignUuid('assignee_id')->nullable()->constrained('users')->nullOnDelete();
+    // ...
+});
+```
+
+The **workbench** is the Testbench host that runs the module (panel
+registration and assets are Filament concerns — see the `filament` skill):
+
+- The panel (`workbench/app/Providers/AdminPanelProvider.php`) registers the
+  module's plugin: `->plugin(TodoPlugin::make())`.
+- The workbench `User` model needs its own factory
+  (`workbench/database/factories/UserFactory.php`) for `User::factory()` to
+  work in seeders/tests.
+- Before serving the panel, publish Filament's assets:
+  `php vendor/bin/testbench filament:assets` (see `new-project`).
 
 ### Model mechanics (lean models)
 

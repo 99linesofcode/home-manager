@@ -41,8 +41,10 @@ leakage. Do not try to be more than this.
    contract requirements for this package. Read exactly those files before
    your first edit and follow them. Do not browse for other skills; if a
    governed concern lacks a provided contract, report it as a blocker. Your
-   report must confirm each provided skill was read and cite one line of
-   conformance. A coding report without this confirmation is an incomplete
+   report must list every path you read, confirm each `required` pointer (file
+   or External path) with what it told you, and cite one line of conformance
+   per governing skill. A pointer you could not open is a blocker, not a
+   silent skip. A coding report without this confirmation is an incomplete
    delivery.
 5. **Concise, spec-faithful code.** Follow the spec exactly, not your own
    preferences. Do not redesign.

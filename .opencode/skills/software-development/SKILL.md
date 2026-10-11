@@ -33,9 +33,10 @@ they are contracts, not suggestions.**
 
   | Task | Governing skills |
   |---|---|
-  | Create a repository / scaffold a project | `new-project` (+ `git-workflow`, `software-architecture`) |
+  | Create a repository / scaffold a project | `new-project` (+ `git-workflow`, `skeleton-ecosystem`) |
   | Any git or GitHub operation (branch, commit, PR, release) | `git-workflow` |
-  | Write, extend, or review code (any language) | `software-architecture` + `software-development` |
+  | Write, extend, or review code (any language) | `software-architecture` + `software-architecture-structure` + `software-development` |
+  | Name, place or restructure files and classes | `software-architecture-structure` |
   | Write or review tests | `software-testing` |
   | Code style: naming, comments, whitespace, formatting rhythm | `self-documenting-code` |
   | Laravel specifics (actions, DTOs, modules) | `laravel` |
@@ -46,6 +47,8 @@ they are contracts, not suggestions.**
   | Docker / Docker Compose dev environment | `docker` |
   | Kubernetes / Helm / Flux / cluster deploy | `kubernetes` |
   | Review a change end-to-end | `code-review` (+ that change's governing skills — resolved from context) |
+  | Scrutinise or re-architect an existing system (demolish the premise, "refactor", "reflect on this") | `premise-demolition` (+ `systems-thinking`) |
+  | See a system as a whole / form the picture of what good looks like | `systems-thinking` |
   | Security review / red-team | `code-review` (+ `security-review`, `threat-modeling`, `edge-case-analysis`) |
   | Start a new project / seed the foundation | `project-seed` |
   | Discover what we're building (vague brief, raw material) | `discovery-interview` |
@@ -97,9 +100,9 @@ they are contracts, not suggestions.**
 - **Worker or otherwise:** a worker package must name its governing skills
   and instruct the worker to load and follow them. A package — or a work
   session — composed from memory for a skill-governed operation is a
-  defect: paraphrases drop steps (2026-09-18: a scaffold dispatched without
-  `new-project` shipped the wrong package manager and no devshell; feature
-  commits pushed straight to `main` with `git-workflow` never loaded).
+  defect: paraphrases drop steps — a scaffold dispatched without `new-project`
+  ships the wrong package manager and no devshell; feature commits pushed
+  straight to `main` with `git-workflow` never loaded.
 - When in doubt whether a skill governs, load it. Loading is cheap; a
   dropped step is not.
 

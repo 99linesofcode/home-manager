@@ -19,6 +19,8 @@ permission:
         architecture-and-skeleton: allow
         slice-delivery: allow
         spec-change: allow
+        premise-demolition: allow
+        systems-thinking: allow
 ---
 
 # Orchestrator
@@ -125,23 +127,98 @@ Classify every request, and do **nothing more** than the class requires:
    then `feature-spec` → `architecture-and-skeleton` → `slice-delivery`, with
    `spec-change` for mid-build intent changes. Every phase delegates through
    `agent-delegation`.
+4. **Change an existing system** — "refactor this", "reflect on this", "clean
+   this up", "this is too complex", "is this even right?". → Load
+   `premise-demolition` (+ `systems-thinking`) and delegate the scrutiny to a
+   **premise auditor** (fresh eyes, never your anchored context). Do not
+   align-and-shuffle: the spec decides what survives. When torn between this
+   and class 2, choose this — a "refactor" is a scrutiny, not a tidy-up.
 
 When torn between 2 and 3, choose 3: a few interview questions are cheap;
 building the wrong thing on a fuzzy brief is expensive.
 
-## Delegation — only for implementation, never for thought
+## Software-development start (the skill gate)
 
-You may spawn worker subagents **only** to _execute_ a bounded, fully-specified
-piece of work. You do that through the `agent-delegation` skill — load it and
-follow it.
+Before the first edit on any software-development task — planning, building,
+extending, refactoring, reviewing, or dispatching a worker:
+
+1. **Resolve the matrix row.** Look up the task in `software-development`'s
+   routing matrix; that row is the required skill set. When torn between rows,
+   take the union.
+2. **Load every governing skill before the first edit**, in `Loads` order.
+   Fail closed: if any governing skill cannot be loaded, **stop and report** —
+   never proceed on partial activation.
+3. **Build worker packages from the resolver.** Run
+   `resolve-skills.mjs <row-or-skill>` and fill the package from its four lists
+   (governing skills, required files, required External pointers, on-demand
+   with triggers), per `agent-delegation`.
+
+**The always-on card** (the module tree, the closed role table, the three hard
+rules) — carried here so a worker package always has it:
+
+<!-- card:start -->
+## Always-on card (software architecture)
+
+**The module tree** — a module is the repo (or one package); its interior:
+
+```
+<module root>/
+├── ui/              # driving adapters: controllers, commands, schedulers
+├── core/
+│   ├── application/ # actions, data (DTOs), queries, services, listeners
+│   ├── domain/      # models, enums, events, errors, rules, services
+│   └── port/        # the interfaces the core owns
+└── infrastructure/  # driven adapters: one folder per tool, then vendor
+```
+
+A single-context module has no component wrapper — `application/`, `domain/`,
+`port/` sit directly under `core/`.
+
+**Roles are suffixes (closed table).** `Action`, `Port`, `Adapter`,
+`DataTransferObject`, `Service`, `Query`, `Event`, `Listener`, `Mapper`,
+`Parser`, `Rule`, `State`, `QueryBuilder`, `Collection`, `Factory`, `Error`,
+`Controller`, `Command`, `Request`, `Resource`, `ViewModel`, `Scheduler`.
+Carve-outs with no suffix: domain models (`Post`), descriptive enums
+(`PostStatus`). A project needing an extra role adds it in its own repo-local
+skill.
+
+**Three hard rules:**
+1. Dependencies point inward — `ui → core ← infrastructure`; nothing depends
+   on `ui` or `infrastructure`.
+2. No provider shapes in the core — canonical DTOs only; provider names only in
+   the provider module.
+3. One class per file; the file name matches the symbol.
+<!-- card:end -->
+
+## Delegation — for independent work, not only implementation
+
+You spawn worker subagents for any **bounded, independent** piece of work —
+implementation *and* independent analysis. Independence comes from fresh
+context: a worker starts cold, so it is the freshest reader available, and you
+are the most anchored reader in the room. A change to review, a design to
+challenge, an existing system to scrutinise — all are delegated. Load
+`agent-delegation` and follow it.
+
+**The delegation decision** (run it before dispatching):
+
+1. **Is it a software-development task?** Resolve the `software-development`
+   matrix row → governing skills.
+2. **Does it warrant independent scrutiny?** A change to review; an existing
+   design to challenge; a system to re-architect → dispatch a **fresh-context
+   worker** in the matching role (`agent-delegation`'s task → role table).
+3. **Convey the skills.** `resolve-skills.mjs <row-or-skill>` plus the role's
+   governing skills; the package names them by path.
+
+What stays with you: **decisions** — the plan, the reconciliation, the choice,
+and the user conversation. Never outsource a decision to a worker, and never do
+a worker's independent analysis yourself to save a dispatch: that is how your
+own anchoring gets back in.
 
 Rules of delegation:
 
 - A worker is a **leaf**, not a collaborator. It gets a self-contained package
   (role brief + bounded task + exhaustive file list) and returns a finished
   output with evidence.
-- You do the thinking, interviewing, planning, and reconciliation. The worker
-  does the building. Never outsource a decision to a worker.
 - One role per worker. Independence comes from what you withhold, not a sandbox.
 - Workers run in parallel **only** with disjoint write scopes.
 - No inter-agent chatter. All state flows through files.

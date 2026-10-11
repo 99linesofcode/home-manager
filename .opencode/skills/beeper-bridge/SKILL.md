@@ -20,6 +20,13 @@ operating procedure.
 - **Loads:** none
 - **References:** none (architecture reference is the wiki page, linked above)
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Documents/Obsidian/AI/wiki/concepts/beeper-bridge.md` | on-demand | for the bridge's rationale and full mechanics |
+| `~/Development/opencode-beeper-bridge/` | on-demand | when the bridge implementation is unclear |
+
 ## Hard rules
 
 - **Never store a chat ID.** Chat IDs change on every Beeper re-link; stored

@@ -12,11 +12,12 @@ every project; only the skeleton, devshell, and workflows differ by language.
 
 ## Related
 
-- **Loads:** `git-workflow` (scaffolding mechanics), `software-architecture`
-  (the architecture contract).
-- **References:** `laravel` (Laravel conventions), `shape-up` (labels + project
-  template), `github` (platform interface), `project-seed` (the spec-driven
-  foundation that orchestrates this skill).
+- **Loads:** `git-workflow` (git mechanics), `skeleton-ecosystem` (the
+  scaffolding catalogue).
+- **References:** `software-architecture` (the architecture contract, wired in
+  at the architecture phase), `laravel` (Laravel conventions), `shape-up`
+  (labels + project template), `github` (platform interface), `project-seed`
+  (the spec-driven foundation that orchestrates this skill).
 - Wiki: [[modular-monolith]], [[hexagonal-architecture]], [[action-objects]].
 
 ## Files
@@ -41,8 +42,7 @@ Non-negotiables whatever the project type:
   language projects. `git submodule add` clones it; a repo adopted or cloned
   without `--recurse-submodules` needs `git submodule update --init` before
   `direnv allow`. Verify with `git submodule status`: a leading `-` means
-  declared-but-empty — a devshell on paper, not wired (`.github` and
-  `.github-php` were found in exactly that state, 2026-10-09). Never install
+  declared-but-empty — a devshell on paper, not wired. Never install
   language tooling ad-hoc on the host — NixOS rejects ad-hoc dynamically-linked
   binaries; the devshell exists so you never fight that.
 - The **package manager follows the skeleton default** (pnpm for node),

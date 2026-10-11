@@ -1,16 +1,21 @@
 #!/usr/bin/env node
 /**
- * Resolve a skill or a routing-matrix row into its flat required set.
+ * Resolve a skill or a routing-matrix row into the four lists a worker package
+ * needs:
  *
- * Prints the absolute path of each skill in the transitive `Loads` closure (in
- * order), followed by each skill's `required` files; `on-demand` files are
- * listed separately with their triggers. This is the output the orchestrator
- * pastes into a worker package so a worker (which cannot load skills) reads the
- * exact required set.
+ *   1. Governing skills — the transitive `Loads` closure, as absolute
+ *      `SKILL.md` paths, in load order.
+ *   2. Required files — every `required` file (references/assets/scripts), as
+ *      absolute paths.
+ *   3. Required External pointers — every `required` `## External` path,
+ *      `~`-expanded, flagged `[MISSING on this machine]` when absent.
+ *   4. On-demand — files and pointers with their triggers (add the ones whose
+ *      trigger matches the task).
+ *
+ * A worker cannot load skills, so this output is pasted into the package.
  *
  * Thin wrapper over `lint-skills.mjs --resolve`.
  *
- * Run it from the repository root (no node on PATH needed on NixOS):
  *   nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/resolve-skills.mjs slice-delivery
  *   nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/resolve-skills.mjs "Deliver a slice"
  */

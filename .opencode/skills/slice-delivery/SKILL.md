@@ -12,7 +12,8 @@ first, lock them, implement, review independently, reconcile.
 
 - **Loads:** `agent-delegation`, `git-workflow`.
 - **References:** `code-review` (the review step, not slice start),
-  `software-development`, `software-testing`, `spec-change`.
+  `software-development`, `software-testing`, `spec-change`,
+  `premise-demolition` (when a slice reveals the shape itself is wrong).
 
 ## Files
 
@@ -23,7 +24,13 @@ Before acting, read every `required` file below.
 | `assets/slice-task.template.md` | required | before shaping the slice task |
 | `assets/spec-delta.template.md` | required | before running the spec-delta check |
 | `assets/review-report.template.md` | on-demand | when dispatching the reviewer (its report format) |
-| `references/implementation-sparring.md` | on-demand | when running the interactive sparring part of the spec-delta check |
+
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Documents/Obsidian/AI/planning/` | on-demand | the transient scratchpad (`planning/<slug>/`) this skill works in |
+| `~/Documents/Obsidian/AI/harness-debt.md` | on-demand | when appending the retrospective's harness debt |
 
 ## When to use
 
@@ -54,8 +61,18 @@ architectural constraints; the PR restates them in its **Behavior** section.
 1. **Spec-delta check.** Restate what the slice must do and must not change;
    list ambiguity that affects it (a BLOCKING open question stops the slice);
    list existing behavior it could break. Use `assets/spec-delta.template.md`.
-   For the interactive part — one question at a time, the ripple-vs-local test
-   — see `references/implementation-sparring.md`.
+   The interactive part is **implementation sparring** — settle the
+   expensive-to-reverse decisions before building:
+   - **Ask when a wrong guess would ripple** into other modules, or be costly
+     once code exists; otherwise state the assumption and move on. Worth
+     pinning: the architecture/pattern, public interfaces and schemas,
+     non-functional constraints, non-goals, how the user wants it verified.
+     Safe to leave: local naming, internal helper structure, order of
+     operations inside a function.
+   - **One question at a time, and wait** — each answer changes what is worth
+     asking next. Say why a question matters (the ripple-vs-local reasoning).
+   - **Recap what is pinned down**, confirm, then implement from that recap;
+     update the feature spec so the durable record matches.
 2. **Characterization tests** (only when touching existing behavior) — dispatch
    a **characterization test author**; they must pass on the current code.
 3. **Acceptance tests first** — dispatch an **acceptance test author** (spec
@@ -86,7 +103,7 @@ architectural constraints; the PR restates them in its **Behavior** section.
    `~/Documents/Obsidian/AI/harness-debt.md` with the observed symptom and the
    proposed delta. Propose, never silently apply: harness changes land through
    deliberate edits the user reviews. (Provisional home — revisit once the
-   obsidian-project-management plugin is stable.)
+   vault's project-management plugin is stable.)
 
 ## Gates
 

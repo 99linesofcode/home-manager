@@ -195,8 +195,7 @@ Two sessions — or a session and a dispatched worker — can run at once. The
 **episodic stream is already safe**: append-only, one file per event, distinct
 paths, so no two writers collide. The single-file documents are not — `HOT.md`,
 `wiki/index.md`, `wiki/log.md`, and `semantic/*.md` are rewritten in place, so a
-blind overwrite loses the other session's change (observed 2026-10-10: a second
-session's HOT rewrite dropped the first session's applied-changes status). A git
+blind overwrite loses the other session's change. A git
 worktree isolates *code*, not the vault, so it does nothing here.
 
 ### The write protocol — read-merge-write with a content-hash CAS

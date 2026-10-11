@@ -5,4 +5,33 @@
 **Not done.** <what wasn't, and why>
 **Assumptions.** (expected: none — anything here is an escalation)
 **Questions / escalations.** <ambiguity, conflict, or a test believed wrong>
-**Evidence.** <command output, test results — not claims>
+
+## Governing skills — read and honoured
+
+One line per governing skill from the package, each with one line of
+conformance evidence (where in the diff it shows):
+
+- `<skill>` — <the rule> — <evidence>
+- A governing skill that could not be read is a blocker; say so under Not done.
+
+## Paths read
+
+Every path the package handed you, and the on-demand ones you opened:
+
+- `<absolute path>` — read | not applicable (<why>)
+
+## Load-bearing pointers — confirmed
+
+Every `required` file and `required` External pointer from the package:
+
+- `<absolute path>` — confirmed (<what it told you>)
+- A pointer that did not exist is a blocker, not a silent skip.
+
+## Evidence
+
+Paste the raw gate and test output — not claims:
+
+```
+<command>
+<output>
+```

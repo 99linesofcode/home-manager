@@ -1,55 +1,52 @@
 ---
 name: software-architecture
-description: The user's software architecture contract — hexagonal-flavored layering for any Object Oriented language, driven by the lean guardrail (build lean, Rule of Three, concepts inform not dictate). Covers ports & adapters, canonical DTOs (the core owns its data shapes; one DTO per domain concept across providers), the UI/core/infrastructure split, action objects as the use-case seam (actions carry the logic), where logic lives (actions, domain services, pure calculations), modular monolith, and SOLID/IoC. Language-agnostic with pseudocode; the language expressions are separate skills (`laravel`/`filament`, `rails`/`avo`, `typescript`). Use when designing, building, extending, or reviewing the architecture of any OO codebase, when deciding how to structure a module, layer, or use case, or when defining the data shapes shared across adapters or providers.
+description: Architecture contract for any OO codebase — where logic lives (actions, domain services, pure calculations), hexagonal ports & adapters, canonical DTOs (the core owns its shapes; one per concept), provider neutrality, the lean guardrail, the modular monolith, ARCHITECTURE.md. Use when designing, building or reviewing architecture, placing logic, or defining a port, DTO or use case. Load `software-architecture-structure` for folders, naming and role suffixes.
 ---
 
 # software-architecture
 
-The user's standard for how software is architected, in any Object Oriented
-language. This is the _how we do it here_ contract. The _why_ lives in the
-wiki concepts (`~/Documents/Obsidian/AI/wiki/concepts/`):
-`architecturally-evident-structure.md`, `ddd.md`,
-`hexagonal-architecture.md`, `action-objects.md`, `modular-monolith.md`,
-`software-architecture-principles.md`. Load those for the reasoning; this
-skill is the contract.
+The user's contract for how software is architected, in any Object Oriented
+language — the _how we do it here_. This is the **core**: principles, where
+logic lives, the hexagonal rules, action objects, the modular monolith, and the
+`ARCHITECTURE.md` contract.
 
-Concrete expressions: `laravel` (Laravel mechanics), `filament` (Filament UI
-mechanics).
+**Structure and naming live in the companion skill
+`software-architecture-structure`** — the folder tree, the closed role-suffix
+table, one class per file. Load it before creating or moving any file. The
+_why_ lives in the wiki concepts (`~/Documents/Obsidian/AI/wiki/concepts/`):
+`architecturally-evident-structure.md`, `ddd.md`, `hexagonal-architecture.md`,
+`action-objects.md`, `modular-monolith.md`, `software-architecture-principles.md`.
 
 ## Related
 
-- **Loads:** (none — this is a leaf contract)
-- **References:** `laravel` (the Laravel mechanics), `filament` (the Filament
-  UI mechanics), `rails` (the Rails mechanics), `avo` (the Avo UI mechanics),
-  `typescript` (the TypeScript/Node mechanics), `software-testing` (how the
-  layers are tested), `project-seed` (the ARCHITECTURE.md stub),
-  `architecture-and-skeleton` (fills ARCHITECTURE.md in).
-- **Leading reference:** Graça's reference implementations —
-  `hgraca/explicit-architecture-php` and `hgraca/explicit-architecture-reactjs`
-  — paired with our module-first convention. Where this skill and the reference
-  apps differ, this skill wins (we invert Graça's axes); where this skill is
-  silent, mirror the reference apps.
-- Wiki concepts: `architecturally-evident-structure.md` (Graça's taxonomy, which
-  this skill distills and inverts), `ddd.md`, `hexagonal-architecture.md`,
-  `action-objects.md`, `modular-monolith.md`,
-  `software-architecture-principles.md`.
+- **Loads:** `software-architecture-structure` (folders, naming, the role
+  table).
+- **References:** `laravel`, `filament` (the PHP expression), `rails`, `avo`
+  (the Ruby expression), `typescript` (the TS/Node expression),
+  `software-testing` (how the layers are tested), `project-seed` (the
+  `ARCHITECTURE.md` stub), `architecture-and-skeleton` (fills it in),
+  `code-review` (the architecture check), `premise-demolition` (challenging an
+  existing design), `systems-thinking` (the whole-system lens).
 
-## Files
+## External
 
-Before acting, read every `required` file below.
-
-| File | Load | Read when |
+| Path | Load | Read when |
 |---|---|---|
-| `references/file-organization.md` | required | before creating or moving any file — folder shape, role suffixes, co-location, Support, and the boundary rules |
-| `references/domain-building-blocks.md` | on-demand | when defining domain building blocks or judging whether an architectural pattern earns its keep |
+| `~/Development/laravel-module-*` | on-demand | the reference module family — mirror it where this skill is silent |
+| `https://github.com/hgraca/explicit-architecture-php` | on-demand | Graça's reference implementation — mirror it where this skill is silent |
+| `https://github.com/hgraca/explicit-architecture-reactjs` | on-demand | the React expression of the same reference |
+| `~/Documents/Obsidian/AI/wiki/concepts/` | on-demand | for the rationale behind a rule |
+
+Where this skill and the reference apps differ, **this skill wins** (we invert
+Graça's axes — module outermost); where this skill is silent, mirror them.
 
 ## When to use
 
 - Designing, building, extending, or reviewing the architecture of any OO
   codebase.
-- Deciding how to structure a module, layer, or use case.
+- Deciding where a piece of logic lives, or how a use case is shaped.
 - The user references hexagonal architecture, action objects, DTOs, bounded
-  contexts, or the lean guardrail.
+  contexts, provider neutrality, or the lean guardrail.
 
 ## Core principles
 
@@ -62,17 +59,18 @@ Before acting, read every `required` file below.
    A convention everyone follows beats a configuration everyone must set.
 3. **Hexagonal layering.** Core domain logic isolated from the outside world;
    dependencies point inward.
-4. **Actions carry the logic.** Every user story is an action (invokable use
+4. **Actions carry the logic.** Every user story is an action (an invokable use
    case taking a DTO); actions compose actions. Logic never smears into
    orchestrators, models, or service-ish grab-bags.
 5. **Modular monolith.** One deployable, internally divided into modules
    (bounded contexts) with explicit boundaries and owned data.
 6. **Pragmatic DDD-lite.** Use the parts that earn their keep; skip the rest
-   until there's a real need.
-7. **Names state domain + role.** Every name carries its domain concept and
-   its architectural role (stereotype); the role locates the class (folder,
-   dependencies, invocation). No metaphor names (Engine, Manager, Helper,
-   Handler, Util). One class per file; lean files.
+   until there's a real need. Models are data + identity; behaviour lives in
+   actions, domain services and value objects.
+7. **Names state domain + role.** Every name carries its domain concept and its
+   architectural role; the role locates the class. No metaphor names (Engine,
+   Manager, Helper, Handler, Util). One class per file. (Detail:
+   `software-architecture-structure`.)
 
 ## Convention over configuration (the default stance)
 
@@ -85,12 +83,9 @@ is the operating default for the whole setup, not just code:
   expect without being told.
 - **Sensible defaults first.** Ship a working default — agent, model,
   permissions, project layout, devshell — and let a project override it only
-  where it genuinely differs. A per-project override is the exception, not the
-  setup step.
+  where it genuinely differs.
 - **Convention beats a knob.** A knob is a decision deferred to every caller;
-  if a convention can absorb the case, don't expose the knob. Add one only when
-  a real, recurring need can't be met by the convention — the same test as the
-  lean guardrail below.
+  if a convention can absorb the case, don't expose the knob.
 - **The escape hatch is explicit.** Where a project must differ, the override
   is a deliberate, visible act (a project `AGENTS.md` / config file), not a
   silent per-repo variation that erodes the convention.
@@ -109,10 +104,9 @@ a service, a module), ask:
    before.
 3. **Does it make verification cheaper, or add ceremony?** A layer earns its
    keep by making the behavior easier to verify — a seam to inject a fake, a
-   boundary to test against — not by mirroring a diagram. For an agent, every
-   layer between the caller and the behavior is another file to read: a tool
-   call and a context tax. A layer that buys neither verifiability nor real
-   isolation is ceremony — skip it.
+   boundary to test against. For an agent, every layer between the caller and
+   the behavior is another file to read: a tool call and a context tax. A layer
+   that buys neither verifiability nor real isolation is ceremony — skip it.
 4. **Does the framework already provide this?** If the ecosystem's conventions
    already carry it, don't rebuild it.
 
@@ -130,7 +124,7 @@ Every piece of logic has exactly one right home:
 | Logic spanning multiple entities, owned by none | **Domain service** (+ value objects) | pure, stateless, no I/O; consulted by a use case, never the reverse |
 | A trivial calculation (VAT, hashing, diffing) | **Pure class/function beside the actions** | no DI, no I/O; a total function |
 | Delivery mechanics (timers, event subscription, queues, debounce) | **Driving-side infrastructure** | turns ambient triggers into action invocations; zero decisions |
-| Raw external data ↔ domain | **Adapters, at the boundary** | an anti-corruption layer: map raw responses onto the domain's canonical DTOs; the core never sees provider shapes — including DTOs that mimic a provider's structure (see "DTOs belong to the core") |
+| Raw external data ↔ domain | **Adapters, at the boundary** | an anti-corruption layer: map raw responses onto the domain's canonical DTOs; the core never sees provider shapes — including DTOs that mimic a provider's structure |
 | State-specific behavior | **Rich enums / state pattern** | when states multiply; not before |
 | Queries | **Query builders / read models** | models stay dumb data + identity |
 
@@ -138,84 +132,6 @@ Anti-patterns: a **god object** (an "Engine"/"Manager" accumulating
 decisions); a "Service" layer duplicating what actions already do; business
 logic in jobs/listeners (infrastructure *around* actions, never logic
 holders); logic smeared across controller + model + job + listener.
-
-## File organization & naming (the contract in brief)
-
-Every artefact name carries two axes: its **domain concept** (which module it
-belongs to) and its **role** (which folder it lives in, what it may depend on,
-how it is invoked, its suffix) — `InvoiceRepository`: `Invoice` domain, `Repository` role.
-
-```
-<module root>/                   # the module IS the repo (or one package in a monorepo)
-├── ui/                          # driving adapters (delivery)
-│   └── <ui-type>/               # web / api / cli
-├── core/                        # the module's core
-│   ├── application/             # use cases (actions), queries, services, listeners
-│   ├── domain/                  # entities, value objects, domain services, events
-│   └── port/                    # the ports the core owns
-└── infrastructure/              # driven adapters
-    └── <tool>/<vendor>/
-```
-
-**Each level groups by its own axis.** `ui/` by UI-type, `infrastructure/` by
-tool, `core/` by component (collapsed for a single-context module); inside a
-component, `application/` and `domain/`; and at that leaf, by subject or role.
-The full per-level tree is in `references/file-organization.md`.
-
-**The role is the suffix** (in the filename and the symbol name). The table is
-closed: every role has exactly one suffix; a name that carries none is either a
-carve-out or wrong.
-
-| Role                    | Suffix         | Lives in |
-|-------------------------|----------------|----------|
-| Use case                | `Action`       | `application/actions/` |
-| Core-designed interface | `Port`         | `core/port/` |
-| Tool wrapper            | `Adapter`      | `infrastructure/<tool>/` |
-| Boundary payload (DTO)  | `DataTransferObject` | `application/` (port DTOs live with their port) |
-| Service (domain/app)    | `Service`      | `domain/` or `application/` |
-| Reconciler (sync chain) | `Reconciler`   | `core/application/services/` |
-| Query                   | `Query`        | `application/queries/` |
-| Domain event            | `Event`        | `domain/` or the shared kernel |
-| Event listener          | `Listener`     | `application/listeners/` |
-| Mapper                  | `Mapper`       | beside its consumer |
-| Parser                  | `Parser`       | beside its consumer |
-| Rule                    | `Rule`         | `domain/rules/` |
-| State                   | `State`        | `domain/states/` |
-| Query builder           | `QueryBuilder` | `domain/` |
-| Collection              | `Collection`   | `domain/` |
-| Factory                 | `Factory`      | `domain/` |
-| Error                   | `Error`        | `domain/errors/` |
-| Controller              | `Controller`   | `ui/` |
-| Command                 | `Command`      | `ui/` |
-| Request                 | `Request`      | `ui/` |
-| Resource                | `Resource`     | `ui/` |
-| View model              | `ViewModel`    | `ui/` |
-| Scheduler               | `Scheduler`    | `ui/` |
-
-**Interfaces carry their role suffix, never a construct marker.** A port is
-`XPort`, a payload `XDataTransferObject` — never `IX` or `XInterface`. The
-construct (that a symbol is an interface) is not a role; naming it is noise.
-The TypeScript expression is in `typescript`.
-
-**The role menu** (closed; extend only by decision, never per repo):
-
-| Area                            | Roles |
-|---------------------------------|-------|
-| `core/application/`             | `actions/` (`Action`), `data/` (`DataTransferObject`), `queries/` (`Query`), `services/` (`Service`), `listeners/` (`Listener`), repository interfaces |
-| `core/domain/`                  | `models/` (bare), `enums/` (descriptive: `PostStatus`), `events/` (`Event`), `errors/` (`Error`), `rules/` (`Rule`), domain services (`Service`) |
-| `core/port/`                    | `Port` interfaces, plus the value objects, DTOs, builders and query objects they need |
-| `ui/`                           | `controllers/`, `commands/`, `requests/`, `resources/`, `view-models/`, `scheduling/` |
-| `infrastructure/<tool>/`        | `Adapter` — one subfolder per tool; a second vendor adapter earns a per-vendor subfolder |
-
-The rationale, the fractal, co-location, Support, the full per-level tree and
-the boundary rules are in `references/file-organization.md`.
-
-## Domain building blocks & patterns
-
-The building blocks (entity, value object, aggregate, repository, domain and
-application services, events, read models, invariants), the architectural
-patterns that earn their keep, and how SOLID/DRY/IoC apply as judgment are in
-`references/domain-building-blocks.md`.
 
 ## Hexagonal architecture (ports & adapters)
 
@@ -230,81 +146,64 @@ designed for the core's needs — never mimicking a tool's API) implemented by
   port belongs inside the application; the implementation belongs outside,
   wrapping the external tool.
 
-**DTOs belong to the core, not the provider.** A port's DTOs are designed
-for the core's needs exactly as the port itself is — never mimicking a
-tool's API. "The core never sees provider shapes" includes shapes wearing
-a DTO costume: a `TaskDataTransferObject` whose fields mirror the GitHub issue is a
-provider shape. **One canonical DTO per domain concept:** when a second
-adapter serves the same concept (a second provider, a second storage, a
-second UI), both map onto the SAME domain DTO — parallel per-provider DTO
-vocabularies are the anti-corruption layer failing silently. The second
-provider is the Rule-of-Three trigger to unify the shapes.
+**DTOs belong to the core, not the provider.** A port's DTOs are designed for
+the core's needs exactly as the port itself is — never mimicking a tool's API.
+"The core never sees provider shapes" includes shapes wearing a DTO costume: a
+`TaskDataTransferObject` whose fields mirror a provider's issue is a provider
+shape. **One canonical DTO per domain concept:** when a second adapter serves
+the same concept (a second provider, a second storage, a second UI), both map
+onto the SAME domain DTO — parallel per-provider DTO vocabularies are the
+anti-corruption layer failing silently. The second provider is the
+Rule-of-Three trigger to unify the shapes.
 
-**The canonical test:** when two representations of the same concept must
-be compared, merged, or synced, the diff logic operates on canonical
-fields only. If it references provider-specific fields, the canonical
-model is missing. Accumulating symptoms: per-pair diff/verdict machinery,
-duplicated hash/translation helpers, provider-shaped snapshot fragments.
-Worked example (OPM, 2026-09-25): GitHub and Todoist each got their own
-task DTO vocabulary — five snapshot-hash copies, two verdict systems,
-and a done/open coercion bug followed; the canonical `TaskDataTransferObject` with one
-mapper per side dissolved all of them.
+**The canonical test:** when two representations of the same concept must be
+compared, merged, or synced, the diff logic operates on canonical fields only.
+If it references provider-specific fields, the canonical model is missing.
+Accumulating symptoms: per-pair diff/verdict machinery, duplicated
+hash/translation helpers, provider-shaped snapshot fragments.
 
-Dependencies point **inward** — the **dependency rule**: the domain layer
-knows nothing about the application layer; the core knows nothing about
-adapters.
+Dependencies point **inward** — the **dependency rule**: the domain layer knows
+nothing about the application layer; the core knows nothing about adapters.
+The folder shape and the layer tree are in `software-architecture-structure`.
 
-Folder shape — module-first (see "Folders: module-first, fractal"):
-
-```
-<module root>/
-├── ui/                 # driving adapters (controllers, commands, schedulers)
-├── core/               # components ({application, domain}) + port/
-└── infrastructure/     # driven adapters (empty until there's a real need)
-```
-
-Enforce with a dependency-graph tool (e.g. Deptrac in PHP) in CI: allowed
-dependencies between layers, build fails on violation. This is what keeps
-the structure from **architectural drift** — the structure decays one
-import at a time unless a gate rejects it.
+Enforce the dependency graph with a tool (e.g. Deptrac in PHP) in CI: allowed
+dependencies between layers, build fails on violation. This is what keeps the
+structure from **architectural drift** — the structure decays one import at a
+time unless a gate rejects it.
 
 ### Provider neutrality (the vocabulary rule, mechanically enforced)
 
-The dependency direction can be clean while the vocabulary still leaks: a
-core whose type names, identifiers, or comments say "GitHub" or "Todoist"
-depends on concretions at the type level, and adding a second provider
-becomes a core edit (OCP broken) instead of a new adapter. The rule:
+The dependency direction can be clean while the vocabulary still leaks: a core
+whose type names, identifiers, or comments name a provider depends on
+concretions at the type level, and adding a second provider becomes a core edit
+(OCP broken) instead of a new adapter. The rule:
 
-- Provider names appear ONLY in: the provider's own module (adapter,
-  transport DTOs, mapper, provider-specific actions — co-located with the
-  port they serve), the composition root where adapters are wired, and
-  port-id VALUES (`'github'` as a registry key is a value, not a type).
+- Provider names appear ONLY in: the provider's own module (adapter, transport
+  DTOs, mapper, provider-specific actions — co-located with the port they
+  serve), the composition root where adapters are wired, and port-id VALUES
+  (`'github'` as a registry key is a value, not a type).
 - Everywhere else — shared kernels, cross-cutting modules, neutral actions,
   comments — the vocabulary is provider-neutral: `remote`, `mirror`,
   `task manager`, `code host`. A WHY comment explaining a provider quirk
   belongs in the provider module that handles it.
-- If shared code seems to need provider knowledge, the design is wrong:
-  push the knowledge behind the port (a neutral field, a port method), or
-  move the code into the provider module.
+- If shared code seems to need provider knowledge, the design is wrong: push
+  the knowledge behind the port (a neutral field, a port method), or move the
+  code into the provider module.
 
-**Enforcement is mechanical, not aspirational:** a boundary gate (a grep
-script or ESLint restriction, wired into the build) fails when a provider
-name appears outside its allowed zones. Conventions without a gate erode one
-worker dispatch at a time — prose in a brief is not a boundary. Reviewers
-and workers run the gate; a violation is a blocking finding. Worked example
-(OPM, 2026-10-06): the layering audit passed — dependency direction was
-clean — while `GithubTaskData`/`TodoistTaskData` sat in the shared kernel and
-core comments explained GitHub quirks. Clean direction, concreted vocabulary;
-the gate is what would have caught it on day one.
+**Enforcement is mechanical, not aspirational:** a boundary gate (a grep script
+or ESLint restriction, wired into the build) fails when a provider name appears
+outside its allowed zones. Conventions without a gate erode one worker dispatch
+at a time — prose in a brief is not a boundary. Reviewers and workers run the
+gate; a violation is a blocking finding.
 
 ## Action objects (the use-case seam)
 
-Each meaningful business operation is its own class — a **transaction
-script** (Fowler) in command-pattern shape: single responsibility,
-immutable, one public method (`call()` in Ruby, `__invoke()` in PHP —
-language-idiomatic), input as a payload/DTO, dependencies via constructor
-injection (never resolved inside the body). An action composes zero or more
-nested actions, each with its own single responsibility.
+Each meaningful business operation is its own class — a **transaction script**
+(Fowler) in command-pattern shape: single responsibility, immutable, one public
+method (`call()` in Ruby, `__invoke()` in PHP — language-idiomatic), input as a
+payload/DTO, dependencies via constructor injection (never resolved inside the
+body). An action composes zero or more nested actions, each with its own single
+responsibility.
 
 **The story test decides what an action is.** Name it as a user story with its
 own inputs and its own reason to exist: `CreateInvoiceAction` calls
@@ -312,6 +211,11 @@ own inputs and its own reason to exist: `CreateInvoiceAction` calls
 mechanical step with no independent meaning — "render the checklist", "detect a
 rename" — is a function or a domain service the action calls, never a nested
 action. Actions are small *because they are stories*, and small stories compose.
+
+**The outermost action owns the transaction.** One story, one transaction: the
+top-level action opens it (Laravel `DB::transaction`, Ruby
+`ActiveRecord::Base.transaction`); a nested action never opens its own — it runs
+inside the caller's.
 
 ```ruby
 class CreatePostAction
@@ -329,15 +233,15 @@ class CreatePostAction
 end
 ```
 
-Sizing and composition rules (Stitcher, Laravel Beyond CRUD):
+Sizing and composition rules:
 
 - Split actions small enough to reuse, large enough not to drown in them.
 - Prefer copy-paste over premature abstraction; abstract by functionality,
   never by technical properties.
 - Compose via constructor injection; avoid deep dependency chains.
-- The primary payoff is cognitive load, not reusability: when a story
-  changes, there is one meaningful place to go — the alternative is
-  **shotgun surgery** (one story change, N files to touch).
+- The primary payoff is cognitive load, not reusability: when a story changes,
+  there is one meaningful place to go — the alternative is **shotgun surgery**
+  (one story change, N files to touch).
 - Rejected as overkill at this scale: command/handler buses, event-driven
   architectures.
 
@@ -361,32 +265,101 @@ class PostStatus
 end
 ```
 
-The action wraps `transition_to` in a rescue, translating the
-`DomainError` into a domain-specific exception — never imperative
-`raise unless` helpers.
+The action wraps `transition_to` in a rescue, translating the `DomainError`
+into a domain-specific exception — never imperative `raise unless` helpers.
+
+## Domain building blocks (when each exists)
+
+The model is a vocabulary with a bar per block, not a uniform checklist. Where
+the textbook default diverges from ours, we say so.
+
+- **Entity** — identity plus lifecycle; the default citizen of `domain/`. Bare
+  name (`Post`, never `PostEntity`).
+- **Value object** — enforces an invariant or carries behaviour, or prevents a
+  real bug class; otherwise the primitive. Bare name.
+- **Aggregate / aggregate root** — the consistency boundary: exactly what one
+  transaction must keep consistent. As small as the invariants allow; one
+  action, one transaction; other aggregates referenced by identity, never by
+  object graph. Bare name (it is an entity).
+- **Repository** — by default the action persists **directly** (Eloquent,
+  ActiveRecord); a repository appears only when storage must be swappable or
+  the domain tested without a DB (lean guardrail), never one per use case.
+  Suffix `Repository`; *where* it sits is a project choice (an infrastructure
+  adapter, or an application-layer repository behind a port).
+- **Domain service** — pure logic spanning entities, owned by none, no I/O;
+  *consulted by* a use case, never the reverse. Suffix `Service`, home
+  `domain/`.
+- **Application service** — orchestration shared across use cases; rare,
+  because actions are the orchestration seam. Suffix `Service`, home
+  `application/`.
+- **Domain event** — something that happened in the domain; `Event`, `domain/`.
+  One that crosses a component boundary is an integration event and lives in
+  the shared kernel, so components share its shape without sharing the domain.
+- **Read model / projection** — a query-shaped view; not until CQRS earns its
+  keep. Reads go through queries and query builders.
+- **Invariant / guard** — a rule that must always hold, owned by the entity,
+  value object, or aggregate that has it and enforced at construction; the
+  action wraps it and translates the error. Never a bare guard scattered
+  through a use case.
+
+**Value objects: extract on enforcement, not on shape.** A value object earns
+its own class when it **enforces an invariant or carries behaviour** — a
+`Money` that can't go negative, an `Email` that validates on construction — or
+when it **prevents a real bug class** (wrapping IDs so a `UserId` can't be
+passed where a `PostId` is expected). It does **not** earn its keep when it only
+re-types a primitive: noise. Graça defaults to value objects over primitives;
+we temper that with the lean guardrail: **enforce or prevent, otherwise keep the
+primitive.**
+
+**Data shapes: DTO, value, or private record — earn it, or it isn't a DTO.**
+Before extracting a shape, it is exactly one of three: a **value object**
+(domain, bare name); a **DataTransferObject** (application) — a *boundary
+payload* that **crosses a module or port boundary**, is **named for the
+concept, not the operation**, and is **reused or canonical**; or a **private
+record** — the working memory of one algorithm, which is **not** a DTO: no
+suffix, co-located with its consumer, never in `data/`. The default is the
+fewest, most general shapes; near-duplicates collapse; a `*Data` that clears
+none of these bars is the smell.
+
+**We don't reach for** Specification, Unit of Work, Gateway, Decorator, or
+Mediator classes by default; add one only when a concrete need can't be met by
+an entity, a value object, a domain service, or an action.
+
+**Architectural patterns (when they earn their keep):** event-driven for
+decoupling/side effects/history, not simple synchronous flows; CQRS/CQS light
+only (reads hit models/query builders directly, writes go through an action;
+strict CQRS is overkill for CRUD); event sourcing only for audit-critical
+domains; repository only when swapping storage or testing without a DB; no
+service layer (actions are the use-case layer); saga/process manager only for
+distributed transactions or multi-step rollback.
+
+**SOLID, DRY, IoC as judgment:** SRP drives action objects (one class, one
+reason to change); DRY is tempered by the Rule of Three; DI is always
+constructor injection; Law of Demeter and composition over inheritance apply as
+judgment.
 
 ## Modular monolith
 
-One deployable, internally divided into **modules with explicit boundaries**.
-A module is a hexagon (see "Folders: module-first, fractal"); its `core` holds
-one or more components (bounded contexts). In the Laravel expression, modules
-are Composer packages and the shared kernel is itself a module
-(`laravel-module-support`).
+One deployable, internally divided into **modules with explicit boundaries**. A
+module is a hexagon; its `core` holds one or more components (bounded
+contexts). Modules compose through the package graph — Composer path
+repositories in the Laravel expression, engine gems in Rails (the mechanism
+lives in the language skill); the shared kernel is itself a module.
 
 - **Module** — a self-contained unit with a clear boundary; exposes a defined
   API, internals private. Its `core` holds the components (bounded contexts).
-- **Owned data** — each module owns its data/schema and is its **single
-  source of truth**; others don't reach in. A module may query data it
-  doesn't own (read-only) but only changes data it owns.
+- **Owned data** — each module owns its data/schema and is its **single source
+  of truth**; others don't reach in. A module may query data it doesn't own
+  (read-only) but only changes data it owns.
 - **Communication** — via contracts (events, actions), not direct coupling;
   peers never import each other, composition goes through the dependency graph.
 - **Extractable** — the boundary makes a later service split possible.
 
 ## The working agreement (pushback)
 
-The user wants a common conception of good software architecture — a
-ubiquitous language for pair programming. In exchange, the agent is expected
-to **push back on architecture when the context warrants it**, not just apply
+The user wants a common conception of good software architecture — a ubiquitous
+language for pair programming. In exchange, the agent is expected to **push
+back on architecture when the context warrants it**, not just apply
 conventions. When a convention would hurt in a given context, say so.
 
 ## The ARCHITECTURE.md contract
@@ -399,4 +372,3 @@ and the enforced conventions. The stub is seeded by `project-seed` and filled
 in by `architecture-and-skeleton` from the actual code; the same change that
 alters the architecture updates it. Reviewers treat an architecture change
 without the document update as blocking.
-

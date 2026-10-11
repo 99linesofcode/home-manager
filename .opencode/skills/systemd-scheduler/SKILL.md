@@ -17,6 +17,12 @@ run log.
 - **beeper-bridge** skill — for injecting prompts into the *live* session
   (chat bridging); scheduled jobs are always fresh headless sessions.
 
+## External
+
+| Path | Load | Read when |
+|---|---|---|
+| `~/Development/home-manager/modules/opencode.nix` | required | always — where the scheduled jobs are declared |
+
 ## How it works
 
 - `home.opencode.scheduledJobs` is a list of `{ skill, schedule ? "*-*-01

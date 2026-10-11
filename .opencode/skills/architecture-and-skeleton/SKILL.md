@@ -11,7 +11,8 @@ walking skeleton.
 ## Related
 
 - **Loads:** `agent-delegation`.
-- **References:** `software-architecture`, `new-project`, `software-development`.
+- **References:** `software-architecture`, `new-project`, `software-development`,
+  `systems-thinking` (right-sizing the shape to the real system).
 
 ## Files
 
