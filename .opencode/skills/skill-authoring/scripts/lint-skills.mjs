@@ -929,7 +929,8 @@ function checkInbound(skills, rep) {
     }
 }
 
-// --- Catalog migration checks (step 2: warn-only; they must not fail the build) ---
+// --- Catalog checks (step 6: they fail the build; only the curated allow-list
+// subset direction stays a warning) ---
 
 const CATALOG_CATEGORIES = new Set([
     'architecture', 'delivery', 'language', 'review', 'analysis', 'tooling', 'vault',
@@ -948,7 +949,7 @@ function checkCatalogSchema(skills, rep) {
         if (!routeWhen || !String(routeWhen).trim()) missingRouteWhen++;
     }
     if (badCategory || missingRouteWhen) {
-        rep.warn(`catalog schema: ${badCategory} skills missing/invalid category, ${missingRouteWhen} missing route-when`);
+        rep.error(`catalog schema: ${badCategory} skills missing/invalid category, ${missingRouteWhen} missing route-when`);
     }
 }
 
@@ -998,16 +999,16 @@ function checkRoleBriefs(skills, root, rep) {
         const parsed = parseRoleBriefGoverning(readText(path.join(dir, e.name)));
         if (!parsed.hasFrontmatter) continue;
         for (const id of parsed.governing) {
-            if (!skills.has(id)) rep.warn(`role brief '${e.name}': unknown governing skill '${id}'`);
+            if (!skills.has(id)) rep.error(`role brief '${e.name}': unknown governing skill '${id}'`);
         }
     }
 }
 
-function checkCatalogStale(rep) {
-    const script = path.join(HERE, 'build-catalog.mjs');
+function checkCatalogStale(root, rep) {
+    const script = path.join(root, '.opencode', 'skills', 'skill-authoring', 'scripts', 'build-catalog.mjs');
     if (!fs.existsSync(script)) return;
     const res = spawnSync(process.execPath, [script, '--check'], { encoding: 'utf8' });
-    if (res.status !== 0) rep.warn('catalog is stale — run build-catalog.mjs');
+    if (res.status !== 0) rep.error('catalog is stale — run build-catalog.mjs');
 }
 
 /** The `permission.skill` allow-list keys in the orchestrator agent file. */
@@ -1063,11 +1064,15 @@ function checkAllowList(skills, root, rep) {
     const catalogSet = new Set(catalogSkills);
     const allowNotInCatalog = allow.filter((id) => !catalogSet.has(id));
     const catalogNotInAllow = catalogSkills.filter((id) => !allowSet.has(id));
-    if (!allowNotInCatalog.length && !catalogNotInAllow.length) return;
-    const parts = [];
-    if (allowNotInCatalog.length) parts.push(`allow-listed but not in catalog: ${allowNotInCatalog.join(', ')}`);
-    if (catalogNotInAllow.length) parts.push(`in catalog but not allow-listed: ${catalogNotInAllow.join(', ')}`);
-    rep.warn(`skill allow-list drift — ${parts.join('; ')}`);
+    // An allow-listed id that is not a real skill is a defect (error). The other
+    // direction — a catalog skill not in the allow-list — is intentional: the
+    // allow-list is a curated subset, so it stays a warning.
+    if (allowNotInCatalog.length) {
+        rep.error(`skill allow-list drift — allow-listed but not in catalog: ${allowNotInCatalog.join(', ')}`);
+    }
+    if (catalogNotInAllow.length) {
+        rep.warn(`skill allow-list drift — in catalog but not allow-listed: ${catalogNotInAllow.join(', ')}`);
+    }
 }
 
 function checkGateDrift(root, rep) {
@@ -1085,7 +1090,7 @@ function checkGateDrift(root, rep) {
     const expectedMatrix = matrixRows.map((r) => r.task).sort();
     const gateMatrix = g.matrix_row && g.matrix_row.criteria ? Object.keys(g.matrix_row.criteria).sort() : [];
     if (JSON.stringify(expectedMatrix) !== JSON.stringify(gateMatrix)) {
-        rep.warn('gate drift — matrix_row.criteria keys != catalog matrixRows tasks');
+        rep.error('gate drift — matrix_row.criteria keys != catalog matrixRows tasks');
     }
     const expectedRoles = Object.keys(catalog.roles || {}).sort();
     const roleCriteria = g.role_routing && g.role_routing.criteria && g.role_routing.criteria.role
@@ -1093,19 +1098,19 @@ function checkGateDrift(root, rep) {
         : {};
     const gateRoles = Object.keys(roleCriteria).sort();
     if (JSON.stringify(expectedRoles) !== JSON.stringify(gateRoles)) {
-        rep.warn('gate drift — role_routing.criteria.role.criteria keys != catalog roles keys');
+        rep.error('gate drift — role_routing.criteria.role.criteria keys != catalog roles keys');
     }
 }
 
 /**
- * `tree.json` (the routing tree): warn-only. It must exist, its `leaves` keys
- * must equal the catalog's skill ids, and its `branches` must cover every
- * category in the catalog. Emits one warning line on any difference.
+ * `tree.json` (the routing tree). It must exist, its `leaves` keys must equal
+ * the catalog's skill ids, and its `branches` must cover every category in the
+ * catalog. Emits one error line on any difference.
  */
 function checkTree(root, rep) {
     const treePath = path.join(root, '.opencode', 'skills', 'tree.json');
     if (!fs.existsSync(treePath)) {
-        rep.warn('tree.json: missing — run build-catalog.mjs');
+        rep.error('tree.json: missing — run build-catalog.mjs');
         return;
     }
     const catalog = readCatalog(root);
@@ -1114,7 +1119,7 @@ function checkTree(root, rep) {
     try {
         tree = JSON.parse(readText(treePath));
     } catch {
-        rep.warn('tree.json: not valid JSON');
+        rep.error('tree.json: not valid JSON');
         return;
     }
     const catalogIds = Object.keys(catalog.skills).sort();
@@ -1128,7 +1133,7 @@ function checkTree(root, rep) {
     if (JSON.stringify(branchCats) !== JSON.stringify(catalogCats)) {
         diffs.push(`branches cover ${branchCats.length} categories, catalog has ${catalogCats.length}`);
     }
-    if (diffs.length) rep.warn(`tree.json: ${diffs.join('; ')}`);
+    if (diffs.length) rep.error(`tree.json: ${diffs.join('; ')}`);
 }
 
 // Skills whose SKILL.md must carry a generated block (and its markers).
@@ -1140,7 +1145,7 @@ function checkGeneratedBlocks(skills, rep) {
         const skill = skills.get(name);
         if (!skill || skill.parseError) continue;
         if (!skill.text.includes('<!-- generated:start') || !skill.text.includes('<!-- generated:end')) {
-            rep.warn(`${name}: missing generated-block markers (<!-- generated:start --> / <!-- generated:end -->)`);
+            rep.error(`${name}: missing generated-block markers (<!-- generated:start --> / <!-- generated:end -->)`);
         }
     }
 }
@@ -1343,7 +1348,7 @@ function main(argv) {
     checkInbound(skills, rep);
     checkCatalogSchema(skills, rep);
     checkRoleBriefs(skills, root, rep);
-    checkCatalogStale(rep);
+    checkCatalogStale(root, rep);
     checkAllowList(skills, root, rep);
     checkGeneratedBlocks(skills, rep);
     checkGateDrift(root, rep);

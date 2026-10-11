@@ -199,6 +199,96 @@ const CASES = [
             write(root, 'demo/SKILL.md', skillText('demo', '<!-- card:start -->\nCARD BODY\n<!-- card:end -->\n', null));
         },
     ],
+    [
+        'catalog schema: skill missing metadata.category',
+        'missing/invalid category',
+        (root) => {
+            copySkills(root);
+            write(root, 'demo/SKILL.md', FRONT.replace('{name}', 'demo').replace('{desc}', 'D.'));
+        },
+    ],
+    [
+        'catalog schema: skill with an invalid category',
+        'missing/invalid category',
+        (root) => {
+            copySkills(root);
+            write(
+                root,
+                'demo/SKILL.md',
+                '---\nname: demo\ndescription: D.\nmetadata:\n  category: bogus\n  route-when: "Use when testing."\n---\n\n' +
+                    '# demo\n\nIntro.\n\n## Related\n\n- **Loads:** (none)\n- **References:** (none)\n\n## Body\n\nText.\n',
+            );
+        },
+    ],
+    [
+        'role brief with an unknown governing id',
+        "role brief 'implementer.md': unknown governing skill 'no-such-skill'",
+        (root) => {
+            copySkills(root);
+            edit(
+                root,
+                'agent-delegation/references/roles/implementer.md',
+                'governing: [software-architecture, software-development, self-documenting-code, git-workflow]',
+                'governing: [no-such-skill]',
+            );
+        },
+    ],
+    [
+        'catalog.json out of date',
+        'catalog is stale',
+        (root) => {
+            copySkills(root);
+            const p = path.join(root, '.opencode', 'skills', 'catalog.json');
+            const catalog = JSON.parse(fs.readFileSync(p, 'utf8'));
+            delete catalog.skills.wiki;
+            fs.writeFileSync(p, JSON.stringify(catalog, null, 2) + '\n');
+        },
+    ],
+    [
+        'generated block missing its end marker',
+        'missing generated-block markers',
+        (root) => {
+            copySkills(root);
+            edit(root, 'software-development/SKILL.md', '<!-- generated:end -->', '');
+        },
+    ],
+    [
+        'gate drift: matrix_row.criteria key renamed',
+        'gate drift',
+        (root) => {
+            copySkills(root);
+            const p = path.join(root, '.opencode', 'skills', 'jev-gates', 'assets', 'gates.json');
+            const gates = JSON.parse(fs.readFileSync(p, 'utf8'));
+            const criteria = gates.gates.matrix_row.criteria;
+            const first = Object.keys(criteria)[0];
+            criteria[first + ' (renamed)'] = criteria[first];
+            delete criteria[first];
+            fs.writeFileSync(p, JSON.stringify(gates, null, 2) + '\n');
+        },
+    ],
+    [
+        'tree.json with a leaf removed',
+        'tree.json: leaves keys',
+        (root) => {
+            copySkills(root);
+            const p = path.join(root, '.opencode', 'skills', 'tree.json');
+            const tree = JSON.parse(fs.readFileSync(p, 'utf8'));
+            delete tree.leaves.wiki;
+            fs.writeFileSync(p, JSON.stringify(tree, null, 2) + '\n');
+        },
+    ],
+    [
+        'allow-listed id that is not a skill',
+        'allow-listed but not in catalog',
+        (root) => {
+            copySkills(root);
+            const p = path.join(root, '.opencode', 'agents', 'orchestrator.md');
+            fs.writeFileSync(
+                p,
+                fs.readFileSync(p, 'utf8').replace('        memory: allow', '        memory: allow\n        bogus-skill: allow'),
+            );
+        },
+    ],
 ];
 
 function tmpRoot() {
