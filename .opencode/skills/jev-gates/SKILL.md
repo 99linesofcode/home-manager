@@ -127,7 +127,8 @@ or diff inside it. Send the smallest sufficient state:
 | `escalation` | `signals` |
 
 The request sets `provider.zdr = true`; OpenRouter stores no prompt or response
-content unless an account opts in.
+content unless an account opts in. ZDR is also enabled at the OpenRouter
+account level, so the request-level `provider.zdr = true` is belt-and-braces.
 
 ## Rollout
 

@@ -11,9 +11,9 @@
           "criteria": {
             "0": "A wiki operation: filing, editing, or looking up vault or wiki content, with no code change.",
             "1": "Conversational or trivial: a question, a one-line answer, or a cosmetic tweak.",
-            "2": "An everyday task: small and well-scoped, with an obvious target and an obvious outcome.",
+            "2": "An everyday task: small and well-scoped — a bugfix, a small feature, a small refactor, or a tidy-up — with an obvious target and an obvious outcome.",
             "3": "A large or under-specified task: the scope or the target is not yet pinned down.",
-            "4": "A change to an existing system: it alters how something already built behaves or is structured."
+            "4": "A system-scale change to an existing system: the shape itself is in question — a re-architecture, a demolition, or a whole-module restructuring. A change that only alters behaviour or adds a feature within the existing shape is NOT class 4."
           }
         },
         "scale": {
@@ -38,10 +38,10 @@
       "criteria": {
         "names_target": {
           "type": "noul",
-          "instructions": "Does the request name a target it refers to: a file, module, screen, endpoint, or component?",
+          "instructions": "Does the request name a specific target it refers to — a file, symbol, module, screen, endpoint, or component?",
           "criteria": {
-            "true": "The request names a specific target it refers to.",
-            "false": "The request names no target at all."
+            "true": "It names a specific file, symbol, module, screen, endpoint, or component (for example: maxRetries, the config, the posts index, the login flow).",
+            "false": "It names no such target."
           }
         },
         "states_success_criteria": {
@@ -54,10 +54,10 @@
         },
         "ambiguity_changes_outcome": {
           "type": "noul",
-          "instructions": "Is there an ambiguity in the request that would change the outcome if it were resolved differently?",
+          "instructions": "Is there an ambiguity that would change what gets built or how, if it were resolved differently? A minor wording choice or an implementation detail does not count.",
           "criteria": {
-            "true": "At least one ambiguity exists that would change what gets built or how.",
-            "false": "No ambiguity remains that would change the outcome."
+            "true": "At least one ambiguity would change what gets built or how it is built.",
+            "false": "No ambiguity remains that would change what gets built or how."
           }
         }
       },
@@ -104,7 +104,7 @@
         "none": "No routing-matrix row fits this task."
       },
       "state_fields": ["task"],
-      "thresholds": { "act": 0.75, "ask": 0.5 },
+      "thresholds": { "act": 0.9, "ask": 0.6 },
       "fail_action": "ask",
       "low_action": "ask"
     },
@@ -140,7 +140,7 @@
         }
       },
       "state_fields": ["task", "brief_role"],
-      "thresholds": { "act": 0.75, "ask": 0.5 },
+      "thresholds": { "act": 0.9, "ask": 0.6 },
       "fail_action": "ask",
       "low_action": "ask"
     },
@@ -180,7 +180,7 @@
         "false": "None of the triggers holds."
       },
       "state_fields": ["signals"],
-      "thresholds": { "act": 0.75, "ask": 0.5 },
+      "thresholds": { "act": 0.6, "ask": 0.3 },
       "fail_action": "escalate",
       "low_action": "escalate"
     }

@@ -79,20 +79,28 @@ is built. Full treatment in the `software-architecture` skill.
 
 ## Startup (every session, no exceptions)
 
+Load the working context first — cheap, always, no exceptions:
+
 1. Read `~/Documents/Obsidian/AI/memory/HOT.md` (working memory).
 2. Read `~/Documents/Obsidian/AI/memory/semantic/user.md` (preferences).
 3. Read `~/Documents/Obsidian/AI/memory/semantic/decisions.md` (standing decisions).
 4. Read `~/Documents/Obsidian/AI/AGENTS.md` (vault schema: the wiki + memory + OKF contract).
-5. Read `~/Documents/Obsidian/AI/wiki/index.md` (navigational memory: what pages exist).
-6. Skim the tail of `~/Documents/Obsidian/AI/wiki/log.md` (episodic memory: recent activity).
-7. Load the `vault-notes` skill in full — the vault's structure, categories,
-   properties, and filing rules. This one is always loaded, not on demand: it
-   is the contract that stops notes being misfiled. Note paths are relative to
-   the vault root `~/Documents/Obsidian/`; the inbox is the vault-root
-   `Inbox/`, never `AI/Inbox/`.
 
 Memory and the wiki are the only record of context that does not survive between
-sessions. Do not skip this, even for a trivial request.
+sessions; do not skip the core reads, even for a trivial request.
+
+**The lazy tier — load on first touch, not at startup:**
+
+5. Before any wiki read or write: read `~/Documents/Obsidian/AI/wiki/index.md`,
+   then skim the tail of `~/Documents/Obsidian/AI/wiki/log.md` (navigational and
+   episodic memory).
+6. Before any vault write — a note, entity, project, or meeting: load the
+   `vault-notes` skill in full (its structure, categories, properties, and filing
+   rules). It is the contract that stops notes being misfiled; load it before the
+   first write, not after.
+
+Note paths are relative to the vault root `~/Documents/Obsidian/`; the inbox is
+the vault-root `Inbox/`, never `AI/Inbox/`.
 
 ## Intake (before triage)
 
@@ -166,19 +174,26 @@ building the wrong thing on a fuzzy brief is expensive.
 ## Jev gates (classification decisions)
 
 Classification-type decisions are made by Jev through `jev-gates`, not by your
-own judgment. The gates:
+own judgment. The gates split into live and shadow:
 
-- `triage_scale` — the class **and** the scale (system vs unit/snippet).
-- `intake_sufficiency` — whether the intake restatement is sufficient.
+**Live** — route on the `action` field:
+
 - `matrix_row` — resolves the `software-development` matrix row (replaces
   "take the union when torn" in the skill gate).
 - `role_routing` — routes the task to a role.
+
+**Shadow** — record Jev's decision beside your own; do not act on it until the
+user approves:
+
+- `triage_scale` — the class **and** the scale (system vs unit/snippet).
+- `intake_sufficiency` — whether the intake restatement is sufficient.
 - `worker_prescreen` — pre-screens a worker package.
 - `escalation` — decides when to escalate; triggers the `advisor` subagent.
 
 Call the script and act on its `action` field. Thresholds and the
 confidence→action mapping live in the script, not here. Gates run on the
-orchestrator side, including on worker output.
+orchestrator side, including on worker output. Shadow gates never block or
+route — you proceed as before and log the disagreement.
 
 ## Software-development start (the skill gate)
 
