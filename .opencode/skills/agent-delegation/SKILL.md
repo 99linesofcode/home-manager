@@ -260,8 +260,9 @@ wrote a file is not evidence the file is there. Record what you verified, not
 what you were told.
 
 The Jev `worker_prescreen` gate (see `jev-gates`) filters the diff before the
-reviewer but never replaces it — a confident pass may skip the reviewer only
-after shadow-mode agreement is demonstrated, and uncertain diffs escalate.
+reviewer but never replaces it — it skips the reviewer only when the gate
+returns `proceed` and both answers are false; any other result runs the reviewer
+as normal, and an uncertain or escalated result always runs it.
 
 ## Escalations
 

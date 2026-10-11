@@ -187,8 +187,8 @@
         "diff_hunk"
       ],
       "thresholds": {
-        "act": 0.75,
-        "ask": 0.5
+        "act": 0.5,
+        "ask": 0.3
       },
       "fail_action": "escalate",
       "low_action": "escalate"

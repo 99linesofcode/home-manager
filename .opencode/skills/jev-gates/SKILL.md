@@ -33,6 +33,7 @@ Before acting, read (or run) every `required` file below.
 | File | Load | Read when |
 |---|---|---|
 | `scripts/jev.mjs` | required | before running a gate — it is the runner |
+| `scripts/tree-walk.mjs` | on-demand | when resolving a request to a skill set and a role (the routing walk) |
 | `assets/gates.json` | on-demand | read by the gate script at run time — machine data, never loaded into context |
 
 ## When to use
@@ -78,6 +79,24 @@ action from `confidence`; the mapping lives in the script.
   premise audit, a hard-to-reverse choice, a worker blocked on a design
   question, the same slice failing review twice, or a high-risk diff touching
   auth, payments, migrations, or concurrency.
+
+## The routing walk (the decision tree)
+
+The walk resolves one request to a skill set and a worker role by composing the
+gates in order — `intake_sufficiency` → `triage_scale` → `matrix_row` →
+`role_routing`. `scripts/tree-walk.mjs` is the runtime that runs them:
+
+```
+node scripts/tree-walk.mjs '<json state>'        # or state on stdin
+```
+
+The cross-cutting nodes are the gates; the level-1 branches are the catalog's
+categories; the leaves are the skills. Below ~100 skills the walk goes straight
+to `matrix_row` — one stage, choosing among all skills' route-when. Above it,
+`--two-stage` inserts a category choice and then a skill choice within that
+category: the >100-skill upgrade path, pre-wired but off by default. The walk
+stops when intake is not sufficient, when triage classes 0 or 1 need no skill,
+or when any gate answers `ask`/`escalate` — the next stage is never guessed.
 
 ## Writing Jev questions (its published failure modes)
 

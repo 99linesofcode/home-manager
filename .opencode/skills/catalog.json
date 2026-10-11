@@ -874,6 +874,11 @@
           "path": "scripts/jev.mjs",
           "tier": "required",
           "trigger": "before running a gate — it is the runner"
+        },
+        {
+          "path": "scripts/tree-walk.mjs",
+          "tier": "on-demand",
+          "trigger": "when resolving a request to a skill set and a role (the routing walk)"
         }
       ],
       "id": "jev-gates",
