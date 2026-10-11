@@ -66,9 +66,8 @@ action from `confidence`; the mapping lives in the script.
 - **`triage_scale`** — the request's triage class (0 wiki operation · 1
   conversational · 2 everyday task · 3 large or under-specified · 4 change an
   existing system) and its scale (`snippet` · `unit` · `system`).
-- **`intake_sufficiency`** — three yes/no questions: does the request name a
-  target, state success criteria, and carry an ambiguity that would change the
-  outcome.
+- **`intake_sufficiency`** — two objective yes/no questions: does the request
+  name a target, and does it state success criteria.
 - **`matrix_row`** — which row of `software-development`'s routing matrix the
   task belongs to, or `none`.
 - **`role_routing`** — which of the eleven worker roles the task warrants, plus

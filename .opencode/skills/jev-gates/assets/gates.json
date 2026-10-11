@@ -11,7 +11,7 @@
           "criteria": {
             "0": "A wiki operation: filing, editing, or looking up vault or wiki content, with no code change.",
             "1": "Conversational or trivial: a question, a one-line answer, or a cosmetic tweak.",
-            "2": "An everyday task: small and well-scoped — a bugfix, a small feature, a small refactor, or a tidy-up — with an obvious target and an obvious outcome.",
+            "2": "An everyday task: small and well-scoped — a bugfix, a small feature, a small behaviour-preserving refactor, or a tidy-up — with an obvious target and an obvious outcome.",
             "3": "A large or under-specified task: the scope or the target is not yet pinned down.",
             "4": "A system-scale change to an existing system: the shape itself is in question — a re-architecture, a demolition, or a whole-module restructuring. A change that only alters behaviour or adds a feature within the existing shape is NOT class 4."
           }
@@ -22,7 +22,7 @@
           "criteria": {
             "snippet": "A few lines or one expression.",
             "unit": "One file or one module.",
-            "system": "A whole system or its architecture."
+            "system": "The architecture or shape of a whole system, or of one module, is in question — a re-architecture, a demolition, or a whole-module restructuring."
           }
         }
       },
@@ -30,15 +30,15 @@
         "request"
       ],
       "thresholds": {
-        "act": 0.75,
-        "ask": 0.5
+        "act": 0.7,
+        "ask": 0.4
       },
       "fail_action": "ask",
       "low_action": "ask"
     },
     "intake_sufficiency": {
       "type": "noul",
-      "instructions": "Judge the intake: three independent yes/no questions about the request. Answer each from the request alone; do not let one answer imply another.",
+      "instructions": "Judge the intake: two independent yes/no questions about the request. Answer each from the request alone; do not let one answer imply another.",
       "criteria": {
         "names_target": {
           "type": "noul",
@@ -55,22 +55,14 @@
             "true": "It states a concrete, checkable condition for being done.",
             "false": "It states no condition for being done."
           }
-        },
-        "ambiguity_changes_outcome": {
-          "type": "noul",
-          "instructions": "Is there an ambiguity that would change what gets built or how, if it were resolved differently? A minor wording choice or an implementation detail does not count.",
-          "criteria": {
-            "true": "At least one ambiguity would change what gets built or how it is built.",
-            "false": "No ambiguity remains that would change what gets built or how."
-          }
         }
       },
       "state_fields": [
         "request"
       ],
       "thresholds": {
-        "act": 0.75,
-        "ask": 0.5
+        "act": 0.5,
+        "ask": 0.25
       },
       "fail_action": "ask",
       "low_action": "ask"

@@ -1128,40 +1128,6 @@ function checkGateDrift(root, rep) {
 }
 
 /**
- * `tree.json` (the routing tree). It must exist, its `leaves` keys must equal
- * the catalog's skill ids, and its `branches` must cover every category in the
- * catalog. Emits one error line on any difference.
- */
-function checkTree(root, rep) {
-    const treePath = path.join(root, '.opencode', 'skills', 'tree.json');
-    if (!fs.existsSync(treePath)) {
-        rep.error('tree.json: missing — run build-catalog.mjs');
-        return;
-    }
-    const catalog = readCatalog(root);
-    if (!catalog || !catalog.skills) return;
-    let tree;
-    try {
-        tree = JSON.parse(readText(treePath));
-    } catch {
-        rep.error('tree.json: not valid JSON');
-        return;
-    }
-    const catalogIds = Object.keys(catalog.skills).sort();
-    const leafIds = tree.leaves && typeof tree.leaves === 'object' ? Object.keys(tree.leaves).sort() : [];
-    const catalogCats = [...new Set(Object.values(catalog.skills).map((s) => s.category))].sort();
-    const branchCats = Array.isArray(tree.branches) ? tree.branches.map((b) => b.category).sort() : [];
-    const diffs = [];
-    if (JSON.stringify(leafIds) !== JSON.stringify(catalogIds)) {
-        diffs.push(`leaves keys (${leafIds.length}) != catalog skill ids (${catalogIds.length})`);
-    }
-    if (JSON.stringify(branchCats) !== JSON.stringify(catalogCats)) {
-        diffs.push(`branches cover ${branchCats.length} categories, catalog has ${catalogCats.length}`);
-    }
-    if (diffs.length) rep.error(`tree.json: ${diffs.join('; ')}`);
-}
-
-/**
  * The human-owned `AGENTS.md` operating contract names skills by id in its
  * `| Operation | Skill |` table. Every id it names must be a real skill, or the
  * contract routes work to something that does not exist. The file is
@@ -1432,7 +1398,6 @@ function main(argv) {
     checkAllowList(skills, root, rep);
     checkGeneratedBlocks(skills, rep);
     checkGateDrift(root, rep);
-    checkTree(root, rep);
     checkAgentsContract(skills, root, rep);
     if (args.base) checkDiff(skills, root, args.base, rep);
 

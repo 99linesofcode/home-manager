@@ -15,20 +15,16 @@
  *
  * It also renders the derived artifacts from that catalog: the routing matrix
  * in `software-development` and the task→role / role→governing tables in
- * `agent-delegation` (between generated-block markers), the two Jev gate
- * option sets in `jev-gates/assets/gates.json`, and the derived half of
- * `skills/tree.json` (`branches` and `leaves`; its `crossCutting` and
- * `progressiveDisclosure` are hand-authored and preserved). `--check` compares
- * all of them, except the authored half of `tree.json`.
+ * `agent-delegation` (between generated-block markers), and the two Jev gate
+ * option sets in `jev-gates/assets/gates.json`. `--check` compares all of them.
  *
  * Determinism is mandatory: all keys and arrays are sorted and no timestamps
- * or absolute paths are emitted, so two runs on the same tree are
+ * or absolute paths are emitted, so two runs on the same checkout are
  * byte-identical.
  *
  * Usage:
  *   node build-catalog.mjs             write catalog.json, both SKILL.md
- *                                      blocks, gates.json, and the derived
- *                                      half of tree.json
+ *                                      blocks, and gates.json
  *   node build-catalog.mjs --check     exit non-zero if any committed artifact differs
  *
  * Node standard library only. The library root is found by walking up from this
@@ -589,50 +585,6 @@ function renderGates(text, catalog) {
     return JSON.stringify(gates, null, 2) + '\n';
 }
 
-// --------------------------------------------------------------- tree.json
-
-/**
- * The routing tree's derived half: `branches` (one entry per category present,
- * its skill ids sorted) and `leaves` (one entry per skill, keyed and sorted by
- * id). Sorted and timestamp-free, so two runs are byte-identical.
- */
-function deriveTree(catalog) {
-    const byCategory = new Map();
-    for (const [id, skill] of Object.entries(catalog.skills)) {
-        const category = skill.category ?? null;
-        if (!byCategory.has(category)) byCategory.set(category, []);
-        byCategory.get(category).push(id);
-    }
-    const branches = [...byCategory.entries()]
-        .map(([category, ids]) => ({ category, skills: ids.slice().sort() }))
-        .sort((a, b) => (String(a.category) < String(b.category) ? -1 : String(a.category) > String(b.category) ? 1 : 0));
-    const leaves = {};
-    for (const id of Object.keys(catalog.skills).sort()) {
-        leaves[id] = { category: catalog.skills[id].category, routeWhen: catalog.skills[id].routeWhen };
-    }
-    return { branches, leaves };
-}
-
-/**
- * Refresh the derived keys of tree.json, preserving the hand-authored
- * `crossCutting` and `progressiveDisclosure`, in canonical key order.
- */
-function renderTree(text, catalog) {
-    const tree = JSON.parse(text);
-    const { branches, leaves } = deriveTree(catalog);
-    return JSON.stringify(
-        {
-            schema: tree.schema,
-            crossCutting: tree.crossCutting,
-            progressiveDisclosure: tree.progressiveDisclosure,
-            branches,
-            leaves,
-        },
-        null,
-        2,
-    ) + '\n';
-}
-
 function main(argv) {
     const check = argv.includes('--check');
     const root = findRoot(HERE);
@@ -679,8 +631,6 @@ function main(argv) {
     const gatesPath = path.join(skillsDir, 'jev-gates', 'assets', 'gates.json');
     targets.push({ path: gatesPath, text: renderGates(readText(gatesPath), catalog) });
 
-    const treePath = path.join(skillsDir, 'tree.json');
-
     if (check) {
         let stale = 0;
         for (const target of targets) {
@@ -694,48 +644,15 @@ function main(argv) {
                 stale++;
             }
         }
-        // tree.json is partly hand-authored: only branches/leaves are checked,
-        // so an edit to crossCutting/progressiveDisclosure does not fail --check.
-        const treeRel = path.relative(root, treePath);
-        if (!fs.existsSync(treePath)) {
-            console.error(`build-catalog: ${treeRel} is missing — run without --check to write it`);
-            stale++;
-        } else {
-            let existingTree = null;
-            try {
-                existingTree = JSON.parse(readText(treePath));
-            } catch {
-                existingTree = null;
-            }
-            if (!existingTree) {
-                console.error(`build-catalog: ${treeRel} is not valid JSON`);
-                stale++;
-            } else {
-                const expected = deriveTree(catalog);
-                if (
-                    JSON.stringify(existingTree.branches) !== JSON.stringify(expected.branches) ||
-                    JSON.stringify(existingTree.leaves) !== JSON.stringify(expected.leaves)
-                ) {
-                    console.error(`build-catalog: ${treeRel} branches/leaves are stale — run without --check to regenerate them`);
-                    stale++;
-                }
-            }
-        }
         if (stale) return 1;
-        console.log('build-catalog: catalog.json, both SKILL.md blocks, gates.json, and tree.json branches/leaves are up to date');
+        console.log('build-catalog: catalog.json, both SKILL.md blocks, and gates.json are up to date');
         return 0;
     }
 
-    if (!fs.existsSync(treePath)) {
-        console.error('build-catalog: skills/tree.json is missing — hand-author the skeleton (crossCutting, progressiveDisclosure) first');
-        return 2;
-    }
     for (const target of targets) {
         fs.writeFileSync(target.path, target.text);
         console.log(`build-catalog: wrote ${path.relative(root, target.path)}`);
     }
-    fs.writeFileSync(treePath, renderTree(readText(treePath), catalog));
-    console.log(`build-catalog: wrote ${path.relative(root, treePath)}`);
     return 0;
 }
 

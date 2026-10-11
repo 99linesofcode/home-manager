@@ -2,9 +2,9 @@
 /**
  * Self-test for lint-skills.mjs — proves it fails closed on real violations.
  *
- * For each case it builds a throwaway tree, mutates it, runs the linter, and
+ * For each case it builds a throwaway fixture, mutates it, runs the linter, and
  * asserts the expected diagnostic appears and the exit code is non-zero. Also
- * proves the clean tree passes and the resolver expands parts.
+ * proves the clean repo passes and the resolver expands parts.
  *
  * Run it after changing the linter:
  *   nix run nixpkgs#nodejs_22 -- .opencode/skills/skill-authoring/scripts/test-lint.mjs
@@ -267,17 +267,6 @@ const CASES = [
         },
     ],
     [
-        'tree.json with a leaf removed',
-        'tree.json: leaves keys',
-        (root) => {
-            copySkills(root);
-            const p = path.join(root, '.opencode', 'skills', 'tree.json');
-            const tree = JSON.parse(fs.readFileSync(p, 'utf8'));
-            delete tree.leaves.wiki;
-            fs.writeFileSync(p, JSON.stringify(tree, null, 2) + '\n');
-        },
-    ],
-    [
         'allow-listed id that is not a skill',
         'allow-listed but not in catalog',
         (root) => {
@@ -326,7 +315,7 @@ function main() {
 
     const clean = run(REPO);
     const cleanOk = clean.code === 0;
-    console.log(`${cleanOk ? 'PASS' : 'FAIL'}: clean tree exits 0`);
+    console.log(`${cleanOk ? 'PASS' : 'FAIL'}: clean repo exits 0`);
     if (!cleanOk) {
         failures++;
         console.log(clean.out);
