@@ -1,6 +1,6 @@
 ---
 name: premise-demolition
-description: Scrutinise an existing system against its spec with fresh eyes and produce a demolition-first refactor — the spec is the only input, the implementation is a claim, and every element must earn its place against a user story or acceptance criterion. Use when asked to reflect on or refactor an existing system, when a design feels over-engineered, when someone says "this is too complex" or "is this even right?", or before any re-architecture.
+description: Judge an existing system against its spec with fresh eyes and rebuild it lean — the implementation is a claim, and every element must earn its place against a user story or acceptance criterion. It exists to shrink a system rather than shuffle files. Use when a design feels over-engineered, when someone asks "is this even right?", or before any re-architecture.
 metadata:
   category: analysis
   route-when: "Use when scrutinising an existing system or a module's architecture against its spec with fresh eyes, when a design feels over-engineered, or before any re-architecture, at system scale."

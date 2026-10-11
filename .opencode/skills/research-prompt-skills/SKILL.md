@@ -1,6 +1,6 @@
 ---
 name: research-prompt-skills
-description: Self-adjusting research sweep on prompt engineering, agent memory, context optimization, and skill authoring. Built for scheduled standalone opencode sessions (systemd timer): grounds in the skill-research wiki pages, dedups against prior sweeps, applies a strict evidence bar, writes a dated findings note to the vault Inbox, and stretches or tightens its own schedule based on verified-finding volume. Use when running the research-prompt-skills scheduled job or when asked to do a prompt/skill research sweep.
+description: A self-adjusting research sweep on prompt engineering, agent memory, context optimization, and skill authoring. It runs as a scheduled standalone session, grounds in prior findings, applies a strict evidence bar, and files a dated note to the vault Inbox. Use when running the research-prompt-skills scheduled job or asked to do a prompt/skill research sweep.
 metadata:
   category: analysis
   route-when: "Use when running the research-prompt-skills scheduled job or when asked to do a prompt, memory, context, or skill research sweep."

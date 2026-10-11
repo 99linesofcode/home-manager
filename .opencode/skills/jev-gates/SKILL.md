@@ -1,6 +1,6 @@
 ---
 name: jev-gates
-description: Run the Jev decision gates — a dependency-free Node runner and gate definitions that turn a classification call into a decision, a confidence, and an action (proceed, ask, or escalate). Use when the orchestrator needs a triage decision, to classify a request, route a task to a skill or a routing-matrix row or a worker role, pre-screen a worker diff before accepting it, or decide whether to escalate to the advisor. Triggers on "triage decision", "classify", "route", "gate", "Jev", "which skill/role/row", "pre-screen a worker diff", "escalate to the advisor".
+description: Ask a System One model to make one classification call — triage, routing, or a diff pre-screen — and act on its typed answer. Use when the orchestrator must not decide a classification by judgment.
 metadata:
   category: tooling
   route-when: "Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, pre-screening a worker diff, or deciding whether to escalate to the advisor."

@@ -1,6 +1,6 @@
 ---
 name: github
-description: The user's GitHub platform interface — reading issues, joining discussions, sending updates, creating pull requests linked to issues, and the milestone note. The GitHub API/platform layer, distinct from git-workflow (local git mechanics). Optional: used by the orchestrator or a worker when work needs to flow through GitHub. Use when reading or triaging issues, participating in discussions, posting updates, or creating PRs that reference issues.
+description: Read and triage GitHub issues, post in discussions, send updates, and open pull requests that reference issues — the platform layer above local git. Use when work needs to flow through GitHub rather than stay on the local branch.
 metadata:
   category: tooling
   route-when: "Use when reading or triaging GitHub issues, joining or posting in discussions, sending updates, or creating pull requests that reference issues."

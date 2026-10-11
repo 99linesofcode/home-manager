@@ -1,6 +1,6 @@
 ---
 name: wiki
-description: The LLM-wiki maintenance procedure (Karpathy). Ingest sources from the vault Inbox, write and cross-link wiki pages, maintain index.md and log.md, answer with citations, and lint for health. Loaded on demand by the orchestrator.
+description: Maintain the vault's agent-owned LLM-wiki layer — turn captured Inbox sources into cross-linked, citable pages — so knowledge stays retrievable and healthy. Use when ingesting a source, querying the wiki, or linting wiki health.
 metadata:
   category: vault
   route-when: "Use when ingesting a source from the vault Inbox, querying the wiki, or linting wiki health."

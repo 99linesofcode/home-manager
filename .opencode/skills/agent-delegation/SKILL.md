@@ -1,6 +1,6 @@
 ---
 name: agent-delegation
-description: Compose and dispatch worker packages, route each task to a role and each role to its governing skills, verify the evidence, and consolidate escalations. Defines the reusable role briefs (material analyst, spec writer, spec adversary, options analyst, spike engineer, characterization test author, acceptance test author, implementer, reviewer, premise auditor, spec reconciler, advisor) and the delegation-brief and worker-report templates. Use whenever the orchestrator dispatches a worker, decides which role a task warrants, or works in any phase of spec-driven delivery.
+description: Compose and dispatch a worker package — pick the role, attach its governing skills and required files, then verify the evidence that comes back. Use when the orchestrator hands work to a worker, since workers start cold and cannot ask for anything the package omits.
 metadata:
   category: tooling
   route-when: "Use when the orchestrator composes or dispatches a worker package, picks a role, verifies evidence, or consolidates escalations."

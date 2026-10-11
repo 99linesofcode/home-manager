@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: The user's code review contract — what a review must check, structured so a worker can run it automated. Covers atomicity, correctness, self-documenting code, no dangling code, tests, architecture adherence, and security. Manual for now; designed to be run by a separate worker. Use when reviewing a pull request or change, or when preparing a change for review.
+description: The user's contract for what a code review must check — atomicity, correctness, style, dead code, tests, architecture, and security — written so a worker can run it. It exists so a review is consistent and complete rather than ad hoc. Use when reviewing a pull request or change, or preparing one for review.
 metadata:
   category: review
   route-when: "Use when reviewing a pull request or change, or when preparing a change for review."

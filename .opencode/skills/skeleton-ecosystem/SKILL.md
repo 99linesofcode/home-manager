@@ -1,6 +1,6 @@
 ---
 name: skeleton-ecosystem
-description: The user's seed→sapling skeleton ecosystem — which skeleton to start from, the three sync mechanisms (remote + rebase, submodule, subtree), the GitHub submodule caveat, devshell wiring, shared config and thin-wrapper workflows, and per-project-type scaffolding. Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows or shared config.
+description: The user's seed→sapling skeleton ecosystem — which skeleton a project starts from and how to wire and keep it in sync. Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows, or shared config.
 metadata:
   category: delivery
   route-when: "Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows or shared config."

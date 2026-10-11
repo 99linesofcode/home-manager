@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: Git and GitHub workflow for this user's projects. GitHub Flow by default, always checking CONTRIBUTING.md first; Conventional Commits (including commit message wording); ask before commit/push/PR; safe git operations (no force-push, no history rewriting). Includes collapsing commits (fixup + squash by feature before push), rebasing, and stashing. The broader development discipline (incremental atomic changes, cleanup-as-you-go) lives in the software-development skill. Use when the user asks to commit, branch, merge, rebase, stash, push, pull, open or review a pull request, file or triage a GitHub issue, create a release, author a CONTRIBUTING.md, or when starting work in a repo and the workflow needs to be determined.
+description: Git and GitHub workflow for the user's projects — determine the repo's methodology, follow its conventions, and make safe commits, branches, and pull requests. Use when committing, branching, merging, rebasing, stashing, pushing or pulling, opening or reviewing a pull request, filing or triaging an issue, creating a release, or authoring a CONTRIBUTING.md.
 metadata:
   category: delivery
   route-when: "Use when the user asks to commit, branch, merge, rebase, stash, push, pull, open or review a pull request, file or triage an issue, create a release, author a CONTRIBUTING.md, or when starting work in a repo and the workflow needs to be determined."

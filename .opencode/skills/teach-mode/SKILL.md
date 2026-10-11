@@ -1,6 +1,6 @@
 ---
 name: teach-mode
-description: The user's teaching contract — how to explain a subject when the user wants to learn. Triggers on "teach me X", "teach mode", "I want to learn X", "walk me through X", "give me a lesson on X", "explain X to me" when the intent is learning. Explains in plain, non-esoteric language, one concept at a time, with concrete examples tied to the user's world. Light assessment and verification — never a grilling. Wiki-first grounding, summary note to the vault Inbox.
+description: Explain a subject so the user actually learns it — plain language, one concept at a time, concrete examples, and light checks rather than a grilling. Use when the user wants to learn something — "teach me X", "walk me through X", or "explain X to me" with learning intent.
 metadata:
   category: tooling
   route-when: "Use when the user wants to learn a subject — 'teach me X', 'walk me through X', 'give me a lesson on X', or 'explain X to me' with a learning intent."

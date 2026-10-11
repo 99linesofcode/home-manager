@@ -1,6 +1,6 @@
 ---
 name: software-development
-description: The user's software development discipline — the skill gate (governing skills loaded and followed before any meaningful work, worker or otherwise), the change chain (task → use cases → separate changes → individual atomic commits), TDD, verify-as-you-go, cleanup-as-you-go (no dangling code), and a definition of done. Applies to every software development context (any language, framework, or repo). Use when building, extending, refactoring, or reviewing code, or when deciding how to structure a change.
+description: The user's software development discipline — load the governing skills, then work in small verifiable changes with cleanup built in. Removes dangling code, messy history, and cleanup-later debt. Use when building, extending, refactoring, or reviewing code in any language or repository, or when deciding how to structure a change.
 metadata:
   category: delivery
   route-when: "Use when building, extending, refactoring, or reviewing code in any language or repository, or when deciding how to structure a change."

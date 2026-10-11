@@ -1,6 +1,6 @@
 ---
 name: avo
-description: The user's Avo admin UI mechanics — Resources, Fields, Actions, Dashboards, Cards, and the Avo-to-action seam. The concrete Avo expression of the software-architecture contract, layered on the rails skill. Use when building, extending, or reviewing Avo resources, fields, actions, dashboards, cards, or authorization in the user's Rails modules or applications.
+description: The user's Avo admin UI mechanics — the Rails counterpart of Filament, so the agent builds Avo resources in the house style rather than inventing its own. Use when building, extending, or reviewing Avo resources, fields, actions, dashboards, or authorization in the user's Rails modules.
 metadata:
   category: language
   route-when: "Use when building, extending, or reviewing Avo resources, fields, actions, dashboards, cards, or authorization in the user's Rails modules or applications."

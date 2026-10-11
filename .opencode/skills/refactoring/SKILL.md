@@ -1,6 +1,6 @@
 ---
 name: refactoring
-description: Scale-aware refactoring contract — snippet, unit (file/module), and system scale, each with its own machinery; legibility is the bar and the judge. Triggers on "refactor", "refactoring", "clean up this code", "this is hard to read", "behaviour-preserving", "legibility", "duplication", "extract", "inline". Use when a change's main job is to restructure code without changing behaviour, at any scale.
+description: Restructure code without changing behaviour, at snippet, unit, or system scale. Use when a change's main job is to improve legibility rather than add behaviour.
 metadata:
   category: architecture
   route-when: "Use when a change's main job is a behaviour-preserving restructure of code, at any scale, including when deciding how much machinery the refactor deserves."

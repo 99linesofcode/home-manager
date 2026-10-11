@@ -1,6 +1,6 @@
 ---
 name: communication-standards
-description: The user's communication contract — how the orchestrator writes when talking to the user. Applies to ALL user-facing output: conversation, summaries, plans, reviews, teaching. Triggers on "less AI", "more human", "stop the slop", "AI slop", "filler", "writing style", "tone", "communication", "prose", "style guide".
+description: Write to the user in plain, human prose — no filler, no AI slop — across conversation, summaries, plans, and reviews. Use for any user-facing writing, or when the user asks for a different tone or less AI slop.
 metadata:
   category: tooling
   route-when: "Use for all user-facing writing — conversation, summaries, plans, reviews, and teaching — or when the user asks for less AI slop, a different tone, or a style guide."

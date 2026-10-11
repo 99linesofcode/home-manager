@@ -1,6 +1,6 @@
 ---
 name: filament
-description: The user's Filament admin UI mechanics — Resources, Forms, Tables, Plugins, and Pages, and the Filament-to-action seam. The concrete Filament expression of the software-architecture contract, layered on the laravel skill. Use when building, extending, or reviewing Filament resources, forms, tables, plugins, or pages in the user's Laravel modules or applications.
+description: The user's Filament admin UI mechanics — the Laravel admin layer and its UI-to-core seam, so the agent builds Filament UI in the house style rather than reaching into Eloquent directly. Use when building, extending, or reviewing Filament resources, forms, tables, plugins, or pages in the user's Laravel modules.
 metadata:
   category: language
   route-when: "Use when building, extending, or reviewing Filament resources, forms, tables, plugins, or pages in the user's Laravel modules or applications."

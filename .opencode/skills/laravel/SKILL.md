@@ -1,6 +1,6 @@
 ---
 name: laravel
-description: The user's Laravel mechanics — the PHP/Laravel-specific conventions for the user's repos: composer wiring, the ServiceProvider composition root, Eloquent model mechanics, Pest + Testbench testing, and the Laravel-specific naming roles. Architecture itself lives in the software-architecture skill. Use when building, extending, or reviewing Laravel code in the user's style, or when the user references their modules, ServiceProvider, composer wiring, or Eloquent mechanics.
+description: The user's Laravel mechanics — the PHP/Laravel conventions their repos follow, so the agent writes Laravel in the house style rather than textbook defaults. Use when building, extending, or reviewing Laravel code in the user's repos.
 metadata:
   category: language
   route-when: "Use when building, extending, or reviewing Laravel or PHP code in the user's style, or when the task references their modules, ServiceProvider, composer wiring, or Eloquent mechanics."

@@ -1,6 +1,6 @@
 ---
 name: edge-case-analysis
-description: Adversarial analysis of unhandled code paths and robustness — boundary values, null/empty/undefined, type coercion, race conditions, resource exhaustion, state-machine violations, and error handling. Use when reviewing code for edge cases, crashes, hangs, and denial-of-service, or as the robustness step of a red-team review.
+description: Adversarial analysis of the unhandled code paths that crash, hang, or exhaust a system — boundary values, nulls, type coercion, race conditions, resource exhaustion, and error handling. It exists to catch the robustness failures a vulnerability hunt passes over. Use when reviewing code for edge cases or denial-of-service, or as the robustness step of a red-team review.
 metadata:
   category: review
   route-when: "Use when reviewing code for edge cases, crashes, hangs, and denial-of-service, or as the robustness step of a red-team review."

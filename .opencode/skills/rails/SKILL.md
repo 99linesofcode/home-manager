@@ -1,6 +1,6 @@
 ---
 name: rails
-description: The user's Ruby on Rails mechanics — the Rails-engine-as-module layout, the engine composition root, ActiveRecord mechanics, Action objects + DTOs, Hotwire (Turbo + Stimulus) UI, Packwerk boundary enforcement, and RSpec testing. The Ruby/Rails expression of the software-architecture contract and the sibling of the laravel skill. Use when building, extending, or reviewing Ruby on Rails code, engines, modules, action objects, DTOs, ActiveRecord models, Hotwire views, or Packwerk boundaries in the user's repos.
+description: The user's Ruby on Rails mechanics — the Rails expression of the software-architecture contract, so the agent builds engines and modules in the house style rather than textbook Rails. Use when building, extending, or reviewing Ruby on Rails code in the user's repos.
 metadata:
   category: language
   route-when: "Use when building, extending, or reviewing Ruby on Rails code, engines, modules, action objects, DTOs, ActiveRecord models, Hotwire views, or Packwerk boundaries in the user's repos."

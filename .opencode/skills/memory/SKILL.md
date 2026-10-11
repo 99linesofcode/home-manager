@@ -1,6 +1,6 @@
 ---
 name: memory
-description: Two-tier file-native memory system (working memory HOT.md + episodic stream + semantic facts, with milestone-triggered reflection and codification pruning), grounded in Generative Agents and Files-as-Memory research. Emits OKF v0.2-conformant concepts. Use when reading or writing HOT.md, recording episodic events, updating semantic memory, running reflection, or when the user says "consolidate memory".
+description: Maintain the user's file-native agent memory — working, episodic, and semantic — so context persists across sessions and is consolidated rather than lost. Use when reading or writing HOT.md, recording an episodic event, or consolidating memory.
 metadata:
   category: vault
   route-when: "Use when reading or writing HOT.md, recording episodic events, updating semantic memory, running reflection, or when the user says consolidate memory."

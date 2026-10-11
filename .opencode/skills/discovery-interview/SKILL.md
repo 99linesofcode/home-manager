@@ -1,6 +1,6 @@
 ---
 name: discovery-interview
-description: Interview-first discovery for a project or feature — ask, don't assume; resolve what we know, track what we don't. Offers concrete options with a recommended default, records decisions, and routes unknowns to the open-questions register. Folds in event storming as a structuring technique for complex domains. Use when a brief is vague, when starting discovery, or when the user hands over raw material and says "figure out what we're building".
+description: Interview-first discovery — ask rather than assume, offer concrete options with a recommended default, record decisions, and route unknowns to an open-questions register. Use when a brief is vague, when starting discovery, or when the user hands over raw material and asks to figure out what we're building.
 metadata:
   category: delivery
   route-when: "Use when a brief is vague, when starting discovery, or when the user hands over raw material and asks to figure out what we're building."

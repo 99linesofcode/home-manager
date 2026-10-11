@@ -1,6 +1,6 @@
 ---
 name: self-documenting-code
-description: The user's code-style contract — code should be self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps. Comments are a smell; intent lives in the project spec and acceptance criteria, never in source comments. Use when writing, reviewing, or refactoring code, when deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording.
+description: The user's code-style contract — code should be self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps; comments are a smell and intent lives in the spec, not the source. Use when writing, reviewing, or refactoring code, deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording.
 metadata:
   category: review
   route-when: "Use when writing, reviewing, or refactoring code, when deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording."

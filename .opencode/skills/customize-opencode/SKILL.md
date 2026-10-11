@@ -1,6 +1,6 @@
 ---
 name: customize-opencode
-description: Use ONLY when the user is editing or creating opencode's own configuration: opencode.json, opencode.jsonc, files under .opencode/, or files under ~/.config/opencode/. Also use when creating or fixing opencode agents, subagents, skills, plugins, MCP servers, or permission rules. Do not use for the user's own application code, or for any project that is not configuring opencode itself.
+description: Edit opencode's own configuration — opencode.json, .opencode/, and ~/.config/opencode/ — including agents, subagents, skills, plugins, MCP servers, and permission rules. Use ONLY when configuring opencode itself, because it validates its config strictly and refuses to start on a wrong field; not for application code.
 metadata:
   category: tooling
   route-when: "Use when the user is editing or creating opencode's own configuration — opencode.json, .opencode/, or ~/.config/opencode/ — including agents, subagents, skills, plugins, MCP servers, and permission rules."

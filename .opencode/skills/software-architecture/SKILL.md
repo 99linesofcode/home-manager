@@ -1,6 +1,6 @@
 ---
 name: software-architecture
-description: Architecture contract for any OO codebase — where logic lives (actions, domain services, pure calculations), hexagonal ports & adapters, canonical DTOs (the core owns its shapes; one per concept), provider neutrality, the lean guardrail, the modular monolith, ARCHITECTURE.md. Use when designing, building or reviewing architecture, placing logic, or defining a port, DTO or use case. Load `software-architecture-structure` for folders, naming and role suffixes.
+description: The house contract for architected object-oriented code — where logic lives, how use cases, ports, and DTOs are shaped, and how to keep the core lean and provider-neutral. It exists so logic has one predictable home and the core does not leak framework or vendor detail. Use when designing, building, or reviewing an OO codebase's architecture, or deciding where logic belongs.
 metadata:
   category: architecture
   route-when: "Use when designing, building, extending, or reviewing the architecture of any OO codebase, or when deciding where logic lives, how a use case is shaped, or how a port or DTO is defined."

@@ -1,6 +1,6 @@
 ---
 name: kubernetes
-description: The user's Kubernetes contract — k3s for local and production, Helm umbrella charts, Flux GitOps, the one-chart-two-overlays local/production parity rule, GHCR for charts and images, SOPS+age secrets, cert-manager TLS, the Gateway API + Traefik ingress, and Task's constrained bootstrap role. Use when deploying to Kubernetes, writing or changing a Helm chart, wiring Flux, handling cluster secrets, or when the user references k3s, Helm, Flux, cert-manager, GHCR, chart submodules, or the kubernetes-base / kubernetes-php / kubernetes-fleet repos.
+description: Deploy workloads to Kubernetes under the user's contract — k3s clusters, Helm umbrella charts, Flux GitOps, secrets, and TLS. Use when deploying to a cluster, writing or changing a Helm chart, wiring Flux, or handling cluster secrets.
 metadata:
   category: tooling
   route-when: "Use when deploying to Kubernetes, writing or changing a Helm chart, wiring Flux, handling cluster secrets, or working with k3s, cert-manager, GHCR, or the kubernetes-* repos."

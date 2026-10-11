@@ -1,6 +1,6 @@
 ---
 name: skill-design-principles
-description: Decision framework for when to create a skill and what belongs in it. Triggers on: "should I make a skill for this", "what goes in a skill", "how do I decide what to put in a skill", "is this a skill or a role", "designing a skill", "skill boundary", "skill scope". Use before creating any new SKILL.md to determine scope and content. Pairs with skill-authoring.
+description: Decide whether a workflow needs a skill at all and what belongs inside it — contract versus methodology, role versus skill, and where the boundary falls. Use before authoring a new SKILL.md, when the question is scope and content rather than mechanics.
 metadata:
   category: tooling
   route-when: "Use before authoring a skill when deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role."

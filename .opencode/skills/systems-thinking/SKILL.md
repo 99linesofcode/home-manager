@@ -1,6 +1,6 @@
 ---
 name: systems-thinking
-description: The lens for seeing a system as a whole before judging or changing any part of it — state the system in one breath, separate essential from accidental complexity, right-size the design to the real system, and derive the picture of what good looks like from the spec alone. Use when modelling a system, when asked whether a design is right, when a design feels too complex, or as the first move of a re-architecture (with premise-demolition).
+description: See a system as a whole before judging or changing any part — state it in one breath, separate essential from accidental complexity, and right-size the design to the real system. It exists so a design is judged against the whole it serves, not in isolation. Use when modelling a system, when asked whether a design is right, or as the first move of a re-architecture.
 metadata:
   category: analysis
   route-when: "Use when modelling a system or feature for the first time, when asked whether a design is right, or as the first move of a re-architecture."

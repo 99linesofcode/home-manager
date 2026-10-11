@@ -1,6 +1,6 @@
 ---
 name: threat-modeling
-description: Model a system, feature, or change to enumerate security threats before or during a review. Use when reviewing architecture or design for security, scoping a security review, or as the first step of a red-team/adversarial review. Produces a STRIDE threat model that scopes what to attack.
+description: Model a system, feature, or change — assets, trust boundaries, data flows — to enumerate security threats with STRIDE before hunting vulnerabilities. It exists to catch architectural security mistakes, such as a missing trust boundary, that code review alone misses. Use when reviewing a design or architecture for security, or as the first step of a red-team review.
 metadata:
   category: review
   route-when: "Use when reviewing architecture or design for security, scoping a security review, or as the first step of a red-team or adversarial review."

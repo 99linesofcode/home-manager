@@ -1,6 +1,6 @@
 ---
 name: slice-delivery
-description: Run one slice end to end — shape it into a task with criterion IDs and architectural constraints, run the spec-delta check, characterization tests, acceptance tests written first and shown to fail for the right reason, lock the tests, implement, run an independent spec review, then reconcile the spec and decisions. Use when starting or delivering a slice, or when the user says "let's build the next slice".
+description: Deliver one slice end to end — shape it, pin its behavior with tests written first and shown to fail for the right reason, implement, review independently, and reconcile the spec. Use when starting or delivering a slice, or when the user says to build the next slice.
 metadata:
   category: delivery
   route-when: "Use when starting or delivering a slice, or when the user asks to build the next slice."

@@ -1,6 +1,6 @@
 ---
 name: skill-authoring
-description: Author, structure, and validate SKILL.md files per the Agent Skills specification (agentskills.io). Use when creating a new skill, editing or extending an existing skill, or when the user asks to define, package, or formalize a workflow as a reusable agent skill.
+description: Author, structure, and validate SKILL.md files against the Agent Skills specification so a skill stays valid and discoverable across clients. Use when creating, editing, or extending a skill, or formalising a workflow as a reusable one.
 metadata:
   category: tooling
   route-when: "Use when creating a new SKILL.md, editing or extending an existing skill, or formalizing a workflow as a reusable agent skill per the Agent Skills specification."

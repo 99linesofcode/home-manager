@@ -1,6 +1,6 @@
 ---
 name: spec-change
-description: Handle changed intent or newly discovered ambiguity mid-build — produce an approved spec delta (affected rules and scenarios, invalidated tests, affected merged slices, proposed re-slicing) before touching any code. Use when the user changes their mind, when a requirement shifts, or when implementation surfaces an ambiguity the spec does not cover.
+description: Handle changed intent or newly discovered ambiguity mid-build by producing an approved spec delta — affected rules, invalidated tests, affected slices — before touching any code. Use when the user changes their mind, a requirement shifts, or implementation surfaces an ambiguity the spec does not cover.
 metadata:
   category: delivery
   route-when: "Use when the user changes their mind mid-build, when a requirement shifts, or when implementation surfaces an ambiguity the spec does not cover."
