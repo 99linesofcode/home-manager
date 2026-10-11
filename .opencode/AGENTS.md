@@ -27,14 +27,15 @@ never be edited directly — the sandbox denies them, correctly.
 
 ## Operating contract
 
-All operational procedure lives in skills. `vault-notes` is **always loaded**
-— every session, in full — because it is the contract that keeps notes filed
-correctly. The rest are loaded on demand; load the relevant skill before
-acting:
+All operational procedure lives in skills. The orchestrator loads the working
+context (memory + the vault schema) at session start, and loads `vault-notes`
+— in full — before its first vault write, because it is the contract that
+keeps notes filed correctly. The rest are loaded on demand; load the relevant
+skill before acting:
 
 | Operation | Skill |
 |---|---|
-| Vault changes (notes, entities, projects, meetings) | `vault-notes` *(always loaded)* |
+| Vault changes (notes, entities, projects, meetings) | `vault-notes` *(loaded before the first write)* |
 | Wiki maintenance (ingest, query, lint) + OKF format | `wiki` |
 | Memory (working, episodic, semantic, reflection) | `memory` |
 | Spec-driven delivery (seed → discovery → spec → architecture → slices) | `project-seed`, `discovery-interview`, `feature-spec`, `architecture-and-skeleton`, `slice-delivery`, `spec-change` |
