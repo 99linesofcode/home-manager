@@ -1080,21 +1080,35 @@ function checkGateDrift(root, rep) {
     } catch {
         return;
     }
-    const rr = gates.gates && gates.gates.role_routing;
-    const criteriaKeys = rr && rr.criteria ? Object.keys(rr.criteria).sort() : [];
-    const roleKeys = catalog.roles ? Object.keys(catalog.roles).sort() : [];
-    const criteriaSet = new Set(criteriaKeys);
-    const roleSet = new Set(roleKeys);
-    const onlyCriteria = criteriaKeys.filter((k) => !roleSet.has(k));
-    const onlyRoles = roleKeys.filter((k) => !criteriaSet.has(k));
-    if (onlyCriteria.length || onlyRoles.length) {
-        const parts = [];
-        if (onlyCriteria.length) parts.push(`only in role_routing criteria: ${onlyCriteria.join(', ')}`);
-        if (onlyRoles.length) parts.push(`only in catalog roles: ${onlyRoles.join(', ')}`);
-        rep.warn(`gate drift — role_routing criteria keys != catalog roles keys (${parts.join('; ')})`);
+    const g = gates.gates || {};
+    const matrixRows = catalog.matrixRows || [];
+    const expectedMatrix = matrixRows.map((r) => r.task).sort();
+    const gateMatrix = g.matrix_row && g.matrix_row.criteria ? Object.keys(g.matrix_row.criteria).sort() : [];
+    if (JSON.stringify(expectedMatrix) !== JSON.stringify(gateMatrix)) {
+        rep.warn('gate drift — matrix_row.criteria keys != catalog matrixRows tasks');
     }
-    // step 4: the matrix_row half — compare `gates.gates.matrix_row.criteria` keys
-    // with `catalog.matrixRows` keys once `matrixRows` exists.
+    const expectedRoles = Object.keys(catalog.roles || {}).sort();
+    const roleCriteria = g.role_routing && g.role_routing.criteria && g.role_routing.criteria.role
+        ? g.role_routing.criteria.role.criteria || {}
+        : {};
+    const gateRoles = Object.keys(roleCriteria).sort();
+    if (JSON.stringify(expectedRoles) !== JSON.stringify(gateRoles)) {
+        rep.warn('gate drift — role_routing.criteria.role.criteria keys != catalog roles keys');
+    }
+}
+
+// Skills whose SKILL.md must carry a generated block (and its markers).
+const GENERATED_BLOCK_SKILLS = ['software-development', 'agent-delegation'];
+
+/** The generated blocks must keep their `<!-- generated:start/end -->` markers. */
+function checkGeneratedBlocks(skills, rep) {
+    for (const name of GENERATED_BLOCK_SKILLS) {
+        const skill = skills.get(name);
+        if (!skill || skill.parseError) continue;
+        if (!skill.text.includes('<!-- generated:start') || !skill.text.includes('<!-- generated:end')) {
+            rep.warn(`${name}: missing generated-block markers (<!-- generated:start --> / <!-- generated:end -->)`);
+        }
+    }
 }
 
 function checkDiff(skills, root, base, rep) {
@@ -1297,6 +1311,7 @@ function main(argv) {
     checkRoleBriefs(skills, root, rep);
     checkCatalogStale(rep);
     checkAllowList(skills, root, rep);
+    checkGeneratedBlocks(skills, rep);
     checkGateDrift(root, rep);
     if (args.base) checkDiff(skills, root, args.base, rep);
 

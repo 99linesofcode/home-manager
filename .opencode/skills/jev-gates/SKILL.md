@@ -33,7 +33,7 @@ Before acting, read (or run) every `required` file below.
 | File | Load | Read when |
 |---|---|---|
 | `scripts/jev.mjs` | required | before running a gate — it is the runner |
-| `assets/gates.json` | required | before running a gate — the gate definitions it reads |
+| `assets/gates.json` | on-demand | read by the gate script at run time — machine data, never loaded into context |
 
 ## When to use
 

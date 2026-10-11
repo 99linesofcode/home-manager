@@ -92,18 +92,22 @@ The task matrix in `software-development` routes a task to **skills**; this
 routes a task to a **role** — what the worker does. Classify the work before you
 dispatch:
 
-| The work | Role |
+<!-- generated:start — do not edit; regenerate with build-catalog.mjs -->
+| Task | Role |
 |---|---|
-| Implement a bounded change against locked tests | implementer |
-| Review a change end-to-end | reviewer |
-| Re-derive and scrutinise an existing system's design | premise auditor |
-| Compare architecture or technology options | options analyst |
-| Prove a risky unknown with a throwaway prototype | spike engineer |
-| Extract facts and questions from raw material | material analyst |
-| Write or attack a spec | spec writer / spec adversary |
-| Author characterization or acceptance tests | characterization test author / acceptance test author |
-| Reconcile the spec to what was built | spec reconciler |
-| Advise on a hard-to-reverse decision or a system-scale premise audit | advisor |
+| Use when turning spec criteria into failing automated tests tagged by ID. | acceptance-test-author |
+| Use when an independent second opinion is needed on a hard-to-reverse decision or a system-scale premise audit. | advisor |
+| Use when pinning the current behavior of code that is about to change. | characterization-test-author |
+| Use when implementing a bounded change against locked tests, following the spec and brief exactly. | implementer |
+| Use when extracting facts, inferences, and unknowns from raw material and proposing interview questions. | material-analyst |
+| Use when comparing architecture or technology options against the user's principles. | options-analyst |
+| Use when re-deriving an existing system's design from its spec with fresh eyes and judging the design against it. | premise-auditor |
+| Use when reviewing a change end-to-end to judge whether each spec criterion is satisfied and tested. | reviewer |
+| Use when attacking a spec for contradictions, untestable rules, missing scenarios, and unaddressed edge cases. | spec-adversary |
+| Use when updating specs and the decision log to match what was actually built. | spec-reconciler |
+| Use when drafting one feature spec with stable IDs, testable rules, and scenarios. | spec-writer |
+| Use when answering one named question with a time-boxed throwaway prototype. | spike-engineer |
+<!-- generated:end -->
 
 **Delegation is for independent work, not only implementation.** Independence
 comes from fresh context, and a cold worker is the freshest reader available. A
@@ -122,20 +126,22 @@ them is a defect: the worker is left working from your paraphrase.
 
 Resolve the role against this matrix and put every listed path in the package:
 
-| Role                         | Governing skills                                                                         |
-| ---------------------------- | ---------------------------------------------------------------------------------------- |
-| material analyst             | `discovery-interview`                                                                    |
-| options analyst              | `architecture-and-skeleton`, `software-architecture`                                     |
-| spike engineer               | `architecture-and-skeleton`                                                              |
-| spec writer                  | `feature-spec`                                                                           |
-| spec adversary               | `feature-spec`                                                                           |
-| spec reconciler              | `feature-spec`, `spec-change`                                                            |
-| characterization test author | `software-testing`                                                                       |
-| acceptance test author       | `software-testing`                                                                       |
-| implementer                  | `software-architecture`, `software-development`, `self-documenting-code`, `git-workflow` |
-| reviewer                     | `code-review`, plus the change's own governing skills                                    |
-| premise auditor              | `premise-demolition`, `systems-thinking`, `software-architecture`                        |
-| advisor                      | `premise-demolition`, `systems-thinking`, `software-architecture`                        |
+<!-- generated:start — do not edit; regenerate with build-catalog.mjs -->
+| Role | Governing skills |
+|---|---|
+| acceptance-test-author | software-testing |
+| advisor | premise-demolition, software-architecture, systems-thinking |
+| characterization-test-author | software-testing |
+| implementer | git-workflow, self-documenting-code, software-architecture, software-development |
+| material-analyst | discovery-interview |
+| options-analyst | architecture-and-skeleton, software-architecture |
+| premise-auditor | premise-demolition, software-architecture, systems-thinking |
+| reviewer | code-review (+ the change's own governing skills) |
+| spec-adversary | feature-spec |
+| spec-reconciler | feature-spec, spec-change |
+| spec-writer | feature-spec |
+| spike-engineer | architecture-and-skeleton |
+<!-- generated:end -->
 
 This matrix routes **roles** — what a worker does. The task-level matrix as in
 the `software-development` routes **tasks**. Both are authoritative for their

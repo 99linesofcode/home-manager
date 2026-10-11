@@ -11,15 +11,21 @@
  * `## Related` graph (`loads` / `references`), the `## Files` table
  * (`tier`: required | on-demand), and the `## External` table. It also parses
  * each role brief under `agent-delegation/references/roles/*.md` for
- * `role` / `governing` / `context-resolved`.
+ * `role` / `governing` / `context-resolved` / `route-when`.
+ *
+ * It also renders the derived artifacts from that catalog: the routing matrix
+ * in `software-development` and the task→role / role→governing tables in
+ * `agent-delegation` (between generated-block markers), and the two Jev gate
+ * option sets in `jev-gates/assets/gates.json`. `--check` compares all of them.
  *
  * Determinism is mandatory: all keys and arrays are sorted and no timestamps
  * or absolute paths are emitted, so two runs on the same tree are
  * byte-identical.
  *
  * Usage:
- *   node build-catalog.mjs [--write]   write .opencode/skills/catalog.json
- *   node build-catalog.mjs --check     exit non-zero if the committed file differs
+ *   node build-catalog.mjs             write catalog.json, both SKILL.md
+ *                                      blocks, and gates.json
+ *   node build-catalog.mjs --check     exit non-zero if any committed artifact differs
  *
  * Node standard library only. The library root is found by walking up from this
  * file for `.opencode/skills`. Run it from the repository root (no node on PATH
@@ -34,6 +40,25 @@ import { fileURLToPath } from 'node:url';
 const SCHEMA = 1;
 const SUMMARY_MAX = 160;
 const HERE = path.dirname(fileURLToPath(import.meta.url));
+
+// Skills deliberately outside the software-development routing matrix, mirroring
+// lint-skills.mjs's NON_MATRIX_ALLOWLIST. Keep the two lists in sync.
+const NON_MATRIX_ALLOWLIST = new Set([
+    'memory',
+    'wiki',
+    'vault-notes',
+    'teach-mode',
+    'communication-standards',
+    'beeper-bridge',
+    'typst-document',
+    'research-prompt-skills',
+]);
+
+// The generated-block markers. Three blocks are rendered: the routing matrix in
+// `software-development`, and the task→role and role→governing tables in
+// `agent-delegation`.
+const START_MARKER = '<!-- generated:start — do not edit; regenerate with build-catalog.mjs -->';
+const END_MARKER = '<!-- generated:end -->';
 
 function findRoot(start) {
     let d = start;
@@ -287,6 +312,7 @@ function loadSkill(dir) {
     return {
         id,
         name: fm.name || id,
+        lines,
         category: meta.category || null,
         summary: summarize(description),
         description,
@@ -311,7 +337,7 @@ function discoverSkills(root) {
 
 /** Parse a role brief's optional frontmatter; today's briefs have none. */
 function parseRoleFrontmatter(text) {
-    const res = { hasFrontmatter: false, role: null, governing: [], contextResolved: false };
+    const res = { hasFrontmatter: false, role: null, governing: [], contextResolved: false, routeWhen: null };
     if (!text.startsWith('---')) return res;
     const lines = text.split('\n');
     let end = null;
@@ -337,6 +363,7 @@ function parseRoleFrontmatter(text) {
         current = key;
         if (key === 'role') res.role = unquote(value) || null;
         else if (key === 'context-resolved') res.contextResolved = value === 'true';
+        else if (key === 'route-when') res.routeWhen = unquote(value) || null;
         else if (key === 'governing') {
             if (value.startsWith('[') && value.endsWith(']')) {
                 res.governing = value.slice(1, -1).split(',').map((s) => unquote(s.trim())).filter(Boolean);
@@ -362,6 +389,7 @@ function discoverRoles(root) {
             governing: parsed.governing.slice().sort(),
             contextResolved: parsed.contextResolved,
             hasFrontmatter: parsed.hasFrontmatter,
+            routeWhen: parsed.routeWhen,
         });
     }
     return out;
@@ -372,6 +400,22 @@ function sortKeys(obj) {
     const out = {};
     for (const k of Object.keys(obj).sort()) out[k] = obj[k];
     return out;
+}
+
+/**
+ * A skill is a "part" if its description declares it ("Part of `x`"), or if a
+ * parent skill's `## Parts` section covers it. Mirrors lint-skills.mjs so the
+ * matrix rows and the linter's allow-list agree.
+ */
+function isPart(skills, name) {
+    const skill = skills.find((s) => s.id === name);
+    if (skill && /Part of `[a-z0-9-]+`/.test(skill.description)) return true;
+    for (const parent of skills) {
+        if (parent.id === name || !name.startsWith(parent.id + '-')) continue;
+        const mask = fenceMask(parent.lines);
+        if (findHeading(parent.lines, mask, 'Parts') !== null) return true;
+    }
+    return false;
 }
 
 function build(root) {
@@ -411,15 +455,134 @@ function build(root) {
             governing: role.governing,
             contextResolved: role.contextResolved,
             hasFrontmatter: role.hasFrontmatter,
+            routeWhen: role.routeWhen,
         });
     }
+
+    // One row per skill in the routing matrix: the skill's route-when sentence
+    // is the task, its id the governing skill, its Loads the companions.
+    const matrixRows = skills
+        .filter((s) => !NON_MATRIX_ALLOWLIST.has(s.id) && !isPart(skills, s.id))
+        .map((s) => sortKeys({ task: s.routeWhen, governing: [s.id], companions: s.loads.slice() }))
+        .sort((a, b) => (a.governing[0] < b.governing[0] ? -1 : a.governing[0] > b.governing[0] ? 1 : 0));
 
     return sortKeys({
         schema: SCHEMA,
         skills: sortKeys(skillMap),
         roles: sortKeys(roleMap),
+        matrixRows,
         count: skills.length,
     });
+}
+
+// ------------------------------------------------------------ render blocks
+
+/** `matrix_row.criteria`: keyed by each matrix task (route-when) → skill summary. */
+function matrixCriteria(catalog) {
+    const criteria = {};
+    for (const row of catalog.matrixRows) {
+        criteria[row.task] = catalog.skills[row.governing[0]].summary;
+    }
+    return sortKeys(criteria);
+}
+
+/** `role_routing.criteria.role.criteria`: keyed by each role → its route-when. */
+function roleCriteria(catalog) {
+    const criteria = {};
+    for (const [slug, role] of Object.entries(catalog.roles)) {
+        criteria[slug] = role.routeWhen;
+    }
+    return sortKeys(criteria);
+}
+
+function renderMatrixBlock(catalog) {
+    const lines = [START_MARKER, '| Task | Governing skills |', '|---|---|'];
+    for (const row of catalog.matrixRows) {
+        let cell = '`' + row.governing[0] + '`';
+        if (row.companions.length) {
+            cell += ' (+ ' + row.companions.map((c) => '`' + c + '`').join(', ') + ')';
+        }
+        lines.push(`| ${row.task} | ${cell} |`);
+    }
+    lines.push(END_MARKER);
+    return lines.join('\n');
+}
+
+function renderRoleTaskBlock(catalog) {
+    const lines = [START_MARKER, '| Task | Role |', '|---|---|'];
+    for (const slug of Object.keys(catalog.roles).sort()) {
+        const role = catalog.roles[slug];
+        lines.push(`| ${role.routeWhen} | ${role.role} |`);
+    }
+    lines.push(END_MARKER);
+    return lines.join('\n');
+}
+
+function renderRoleGoverningBlock(catalog) {
+    const lines = [START_MARKER, '| Role | Governing skills |', '|---|---|'];
+    for (const slug of Object.keys(catalog.roles).sort()) {
+        const role = catalog.roles[slug];
+        if (!role.governing.length) continue;
+        let cell = role.governing.join(', ');
+        if (role.contextResolved) cell += " (+ the change's own governing skills)";
+        lines.push(`| ${role.role} | ${cell} |`);
+    }
+    lines.push(END_MARKER);
+    return lines.join('\n');
+}
+
+/** Replace the hand table whose header matches `headerRegex` with `content`. */
+function replaceHandTable(text, headerRegex, content) {
+    const lines = text.split('\n');
+    const idx = lines.findIndex((l) => headerRegex.test(l));
+    if (idx === -1) return null;
+    let end = idx;
+    while (end + 1 < lines.length && /^\s*\|/.test(lines[end + 1])) end++;
+    return [...lines.slice(0, idx), ...content.split('\n'), ...lines.slice(end + 1)].join('\n');
+}
+
+/**
+ * Apply the generated blocks to a SKILL.md. Once the markers are present they
+ * are authoritative — the i-th marker pair takes the i-th block, so a file with
+ * two blocks (agent-delegation) maps each pair correctly. On the first run the
+ * hand table named by each block's `headerRegex` is replaced.
+ */
+function applyBlocks(text, blocks) {
+    if (!text.includes(START_MARKER)) {
+        let out = text;
+        for (const block of blocks) {
+            const next = replaceHandTable(out, block.headerRegex, block.content);
+            if (next === null) {
+                throw new Error(`build-catalog: could not locate the hand table for the ${block.label}`);
+            }
+            out = next;
+        }
+        return out;
+    }
+    let out = '';
+    let cursor = 0;
+    for (const block of blocks) {
+        const start = text.indexOf(START_MARKER, cursor);
+        if (start === -1) {
+            throw new Error(`build-catalog: missing start marker for the ${block.label}`);
+        }
+        const end = text.indexOf(END_MARKER, start + START_MARKER.length);
+        if (end === -1) {
+            throw new Error(`build-catalog: missing end marker for the ${block.label}`);
+        }
+        out += text.slice(cursor, start) + block.content;
+        cursor = end + END_MARKER.length;
+    }
+    out += text.slice(cursor);
+    return out;
+}
+
+/** The gates.json text with its two generated option sets refreshed. */
+function renderGates(text, catalog) {
+    const gates = JSON.parse(text);
+    gates.gates.matrix_row.criteria = matrixCriteria(catalog);
+    gates.gates.role_routing.criteria.role.criteria = roleCriteria(catalog);
+    return JSON.stringify(gates, null, 2) + '\n';
 }
 
 function main(argv) {
@@ -429,26 +592,67 @@ function main(argv) {
         console.error('build-catalog: could not locate .opencode/skills');
         return 2;
     }
-    const text = JSON.stringify(build(root), null, 2) + '\n';
-    const outPath = path.join(root, '.opencode', 'skills', 'catalog.json');
-    const rel = path.relative(root, outPath);
+    const catalog = build(root);
+    const skillsDir = path.join(root, '.opencode', 'skills');
+
+    const targets = [
+        { path: path.join(skillsDir, 'catalog.json'), text: JSON.stringify(catalog, null, 2) + '\n' },
+    ];
+
+    const swPath = path.join(skillsDir, 'software-development', 'SKILL.md');
+    targets.push({
+        path: swPath,
+        text: applyBlocks(readText(swPath), [
+            {
+                label: 'routing matrix',
+                headerRegex: /^\s*\|\s*Task\s*\|\s*Governing skills\s*\|/,
+                content: renderMatrixBlock(catalog),
+            },
+        ]),
+    });
+
+    const adPath = path.join(skillsDir, 'agent-delegation', 'SKILL.md');
+    targets.push({
+        path: adPath,
+        text: applyBlocks(readText(adPath), [
+            {
+                label: 'task→role table',
+                headerRegex: /^\s*\|\s*The work\s*\|\s*Role\s*\|/,
+                content: renderRoleTaskBlock(catalog),
+            },
+            {
+                label: 'role→governing table',
+                headerRegex: /^\s*\|\s*Role\s*\|\s*Governing skills\s*\|/,
+                content: renderRoleGoverningBlock(catalog),
+            },
+        ]),
+    });
+
+    const gatesPath = path.join(skillsDir, 'jev-gates', 'assets', 'gates.json');
+    targets.push({ path: gatesPath, text: renderGates(readText(gatesPath), catalog) });
 
     if (check) {
-        const existing = fs.existsSync(outPath) ? readText(outPath) : null;
-        if (existing === null) {
-            console.error(`build-catalog: ${rel} is missing — run without --check to write it`);
-            return 1;
+        let stale = 0;
+        for (const target of targets) {
+            const rel = path.relative(root, target.path);
+            const existing = fs.existsSync(target.path) ? readText(target.path) : null;
+            if (existing === null) {
+                console.error(`build-catalog: ${rel} is missing — run without --check to write it`);
+                stale++;
+            } else if (existing !== target.text) {
+                console.error(`build-catalog: ${rel} is stale — run without --check to regenerate it`);
+                stale++;
+            }
         }
-        if (existing !== text) {
-            console.error(`build-catalog: ${rel} is stale — run without --check to regenerate it`);
-            return 1;
-        }
-        console.log(`build-catalog: ${rel} is up to date`);
+        if (stale) return 1;
+        console.log('build-catalog: catalog.json, both SKILL.md blocks, and gates.json are up to date');
         return 0;
     }
 
-    fs.writeFileSync(outPath, text);
-    console.log(`build-catalog: wrote ${rel}`);
+    for (const target of targets) {
+        fs.writeFileSync(target.path, target.text);
+        console.log(`build-catalog: wrote ${path.relative(root, target.path)}`);
+    }
     return 0;
 }
 

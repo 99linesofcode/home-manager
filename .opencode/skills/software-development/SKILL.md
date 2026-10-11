@@ -34,40 +34,47 @@ they are contracts, not suggestions.**
   lookup for the software development cluster; when a skill is added,
   renamed, or rescoped, its row changes here — see `skill-authoring`):
 
-  | Task | Governing skills |
-  |---|---|
-  | Create a repository / scaffold a project | `new-project` (+ `git-workflow`, `skeleton-ecosystem`) |
-  | Any git or GitHub operation (branch, commit, PR, release) | `git-workflow` |
-  | Write, extend, or review code (any language) | `software-architecture` + `software-architecture-structure` + `software-development` |
-  | Name, place or restructure files and classes | `software-architecture-structure` |
-  | Write or review tests | `software-testing` |
-  | Code style: naming, comments, whitespace, formatting rhythm | `self-documenting-code` |
-  | Laravel specifics (actions, DTOs, modules) | `laravel` |
-  | Filament UI work | `filament` (+ `laravel`) |
-  | Rails specifics (actions, DTOs, engines, Hotwire) | `rails` |
-  | Avo admin UI work | `avo` (+ `rails`) |
-  | TypeScript / Node specifics (interfaces, imports, barrels, DI) | `typescript` (+ `software-architecture`) |
-  | Docker / Docker Compose dev environment | `docker` |
-  | Kubernetes / Helm / Flux / cluster deploy | `kubernetes` |
-  | Review a change end-to-end | `code-review` (+ that change's governing skills — resolved from context) |
-  | Scrutinise or re-architect an existing system (demolish the premise, "refactor", "reflect on this") | `premise-demolition` (+ `systems-thinking`) |
-  | Refactor code at any scale (snippet, unit, system) | `refactoring` |
-  | See a system as a whole / form the picture of what good looks like | `systems-thinking` |
-  | Security review / red-team | `code-review` (+ `security-review`, `threat-modeling`, `edge-case-analysis`) |
-  | Start a new project / seed the foundation | `project-seed` |
-  | Discover what we're building (vague brief, raw material) | `discovery-interview` |
-  | Write or update a feature spec | `feature-spec` |
-  | Choose a stack / build the walking skeleton | `architecture-and-skeleton` |
-  | Deliver a slice | `slice-delivery` |
-  | Handle changed intent or new ambiguity mid-build | `spec-change` |
-  | Dispatch a worker | `agent-delegation` |
-  | Make a classification or routing decision (triage, intake, matrix row, role) | `jev-gates` |
-  | Author or edit a skill (SKILL.md) | `skill-authoring` (+ `skill-design-principles`) |
-  | Configure opencode itself (agents, MCP, permissions) | `customize-opencode` |
-  | Build or release an Obsidian plugin | `obsidian-plugin` |
-  | Schedule a recurring agent job | `systemd-scheduler` |
-  | Shape work before betting on it (appetite, hill, slice sizing) | `shape-up` |
-  | File or triage issues, open PRs on GitHub | `github` (+ `git-workflow`) |
+<!-- generated:start — do not edit; regenerate with build-catalog.mjs -->
+| Task | Governing skills |
+|---|---|
+| Use when the orchestrator composes or dispatches a worker package, picks a role, verifies evidence, or consolidates escalations. | `agent-delegation` |
+| Use when choosing a stack or architecture, when how to structure this comes up, or before any real feature is built. | `architecture-and-skeleton` (+ `agent-delegation`) |
+| Use when building, extending, or reviewing Avo resources, fields, actions, dashboards, cards, or authorization in the user's Rails modules or applications. | `avo` (+ `rails`) |
+| Use when reviewing a pull request or change, or when preparing a change for review. | `code-review` (+ `edge-case-analysis`, `security-review`, `threat-modeling`) |
+| Use when the user is editing or creating opencode's own configuration — opencode.json, .opencode/, or ~/.config/opencode/ — including agents, subagents, skills, plugins, MCP servers, and permission rules. | `customize-opencode` |
+| Use when a brief is vague, when starting discovery, or when the user hands over raw material and asks to figure out what we're building. | `discovery-interview` (+ `agent-delegation`) |
+| Use when creating or changing a Docker or Docker Compose dev environment — adding a service to docker-base, extending a language wrapper, wiring a project's compose, or defining the production image. | `docker` |
+| Use when reviewing code for edge cases, crashes, hangs, and denial-of-service, or as the robustness step of a red-team review. | `edge-case-analysis` |
+| Use when writing or updating a feature spec, or when a slice needs its acceptance criteria pinned. | `feature-spec` (+ `agent-delegation`) |
+| Use when building, extending, or reviewing Filament resources, forms, tables, plugins, or pages in the user's Laravel modules or applications. | `filament` (+ `laravel`) |
+| Use when the user asks to commit, branch, merge, rebase, stash, push, pull, open or review a pull request, file or triage an issue, create a release, author a CONTRIBUTING.md, or when starting work in a repo and the workflow needs to be determined. | `git-workflow` |
+| Use when reading or triaging GitHub issues, joining or posting in discussions, sending updates, or creating pull requests that reference issues. | `github` (+ `git-workflow`) |
+| Use when the orchestrator needs a single classification call — a triage decision, routing a task to a skill, matrix row, or worker role, pre-screening a worker diff, or deciding whether to escalate to the advisor. | `jev-gates` |
+| Use when deploying to Kubernetes, writing or changing a Helm chart, wiring Flux, handling cluster secrets, or working with k3s, cert-manager, GHCR, or the kubernetes-* repos. | `kubernetes` |
+| Use when building, extending, or reviewing Laravel or PHP code in the user's style, or when the task references their modules, ServiceProvider, composer wiring, or Eloquent mechanics. | `laravel` (+ `software-architecture`, `software-testing`) |
+| Use when starting a new project from scratch, scaffolding a new repo, creating a new Laravel app or module, or setting up a fresh development environment. | `new-project` (+ `git-workflow`, `skeleton-ecosystem`) |
+| Use when building, extending, or releasing an Obsidian community plugin in any repository. | `obsidian-plugin` |
+| Use when scrutinising an existing system or a module's architecture against its spec with fresh eyes, when a design feels over-engineered, or before any re-architecture, at system scale. | `premise-demolition` (+ `systems-thinking`) |
+| Use when starting a new project, setting up the foundation, or seeding a repo for spec-driven delivery. | `project-seed` (+ `new-project`) |
+| Use when building, extending, or reviewing Ruby on Rails code, engines, modules, action objects, DTOs, ActiveRecord models, Hotwire views, or Packwerk boundaries in the user's repos. | `rails` (+ `software-architecture`, `software-testing`) |
+| Use when a change's main job is a behaviour-preserving restructure of code, at any scale, including when deciding how much machinery the refactor deserves. | `refactoring` |
+| Use when reviewing a diff or codebase for security issues, or as the core red-team step of a code review. | `security-review` |
+| Use when writing, reviewing, or refactoring code, when deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording. | `self-documenting-code` |
+| Use when shaping a piece of work, setting an appetite, betting on a cycle, tracking a hill, or sizing a slice. | `shape-up` |
+| Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows or shared config. | `skeleton-ecosystem` |
+| Use when creating a new SKILL.md, editing or extending an existing skill, or formalizing a workflow as a reusable agent skill per the Agent Skills specification. | `skill-authoring` (+ `skill-design-principles`) |
+| Use before authoring a skill when deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role. | `skill-design-principles` |
+| Use when starting or delivering a slice, or when the user asks to build the next slice. | `slice-delivery` (+ `agent-delegation`, `git-workflow`) |
+| Use when designing, building, extending, or reviewing the architecture of any OO codebase, or when deciding where logic lives, how a use case is shaped, or how a port or DTO is defined. | `software-architecture` (+ `software-architecture-structure`) |
+| Use when creating, moving, naming, or placing a class or file, choosing a folder, picking a role suffix, adding a module, or reviewing a repository's structure. | `software-architecture-structure` |
+| Use when building, extending, refactoring, or reviewing code in any language or repository, or when deciding how to structure a change. | `software-development` |
+| Use when writing, extending, or reviewing tests, or when deciding what to test and how to structure a test suite. | `software-testing` |
+| Use when the user changes their mind mid-build, when a requirement shifts, or when implementation surfaces an ambiguity the spec does not cover. | `spec-change` (+ `agent-delegation`) |
+| Use when scheduling a recurring agent job, adding, removing, or changing a scheduled job, or inspecting why a scheduled run behaved a certain way. | `systemd-scheduler` |
+| Use when modelling a system or feature for the first time, when asked whether a design is right, or as the first move of a re-architecture. | `systems-thinking` |
+| Use when reviewing architecture or design for security, scoping a security review, or as the first step of a red-team or adversarial review. | `threat-modeling` |
+| Use when writing, extending, or reviewing TypeScript or Node code, naming an interface or type, deciding a module's export shape, wiring dependencies, or configuring tsconfig. | `typescript` (+ `software-architecture`) |
+<!-- generated:end -->
 
   Routing rules: the matrix routes the task; each skill's `description`
   carries the trigger keywords for every task it governs (the discovery
