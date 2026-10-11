@@ -82,14 +82,11 @@ they are contracts, not suggestions.**
   cross-references stay in each skill's `## Related` (Loads = required
   companions, References = on-demand — navigation, not routing).
 
-  Row grammar: a `(+ companion, …)` group means the primary skill `Loads`
-  each companion (the linter enforces it); a companion that is only known
-  once the task is concrete is marked **resolved from context** instead
-  (`code-review`'s "that change's governing skills"). Skills joined by a bare
-  ` + ` are co-equal primaries. The linter parses this table: every named
-  skill must exist, every `+` companion must be in the primary's `Loads` or
-  marked context-resolved, and every skill is either here or in the
-  non-matrix allowlist.
+  Row grammar: the matrix is generated (do not hand-edit). Each row names a
+  skill and, in parentheses, the skills it `Loads` (the linter enforces it);
+  skills joined by a bare ` + ` are co-equal primaries. The linter parses this
+  table: every named skill must exist, and every `(+ …)` companion must be in
+  the primary's `Loads`.
 
   Activation rules:
 

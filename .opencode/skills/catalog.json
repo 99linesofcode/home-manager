@@ -679,6 +679,7 @@
       ],
       "name": "discovery-interview",
       "references": [
+        "feature-spec",
         "shape-up",
         "software-architecture",
         "systems-thinking",
@@ -749,6 +750,8 @@
       ],
       "name": "feature-spec",
       "references": [
+        "discovery-interview",
+        "slice-delivery",
         "software-testing",
         "spec-change"
       ],
@@ -1410,6 +1413,7 @@
       "name": "slice-delivery",
       "references": [
         "code-review",
+        "feature-spec",
         "premise-demolition",
         "software-development",
         "software-testing",

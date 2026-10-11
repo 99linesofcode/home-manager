@@ -1059,19 +1059,14 @@ function checkAllowList(skills, root, rep) {
     if (!fs.existsSync(agentPath) || !catalog || !catalog.skills) return;
     const allow = orchestratorSkillAllowList(readText(agentPath));
     if (!allow.length) return;
-    const allowSet = new Set(allow);
     const catalogSkills = Object.keys(catalog.skills).sort();
     const catalogSet = new Set(catalogSkills);
     const allowNotInCatalog = allow.filter((id) => !catalogSet.has(id));
-    const catalogNotInAllow = catalogSkills.filter((id) => !allowSet.has(id));
     // An allow-listed id that is not a real skill is a defect (error). The other
     // direction — a catalog skill not in the allow-list — is intentional: the
-    // allow-list is a curated subset, so it stays a warning.
+    // allow-list is a curated subset, so it is not drift and is not reported.
     if (allowNotInCatalog.length) {
         rep.error(`skill allow-list drift — allow-listed but not in catalog: ${allowNotInCatalog.join(', ')}`);
-    }
-    if (catalogNotInAllow.length) {
-        rep.warn(`skill allow-list drift — in catalog but not allow-listed: ${catalogNotInAllow.join(', ')}`);
     }
 }
 
@@ -1344,9 +1339,10 @@ function printStats(skills) {
     let over = 0;
     const overList = [];
     for (const [n, skill] of skills) {
-        if (skill.nlines > DEFAULT_MAX_LINES || skill.bytes > DEFAULT_MAX_BYTES) {
+        const budgetBytes = skill.bytes - metadataBytes(skill);
+        if (skill.nlines > DEFAULT_MAX_LINES || budgetBytes > DEFAULT_MAX_BYTES) {
             over++;
-            overList.push(`${n} (${skill.nlines}L, ${skill.bytes}B)`);
+            overList.push(`${n} (${skill.nlines}L, ${budgetBytes}B)`);
         }
     }
     console.log(`skills: ${skills.size}`);

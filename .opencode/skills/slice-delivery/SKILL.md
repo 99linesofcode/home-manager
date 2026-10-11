@@ -17,7 +17,8 @@ first, lock them, implement, review independently, reconcile.
 - **Loads:** `agent-delegation`, `git-workflow`.
 - **References:** `code-review` (the review step, not slice start),
   `software-development`, `software-testing`, `spec-change`,
-  `premise-demolition` (when a slice reveals the shape itself is wrong).
+  `premise-demolition` (when a slice reveals the shape itself is wrong),
+  `feature-spec`.
 
 ## Files
 

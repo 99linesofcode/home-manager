@@ -15,7 +15,8 @@ spec is the source; the tests are its executable expression.
 ## Related
 
 - **Loads:** `agent-delegation`.
-- **References:** `software-testing` (scenario shape), `spec-change`.
+- **References:** `software-testing` (scenario shape), `spec-change`,
+  `discovery-interview`, `slice-delivery`.
 
 ## Files
 

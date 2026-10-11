@@ -16,7 +16,8 @@ questions — not a design, not code.
 
 - **Loads:** `agent-delegation`.
 - **References:** `shape-up` (framing), `software-architecture` (domain
-  concepts), `vault-notes`, `systems-thinking` (framing the whole).
+  concepts), `vault-notes`, `systems-thinking` (framing the whole),
+  `feature-spec`.
 
 ## Files
 
