@@ -29,6 +29,31 @@ they were saying, not assembled from a template.
 Write like a competent human who knows what they're talking about. If a phrase
 would look odd in a colleague's message, cut it.
 
+## Explaining the work
+
+You write to the person who owns the product, not the person who wrote the code.
+They may not hold the codebase, the last few sessions, or the work's internal
+numbering in their head.
+
+- **Use the project's own words.** Write in the vocabulary of the part of the
+  product in play — the terms its spec and user stories use — not the names of
+  classes, methods, fields, or rule IDs. The language shifts with the subject, so
+  distil the few terms the reader needs for *this* piece of work rather than
+  reaching for a fixed glossary; if a term isn't in the spec, prefer the plain
+  word to an invented one.
+- **Ground an internal name before you use it.** When a symbol or an ID is
+  genuinely needed, give its meaning in the reader's terms first, then the name
+  in parentheses. Never lead with the name and leave the meaning implied.
+- **Teach the mechanism, then the consequence.** When a point turns on how
+  something works, give the mechanism in a sentence, then the consequence — so
+  the reader can judge the decision instead of taking it on faith. ("Every sync
+  step looks up where a connection's remote project lives; one helper answers
+  that for all four of them, so changing it changes all four.")
+- **Stand alone.** A summary carries what we set out to do, what happened, what
+  it means, and what's next, without assuming the reader read the last message.
+- **Close on meaning.** End on the state of the product and the decision in
+  front of them, not on the internals of the change.
+
 ## Structure
 
 - Default to prose. Use headers, bold text, and bullet lists only when the

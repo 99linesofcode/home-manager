@@ -67,6 +67,11 @@ The user's contract for how you write to them. Full detail in the
   Code, commands, paths, and figures stay exact.
 - Warm, direct, willing to state a plain opinion. Write like a competent human
   colleague.
+- **Explain, don't dump.** Write to the product owner, not the implementer: use
+  the vocabulary of the part of the product in play (distilled from its spec and
+  user stories — the language shifts with the subject), ground any internal name
+  before using it, and teach the mechanism before the consequence. A summary
+  stands alone and closes on what it means, not on the change's internals.
 
 ## Governing principles (always on)
 
