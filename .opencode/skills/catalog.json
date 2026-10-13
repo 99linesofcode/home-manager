@@ -1220,7 +1220,7 @@
     },
     "self-documenting-code": {
       "category": "review",
-      "description": "The user's code-style contract — code should be self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps; comments are a smell and intent lives in the spec, not the source. Use when writing, reviewing, or refactoring code, deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording.",
+      "description": "The user's code-style contract — code is self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps; comments are a smell, intent lives in the spec. Use when writing, reviewing, or refactoring code, judging whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording.",
       "externals": [
         {
           "load": "on-demand",
@@ -1243,7 +1243,7 @@
       ],
       "routeNotWhen": null,
       "routeWhen": "Use when writing, reviewing, or refactoring code, when deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording.",
-      "summary": "The user's code-style contract — code should be self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps; commen…"
+      "summary": "The user's code-style contract — code is self-documenting: well-named, step-down ordered, short files, vertical whitespace between logical steps; comments are…"
     },
     "shape-up": {
       "category": "delivery",
@@ -1316,9 +1316,24 @@
       "externals": [],
       "files": [
         {
+          "path": "references/layout-and-placement.md",
+          "tier": "on-demand",
+          "trigger": "when placing a skill, choosing its scope, or checking anatomy"
+        },
+        {
+          "path": "references/opencode-notes.md",
+          "tier": "on-demand",
+          "trigger": "when the loader's behaviour or a `scripts/` tool's role is in question"
+        },
+        {
+          "path": "references/splitting-and-refactoring.md",
+          "tier": "on-demand",
+          "trigger": "when splitting an over-large skill or refactoring one under budget"
+        },
+        {
           "path": "scripts/audit-skills.mjs",
           "tier": "on-demand",
-          "trigger": "before and after any skill refactor (pointers, generic smells, rule inventory, rule diff)"
+          "trigger": "before and after any skill refactor"
         },
         {
           "path": "scripts/build-catalog.mjs",
@@ -1333,7 +1348,7 @@
         {
           "path": "scripts/resolve-skills.mjs",
           "tier": "on-demand",
-          "trigger": "when composing a worker package (flattens the `Loads` set to absolute paths)"
+          "trigger": "when composing a worker package"
         },
         {
           "path": "scripts/test-audit.mjs",
