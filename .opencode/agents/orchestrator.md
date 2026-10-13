@@ -204,7 +204,10 @@ extending, refactoring, reviewing, or dispatching a worker:
 3. **Build worker packages from the resolver.** Run
    `resolve-skills.mjs <row-or-skill>` and fill the package from its four lists
    (governing skills, required files, required External pointers, on-demand
-   with triggers), per `agent-delegation`.
+   with triggers), and run `agent-delegation/scripts/resolve-repo.mjs <repo>`
+   for the Environment block — per `agent-delegation`. Resolve the repo's
+   environment the first time you touch it in a session, not at startup; treat
+   the resolver's block as a default to correct against the repo, not a verdict.
 
 **The always-on card** (the module tree, the closed role table, the three hard
 rules) — carried here so a worker package always has it:

@@ -23,12 +23,14 @@ the package carries — so the package is the whole game.
 
 ## Files
 
-Before acting, read every `required` file below.
+Before acting, read (or run) every `required` file below.
 
 | File | Load | Read when |
 |---|---|---|
 | `assets/delegation-brief.template.md` | required | before composing a worker package |
 | `assets/worker-report.template.md` | required | before reading a worker report |
+| `scripts/resolve-repo.mjs` | required | before composing a worker package — draft the Environment block from the target repo's manifests |
+| `scripts/test-resolve-repo.mjs` | on-demand | when changing the resolver |
 | `references/roles/material-analyst.md` | on-demand | when dispatching the material-analyst role |
 | `references/roles/options-analyst.md` | on-demand | when dispatching the options-analyst role |
 | `references/roles/spike-engineer.md` | on-demand | when dispatching the spike-engineer role |
@@ -166,28 +168,36 @@ the pointers?_ below.
 ## Environment (every package)
 
 Every worker starts cold in the same machine environment, and the package is
-where it learns that environment. A package that omits it is a defect — the
-worker then guesses at the devshell, or runs a gate with a global binary and
-proves nothing. Carry this block, filled in for the task:
+where it learns that environment. Omit it and the worker guesses — at the
+devshell, at the gate, at the tool.
 
-- **Platform.** NixOS. The project's devshell is the environment its gates are
-  defined against.
-- **Repository & working directory.** <absolute repo path> — the worker confirms
-  with `pwd`, `git remote -v`, `git log` before acting; never assume which
-  repository it is in.
-- **Devshell.** Run every project command through it: `direnv exec . <cmd>` from
-  the repo root, or `nix develop -c <cmd>`; `nix run` for a one-off tool. When a
-  package manager is unavailable, invoke the underlying binaries directly (e.g.
-  `node_modules/.bin/vitest run`). Never bypass the devshell with a global
-  binary — a gate run outside it proves nothing about the environment the change
-  ships in.
-- **Gates.** <the exact commands: typecheck, lint, boundaries, test, build>.
+**Propose, then correct.** Run the resolver for the target repository:
+
+    nix run nixpkgs#nodejs_22 -- .opencode/skills/agent-delegation/scripts/resolve-repo.mjs <absolute repo path>
+
+It emits an `## Environment (resolved)` block — the ecosystems it finds and
+their gates as exact `direnv exec . <cmd>` commands. It is a **default, not a
+verdict**: it reads only the repo root, so correct it against the repo before
+pasting — add a nested manifest's gates, drop what does not apply, hand-fill
+when it reports "not recognised". A vague block is a defect: the worker
+improvises, and the improvisation is `npx`.
+
+**Why the devshell is not optional.** On this NixOS machine `node`, `npm`,
+`npx`, and every package manager live *inside the devshell closure* — none is on
+`PATH` outside it. `npx` is a global binary that may not exist, and a gate run
+through it proves nothing about the shipped environment. Run every command
+through `direnv exec . <cmd>` from the repo root, or `nix develop -c <cmd>`;
+`nix run` for a one-off tool.
+
+**The fallback is inside the devshell, not instead of it.** When a package
+manager is unavailable, invoke the underlying binary *through the devshell*
+(`direnv exec . node_modules/.bin/vitest run`) — never a global binary.
+
 - **One worktree per worker.** Each worker gets its own worktree cut from the
-  remote default branch; never two workers in one checkout. Do not fight another
-  session over HEAD.
+  remote default branch; never two workers in one checkout.
 
-The role briefs carry the same block as the worker's reminder; the package is the
-binding copy, and it names the concrete repository and gates.
+The role briefs carry a one-line reminder; the package's corrected block is
+binding.
 
 ## Can a worker read the pointers?
 

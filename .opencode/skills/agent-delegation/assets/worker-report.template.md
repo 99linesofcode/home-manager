@@ -29,7 +29,9 @@ Every `required` file and `required` External pointer from the package:
 
 ## Evidence
 
-Paste the raw gate and test output — not claims:
+Paste the raw gate and test output — not claims. Every command must appear
+exactly as you ran it, prefixed with `direnv exec .` (or `nix …`); a gate run
+through `npx`, `npm`, or a bare `node` is not accepted:
 
 ```
 <command>

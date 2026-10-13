@@ -496,6 +496,16 @@
           "path": "references/roles/spike-engineer.md",
           "tier": "on-demand",
           "trigger": "when dispatching the spike-engineer role"
+        },
+        {
+          "path": "scripts/resolve-repo.mjs",
+          "tier": "required",
+          "trigger": "before composing a worker package — draft the Environment block from the target repo's manifests"
+        },
+        {
+          "path": "scripts/test-resolve-repo.mjs",
+          "tier": "on-demand",
+          "trigger": "when changing the resolver"
         }
       ],
       "id": "agent-delegation",

@@ -68,10 +68,16 @@ skill.
 
 ## Environment
 
-- Platform: NixOS; the project devshell is the environment the gates run in.
-- Repository / working directory: <absolute path> — confirm with `pwd`, `git remote -v`, `git log`; never assume which repository you are in.
-- Devshell: `direnv exec . <cmd>` from the repo root, or `nix develop -c <cmd>`; `nix run` for a one-off tool. Never bypass it with a global binary.
-- Gates: <exact commands: typecheck, lint, boundaries, test, build>.
+Run the resolver for the target repository and use its output as the starting
+point — a **default, not a verdict**:
+
+    nix run nixpkgs#nodejs_22 -- .opencode/skills/agent-delegation/scripts/resolve-repo.mjs <absolute repo path>
+
+Paste its `## Environment (resolved)` block, then correct it against the repo —
+add a nested manifest's gates, drop what does not apply, hand-fill if it reports
+"not recognised". A vague block ("run the tests") is a defect: the worker then
+improvises, and the improvisation is `npx`.
+
 - One worktree per worker — do not fight another session over HEAD.
 
 ## Read (exhaustive)
