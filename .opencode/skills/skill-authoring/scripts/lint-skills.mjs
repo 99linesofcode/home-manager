@@ -52,12 +52,7 @@ const NORMATIVE_WORD_THRESHOLD = 12;
 
 // Deliberate size-budget exceptions: a skill over the default budget must be
 // listed here with a numeric max_kb (<= 32) and a one-line reason.
-const BUDGET_EXCEPTIONS = {
-    'skill-authoring': {
-        max_kb: 32,
-        reason: 'contract skill: the size/reference policy, load policy and splitting patterns are normative and must be in context together',
-    },
-};
+const BUDGET_EXCEPTIONS = {};
 
 // Skills deliberately outside the software-development routing matrix, each
 // with a one-line reason.
