@@ -55,6 +55,11 @@ A refactor that fails a test is not done.
 
 - **Duplication with different reasons to change is kept.** Two similar blocks
   that will change for different reasons are not a DRY violation.
+- **Same input and output, different body — keep both.** Two functions whose
+  signature and result are identical are still not a duplication to collapse
+  when their **bodies differ**: the differing body is the reason they will
+  change apart. Consolidate only when the bodies are byte-identical; when they
+  differ at all, however equivalent the behaviour, leave both.
 - **An abstraction with one caller is allowed when it names a step of intent.**
   A named step reads better than the inline block.
 - **Inline an abstraction whose name adds nothing.** A name that restates the

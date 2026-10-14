@@ -1,6 +1,13 @@
 {
-  "count": 45,
+  "count": 48,
   "matrixRows": [
+    {
+      "companions": [],
+      "governing": [
+        "activepieces"
+      ],
+      "task": "Use when building, extending, or reviewing an Activepieces piece, its actions, its triggers, or a flow that wires Activepieces to a service."
+    },
     {
       "companions": [],
       "governing": [
@@ -25,6 +32,15 @@
         "avo"
       ],
       "task": "Use when building, extending, or reviewing Avo resources, fields, actions, dashboards, cards, or authorization in the user's Rails modules or applications."
+    },
+    {
+      "companions": [
+        "self-documenting-code"
+      ],
+      "governing": [
+        "clean-code"
+      ],
+      "task": "Use when writing, reviewing, or refactoring code, when judging whether a unit is too big, too clever, or too deeply nested, or when asking whether code is clean."
     },
     {
       "companions": [
@@ -201,6 +217,13 @@
     {
       "companions": [],
       "governing": [
+        "shopify"
+      ],
+      "task": "Use when working with a Shopify store programmatically — acquiring or running the Shopify CLI, authenticating to a store, or running Admin GraphQL reads, mutations, or bulk operations against products, variants, prices, inventory, or orders."
+    },
+    {
+      "companions": [],
+      "governing": [
         "skeleton-ecosystem"
       ],
       "task": "Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows or shared config."
@@ -248,7 +271,9 @@
       "task": "Use when creating, moving, naming, or placing a class or file, choosing a folder, picking a role suffix, adding a module, or reviewing a repository's structure."
     },
     {
-      "companions": [],
+      "companions": [
+        "clean-code"
+      ],
       "governing": [
         "software-development"
       ],
@@ -422,6 +447,23 @@
   },
   "schema": 1,
   "skills": {
+    "activepieces": {
+      "category": "tooling",
+      "description": "Build and extend Activepieces pieces (integrations) to the platform's conventions — piece anatomy, auth in lib/auth.ts, actions and triggers, the build/register/verify loop, and the seam that keeps domain logic in the core rather than the piece. Use when building, extending, or reviewing an Activepieces piece, connector, action, or trigger.",
+      "externals": [],
+      "files": [],
+      "id": "activepieces",
+      "loads": [],
+      "name": "activepieces",
+      "references": [
+        "software-architecture",
+        "typescript"
+      ],
+      "roles": [],
+      "routeNotWhen": "Use `software-architecture` for where the logic lives inside the core the piece calls, and `typescript` for the language conventions.",
+      "routeWhen": "Use when building, extending, or reviewing an Activepieces piece, its actions, its triggers, or a flow that wires Activepieces to a service.",
+      "summary": "Build and extend Activepieces pieces (integrations) to the platform's conventions — piece anatomy, auth in lib/auth.ts, actions and triggers, the build/registe…"
+    },
     "agent-delegation": {
       "category": "tooling",
       "description": "Compose and dispatch a worker package — pick the role, attach its governing skills and required files, then verify the evidence that comes back. Use when the orchestrator hands work to a worker, since workers start cold and cannot ask for anything the package omits.",
@@ -603,6 +645,27 @@
       "routeNotWhen": null,
       "routeWhen": "Use when the user attaches, detaches, or checks the Beeper↔opencode bridge — including 'establish a bridge connection to Beeper', 'I'm going AFK', or 'delegate this to Beeper'.",
       "summary": "Attach a Beeper chat to the current opencode session so the user can keep driving it from their phone, and detach or check status."
+    },
+    "clean-code": {
+      "category": "review",
+      "description": "The umbrella contract for clean code, distilled from Clean Code — intention-revealing names, small functions that do one thing, no duplication, honest error handling, and small cohesive classes. Use when writing, reviewing, or refactoring code, when a unit feels too big, too clever, or too deeply nested, or when judging whether code is clean.",
+      "externals": [],
+      "files": [],
+      "id": "clean-code",
+      "loads": [
+        "self-documenting-code"
+      ],
+      "name": "clean-code",
+      "references": [
+        "feature-spec",
+        "refactoring",
+        "software-architecture",
+        "software-testing"
+      ],
+      "roles": [],
+      "routeNotWhen": "Use `self-documenting-code` for the comment, naming-rhythm, whitespace and file-length contract; `software-architecture` for where logic lives.",
+      "routeWhen": "Use when writing, reviewing, or refactoring code, when judging whether a unit is too big, too clever, or too deeply nested, or when asking whether code is clean.",
+      "summary": "The umbrella contract for clean code, distilled from Clean Code — intention-revealing names, small functions that do one thing, no duplication, honest error ha…"
     },
     "code-review": {
       "category": "review",
@@ -1265,6 +1328,26 @@
       "routeWhen": "Use when shaping a piece of work, setting an appetite, betting on a cycle, tracking a hill, or sizing a slice.",
       "summary": "The user's Shape Up working method — shaping work before betting on it, setting appetites, tracking hills, and sizing slices."
     },
+    "shopify": {
+      "category": "tooling",
+      "description": "Work with a Shopify store programmatically — acquire the latest Shopify CLI through nix and pnpm, authenticate, and run Admin GraphQL reads, mutations, and bulk operations. Use when updating Shopify products, variants, prices, inventory, or orders; running shopify store execute or bulk; or scripting against the Admin API.",
+      "externals": [],
+      "files": [
+        {
+          "path": "scripts/shopify",
+          "tier": "required",
+          "trigger": "always — it is the wrapper that runs the latest CLI"
+        }
+      ],
+      "id": "shopify",
+      "loads": [],
+      "name": "shopify",
+      "references": [],
+      "roles": [],
+      "routeNotWhen": "Use for Shopify store data and Admin API operations only — not theme development, Hydrogen storefronts, or building a distributed app.",
+      "routeWhen": "Use when working with a Shopify store programmatically — acquiring or running the Shopify CLI, authenticating to a store, or running Admin GraphQL reads, mutations, or bulk operations against products, variants, prices, inventory, or orders.",
+      "summary": "Work with a Shopify store programmatically — acquire the latest Shopify CLI through nix and pnpm, authenticate, and run Admin GraphQL reads, mutations, and bul…"
+    },
     "skeleton-ecosystem": {
       "category": "delivery",
       "description": "The user's seed→sapling skeleton ecosystem — which skeleton a project starts from and how to wire and keep it in sync. Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows, or shared config.",
@@ -1486,6 +1569,7 @@
       ],
       "name": "software-architecture",
       "references": [
+        "activepieces",
         "architecture-and-skeleton",
         "avo",
         "code-review",
@@ -1551,7 +1635,9 @@
       "externals": [],
       "files": [],
       "id": "software-development",
-      "loads": [],
+      "loads": [
+        "clean-code"
+      ],
       "name": "software-development",
       "references": [
         "code-review",

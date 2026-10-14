@@ -17,7 +17,7 @@ history hygiene) live in the `git-workflow` skill.
 
 ## Related
 
-- **Loads:** (none — this is the gate; it routes via the matrix above)
+- **Loads:** `clean-code` (the code-quality umbrella every change answers to).
 - **References:** `software-architecture`, `software-testing`,
   `git-workflow`, `self-documenting-code`, `new-project`,
   `code-review`, `skill-authoring` (the routing-matrix convention)
@@ -37,9 +37,11 @@ they are contracts, not suggestions.**
 <!-- generated:start — do not edit; regenerate with build-catalog.mjs -->
 | Task | Governing skills |
 |---|---|
+| Use when building, extending, or reviewing an Activepieces piece, its actions, its triggers, or a flow that wires Activepieces to a service. | `activepieces` |
 | Use when the orchestrator composes or dispatches a worker package, picks a role, verifies evidence, or consolidates escalations. | `agent-delegation` |
 | Use when choosing a stack or architecture, when how to structure this comes up, or before any real feature is built. | `architecture-and-skeleton` (+ `agent-delegation`) |
 | Use when building, extending, or reviewing Avo resources, fields, actions, dashboards, cards, or authorization in the user's Rails modules or applications. | `avo` (+ `rails`) |
+| Use when writing, reviewing, or refactoring code, when judging whether a unit is too big, too clever, or too deeply nested, or when asking whether code is clean. | `clean-code` (+ `self-documenting-code`) |
 | Use when reviewing a pull request or change, or when preparing a change for review. | `code-review` (+ `edge-case-analysis`, `security-review`, `threat-modeling`) |
 | Use when the user is editing or creating opencode's own configuration — opencode.json, .opencode/, or ~/.config/opencode/ — including agents, subagents, skills, plugins, MCP servers, and permission rules. | `customize-opencode` |
 | Use when a brief is vague, when starting discovery, or when the user hands over raw material and asks to figure out what we're building. | `discovery-interview` (+ `agent-delegation`) |
@@ -61,13 +63,14 @@ they are contracts, not suggestions.**
 | Use when reviewing a diff or codebase for security issues, or as the core red-team step of a code review. | `security-review` |
 | Use when writing, reviewing, or refactoring code, when deciding whether a comment earns its place, or for any question of code style, formatting rhythm, blank lines, or error-message wording. | `self-documenting-code` |
 | Use when shaping a piece of work, setting an appetite, betting on a cycle, tracking a hill, or sizing a slice. | `shape-up` |
+| Use when working with a Shopify store programmatically — acquiring or running the Shopify CLI, authenticating to a store, or running Admin GraphQL reads, mutations, or bulk operations against products, variants, prices, inventory, or orders. | `shopify` |
 | Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows or shared config. | `skeleton-ecosystem` |
 | Use when creating a new SKILL.md, editing or extending an existing skill, or formalizing a workflow as a reusable agent skill per the Agent Skills specification. | `skill-authoring` (+ `skill-design-principles`) |
 | Use before authoring a skill when deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role. | `skill-design-principles` |
 | Use when starting or delivering a slice, or when the user asks to build the next slice. | `slice-delivery` (+ `agent-delegation`, `git-workflow`) |
 | Use when designing, building, extending, or reviewing the architecture of any OO codebase, or when deciding where logic lives, how a use case is shaped, or how a port or DTO is defined. | `software-architecture` (+ `software-architecture-structure`) |
 | Use when creating, moving, naming, or placing a class or file, choosing a folder, picking a role suffix, adding a module, or reviewing a repository's structure. | `software-architecture-structure` |
-| Use when building, extending, refactoring, or reviewing code in any language or repository, or when deciding how to structure a change. | `software-development` |
+| Use when building, extending, refactoring, or reviewing code in any language or repository, or when deciding how to structure a change. | `software-development` (+ `clean-code`) |
 | Use when writing, extending, or reviewing tests, or when deciding what to test and how to structure a test suite. | `software-testing` |
 | Use when the user changes their mind mid-build, when a requirement shifts, or when implementation surfaces an ambiguity the spec does not cover. | `spec-change` (+ `agent-delegation`) |
 | Use when scheduling a recurring agent job, adding, removing, or changing a scheduled job, or inspecting why a scheduled run behaved a certain way. | `systemd-scheduler` |
