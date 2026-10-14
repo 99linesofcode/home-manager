@@ -188,7 +188,7 @@ const CASES = [
         'remove the exception',
         (root) => {
             copySkills(root);
-            write(root, 'skill-authoring/SKILL.md', skillText('skill-authoring', 'Body.', null));
+            write(root, 'agent-delegation/SKILL.md', skillText('agent-delegation', 'Body.', null));
         },
     ],
     [

@@ -52,7 +52,12 @@ const NORMATIVE_WORD_THRESHOLD = 12;
 
 // Deliberate size-budget exceptions: a skill over the default budget must be
 // listed here with a numeric max_kb (<= 32) and a one-line reason.
-const BUDGET_EXCEPTIONS = {};
+const BUDGET_EXCEPTIONS = {
+    'agent-delegation': {
+        max_kb: 22,
+        reason: 'the delegation contract: every rule and both generated role/skill tables must be in context together',
+    },
+};
 
 // Skills deliberately outside the software-development routing matrix, each
 // with a one-line reason.
@@ -711,7 +716,12 @@ function checkSizes(skills, rep) {
         }
         if (skill.parseError) continue;
         const budgetBytes = skill.bytes - metadataBytes(skill);
-        if (skill.nlines <= DEFAULT_MAX_LINES && budgetBytes <= DEFAULT_MAX_BYTES) {
+        const total = reportBytes(skill);
+        if (
+            skill.nlines <= DEFAULT_MAX_LINES &&
+            budgetBytes <= DEFAULT_MAX_BYTES &&
+            total <= DEFAULT_MAX_BYTES
+        ) {
             rep.error(`BUDGET_EXCEPTIONS: '${name}' is within the default budget — remove the exception`);
         }
     }

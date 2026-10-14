@@ -398,6 +398,18 @@
       "role": "premise-auditor",
       "routeWhen": "Use when re-deriving an existing system's design from its spec with fresh eyes and judging the design against it."
     },
+    "refactorer": {
+      "contextResolved": false,
+      "governing": [
+        "clean-code",
+        "refactoring",
+        "software-architecture",
+        "software-architecture-structure"
+      ],
+      "hasFrontmatter": true,
+      "role": "refactorer",
+      "routeWhen": "Use when code that already works is to be restructured against the refactoring catalogue and the clean-code principles — after a slice lands, before the reviewer."
+    },
     "reviewer": {
       "contextResolved": true,
       "governing": [
@@ -513,6 +525,11 @@
           "path": "references/roles/premise-auditor.md",
           "tier": "on-demand",
           "trigger": "when dispatching the premise-auditor role"
+        },
+        {
+          "path": "references/roles/refactorer.md",
+          "tier": "on-demand",
+          "trigger": "when dispatching the refactorer role"
         },
         {
           "path": "references/roles/reviewer.md",
@@ -662,7 +679,9 @@
         "software-architecture",
         "software-testing"
       ],
-      "roles": [],
+      "roles": [
+        "refactorer"
+      ],
       "routeNotWhen": "Use `self-documenting-code` for the comment, naming-rhythm, whitespace and file-length contract; `software-architecture` for where logic lives.",
       "routeWhen": "Use when writing, reviewing, or refactoring code, when judging whether a unit is too big, too clever, or too deeply nested, or when asking whether code is clean.",
       "summary": "The umbrella contract for clean code, distilled from Clean Code — intention-revealing names, small functions that do one thing, no duplication, honest error ha…"
@@ -1218,18 +1237,27 @@
       "category": "architecture",
       "description": "Restructure code without changing behaviour, at snippet, unit, or system scale. Use when a change's main job is to improve legibility rather than add behaviour.",
       "externals": [],
-      "files": [],
+      "files": [
+        {
+          "path": "references/catalogue.md",
+          "tier": "on-demand",
+          "trigger": "when choosing which refactoring to apply"
+        }
+      ],
       "id": "refactoring",
       "loads": [],
       "name": "refactoring",
       "references": [
+        "clean-code",
         "code-review",
         "premise-demolition",
         "software-architecture",
         "software-testing",
         "systems-thinking"
       ],
-      "roles": [],
+      "roles": [
+        "refactorer"
+      ],
       "routeNotWhen": "Use `premise-demolition` when the whole system or a module's architecture is in question and the shape itself is being judged.",
       "routeWhen": "Use when a change's main job is a behaviour-preserving restructure of code, at any scale, including when deciding how much machinery the refactor deserves.",
       "summary": "Restructure code without changing behaviour, at snippet, unit, or system scale."
@@ -1528,6 +1556,7 @@
         "code-review",
         "feature-spec",
         "premise-demolition",
+        "refactoring",
         "software-development",
         "software-testing",
         "spec-change"
@@ -1586,7 +1615,8 @@
         "advisor",
         "implementer",
         "options-analyst",
-        "premise-auditor"
+        "premise-auditor",
+        "refactorer"
       ],
       "routeNotWhen": "Use `software-architecture-structure` for naming or placing a file or class, choosing a folder, or picking a role suffix.",
       "routeWhen": "Use when designing, building, extending, or reviewing the architecture of any OO codebase, or when deciding where logic lives, how a use case is shaped, or how a port or DTO is defined.",
@@ -1624,7 +1654,9 @@
         "systems-thinking",
         "typescript"
       ],
-      "roles": [],
+      "roles": [
+        "refactorer"
+      ],
       "routeNotWhen": "Use `software-architecture` for the principles, where logic lives, the hexagonal rules, DTOs, or provider neutrality.",
       "routeWhen": "Use when creating, moving, naming, or placing a class or file, choosing a folder, picking a role suffix, adding a module, or reviewing a repository's structure.",
       "summary": "The structure-and-naming half of the architecture contract — the folder tree, the closed role-suffix table, one class per file, and the boundary rules."

@@ -40,6 +40,7 @@ Before acting, read (or run) every `required` file below.
 | `references/roles/characterization-test-author.md` | on-demand | when dispatching the characterization-test-author role |
 | `references/roles/acceptance-test-author.md` | on-demand | when dispatching the acceptance-test-author role |
 | `references/roles/implementer.md` | on-demand | when dispatching the implementer role |
+| `references/roles/refactorer.md` | on-demand | when dispatching the refactorer role |
 | `references/roles/reviewer.md` | on-demand | when dispatching the reviewer role |
 | `references/roles/premise-auditor.md` | on-demand | when dispatching the premise-auditor role |
 | `references/roles/advisor.md` | on-demand | when dispatching the advisor role |
@@ -104,6 +105,7 @@ dispatch:
 | Use when extracting facts, inferences, and unknowns from raw material and proposing interview questions. | material-analyst |
 | Use when comparing architecture or technology options against the user's principles. | options-analyst |
 | Use when re-deriving an existing system's design from its spec with fresh eyes and judging the design against it. | premise-auditor |
+| Use when code that already works is to be restructured against the refactoring catalogue and the clean-code principles — after a slice lands, before the reviewer. | refactorer |
 | Use when reviewing a change end-to-end to judge whether each spec criterion is satisfied and tested. | reviewer |
 | Use when attacking a spec for contradictions, untestable rules, missing scenarios, and unaddressed edge cases. | spec-adversary |
 | Use when updating specs and the decision log to match what was actually built. | spec-reconciler |
@@ -138,6 +140,7 @@ Resolve the role against this matrix and put every listed path in the package:
 | material-analyst | discovery-interview |
 | options-analyst | architecture-and-skeleton, software-architecture |
 | premise-auditor | premise-demolition, software-architecture, systems-thinking |
+| refactorer | clean-code, refactoring, software-architecture, software-architecture-structure |
 | reviewer | code-review (+ the change's own governing skills) |
 | spec-adversary | feature-spec |
 | spec-reconciler | feature-spec, spec-change |

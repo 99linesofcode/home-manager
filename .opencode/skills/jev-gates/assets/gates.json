@@ -137,6 +137,7 @@
             "material-analyst": "Use when extracting facts, inferences, and unknowns from raw material and proposing interview questions.",
             "options-analyst": "Use when comparing architecture or technology options against the user's principles.",
             "premise-auditor": "Use when re-deriving an existing system's design from its spec with fresh eyes and judging the design against it.",
+            "refactorer": "Use when code that already works is to be restructured against the refactoring catalogue and the clean-code principles — after a slice lands, before the reviewer.",
             "reviewer": "Use when reviewing a change end-to-end to judge whether each spec criterion is satisfied and tested.",
             "spec-adversary": "Use when attacking a spec for contradictions, untestable rules, missing scenarios, and unaddressed edge cases.",
             "spec-reconciler": "Use when updating specs and the decision log to match what was actually built.",

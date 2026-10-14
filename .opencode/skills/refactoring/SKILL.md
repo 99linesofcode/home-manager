@@ -19,7 +19,14 @@ the wrong scale's machinery is a defect, however clean the result looks.
 - **References:** `premise-demolition` (the system-scale path), `systems-thinking`
   (the whole-system lens), `software-testing` (characterization tests),
   `code-review` (the findings format and the finding tags),
-  `software-architecture` (where logic lives).
+  `software-architecture` (where logic lives), `clean-code` (the principles the
+  result is judged by).
+
+## Files
+
+| File | Load | Read when |
+|---|---|---|
+| `references/catalogue.md` | on-demand | when choosing which refactoring to apply |
 
 ## When to use
 
@@ -27,6 +34,24 @@ the wrong scale's machinery is a defect, however clean the result looks.
 - "Clean this up", "this is hard to read", "make this legible",
   "behaviour-preserving".
 - Deciding how much machinery a refactor deserves.
+
+## The operations
+
+A refactor is a sequence of **named operations** from the catalogue
+(`references/catalogue.md`) — Extract Function, Combine Functions into Class,
+Pull Up Method, Replace Nested Conditional with Guard Clauses, and the rest.
+Name the operation you are applying, apply one at a time, and keep every step
+green.
+
+- **Group related concepts — never one helper per file.** `Combine Functions
+  into Class` is the operation: several functions that work on the same data are
+  a class waiting to be born. A single trivial helper is not; it stays beside
+  what it serves.
+- **Shared across classes → pull up.** When the same function or field is needed
+  by more than one class, `Pull Up Method` / `Pull Up Field` (or `Extract
+  Superclass`, or a shared module where inheritance does not fit) — never a copy
+  per class.
+- **No abstraction for one caller** unless its name states a step of intent.
 
 ## Scale decides the machinery
 

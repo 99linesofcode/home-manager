@@ -18,7 +18,7 @@ first, lock them, implement, review independently, reconcile.
 - **References:** `code-review` (the review step, not slice start),
   `software-development`, `software-testing`, `spec-change`,
   `premise-demolition` (when a slice reveals the shape itself is wrong),
-  `feature-spec`.
+  `refactoring` (the refactor step), `feature-spec`.
 
 ## Files
 
@@ -95,19 +95,25 @@ architectural constraints; the PR restates them in its **Behavior** section.
 4. **Implement** — dispatch an **implementer** with the locked tests, the spec,
    and the ADR constraints. All gates green after each logical step; the
    implementer may not touch tests or exceed scope.
-5. **Independent review** — dispatch a **reviewer** (fresh context; spec + diff
+5. **Refactor** — dispatch a **refactorer** on what was just built, *before* the
+   reviewer sees it: every change a named operation from the refactoring
+   catalogue (`refactoring`), behaviour-preserving, file-by-file then at the
+   class-and-object level against hexagonal and explicit architecture. Gates
+   green after every step; anything too large for the pass comes back as a
+   prioritised backlog for its own slice.
+6. **Independent review** — dispatch a **reviewer** (fresh context; spec + diff
    + results, never the implementer's reasoning). For each criterion: is there a
    test that would fail if it broke, and does the implementation satisfy it or
    only the test? Then run `code-review` (quality + the red-team trio) as a
    second fresh pass.
-6. **Close out** — dispatch a **spec reconciler** to update the spec and
+7. **Close out** — dispatch a **spec reconciler** to update the spec and
    `decisions.md` to match what was built. Update the slice task and the GitHub
    progress.
-7. **Clean up when the *effort* completes** — not per slice. The vault
+8. **Clean up when the *effort* completes** — not per slice. The vault
    scratchpad (`planning/<slug>/`, incl. its `specs/`) is **transient**:
    consolidate durable insights into the wiki/memory, then move it to `.trash/`
    (recoverable). A finished effort leaves no working files behind.
-8. **Retrospective (when the slice closes).** Run a short retrospective — what
+9. **Retrospective (when the slice closes).** Run a short retrospective — what
    went wrong, what was slow, and which instruction, gate, or missing convention
    caused it. Two outputs: process fixes within this repo's gift (do now or file
    a follow-up), and **harness debt** — a proposed change to a skill, agent, or
