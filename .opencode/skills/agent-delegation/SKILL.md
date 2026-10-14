@@ -194,7 +194,8 @@ manager is unavailable, invoke the underlying binary *through the devshell*
 (`direnv exec . node_modules/.bin/vitest run`) — never a global binary.
 
 - **One worktree per worker.** Each worker gets its own worktree cut from the
-  remote default branch; never two workers in one checkout.
+  remote default branch; never two workers in one checkout. Provision a fresh
+  worktree first (`git-workflow`).
 
 The role briefs carry a one-line reminder; the package's corrected block is
 binding.

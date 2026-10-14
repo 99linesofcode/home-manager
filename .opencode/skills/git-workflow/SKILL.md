@@ -319,6 +319,18 @@ over one working tree.
   git worktree add ../<repo>-<slug> -b <type>/<slug> origin/main
   ```
 
+  **A new worktree is not ready to run.** It is a fresh checkout with none of the
+  main checkout's local state: submodules are uninitialised, dependencies are
+  absent, and the devshell is untrusted because the path is new — so the gates
+  fail for reasons that have nothing to do with the change. Provision it before
+  running anything:
+
+  ```bash
+  git -C ../<repo>-<slug> submodule update --init --recursive
+  (cd ../<repo>-<slug> && direnv allow)        # a fresh path is untrusted
+  direnv exec ../<repo>-<slug> pnpm install    # the repo's own installer
+  ```
+
 - **List / remove / prune:** `git worktree list`; `git worktree remove <path>`
   (refuses a dirty worktree — commit or discard first); `git worktree prune`
   clears metadata for directories deleted by hand.
