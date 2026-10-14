@@ -44,6 +44,13 @@ Before acting, read every `required` file below.
 
 ## Shape the slice (first)
 
+Before shaping, fetch: `git fetch origin`, and cut every worker worktree from
+`origin/main` — never a possibly-stale local `main` — recording the base commit
+in the slice task. A worktree cut from a stale base builds on code that has
+already moved; the fetch is the load-bearing part (the mechanics are
+`git-workflow`'s). If the repo's own checkout is behind, fast-forward it
+(`git merge --ff-only origin/main`) and rebuild anything it serves.
+
 A slice is a project task of type `slice`. It carries:
 
 - the spec criterion IDs it satisfies,

@@ -121,7 +121,20 @@ Before any git work in a repo, determine the methodology:
    final-state messages, and update the PR description to match the merged
    reality, verified against the code.
 6. Merge when green + approved (or per repo rules).
-7. Delete the branch locally + remotely. Note: deleting a base branch
+7. **Sync the local default branch — right after every merge.** The merge
+   happens on the remote, so the local checkout is behind by construction, and
+   "I did not do the merge" is no reason to skip it: a fetch tells you either
+   way. In the main checkout (the one on the default branch):
+
+   ```bash
+   git fetch origin && git merge --ff-only origin/main
+   ```
+
+   Then, when the repo serves an artifact from the checkout — an Obsidian
+   plugin's `main.js`, any build the running system loads — rebuild it, or the
+   running system keeps serving the previous release. This is the step that
+   stops a stale checkout from masquerading as current.
+8. Delete the branch locally + remotely. Note: deleting a base branch
    auto-closes PRs targeting it — merge stacked PRs in order and retarget
    before deleting.
 
