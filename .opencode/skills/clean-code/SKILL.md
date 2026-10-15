@@ -13,16 +13,11 @@ Clean code is code a reader can change without fear: it does what it says, says
 what it does, and has one obvious place to change. This skill is the umbrella —
 the rules that make that true, in any language.
 
-It is not a style guide, and it does not restate its neighbours:
-
-- `self-documenting-code` owns **comments, naming rhythm, whitespace, file
-  length** — load it alongside this one.
-- `refactoring` owns the **duplication policy** and the legibility tests.
-- `software-architecture` owns **where logic lives** — actions, ports, DTOs,
-  services, and the lean guardrail.
-
-What is left — the shape of a **name**, a **function**, an **error**, an
-**object**, a **class**, and the order in which you reach for those — is here.
+It is not a style guide, and it does not restate its neighbours: comments and
+naming rhythm, the duplication policy, and where logic lives each have their
+own home — `## Related` names them. What is left — the shape of a **name**, a
+**function**, an **error**, an **object**, a **class**, and the order in which
+you reach for those — is here.
 
 ## Related
 

@@ -100,7 +100,7 @@ Every finding a refactor produces is tagged by what it protects:
 
 Convention-only findings are **non-blocking unless the fix pays for itself** (the
 change is small, local, and clearly better). Never block a refactor on a
-convention-only finding. `code-review` owns the findings format.
+convention-only finding.
 
 ## Behaviour preservation
 
