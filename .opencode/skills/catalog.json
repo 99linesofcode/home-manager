@@ -1,5 +1,5 @@
 {
-  "count": 49,
+  "count": 50,
   "matrixRows": [
     {
       "companions": [],
@@ -130,6 +130,13 @@
         "github"
       ],
       "task": "Use when reading or triaging GitHub issues, joining or posting in discussions, sending updates, or creating pull requests that reference issues."
+    },
+    {
+      "companions": [],
+      "governing": [
+        "home-manager"
+      ],
+      "task": "Use when changing the user's declarative NixOS/home-manager configuration — adding or editing a module under modules/, changing a host's options or packages, or verifying that a change evaluates and renders."
     },
     {
       "companions": [],
@@ -810,11 +817,12 @@
       "name": "customize-opencode",
       "references": [
         "git-workflow",
+        "home-manager",
         "skill-authoring",
         "skill-design-principles"
       ],
       "roles": [],
-      "routeNotWhen": null,
+      "routeNotWhen": "Use `home-manager` for the config layer itself — modules, hosts, and verifying a change — rather than opencode's own config surface.",
       "routeWhen": "Use when the user is editing or creating opencode's own configuration — opencode.json, .opencode/, or ~/.config/opencode/ — including agents, subagents, skills, plugins, MCP servers, and permission rules.",
       "summary": "Edit opencode's own configuration — opencode.json, .opencode/, and ~/.config/opencode/ — including agents, subagents, skills, plugins, MCP servers, and permiss…"
     },
@@ -1015,6 +1023,29 @@
       "routeNotWhen": "Use `git-workflow` for local git mechanics — branching, commits, squash, and push safety.",
       "routeWhen": "Use when reading or triaging GitHub issues, joining or posting in discussions, sending updates, or creating pull requests that reference issues.",
       "summary": "Read and triage GitHub issues, post in discussions, send updates, and open pull requests that reference issues — the platform layer above local git."
+    },
+    "home-manager": {
+      "category": "tooling",
+      "description": "Change and verify the user's declarative NixOS/home-manager configuration — the flake at ~/Development/home-manager. Use when adding or editing a module under modules/, enabling it on a host, changing a host's packages or options, or checking that a config change evaluates and renders without running home-manager switch.",
+      "externals": [
+        {
+          "load": "required",
+          "path": "~/Development/home-manager/",
+          "trigger": "always — the config repo this skill governs"
+        }
+      ],
+      "files": [],
+      "id": "home-manager",
+      "loads": [],
+      "name": "home-manager",
+      "references": [
+        "customize-opencode",
+        "git-workflow"
+      ],
+      "roles": [],
+      "routeNotWhen": "Use `customize-opencode` for opencode's own config surface rather than the config layer itself.",
+      "routeWhen": "Use when changing the user's declarative NixOS/home-manager configuration — adding or editing a module under modules/, changing a host's options or packages, or verifying that a change evaluates and renders.",
+      "summary": "Change and verify the user's declarative NixOS/home-manager configuration — the flake at ~/Development/home-manager."
     },
     "jev-gates": {
       "category": "tooling",

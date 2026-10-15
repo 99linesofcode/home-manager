@@ -4,6 +4,7 @@ description: Edit opencode's own configuration — opencode.json, .opencode/, an
 metadata:
   category: tooling
   route-when: "Use when the user is editing or creating opencode's own configuration — opencode.json, .opencode/, or ~/.config/opencode/ — including agents, subagents, skills, plugins, MCP servers, and permission rules."
+  route-not-when: "Use `home-manager` for the config layer itself — modules, hosts, and verifying a change — rather than opencode's own config surface."
 ---
 
 # Customizing opencode
@@ -17,7 +18,8 @@ is wrong. The shapes below cover the common surface area, but they are a
 - **Loads:** (none — loaded on demand)
 - **References:** `skill-authoring` (when the config change is a skill),
   `skill-design-principles` (whether the config belongs in a skill at all),
-  `git-workflow` (the worktree discipline for changing the harness).
+  `git-workflow` (the worktree discipline for changing the harness),
+  `home-manager` (the declarative config layer a change lands in).
 
 ## External
 
@@ -148,7 +150,7 @@ Every field is optional.
       "type": "local",
       "command": ["npx", "-y", "@playwright/mcp"],
       "enabled": true,
-      "env": {}
+      "environment": {}
     },
     "remote-thing": {
       "type": "remote",
@@ -356,7 +358,7 @@ Special object-shaped (not callbacks): `tool: { my_tool: { ... } }`,
       "type": "local",
       "command": ["npx", "-y", "@playwright/mcp"],
       "enabled": true,
-      "env": { "BROWSER": "chromium" }
+      "environment": { "BROWSER": "chromium" }
     },
     "github": {
       "type": "remote",
@@ -371,6 +373,39 @@ Special object-shaped (not callbacks): `tool: { my_tool: { ... } }`,
 
 `command` is an array of strings. `type` is required. Use `enabled: false` to
 disable a server inherited from a parent config.
+
+### Declaring servers via home-manager (`programs.mcp.servers`)
+
+In this user's setup the `mcp` block is never hand-written — it is rendered from
+`programs.mcp.servers` (see `modules/opencode.nix`). The source shape is not the
+rendered shape: the home-manager module transforms each entry.
+
+- **`type` is inferred, not read.** The transform sets `type` from whether the
+  entry has a `command` (→ `local`) or a `url` (→ `remote`). Writing
+  `type = "local"` in the source is inert — it is a readability convention, not
+  an input.
+- **`command` is a string in the source; the render makes it an array.** Source
+  `command = "…"; args = [ "…" ];` becomes one `command` array in
+  `opencode.json`.
+- **`env` becomes `environment`.** The rendered field is `environment` (the
+  schema above); the source uses `env`. Never write `env` in `opencode.json`.
+
+A local server in the source:
+
+```nix
+servers.<name> = {
+  type = "local";
+  command = lib.getExe' pkgs.<pkg> "<exe>";
+  args = [ "<arg>" ];
+  env = { … }; # optional
+};
+```
+
+**Launch servers from the nix store, never a global install.** `lib.getExe'
+pkgs.uv "uvx"` (and `pkgs.nodejs_22` → `npx`) resolves the runner to a store
+path, so an MCP server needs no globally installed launcher — the house pattern
+(`obsidian`, `discord`, `freecad`). `pkgs.uv` ships `uvx`; `pkgs.nodejs_22`
+ships `npx`.
 
 ## Permissions
 
