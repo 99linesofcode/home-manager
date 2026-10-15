@@ -34,9 +34,18 @@ with lib;
     home = {
       packages = [
         (pkgs.freecad.customize {
-          modules = [ freecadMcpAddon ];
+          makeWrapperFlags = [
+            "--set"
+            "LD_PRELOAD"
+            "${lib.getLib pkgs.expat}/lib/libexpat.so.1"
+          ];
         })
       ];
+    };
+
+    xdg.dataFile."FreeCAD/v1-1/Mod/FreeCADMCP" = {
+      source = "${freecadMcpAddon}/FreeCADMCP";
+      recursive = true;
     };
 
     programs = {
