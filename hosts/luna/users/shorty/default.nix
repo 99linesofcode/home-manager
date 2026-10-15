@@ -11,7 +11,6 @@ with lib;
       android-tools
       electron
       etlegacy
-      freecad
       gdb
       ghidra
       insomnia # NOTE: FOSS alternative to Postman API tester
@@ -40,6 +39,7 @@ with lib;
       enable = true;
       defaultApplication.enable = true;
     };
+    freecad.enable = true;
     gammastep.enable = true;
     git.enable = true;
     grim.enable = true;
