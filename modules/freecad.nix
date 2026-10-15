@@ -33,6 +33,11 @@ with lib;
   config = mkIf cfg.enable {
     home = {
       packages = [
+        # FreeCAD links libCoin, which on this nixpkgs pin vendors an ancient expat
+        # and re-exports its XML_* symbols, colliding with Python's newer expat and
+        # segfaulting on any XML parse (nixpkgs#544607). Preloading the real libexpat
+        # makes its symbols win; drop this once the pin picks up coin3d's unvendor
+        # (nixpkgs e1060cde, PR #548045).
         (pkgs.freecad.customize {
           makeWrapperFlags = [
             "--set"
