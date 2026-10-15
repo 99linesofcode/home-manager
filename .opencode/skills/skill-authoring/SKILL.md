@@ -87,14 +87,6 @@ neighbours). `name` and `description` keep their meaning and must not be
 shortened. Role briefs under `references/roles/` MAY carry `role`, `governing`
 (skill ids), and `context-resolved: true`.
 
-### The `description` is the trigger
-
-The `description` is what the agent sees before the skill loads. It must cover
-both _what_ the skill does and _when_ to reach for it. Write in third person
-("Use when...", not "I help with..."). Front-load concrete trigger keywords and
-filenames the user is likely to say. Use "Use ONLY when..." to keep a skill
-quiet on adjacent topics.
-
 ### Body content
 
 - Markdown after the frontmatter. No format restrictions — write whatever helps
@@ -105,8 +97,7 @@ quiet on adjacent topics.
 - Keep file references shallow (one level from `SKILL.md`); avoid deeply nested
   paths.
 - The agent loads the entire body once the skill is activated, so keep it
-  self-contained enough to act on. Push *lookup* depth into `references/` — never
-  normative rules (see *Size and reference policy*).
+  self-contained enough to act on; push *lookup* depth into `references/`.
 
 Include step-by-step instructions, input/output examples, and common edge cases.
 **Examples are Ruby** unless the skill is language- or framework-specific — it
@@ -117,8 +108,7 @@ reads close to pseudocode. This holds for every skill authored from now on.
 Three tiers: **metadata** (`name` + `description`, read at session start),
 **instructions** (the `SKILL.md` body, read on activation), and
 **resources** (`references/`, `assets/`, `scripts/`, read only when chosen).
-The `description` carries the discovery burden; the body must be
-self-contained; only *lookup* depth goes to `references/`.
+The body must be self-contained; only *lookup* depth goes to `references/`.
 
 ## Size and reference policy (the owning document)
 
@@ -169,7 +159,7 @@ When a skill exceeds the cap, the options are, in order:
 1. **Split by skill** — sibling skills joined by `Loads` (see *Splitting a
    skill*), or a composite skill with an explicit required-reading list.
 2. **Declare a budget exception** — only when the content is all normative and
-   must be in context together, with a `max_kb` and a reason.
+   must be in context together.
 
 Never an undeclared `references/` file. Never a `references/` file that carries
 normative rules without being declared `required`.
@@ -184,8 +174,8 @@ MUST carry a one-line instruction directly above or below the table:
 > Before acting, read (or run) every `required` file below.
 
 - **`required`** — the agent MUST read (or run) it before acting under this
-  skill. A required *reference* counts toward the size budget (loaded in
-  practice); a required *script* is run, not loaded, so it does not.
+  skill. A required *reference* counts toward the size budget; a required
+  *script* is run, not loaded, so it does not.
 - **`on-demand`** — read only when its trigger fires. The "Read when" cell MUST
   be a concrete trigger, not "for more detail".
 
@@ -278,9 +268,14 @@ before the body. Rules:
 
 ## Adding, renaming or rescoping a skill (the checklist)
 
+- [ ] Sweep the prior-art shelf and record a verdict (adopt / adapt / compose / fresh) — see `skill-design-principles`.
+- [ ] Run `scripts/build-catalog.mjs` to regenerate the derived artefacts — the
+      routing matrix in `software-development`, the role tables in
+      `agent-delegation`, `catalog.json`, and the two gate option sets in
+      `gates.json`. **Never hand-edit those; they are generated.** A skill
+      deliberately outside the matrix goes on the non-matrix allowlist in *both*
+      `build-catalog.mjs` and `lint-skills.mjs`, with a reason.
 - [ ] Run the linter: `scripts/lint-skills.mjs` (and `--base origin/main`).
-- [ ] Update its **routing-matrix row** in `software-development` — or add it to
-      the non-matrix allowlist in the linter, with a reason.
 - [ ] Update its **`## Related`** (Loads/References) and its **`## Files`**
       table.
 - [ ] Keep **normative content in `SKILL.md`** — never hide it in an undeclared
@@ -292,27 +287,24 @@ before the body. Rules:
 The spec handles discovery via progressive disclosure; this library adds two
 conventions on top:
 
-1. **Descriptions carry every trigger.** The `description` is read at
-   session start for ALL skills — it is the only discovery surface. It must
-   front-load trigger keywords for every task the skill governs, including
-   style and formatting topics (the whitespace rule lives in
-   `self-documenting-code`, so its description says "whitespace", "blank
-   lines", "formatting rhythm"). Audit the description on every skill edit:
-   a task that should route to this skill but wouldn't match its description
-   is a defect.
+1. **The `description` is the trigger.** Read at session start for ALL skills,
+   it is the only discovery surface, and must cover both _what_ the skill does
+   and _when_ to reach for it. Write in third person ("Use when..."); gate with
+   "Use ONLY when..." to stay quiet on adjacent topics. Front-load concrete
+   trigger keywords and filenames for every task the skill governs. Audit it on
+   every skill edit: a task that should route here but wouldn't match its
+   description is a defect.
 2. **The routing matrix is authoritative.** `software-development`'s gate holds
    the task → skills matrix for the dev cluster; `AGENTS.md`'s operations table
-   routes non-dev work. Update a skill's row there when it is added, renamed, or
-   rescoped. The layering: **description triggers**, **matrix routes**,
-   `## Related` **navigates**.
+   routes non-dev work. The matrix is **generated** — change the skill's
+   frontmatter and run `build-catalog.mjs`; never edit the matrix by hand. The
+   layering: **description triggers**, **matrix routes**, `## Related`
+   **navigates**.
 3. **Atomic activation for inseparable sets.** When skills must always load
    together, prefer a composite skill (one `SKILL.md` whose body instructs
-   reading its components; one description for the router) over relying on
-   the model to load a set. The loading model has four layers: registry
-   metadata at startup (name + description), the routing matrix on task
-   match, the skill body on activation, references/scripts on demand. Fail
-   closed: a missing governing skill blocks the work — never proceed on
-   partial activation. Dependency manifests, version pinning, capability
+   reading its components; one description for the router). Fail closed: a
+   missing governing skill blocks the work — never proceed on partial
+   activation. Dependency manifests, version pinning, capability
    profiles, and **category subfolders** (Hermes-style grouping directories) are
    deferred until the library's scale demands them (see
    [[agent-skill-retrieval-research]]).
@@ -372,6 +364,7 @@ three triggers.
 
 ## Authoring checklist
 
+- [ ] Prior-art sweep done; borrowed material rewritten in our vocabulary, nothing copied.
 - [ ] Folder named after `name`; `SKILL.md` spelled exactly; sits flat under the
       skills root (no category directory).
 - [ ] `name` lowercase, hyphens only, ≤64 chars, matches folder.

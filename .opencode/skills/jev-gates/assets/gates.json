@@ -71,7 +71,7 @@
       "type": "choice",
       "instructions": "Which single row of the software-development routing matrix does this task belong to? Choose the best-fitting row; choose 'none' only if no row fits.",
       "criteria": {
-        "Use before authoring a skill when deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role.": "Decide whether a workflow needs a skill at all and what belongs inside it — contract versus methodology, role versus skill, and where the boundary falls.",
+        "Use before authoring or changing a skill when checking prior art, deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role.": "Decide whether a workflow needs a skill at all and what belongs inside it — sweep the prior-art shelf first, then contract versus methodology, role versus skil…",
         "Use when a brief is vague, when starting discovery, or when the user hands over raw material and asks to figure out what we're building.": "Interview-first discovery — ask rather than assume, offer concrete options with a recommended default, record decisions, and route unknowns to an open-question…",
         "Use when a change's main job is a behaviour-preserving restructure of code, at any scale, including when deciding how much machinery the refactor deserves.": "Restructure code without changing behaviour, at snippet, unit, or system scale.",
         "Use when building, extending, or releasing an Obsidian community plugin in any repository.": "Build and release an Obsidian community plugin to the platform's conventions — manifest and versions upkeep, minAppVersion, and the tag-driven release.",

@@ -66,7 +66,7 @@ they are contracts, not suggestions.**
 | Use when working with a Shopify store programmatically — acquiring or running the Shopify CLI, authenticating to a store, or running Admin GraphQL reads, mutations, or bulk operations against products, variants, prices, inventory, or orders. | `shopify` |
 | Use when scaffolding or adopting a repo, choosing a skeleton, or wiring a devshell, workflows or shared config. | `skeleton-ecosystem` |
 | Use when creating a new SKILL.md, editing or extending an existing skill, or formalizing a workflow as a reusable agent skill per the Agent Skills specification. | `skill-authoring` (+ `skill-design-principles`) |
-| Use before authoring a skill when deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role. | `skill-design-principles` |
+| Use before authoring or changing a skill when checking prior art, deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role. | `skill-design-principles` |
 | Use when starting or delivering a slice, or when the user asks to build the next slice. | `slice-delivery` (+ `agent-delegation`, `git-workflow`) |
 | Use when designing, building, extending, or reviewing the architecture of any OO codebase, or when deciding where logic lives, how a use case is shaped, or how a port or DTO is defined. | `software-architecture` (+ `software-architecture-structure`) |
 | Use when creating, moving, naming, or placing a class or file, choosing a folder, picking a role suffix, adding a module, or reviewing a repository's structure. | `software-architecture-structure` |

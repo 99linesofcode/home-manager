@@ -242,7 +242,7 @@
       "governing": [
         "skill-design-principles"
       ],
-      "task": "Use before authoring a skill when deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role."
+      "task": "Use before authoring or changing a skill when checking prior art, deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role."
     },
     {
       "companions": [
@@ -1494,7 +1494,7 @@
     },
     "skill-design-principles": {
       "category": "tooling",
-      "description": "Decide whether a workflow needs a skill at all and what belongs inside it — contract versus methodology, role versus skill, and where the boundary falls. Use before authoring a new SKILL.md, when the question is scope and content rather than mechanics.",
+      "description": "Decide whether a workflow needs a skill at all and what belongs inside it — sweep the prior-art shelf first, then contract versus methodology, role versus skill, and where the boundary falls. Use before authoring a new SKILL.md or changing an existing one, when the question is scope and content rather than mechanics.",
       "externals": [],
       "files": [
         {
@@ -1511,8 +1511,8 @@
       ],
       "roles": [],
       "routeNotWhen": "Use `skill-authoring` for the mechanics of writing a valid SKILL.md once the scope and content are settled.",
-      "routeWhen": "Use before authoring a skill when deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role.",
-      "summary": "Decide whether a workflow needs a skill at all and what belongs inside it — contract versus methodology, role versus skill, and where the boundary falls."
+      "routeWhen": "Use before authoring or changing a skill when checking prior art, deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role.",
+      "summary": "Decide whether a workflow needs a skill at all and what belongs inside it — sweep the prior-art shelf first, then contract versus methodology, role versus skil…"
     },
     "slice-delivery": {
       "category": "delivery",
