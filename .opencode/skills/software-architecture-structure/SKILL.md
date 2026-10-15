@@ -23,7 +23,8 @@ packages; mirror them when a rule is silent.
 
 - **Loads:** (none — the core Loads this skill; this skill References it).
 - **References:** `software-architecture`, `laravel`, `rails`, `typescript`,
-  `premise-demolition`, `systems-thinking`.
+  `premise-demolition`, `systems-thinking`, `refactoring` (the operations that
+  group and pull up).
 
 ## External
 
@@ -171,6 +172,14 @@ expression lives in the `typescript` skill.
   **module file** where the transforms own nothing (`note.rb`, `support.rb`).
   The default is the model object — a service is the exception, never a home
   for cohesion. Class-internal helpers stay in that class's file.
+
+  **Grouping is not coalescing.** "Never a home for cohesion" means a service
+  must not become a grab-bag of unrelated helpers — not that each helper gets
+  its own file. Related functions group, in one class or one module, wherever
+  they are read together. When a helper is needed by **several** classes, do not
+  copy it: **pull it up** to the home they share — a superclass, a value object,
+  or a module at their level. These are the catalogue's `Combine Functions into
+  Class` and `Pull Up Method` (`refactoring`).
 
 ## The role menu (closed)
 

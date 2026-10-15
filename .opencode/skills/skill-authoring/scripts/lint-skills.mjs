@@ -57,6 +57,10 @@ const BUDGET_EXCEPTIONS = {
         max_kb: 22,
         reason: 'the delegation contract: every rule and both generated role/skill tables must be in context together',
     },
+    'software-architecture-structure': {
+        max_kb: 22,
+        reason: 'the structure-and-naming contract: the folder tree, the role table and the boundary rules must be in context together',
+    },
 };
 
 // Skills deliberately outside the software-development routing matrix, each
