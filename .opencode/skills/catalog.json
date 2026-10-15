@@ -746,6 +746,7 @@
       "loads": [],
       "name": "customize-opencode",
       "references": [
+        "git-workflow",
         "skill-authoring",
         "skill-design-principles"
       ],

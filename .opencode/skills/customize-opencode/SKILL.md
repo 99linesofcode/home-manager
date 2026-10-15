@@ -16,7 +16,8 @@ is wrong. The shapes below cover the common surface area, but they are a
 
 - **Loads:** (none — loaded on demand)
 - **References:** `skill-authoring` (when the config change is a skill),
-  `skill-design-principles` (whether the config belongs in a skill at all).
+  `skill-design-principles` (whether the config belongs in a skill at all),
+  `git-workflow` (the worktree discipline for changing the harness).
 
 ## External
 
@@ -62,6 +63,28 @@ symlinks into the nix store** and must never be edited directly.
 - `~/.config/opencode/` is generated output — treat it as read-only.
 - This applies to every file in the "Where files live" table below: the
   global-config and global-skills paths are nix-managed here, not hand-edited.
+
+### Changing the harness: a worktree per session, regenerate on merge
+
+Several orchestrator sessions may run at once, and any of them may change the
+harness — a skill, an agent, a plugin, a permission rule. Give each session its
+own git worktree so no two writers share a HEAD; this is the same isolation
+`git-workflow` prescribes for workers.
+
+- **Cut from local `main`, not `origin/main`.** This repo's local `main` can be
+  ahead of its remote, so cutting from `origin/main` would drop those commits.
+- **Treat a harness change as a slice.** Author it on the worktree's branch and
+  merge when the user is happy with it; let the user be the merge point.
+- **Regenerate the derived artefacts before merging.** After authoring, and
+  again after rebasing onto current `main`, run
+  `skill-authoring/scripts/build-catalog.mjs`. The second run is the
+  authoritative one — it recomputes the routing matrix, the role tables,
+  `catalog.json`, and the gate option sets over the *merged* skill set, which is
+  what keeps the merge a plain merge. Regeneration is deterministic and cheap.
+- **Merge one branch at a time.**
+- `home-manager switch` still applies the result. A worktree isolates the
+  *edits*, not the running generation — and because this is a flake, a new file
+  must be `git add`ed before `home-manager switch` will see it.
 
 ## Where files live
 
