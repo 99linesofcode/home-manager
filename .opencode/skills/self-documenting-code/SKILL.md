@@ -96,6 +96,20 @@ comments are removed.** Intent lives in the spec and the tests; the code
 carries it through names and prose-like structure. The one descriptive string
 that belongs in source is a descriptive error message.
 
+### Marker comments are the exception
+
+The rule bans *explanatory prose*. It does not ban **marker comments** — a
+capitalised tag that flags open work for the next reader. These are welcome in
+any file, config included:
+
+`TODO`, `FIXME`, `HACK`, `XXX`, `NOTE`, `WARNING`, `BUG`, `INFO`.
+
+Use the canonical spelling (`FIXME`, not `FIX`; `WARNING`, not `WARN`), and
+carry a tracking reference where the project has one. A marker states what is
+open; it never narrates the code. A skill may define its own justified
+exception (e.g. an architecture skill that has a port carry a short rationale
+comment).
+
 ## Documentation surfaces (where documentation lives, and when it updates)
 
 Documentation has four surfaces. Each has a distinct job and an update
@@ -134,5 +148,6 @@ change updates both — `ARCHITECTURE.md` (how it works now) and the vault log
 Before adding a comment, ask: **would a competent reader understand this
 without it?** If yes, cut it. If no, move the intent to the spec or rename the
 code — the explanation belongs where the project keeps its contract, not in
-the source. There is no third outcome: a comment is never the answer.
+the source. A marker comment is the one exception: it flags open work, and it
+is the tag, not an explanation, that earns its place.
 

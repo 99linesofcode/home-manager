@@ -82,12 +82,6 @@ with `<name>.enable = true;`, kept alphabetical among its siblings. Never list a
 app in a host's `home.packages` when a module owns it — the module is the single
 home for the concern.
 
-## No comments in Nix files
-
-Never add comments to the user's Nix files. Intent lives in the module name and
-the option; operational knowledge lives in agent memory, not in the file. The
-user's own comments stay untouched.
-
 ## Verify by evaluating — never by switching
 
 The agent cannot run `home-manager switch` (denied), and must not try. Prove a
