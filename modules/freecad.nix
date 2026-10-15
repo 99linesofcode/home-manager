@@ -28,8 +28,13 @@ with lib;
             type = "local";
             command = lib.getExe' pkgs.uv "uvx";
             args = [
+              "--python"
+              (lib.getExe pkgs.python313)
               "freecad-mcp"
             ];
+            env = {
+              UV_PYTHON_DOWNLOADS = "never";
+            };
           };
         };
       };
