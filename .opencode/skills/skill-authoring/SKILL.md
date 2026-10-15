@@ -265,6 +265,13 @@ before the body. Rules:
 - A skill named in the body but not in `Related` is a lint warning — add it to
   `References`, or reword so it is not a dependency. Add to `Loads` only if it
   is genuinely always required.
+- **Direction.** `A` References `B` means *under `A`, you may need `B`*. An
+  **expression** — a language, framework, or environment that shapes how a
+  contract is realized — **Loads** or **References** it, and the contract
+  **References** it back. A **tool** you merely operate within may **Reference**
+  it; the contract never references the tool.
+- **Names only.** An entry is a name and at most a one-clause gloss — never why
+  it is there. State the why once in the design guidance, not in the list.
 
 ## Adding, renaming or rescoping a skill (the checklist)
 

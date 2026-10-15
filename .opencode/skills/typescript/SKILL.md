@@ -20,7 +20,8 @@ This skill carries only what a TypeScript/Node agent would otherwise get wrong
 
 - **Loads:** `software-architecture` (the contract this expresses).
 - **References:** `software-testing` (Vitest), `obsidian-plugin` (plugin
-  packaging and release).
+  packaging and release), `activepieces` (piece building and release),
+  `shopify` (the store CLI and Admin API).
 
 ## Interface naming: the role is the suffix, never the construct
 

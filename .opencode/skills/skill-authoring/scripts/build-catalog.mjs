@@ -215,7 +215,11 @@ function parseRelated(ctx) {
             current = null;
             continue;
         }
-        if (current && line.trim()) {
+        if (!line.trim()) {
+            current = null;
+            continue;
+        }
+        if (current) {
             addUnique(current === 'loads' ? ctx.loads : ctx.references, extractNames(line));
         }
     }

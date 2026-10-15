@@ -27,7 +27,6 @@ _why_ lives in the wiki concepts (`~/Documents/Obsidian/AI/wiki/concepts/`):
   table).
 - **References:** `laravel`, `filament` (the PHP expression), `rails`, `avo`
   (the Ruby expression), `typescript` (the TS/Node expression),
-  `activepieces` (the automation-adapter expression),
   `software-testing` (how the layers are tested), `project-seed` (the
   `ARCHITECTURE.md` stub), `architecture-and-skeleton` (fills it in),
   `code-review` (the architecture check), `premise-demolition` (challenging an

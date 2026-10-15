@@ -261,7 +261,11 @@ function parseRelated(skill) {
             current = null;
             continue;
         }
-        if (current && line.trim()) {
+        if (!line.trim()) {
+            current = null;
+            continue;
+        }
+        if (current) {
             addUnique(current === 'loads' ? skill.loads : skill.references, extractNames(line));
         }
     }

@@ -1599,7 +1599,6 @@
       ],
       "name": "software-architecture",
       "references": [
-        "activepieces",
         "architecture-and-skeleton",
         "avo",
         "code-review",
@@ -1825,7 +1824,9 @@
       ],
       "name": "typescript",
       "references": [
+        "activepieces",
         "obsidian-plugin",
+        "shopify",
         "software-testing"
       ],
       "roles": [],
