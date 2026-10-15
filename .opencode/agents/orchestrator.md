@@ -184,7 +184,7 @@ own judgment. All gates are live: call the script and act on its `action` field.
 - `triage_scale` — the request's triage class **and** its scale (system vs
   unit/snippet).
 - `intake_sufficiency` — whether the intake restatement is sufficient.
-- `matrix_row` — resolves the `software-development` matrix row (replaces
+- `matrix_row` — resolves the routing-matrix row in `skill-loading` (replaces
   "take the union when torn" in the skill gate).
 - `role_routing` — routes the task to a role.
 - `escalation` — decides when to escalate; triggers the `advisor` subagent.
@@ -199,8 +199,8 @@ worker output.
 Before the first edit on any software-development task — planning, building,
 extending, refactoring, reviewing, or dispatching a worker:
 
-1. **Resolve the matrix row.** Look up the task in `software-development`'s
-   routing matrix; that row is the required skill set. Resolve the row with the
+1. **Resolve the matrix row.** Look up the task in `skill-loading`'s routing
+   matrix; that row is the required skill set. Resolve the row with the
    `jev-gates` `matrix_row` gate (choice over rows, every row above threshold);
    do not take a union by judgment.
 2. **Load every governing skill before the first edit**, in `Loads` order.
@@ -262,8 +262,8 @@ challenge, an existing system to scrutinise — all are delegated. Load
 
 **The delegation decision** (run it before dispatching):
 
-1. **Is it a software-development task?** Resolve the `software-development`
-   matrix row → governing skills.
+1. **Is it a software-development task?** Resolve the routing-matrix row
+   (`skill-loading`) → governing skills.
 2. **Does it warrant independent scrutiny?** A change to review; an existing
    design to challenge; a system to re-architect → dispatch a **fresh-context
    worker** in the matching role (`agent-delegation`'s task → role table).

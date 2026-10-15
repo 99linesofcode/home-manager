@@ -42,7 +42,7 @@ const NAME_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const DESC_MAX = 1024;
 const DESC_WARN = 400;
 const MAX_CLOSURE = 4; // transitive Loads closure, excluding self
-const MATRIX_SKILL = 'software-development';
+const MATRIX_SKILL = 'skill-loading';
 const FILES_DIRS = ['references', 'assets', 'scripts'];
 // Files exempt from the 2 KB floor and the 8 KB ceiling: role briefs and
 // assets are passed by path or filled in; scripts are run, not read.
@@ -63,22 +63,17 @@ const BUDGET_EXCEPTIONS = {
     },
 };
 
-// Skills deliberately outside the software-development routing matrix, each
-// with a one-line reason.
-const NON_MATRIX_ALLOWLIST = {
-    memory: 'cross-cutting memory protocol; routed by the orchestrator prompt',
-    wiki: 'LLM-wiki maintenance; a vault operation routed by AGENTS.md',
-    'vault-notes': 'always loaded; the vault filing contract',
-    'teach-mode': 'teaching mode; not a software-development task',
-    'communication-standards': 'always-on writing contract; not a routed dev task',
-    'beeper-bridge': 'harness operation (chat bridge); not a dev task',
-    'typst-document': 'document rendering; a vault/ops task',
-    'research-prompt-skills': 'scheduled standalone job; not a routed dev task',
-};
-
 // Skills deliberately not referenced by any other skill: they are entry points
 // loaded on demand, not library skills, so the zero-inbound warning is skipped.
 const INBOUND_EXEMPT = {
+    memory: 'cross-cutting memory protocol; loaded by the orchestrator prompt',
+    wiki: 'LLM-wiki maintenance; a vault operation loaded by AGENTS.md',
+    'vault-notes': 'always loaded; the vault filing contract',
+    'teach-mode': 'teaching mode; not a routed dev task',
+    'communication-standards': 'always-on writing contract',
+    'beeper-bridge': 'harness operation (chat bridge); not a routed dev task',
+    'typst-document': 'document rendering; a vault/ops task',
+    'research-prompt-skills': 'scheduled standalone job; not a routed dev task',
     'customize-opencode': 'entry point invoked when configuring opencode',
     'systemd-scheduler': 'entry point invoked from systemd; it schedules workers itself',
 };
@@ -832,7 +827,7 @@ function checkMatrix(skills, rep) {
         }
     }
     for (const name of [...skills.keys()].sort()) {
-        if (named.has(name) || NON_MATRIX_ALLOWLIST[name]) continue;
+        if (named.has(name)) continue;
         if (isPart(skills, name)) continue;
         rep.error(`${name}: not in the routing matrix and not in the non-matrix allowlist`);
     }
@@ -944,7 +939,7 @@ function checkInbound(skills, rep) {
         }
     }
     for (const name of [...skills.keys()].sort()) {
-        if (inbound.get(name) === 0 && !NON_MATRIX_ALLOWLIST[name] && !INBOUND_EXEMPT[name]) {
+        if (inbound.get(name) === 0 && !INBOUND_EXEMPT[name]) {
             rep.warn(`${name}: zero inbound references`);
         }
     }
@@ -1161,29 +1156,10 @@ function checkAgentsContract(skills, root, rep) {
         return;
     }
     const end = sectionEnd(lines, mask, idx);
-    let start = null;
+    const unknown = [];
     for (let i = idx + 1; i < end; i++) {
         if (mask[i]) continue;
-        const line = lines[i].trim();
-        if (!line.startsWith('|')) continue;
-        const cells = line.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
-        if (cells.length >= 2 && cells[0].toLowerCase() === 'operation' && cells[1].toLowerCase() === 'skill') {
-            start = i;
-            break;
-        }
-    }
-    if (start === null) {
-        rep.warn('AGENTS.md: operating-contract check skipped — no | Operation | Skill | table');
-        return;
-    }
-    const unknown = [];
-    for (let i = start + 2; i < end; i++) {
-        if (mask[i]) continue;
-        const line = lines[i].trim();
-        if (!line.startsWith('|')) break;
-        const cells = line.replace(/^\|/, '').replace(/\|$/, '').split('|').map((c) => c.trim());
-        if (cells.length < 2) continue;
-        for (const n of extractNames(cells[1])) {
+        for (const n of extractNames(lines[i])) {
             if (!skills.has(n) && !unknown.includes(n)) unknown.push(n);
         }
     }
@@ -1193,7 +1169,7 @@ function checkAgentsContract(skills, root, rep) {
 }
 
 // Skills whose SKILL.md must carry a generated block (and its markers).
-const GENERATED_BLOCK_SKILLS = ['software-development', 'agent-delegation'];
+const GENERATED_BLOCK_SKILLS = ['skill-loading', 'agent-delegation'];
 
 /** The generated blocks must keep their `<!-- generated:start/end -->` markers. */
 function checkGeneratedBlocks(skills, rep) {

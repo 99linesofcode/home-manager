@@ -27,20 +27,14 @@ never be edited directly — the sandbox denies them, correctly.
 
 ## Operating contract
 
-All operational procedure lives in skills. The orchestrator loads the working
-context (memory + the vault schema) at session start, and loads `vault-notes`
-— in full — before its first vault write, because it is the contract that
-keeps notes filed correctly. The rest are loaded on demand; load the relevant
-skill before acting:
+All operational procedure lives in skills, and which skill governs a task is
+resolved through the **routing matrix** — the single library-wide lookup, in
+`skill-loading`. The orchestrator resolves it and loads the governing skills; a
+worker cannot load skills, so it receives them in the dispatch package.
 
-| Operation | Skill |
-|---|---|
-| Vault changes (notes, entities, projects, meetings) | `vault-notes` *(loaded before the first write)* |
-| Wiki maintenance (ingest, query, lint) + OKF format | `wiki` |
-| Memory (working, episodic, semantic, reflection) | `memory` |
-| Spec-driven delivery (seed → discovery → spec → architecture → slices) | `project-seed`, `discovery-interview`, `feature-spec`, `architecture-and-skeleton`, `slice-delivery`, `spec-change` |
-| Dispatch a worker | `agent-delegation` |
-| Git/GitHub delivery | `git-workflow` |
+The vault is the source of truth for its contents: any agent that writes to it
+follows the filing contract in `vault-notes`. The orchestrator loads that skill
+in full before the first vault write, and ships it to any worker it dispatches.
 
 ## Permissions
 

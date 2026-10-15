@@ -1,5 +1,5 @@
 {
-  "count": 48,
+  "count": 49,
   "matrixRows": [
     {
       "companions": [],
@@ -34,6 +34,13 @@
       "task": "Use when building, extending, or reviewing Avo resources, fields, actions, dashboards, cards, or authorization in the user's Rails modules or applications."
     },
     {
+      "companions": [],
+      "governing": [
+        "beeper-bridge"
+      ],
+      "task": "Use when the user attaches, detaches, or checks the Beeper↔opencode bridge — including 'establish a bridge connection to Beeper', 'I'm going AFK', or 'delegate this to Beeper'."
+    },
+    {
       "companions": [
         "self-documenting-code"
       ],
@@ -52,6 +59,13 @@
         "code-review"
       ],
       "task": "Use when reviewing a pull request or change, or when preparing a change for review."
+    },
+    {
+      "companions": [],
+      "governing": [
+        "communication-standards"
+      ],
+      "task": "Use for all user-facing writing — conversation, summaries, plans, reviews, and teaching — or when the user asks for less AI slop, a different tone, or a style guide."
     },
     {
       "companions": [],
@@ -142,6 +156,13 @@
       "task": "Use when building, extending, or reviewing Laravel or PHP code in the user's style, or when the task references their modules, ServiceProvider, composer wiring, or Eloquent mechanics."
     },
     {
+      "companions": [],
+      "governing": [
+        "memory"
+      ],
+      "task": "Use when reading or writing HOT.md, recording episodic events, updating semantic memory, running reflection, or when the user says consolidate memory."
+    },
+    {
       "companions": [
         "git-workflow",
         "skeleton-ecosystem"
@@ -196,6 +217,13 @@
     {
       "companions": [],
       "governing": [
+        "research-prompt-skills"
+      ],
+      "task": "Use when running the research-prompt-skills scheduled job or when asked to do a prompt, memory, context, or skill research sweep."
+    },
+    {
+      "companions": [],
+      "governing": [
         "security-review"
       ],
       "task": "Use when reviewing a diff or codebase for security issues, or as the core red-team step of a code review."
@@ -243,6 +271,13 @@
         "skill-design-principles"
       ],
       "task": "Use before authoring or changing a skill when checking prior art, deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role."
+    },
+    {
+      "companions": [],
+      "governing": [
+        "skill-loading"
+      ],
+      "task": "Use when resolving which skills govern a task, reading or changing the routing matrix, or composing a worker's governing set."
     },
     {
       "companions": [
@@ -312,6 +347,13 @@
     {
       "companions": [],
       "governing": [
+        "teach-mode"
+      ],
+      "task": "Use when the user wants to learn a subject — 'teach me X', 'walk me through X', 'give me a lesson on X', or 'explain X to me' with a learning intent."
+    },
+    {
+      "companions": [],
+      "governing": [
         "threat-modeling"
       ],
       "task": "Use when reviewing architecture or design for security, scoping a security review, or as the first step of a red-team or adversarial review."
@@ -324,6 +366,27 @@
         "typescript"
       ],
       "task": "Use when writing, extending, or reviewing TypeScript or Node code, naming an interface or type, deciding a module's export shape, wiring dependencies, or configuring tsconfig."
+    },
+    {
+      "companions": [],
+      "governing": [
+        "typst-document"
+      ],
+      "task": "Use when converting a markdown document to a PDF, creating an offerte or contract, or rendering a document with the 99linesofcode typst template."
+    },
+    {
+      "companions": [],
+      "governing": [
+        "vault-notes"
+      ],
+      "task": "Use when creating or maintaining a note, person, organization, project, or meeting in the Obsidian vault, or when reorganizing or cleaning the vault."
+    },
+    {
+      "companions": [],
+      "governing": [
+        "wiki"
+      ],
+      "task": "Use when ingesting a source from the vault Inbox, querying the wiki, or linting wiki health."
     }
   ],
   "roles": {
@@ -1515,6 +1578,30 @@
       "routeWhen": "Use before authoring or changing a skill when checking prior art, deciding whether a skill is needed, what belongs in it, or whether the thing is a skill or a role.",
       "summary": "Decide whether a workflow needs a skill at all and what belongs inside it — sweep the prior-art shelf first, then contract versus methodology, role versus skil…"
     },
+    "skill-loading": {
+      "category": "tooling",
+      "description": "How the orchestrator resolves a task to a skill set and loads it — the three layers (descriptions trigger, the routing matrix routes, `## Related` navigates), the library-wide routing matrix, the `Loads` closure, and fail-closed activation. Use when resolving which skills govern a task, reading or changing the routing matrix, or composing a worker's governing set.",
+      "externals": [
+        {
+          "load": "on-demand",
+          "path": "~/Documents/Obsidian/AI/wiki/syntheses/skill-architecture.md",
+          "trigger": "for the rationale behind the three layers and the deferred scale machinery"
+        }
+      ],
+      "files": [],
+      "id": "skill-loading",
+      "loads": [],
+      "name": "skill-loading",
+      "references": [
+        "agent-delegation",
+        "jev-gates",
+        "skill-authoring"
+      ],
+      "roles": [],
+      "routeNotWhen": "Use `skill-authoring` to write or change a skill, and `agent-delegation` to compose the rest of a worker package.",
+      "routeWhen": "Use when resolving which skills govern a task, reading or changing the routing matrix, or composing a worker's governing set.",
+      "summary": "How the orchestrator resolves a task to a skill set and loads it — the three layers (descriptions trigger, the routing matrix routes, `## Related` navigates),…"
+    },
     "slice-delivery": {
       "category": "delivery",
       "description": "Deliver one slice end to end — shape it, pin its behavior with tests written first and shown to fail for the right reason, implement, review independently, and reconcile the spec. Use when starting or delivering a slice, or when the user says to build the next slice.",
@@ -1678,6 +1765,7 @@
         "new-project",
         "self-documenting-code",
         "skill-authoring",
+        "skill-loading",
         "software-architecture",
         "software-testing"
       ],

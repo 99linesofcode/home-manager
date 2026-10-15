@@ -41,18 +41,8 @@ const SCHEMA = 1;
 const SUMMARY_MAX = 160;
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 
-// Skills deliberately outside the software-development routing matrix, mirroring
-// lint-skills.mjs's NON_MATRIX_ALLOWLIST. Keep the two lists in sync.
-const NON_MATRIX_ALLOWLIST = new Set([
-    'memory',
-    'wiki',
-    'vault-notes',
-    'teach-mode',
-    'communication-standards',
-    'beeper-bridge',
-    'typst-document',
-    'research-prompt-skills',
-]);
+// The routing matrix is library-wide: every skill has a row (companions
+// excepted). There is no allow-list.
 
 // The generated-block markers. Three blocks are rendered: the routing matrix in
 // `software-development`, and the task→role and role→governing tables in
@@ -466,7 +456,7 @@ function build(root) {
     // One row per skill in the routing matrix: the skill's route-when sentence
     // is the task, its id the governing skill, its Loads the companions.
     const matrixRows = skills
-        .filter((s) => !NON_MATRIX_ALLOWLIST.has(s.id) && !isPart(skills, s.id))
+        .filter((s) => !isPart(skills, s.id))
         .map((s) => sortKeys({ task: s.routeWhen, governing: [s.id], companions: s.loads.slice() }))
         .sort((a, b) => (a.governing[0] < b.governing[0] ? -1 : a.governing[0] > b.governing[0] ? 1 : 0));
 
@@ -603,10 +593,10 @@ function main(argv) {
         { path: path.join(skillsDir, 'catalog.json'), text: JSON.stringify(catalog, null, 2) + '\n' },
     ];
 
-    const swPath = path.join(skillsDir, 'software-development', 'SKILL.md');
+    const matrixPath = path.join(skillsDir, 'skill-loading', 'SKILL.md');
     targets.push({
-        path: swPath,
-        text: applyBlocks(readText(swPath), [
+        path: matrixPath,
+        text: applyBlocks(readText(matrixPath), [
             {
                 label: 'routing matrix',
                 headerRegex: /^\s*\|\s*Task\s*\|\s*Governing skills\s*\|/,

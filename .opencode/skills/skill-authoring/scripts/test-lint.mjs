@@ -98,7 +98,7 @@ const CASES = [
         "companion 'kubernetes' not in 'filament' Loads",
         (root) => {
             copySkills(root);
-            edit(root, 'software-development/SKILL.md', '`filament` (+ `laravel`)', '`filament` (+ `kubernetes`)');
+            edit(root, 'skill-loading/SKILL.md', '`filament` (+ `laravel`)', '`filament` (+ `kubernetes`)');
         },
     ],
     [
@@ -249,7 +249,7 @@ const CASES = [
         'missing generated-block markers',
         (root) => {
             copySkills(root);
-            edit(root, 'software-development/SKILL.md', '<!-- generated:end -->', '');
+            edit(root, 'skill-loading/SKILL.md', '<!-- generated:end -->', '');
         },
     ],
     [
