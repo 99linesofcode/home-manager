@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# Run the latest Shopify CLI without a global npm install.
+#
+# Node comes from nixpkgs (independent of the system's node); pnpm installs
+# @shopify/cli@latest globally into a disposable PNPM_HOME. Idempotent and
+# always-latest: re-running installs the current release before executing.
+#
+#   scripts/shopify store auth --store <store>.myshopify.com --scopes write_products
+#   scripts/shopify store execute --store <store>.myshopify.com --query '{ shop { name } }'
+#
+# Override the cache location (to persist it) with SHOPIFY_CLI_HOME.
+set -eu
+
+: "${SHOPIFY_CLI_HOME:=${TMPDIR:-/tmp}/shopify-cli}"
+export SHOPIFY_CLI_HOME
+
+exec nix shell nixpkgs#nodejs_22 nixpkgs#pnpm -c sh -c '
+  export PNPM_HOME="$SHOPIFY_CLI_HOME"
+  export PATH="$PNPM_HOME/bin:$PATH"
+  pnpm add -g --allow-build=esbuild @shopify/cli@latest >/dev/null &&
+    exec shopify "$@"
+' shopify "$@"
